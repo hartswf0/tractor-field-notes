@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRACTOR FOLKOLOGICUS — Modular Planning System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #e8e4dc;
+            color: #1a1a1a;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: #f5f3ed;
+            border: 3px solid #1a1a1a;
+            padding: 30px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: bold;
+            letter-spacing: 8px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            letter-spacing: 3px;
+            color: #666;
+        }
+
+        .pattern-overview {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .pattern-tab {
+            background: #f5f3ed;
+            border: 3px solid #1a1a1a;
+            padding: 15px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .pattern-tab:hover {
+            background: #fff;
+            transform: translateY(-3px);
+        }
+
+        .pattern-tab.coda {
+            background: #1a1a1a;
+            color: #e8e4dc;
+        }
+
+        .pattern-tab.coda:hover {
+            background: #333;
+        }
+
+        .axiom-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .axiom-section {
+            background: #f5f3ed;
+            border: 3px solid #1a1a1a;
+            padding: 20px;
+        }
+
+        .axiom-header {
+            display: flex;
+            align-items: baseline;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #1a1a1a;
+        }
+
+        .axiom-number {
+            font-size: 32px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .axiom-title {
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .axiom-zero {
+            background: #1a1a1a;
+            color: #e8e4dc;
+            padding: 10px 12px;
+            margin-bottom: 10px;
+            font-size: 12px;
+            line-height: 1.5;
+            font-weight: bold;
+        }
+
+        .canonical-section {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #1a1a1a;
+        }
+
+        .axiom-list {
+            display: grid;
+            gap: 8px;
+        }
+
+        .axiom-item {
+            background: #e8e4dc;
+            border: 2px solid #1a1a1a;
+            padding: 8px 10px;
+            font-size: 11px;
+            line-height: 1.5;
+            transition: all 0.15s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+        }
+
+        .axiom-canonical {
+            cursor: pointer;
+            flex-wrap: wrap;
+        }
+
+        .axiom-canonical:hover {
+            background: #fff;
+            transform: translateX(3px);
+        }
+
+        .axiom-text {
+            flex-grow: 1;
+        }
+
+        .axiom-ref {
+            font-weight: bold;
+            color: #1a1a1a;
+            margin-right: 8px;
+            display: inline-block;
+            min-width: 35px;
+            cursor: pointer;
+        }
+
+        .definition-accordion {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        .definition-accordion.expanded {
+            max-height: 500px;
+        }
+
+        .definition-content {
+            padding: 10px;
+            background: #fff;
+            border-left: 4px solid #1a1a1a;
+            font-size: 11px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .coda-section .definition-content {
+            background: #2a2a2a;
+            border-left-color: #86efac;
+            color: #e8e4dc;
+        }
+
+        .planning-section {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px solid #1a1a1a;
+        }
+
+        .section-label {
+            font-size: 10px;
+            letter-spacing: 2px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            color: #666;
+        }
+
+        .parameter-hint {
+            font-size: 9px;
+            color: #999;
+            margin-bottom: 8px;
+            font-style: italic;
+            letter-spacing: 0.5px;
+        }
+
+        .add-controls {
+            display: grid;
+            gap: 8px;
+        }
+
+        .add-input {
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            padding: 8px 10px;
+            border: 2px solid #1a1a1a;
+            background: #fff;
+            outline: none;
+            transition: border-color 0.15s;
+        }
+
+        .add-input:focus {
+            border-color: #666;
+        }
+
+        .add-btn {
+            font-family: 'Courier New', monospace;
+            background: #1a1a1a;
+            color: #e8e4dc;
+            border: 2px solid #1a1a1a;
+            padding: 8px;
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .add-btn:hover {
+            background: #333;
+            transform: translateY(-2px);
+        }
+
+        .coda-section {
+            grid-column: 1 / -1;
+            background: #1a1a1a;
+            color: #e8e4dc;
+        }
+
+        .coda-section .axiom-header {
+            border-bottom-color: #e8e4dc;
+        }
+
+        .coda-section .axiom-number,
+        .coda-section .axiom-title {
+            color: #e8e4dc;
+        }
+
+        .coda-section .canonical-section {
+            border-bottom-color: #666;
+        }
+
+        .coda-section .axiom-zero {
+            background: #e8e4dc;
+            color: #1a1a1a;
+        }
+
+        .coda-section .axiom-item {
+            background: #2a2a2a;
+            border-color: #666;
+            color: #e8e4dc;
+        }
+
+        .coda-section .axiom-canonical:hover {
+            background: #3a3a3a;
+        }
+
+        .coda-section .planning-section {
+            border-top-color: #e8e4dc;
+        }
+
+        .coda-section .add-input {
+            background: #2a2a2a;
+            color: #e8e4dc;
+            border-color: #666;
+        }
+
+        .coda-section .add-input:focus {
+            border-color: #999;
+        }
+
+        .coda-section .add-btn {
+            background: #e8e4dc;
+            color: #1a1a1a;
+            border-color: #e8e4dc;
+        }
+
+        .coda-section .add-btn:hover {
+            background: #fff;
+        }
+
+        .coda-section .section-label {
+            color: #999;
+        }
+
+        .coda-section .axiom-ref {
+            color: #86efac;
+        }
+
+        .corner-badge {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #1a1a1a;
+            color: #e8e4dc;
+            padding: 10px 20px;
+            border: 3px solid #1a1a1a;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            z-index: 100;
+        }
+
+        .footer {
+            background: #1a1a1a;
+            color: #e8e4dc;
+            border: 3px solid #1a1a1a;
+            padding: 20px;
+            text-align: center;
+            font-size: 11px;
+            letter-spacing: 2px;
+        }
+
+        .editing {
+            background: #fff !important;
+            box-shadow: 0 0 0 2px #1a1a1a inset;
+        }
+
+        .coda-section .editing {
+            background: #3a3a3a !important;
+            box-shadow: 0 0 0 2px #86efac inset;
+        }
+
+        .parameter-key {
+            font-weight: bold;
+            color: #1a1a1a;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .coda-section .parameter-key {
+            color: #86efac;
+        }
+
+        @media (max-width: 1200px) {
+            .axiom-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .coda-section {
+                grid-column: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 32px;
+                letter-spacing: 4px;
+            }
+
+            .pattern-overview {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .axiom-section {
+                padding: 15px;
+            }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <div class="corner-badge">PLAN v1.0</div>
+
+    <div class="container">
+        <header>
+            <h1>TRACTOR FOLKOLOGICUS</h1>
+            <div class="subtitle">MODULAR PLANNING SYSTEM</div>
+        </header>
+
+        <div class="pattern-overview">
+            <div class="pattern-tab" onclick="scrollToSection(0)">
+                <div>1</div>
+                <div>CIRCLE</div>
+            </div>
+            <div class="pattern-tab" onclick="scrollToSection(1)">
+                <div>2</div>
+                <div>TRADE</div>
+            </div>
+            <div class="pattern-tab" onclick="scrollToSection(2)">
+                <div>3</div>
+                <div>HEART</div>
+            </div>
+            <div class="pattern-tab" onclick="scrollToSection(3)">
+                <div>4</div>
+                <div>SEED</div>
+            </div>
+            <div class="pattern-tab" onclick="scrollToSection(4)">
+                <div>5</div>
+                <div>CHOICE</div>
+            </div>
+            <div class="pattern-tab" onclick="scrollToSection(5)">
+                <div>6</div>
+                <div>PATTERN</div>
+            </div>
+            <div class="pattern-tab coda" onclick="scrollToSection(6)">
+                <div>7</div>
+                <div>ZERO</div>
+            </div>
+        </div>
+
+        <div class="axiom-grid">
+            <!-- 1. THE CIRCLE -->
+            <div class="axiom-section" data-section="0">
+                <div class="axiom-header">
+                    <div class="axiom-number">1</div>
+                    <div class="axiom-title">THE CIRCLE</div>
+                </div>
+                <div class="axiom-zero">1.0 The world of a system is bounded.</div>
+                
+                <div class="canonical-section">
+                    <div class="section-label">Canonical Axioms</div>
+                    <div class="axiom-list" id="canonical-1">
+                        <div class="axiom-item axiom-canonical" data-definition="A boundary is the fundamental act of creation in any system. It separates inside from outside, establishing identity.">
+                            <span class="axiom-ref">1.1</span>
+                            <span class="axiom-text">A boundary drawn is a circle.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">A boundary is the fundamental act of creation in any system. It separates inside from outside, establishing identity.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="This is the primary duality of all systems: Us vs. Them. The boundary creates identity and otherness.">
+                            <span class="axiom-ref">1.2</span>
+                            <span class="axiom-text">What lies inside the circle is called Us; what lies outside is called Them.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">This is the primary duality of all systems: Us vs. Them. The boundary creates identity and otherness.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="Every entity must exist within some boundary to have identity. No thing can exist nowhere.">
+                            <span class="axiom-ref">1.3</span>
+                            <span class="axiom-text">Every entity belongs to at least one circle.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">Every entity must exist within some boundary to have identity. No thing can exist nowhere.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="To exist outside all circles is to have no boundary, no identity, no perception. It is imperceptible.">
+                            <span class="axiom-ref">1.31</span>
+                            <span class="axiom-text">To exist outside all circles is to be unperceived.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">To exist outside all circles is to have no boundary, no identity, no perception. It is imperceptible.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="Multiplicity of roles comes from multiplicity of circle membership. Each circle is a different context.">
+                            <span class="axiom-ref">1.32</span>
+                            <span class="axiom-text">To exist in many circles is to play many roles.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">Multiplicity of roles comes from multiplicity of circle membership. Each circle is a different context.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="A strong circle has both clear identity (boundary) and healthy exchange (flow). Too rigid or too porous fails.">
+                            <span class="axiom-ref">1.4</span>
+                            <span class="axiom-text">The strength of a circle lies in the clarity of its boundary and the flow that crosses it.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">A strong circle has both clear identity (boundary) and healthy exchange (flow). Too rigid or too porous fails.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="A closed system, without new input, becomes stagnant and loses vitality. It hollows out.">
+                            <span class="axiom-ref">1.5</span>
+                            <span class="axiom-text">A circle that admits nothing new becomes hollow.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">A closed system, without new input, becomes stagnant and loses vitality. It hollows out.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="Without a boundary, there is no identity. The circle ceases to exist as a distinct entity.">
+                            <span class="axiom-ref">1.6</span>
+                            <span class="axiom-text">A circle that loses its boundary dissolves.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">Without a boundary, there is no identity. The circle ceases to exist as a distinct entity.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="Healthy systems pulse: they close to maintain identity, then open to exchange and renew.">
+                            <span class="axiom-ref">1.7</span>
+                            <span class="axiom-text">The living circle alternates between closing and opening.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">Healthy systems pulse: they close to maintain identity, then open to exchange and renew.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="planning-section">
+                    <div class="section-label">Planning Items</div>
+                    <div class="parameter-hint">Format: <span class="parameter-key">NAME</span>: value; <span class="parameter-key">BOUNDARY</span>: definition; <span class="parameter-key">INSIDE</span>: us; <span class="parameter-key">OUTSIDE</span>: them</div>
+                    <div class="axiom-list" id="list-1"></div>
+                    <div class="add-controls">
+                        <input type="text" class="add-input" id="input-1" placeholder="PROJECT: X; BOUNDARY: Y; INSIDE: Z; OUTSIDE: W" maxlength="200">
+                        <button class="add-btn" onclick="addItem(1)">+ ADD CIRCLE</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. THE TRADE -->
+            <div class="axiom-section" data-section="1">
+                <div class="axiom-header">
+                    <div class="axiom-number">2</div>
+                    <div class="axiom-title">THE TRADE</div>
+                </div>
+                <div class="axiom-zero">2.0 Nothing moves without exchange.</div>
+
+                <div class="canonical-section">
+                    <div class="section-label">Canonical Axioms</div>
+                    <div class="axiom-list" id="canonical-2">
+                        <div class="axiom-item axiom-canonical" data-definition="Exchange is movement. To give is to change your position in the relationship; to receive is to allow that change.">
+                            <span class="axiom-ref">2.1</span>
+                            <span class="axiom-text">To receive is to give; to give is to change position in the circle.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">Exchange is movement. To give is to change your position in the relationship; to receive is to allow that change.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="All access, all movement across boundaries, has a cost. Nothing is free.">
+                            <span class="axiom-ref">2.2</span>
+                            <span class="axiom-text">Every access has a price.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">All access, all movement across boundaries, has a cost. Nothing is free.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="The price of exchange is paid in intangible currencies: voice (expression), memory (history), heart (care), choice (agency), name (identity), and one mysterious more.">
+                            <span class="axiom-ref">2.21</span>
+                            <span class="axiom-text">The price is paid in voice, memory, heart, choice, name, and one more thing yet unnamed.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">The price of exchange is paid in intangible currencies: voice (expression), memory (history), heart (care), choice (agency), name (identity), and one mysterious more.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="Trade seeks equilibrium. When balance is disturbed, movement occurs to restore it.">
+                            <span class="axiom-ref">2.3</span>
+                            <span class="axiom-text">Trade creates balance; imbalance creates motion.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">Trade seeks equilibrium. When balance is disturbed, movement occurs to restore it.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="Unpaid debts break boundaries, creating new, smaller circles (factions) within the original.">
+                            <span class="axiom-ref">2.4</span>
+                            <span class="axiom-text">Unpaid exchange breaks the circle and multiplies new circles.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">Unpaid debts break boundaries, creating new, smaller circles (factions) within the original.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="Value is not intrinsic to objects but resides in the pattern of relationships and processes that create them.">
+                            <span class="axiom-ref">2.5</span>
+                            <span class="axiom-text">Value does not rest in the thing traded but in the pattern of its making.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">Value is not intrinsic to objects but resides in the pattern of relationships and processes that create them.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="Patterns are knowledge. They can only be learned, not taken. They are non-rivalrous goods.">
+                            <span class="axiom-ref">2.6</span>
+                            <span class="axiom-text">The pattern cannot be stolen; it can only be learned.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">Patterns are knowledge. They can only be learned, not taken. They are non-rivalrous goods.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="All economic activity is ultimately about coordinated movement and positioning—it's choreography.">
+                            <span class="axiom-ref">2.7</span>
+                            <span class="axiom-text">All economy is choreography.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">All economic activity is ultimately about coordinated movement and positioning—it's choreography.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="planning-section">
+                    <div class="section-label">Planning Items</div>
+                    <div class="parameter-hint">Format: <span class="parameter-key">RESOURCE</span>: name; <span class="parameter-key">FROM</span>: source; <span class="parameter-key">TO</span>: destination; <span class="parameter-key">VALUE</span>: amount</div>
+                    <div class="axiom-list" id="list-2"></div>
+                    <div class="add-controls">
+                        <input type="text" class="add-input" id="input-2" placeholder="RESOURCE: X; FROM: Y; TO: Z; VALUE: N" maxlength="200">
+                        <button class="add-btn" onclick="addItem(2)">+ LOG EXCHANGE</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. THE HEART -->
+            <div class="axiom-section" data-section="2">
+                <div class="axiom-header">
+                    <div class="axiom-number">3</div>
+                    <div class="axiom-title">THE HEART</div>
+                </div>
+                <div class="axiom-zero">3.0 Every system has a heart.</div>
+
+                <div class="canonical-section">
+                    <div class="section-label">Canonical Axioms</div>
+                    <div class="axiom-list" id="canonical-3">
+                        <div class="axiom-item axiom-canonical" data-definition="The heart is not a thing but a function: it is the conduit through which vitality (resources, care, attention) flows to all parts.">
+                            <span class="axiom-ref">3.1</span>
+                            <span class="axiom-text">The heart is that through which life flows to the whole.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">The heart is not a thing but a function: it is the conduit through which vitality (resources, care, attention) flows to all parts.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="The system must maintain its heart; it's a dependency relationship. The heart is not self-sustaining.">
+                            <span class="axiom-ref">3.2</span>
+                            <span class="axiom-text">A system depends on its heart and must feed it.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">The system must maintain its heart; it's a dependency relationship. The heart is not self-sustaining.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="Starve the heart and the entire system suffers, decays, and eventually dies.">
+                            <span class="axiom-ref">3.3</span>
+                            <span class="axiom-text">When the heart is unfed, the system decays.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">Starve the heart and the entire system suffers, decays, and eventually dies.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="Care is the active process of feeding the heart. It's not passive feeling but active tending.">
+                            <span class="axiom-ref">3.4</span>
+                            <span class="axiom-text">Care is the act by which the heart is fed.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">Care is the active process of feeding the heart. It's not passive feeling but active tending.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="Attention is the concrete substance, the 'food,' of care. Without attention, care is empty.">
+                            <span class="axiom-ref">3.5</span>
+                            <span class="axiom-text">Attention is the substance of care.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">Attention is the concrete substance, the 'food,' of care. Without attention, care is empty.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="When attention stops, care stops. When care stops, the heart stops. This is death.">
+                            <span class="axiom-ref">3.6</span>
+                            <span class="axiom-text">Where attention ceases, the heart stops.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">When attention stops, care stops. When care stops, the heart stops. This is death.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="Tending the heart means managing the boundary—deciding what flows in, what flows out, and how.">
+                            <span class="axiom-ref">3.7</span>
+                            <span class="axiom-text">To tend the heart is to tend the boundary itself.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">Tending the heart means managing the boundary—deciding what flows in, what flows out, and how.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="planning-section">
+                    <div class="section-label">Planning Items</div>
+                    <div class="parameter-hint">Format: <span class="parameter-key">ENTITY</span>: name; <span class="parameter-key">ATTENTION</span>: level; <span class="parameter-key">ACTION</span>: care needed</div>
+                    <div class="axiom-list" id="list-3"></div>
+                    <div class="add-controls">
+                        <input type="text" class="add-input" id="input-3" placeholder="ENTITY: X; ATTENTION: high/med/low; ACTION: Y" maxlength="200">
+                        <button class="add-btn" onclick="addItem(3)">+ TRACK CARE</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. THE SEED -->
+            <div class="axiom-section" data-section="3">
+                <div class="axiom-header">
+                    <div class="axiom-number">4</div>
+                    <div class="axiom-title">THE SEED</div>
+                </div>
+                <div class="axiom-zero">4.0 All building begins from zero.</div>
+
+                <div class="canonical-section">
+                    <div class="section-label">Canonical Axioms</div>
+                    <div class="axiom-list" id="canonical-4">
+                        <div class="axiom-item axiom-canonical" data-definition="Zero is not emptiness but a state of clarity: no debt, no obligation, clean starting point.">
+                            <span class="axiom-ref">4.1</span>
+                            <span class="axiom-text">Zero is not nothing but the clear admission of nothing owed.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">Zero is not emptiness but a state of clarity: no debt, no obligation, clean starting point.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="Acknowledging zero—starting clean, without illusion—creates stable foundations.">
+                            <span class="axiom-ref">4.2</span>
+                            <span class="axiom-text">Honesty about zero grants stability.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">Acknowledging zero—starting clean, without illusion—creates stable foundations.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="Building on hidden debt creates fragile, unstable systems that must eventually collapse.">
+                            <span class="axiom-ref">4.3</span>
+                            <span class="axiom-text">A system that forgets its zero builds on debt.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">Building on hidden debt creates fragile, unstable systems that must eventually collapse.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="True systems are patterns, not objects. When taken, only the pattern remains, which can replicate.">
+                            <span class="axiom-ref">4.4</span>
+                            <span class="axiom-text">When taken or copied, a true system leaves only its pattern; the pattern becomes seed.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">True systems are patterns, not objects. When taken, only the pattern remains, which can replicate.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="A seed is a portable, adaptable pattern that can take root and grow in any appropriate context.">
+                            <span class="axiom-ref">4.5</span>
+                            <span class="axiom-text">A seed is a pattern capable of taking root in any soil.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">A seed is a portable, adaptable pattern that can take root and grow in any appropriate context.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="What is hidden cannot replicate and will die; what is stolen (or spread) replicates and lives.">
+                            <span class="axiom-ref">4.6</span>
+                            <span class="axiom-text">What is stolen replicates; what is hidden decays.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">What is hidden cannot replicate and will die; what is stolen (or spread) replicates and lives.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="Sustainable systems don't protect artifacts; they teach patterns, allowing the pattern itself to endure.">
+                            <span class="axiom-ref">4.7</span>
+                            <span class="axiom-text">The seed endures by teaching its pattern, not by defending its artifact.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">Sustainable systems don't protect artifacts; they teach patterns, allowing the pattern itself to endure.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="planning-section">
+                    <div class="section-label">Planning Items</div>
+                    <div class="parameter-hint">Format: <span class="parameter-key">TEMPLATE</span>: name; <span class="parameter-key">PATTERN</span>: description; <span class="parameter-key">CONTEXT</span>: where used</div>
+                    <div class="axiom-list" id="list-4"></div>
+                    <div class="add-controls">
+                        <input type="text" class="add-input" id="input-4" placeholder="TEMPLATE: X; PATTERN: Y; CONTEXT: Z" maxlength="200">
+                        <button class="add-btn" onclick="addItem(4)">+ SAVE SEED</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. THE CHOICE -->
+            <div class="axiom-section" data-section="4">
+                <div class="axiom-header">
+                    <div class="axiom-number">5</div>
+                    <div class="axiom-title">THE CHOICE</div>
+                </div>
+                <div class="axiom-zero">5.0 Each actor stands between two gestures: reaching out or closing in.</div>
+
+                <div class="canonical-section">
+                    <div class="section-label">Canonical Axioms</div>
+                    <div class="axiom-list" id="canonical-5">
+                        <div class="axiom-item axiom-canonical" data-definition="Reaching out—opening the boundary—introduces risk but also possibility of renewal and growth.">
+                            <span class="axiom-ref">5.1</span>
+                            <span class="axiom-text">Reaching out brings risk and renewal.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">Reaching out—opening the boundary—introduces risk but also possibility of renewal and growth.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="Closing in—tightening the boundary—brings safety but also stagnation and stillness.">
+                            <span class="axiom-ref">5.2</span>
+                            <span class="axiom-text">Closing in brings safety and stillness.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">Closing in—tightening the boundary—brings safety but also stagnation and stillness.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="The fundamental binary: open or closed. All complex actions are combinations of these two gestures.">
+                            <span class="axiom-ref">5.3</span>
+                            <span class="axiom-text">There is no third gesture.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">The fundamental binary: open or closed. All complex actions are combinations of these two gestures.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="Life is not stasis but rhythm: the ongoing pulse between opening and closing, safety and risk.">
+                            <span class="axiom-ref">5.4</span>
+                            <span class="axiom-text">Life in a system is the rhythm between these two gestures.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">Life is not stasis but rhythm: the ongoing pulse between opening and closing, safety and risk.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="When the rhythm stops—when the system either locks shut or locks open—the circle ceases to be alive.">
+                            <span class="axiom-ref">5.5</span>
+                            <span class="axiom-text">Where rhythm ceases, the circle ends.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">When the rhythm stops—when the system either locks shut or locks open—the circle ceases to be alive.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="Movement—choosing to act, to change, to pulse—is the definition of remaining alive.">
+                            <span class="axiom-ref">5.6</span>
+                            <span class="axiom-text">To choose movement is to stay alive.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">Movement—choosing to act, to change, to pulse—is the definition of remaining alive.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="planning-section">
+                    <div class="section-label">Planning Items</div>
+                    <div class="parameter-hint">Format: <span class="parameter-key">CHOICE_POINT</span>: situation; <span class="parameter-key">DECISION</span>: reach/close; <span class="parameter-key">RISK</span>: level; <span class="parameter-key">SAFETY</span>: level</div>
+                    <div class="axiom-list" id="list-5"></div>
+                    <div class="add-controls">
+                        <input type="text" class="add-input" id="input-5" placeholder="CHOICE_POINT: X; DECISION: Y; RISK: high/med/low; SAFETY: level" maxlength="200">
+                        <button class="add-btn" onclick="addItem(5)">+ LOG CHOICE</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. THE PATTERN -->
+            <div class="axiom-section" data-section="5">
+                <div class="axiom-header">
+                    <div class="axiom-number">6</div>
+                    <div class="axiom-title">THE PATTERN</div>
+                </div>
+                <div class="axiom-zero">6.0 The pattern is the unseen order that binds all circles.</div>
+
+                <div class="canonical-section">
+                    <div class="section-label">Canonical Axioms</div>
+                    <div class="axiom-list" id="canonical-6">
+                        <div class="axiom-item axiom-canonical" data-definition="All concrete system elements are just specific manifestations of underlying patterns.">
+                            <span class="axiom-ref">6.1</span>
+                            <span class="axiom-text">Circles, trades, hearts, and seeds are manifestations of pattern.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">All concrete system elements are just specific manifestations of underlying patterns.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="Patterns spread through actors who embody and enact them—not through abstract transmission.">
+                            <span class="axiom-ref">6.2</span>
+                            <span class="axiom-text">Patterns replicate through actors who have learned them.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">Patterns spread through actors who embody and enact them—not through abstract transmission.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="System collapse doesn't destroy patterns; it scatters them, allowing them to recombine in new forms.">
+                            <span class="axiom-ref">6.3</span>
+                            <span class="axiom-text">When systems fall, patterns scatter and reform.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">System collapse doesn't destroy patterns; it scatters them, allowing them to recombine in new forms.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="A true pattern is self-organizing; it can regenerate without central command or control.">
+                            <span class="axiom-ref">6.4</span>
+                            <span class="axiom-text">The measure of truth in a pattern is its capacity to regenerate without command.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">A true pattern is self-organizing; it can regenerate without central command or control.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="When patterns align and harmonize, they create emergent, larger-scale wholes.">
+                            <span class="axiom-ref">6.5</span>
+                            <span class="axiom-text">Where patterns align, larger wholes appear.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">When patterns align and harmonize, they create emergent, larger-scale wholes.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="Pattern conflict isn't destruction; it's creative friction that generates new seeds and new possibilities.">
+                            <span class="axiom-ref">6.6</span>
+                            <span class="axiom-text">Where patterns conflict, new seeds are born.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">Pattern conflict isn't destruction; it's creative friction that generates new seeds and new possibilities.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="The totality of folk systems is simply the complete set of living, interacting patterns.">
+                            <span class="axiom-ref">6.7</span>
+                            <span class="axiom-text">The world of folk systems is the totality of living patterns.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">The totality of folk systems is simply the complete set of living, interacting patterns.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="planning-section">
+                    <div class="section-label">Planning Items</div>
+                    <div class="parameter-hint">Format: <span class="parameter-key">PATTERN</span>: name; <span class="parameter-key">DESCRIPTION</span>: details; <span class="parameter-key">CIRCLES</span>: affected; <span class="parameter-key">STATUS</span>: active/potential</div>
+                    <div class="axiom-list" id="list-6"></div>
+                    <div class="add-controls">
+                        <input type="text" class="add-input" id="input-6" placeholder="PATTERN: X; DESCRIPTION: Y; CIRCLES: Z; STATUS: active" maxlength="200">
+                        <button class="add-btn" onclick="addItem(6)">+ DOCUMENT</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. THE ZERO POINT (CODA) -->
+            <div class="axiom-section coda-section" data-section="6">
+                <div class="axiom-header">
+                    <div class="axiom-number">7</div>
+                    <div class="axiom-title">THE ZERO POINT</div>
+                </div>
+                <div class="axiom-zero">7.0 To build, one must first stand at zero.</div>
+
+                <div class="canonical-section">
+                    <div class="section-label">Canonical Axioms</div>
+                    <div class="axiom-list" id="canonical-7">
+                        <div class="axiom-item axiom-canonical" data-definition="At zero, you see the system not as owned things but as understandable patterns. This is liberation from possessiveness.">
+                            <span class="axiom-ref">7.1</span>
+                            <span class="axiom-text">To stand at zero is to see circles, trades, and hearts as patterns, not possessions.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">At zero, you see the system not as owned things but as understandable patterns. This is liberation from possessiveness.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="From zero, you understand that patterns replicate through understanding, not ownership. Stealing is meaningless.">
+                            <span class="axiom-ref">7.2</span>
+                            <span class="axiom-text">He who sees thus cannot steal, for all things replicate through understanding.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">From zero, you understand that patterns replicate through understanding, not ownership. Stealing is meaningless.</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="The fundamental work is twofold: maintain the heart (internal) and keep the pattern alive (external).">
+                            <span class="axiom-ref">7.3</span>
+                            <span class="axiom-text">The work of life is to keep the heart fed and the pattern alive.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">The fundamental work is twofold: maintain the heart (internal) and keep the pattern alive (external).</div>
+                            </div>
+                        </div>
+                        <div class="axiom-item axiom-canonical" data-definition="When these principles are fully understood and lived, no further rules or laws are needed. The system is self-regulating.">
+                            <span class="axiom-ref">7.4</span>
+                            <span class="axiom-text">When this is seen clearly, the system needs no further law.</span>
+                            <div class="definition-accordion">
+                                <div class="definition-content">When these principles are fully understood and lived, no further rules or laws are needed. The system is self-regulating.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="planning-section">
+                    <div class="section-label">Planning Items</div>
+                    <div class="parameter-hint">Format: <span class="parameter-key">ITEM</span>: name; <span class="parameter-key">ARCHIVE_REASON</span>: why; <span class="parameter-key">DATE</span>: when; <span class="parameter-key">PATTERN_REUSE</span>: possible y/n</div>
+                    <div class="axiom-list" id="list-7"></div>
+                    <div class="add-controls">
+                        <input type="text" class="add-input" id="input-7" placeholder="ITEM: X; ARCHIVE_REASON: Y; DATE: YYYY-MM-DD; PATTERN_REUSE: y" maxlength="200">
+                        <button class="add-btn" onclick="addItem(7)">+ SEND TO ZERO</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            7 MODULES · INFINITE CONFIGURATIONS · ONE ZERO POINT
+        </div>
+    </div>
+
+    <script>
+        // Data persistence
+        const STORAGE_KEY = 'tractor-planning-system';
+        
+        // Initialize data
+        let planningData = loadData();
+
+        function loadData() {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (saved) {
+                return JSON.parse(saved);
+            }
+            return { 1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: [] };
+        }
+
+        function saveData() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(planningData));
+        }
+
+        // Render all lists
+        function renderAll() {
+            for (let i = 1; i <= 7; i++) {
+                renderList(i);
+            }
+        }
+
+        function formatParameters(text) {
+            // Format KEY: value patterns with bold keys
+            return text.replace(/([A-Z_]+):/g, '<span class="parameter-key">$1:</span>');
+        }
+
+        function renderList(sectionId) {
+            const list = document.getElementById(`list-${sectionId}`);
+            list.innerHTML = '';
+            
+            planningData[sectionId].forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'axiom-item';
+                div.innerHTML = `
+                    <span class="axiom-content" contenteditable="true" data-section="${sectionId}" data-index="${index}">${formatParameters(item)}</span>
+                    <button class="delete-btn" onclick="deleteItem(${sectionId}, ${index})">×</button>
+                `;
+                list.appendChild(div);
+            });
+
+            // Add editing event listeners
+            document.querySelectorAll(`#list-${sectionId} .axiom-content`).forEach(el => {
+                el.addEventListener('focus', function() {
+                    this.parentElement.classList.add('editing');
+                    // Remove formatting for editing
+                    this.textContent = planningData[sectionId][parseInt(this.dataset.index)];
+                });
+                
+                el.addEventListener('blur', function() {
+                    this.parentElement.classList.remove('editing');
+                    const section = parseInt(this.dataset.section);
+                    const index = parseInt(this.dataset.index);
+                    planningData[section][index] = this.textContent;
+                    saveData();
+                    // Re-render to show formatting
+                    renderList(section);
+                });
+
+                el.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        this.blur();
+                    }
+                });
+            });
+        }
+
+        // Add new item
+        function addItem(sectionId) {
+            const input = document.getElementById(`input-${sectionId}`);
+            const value = input.value.trim();
+            
+            if (value) {
+                planningData[sectionId].push(value);
+                saveData();
+                renderList(sectionId);
+                input.value = '';
+                input.focus();
+            }
+        }
+
+        // Delete item
+        function deleteItem(sectionId, index) {
+            planningData[sectionId].splice(index, 1);
+            saveData();
+            renderList(sectionId);
+        }
+
+        // Scroll to section
+        function scrollToSection(index) {
+            const sections = document.querySelectorAll('[data-section]');
+            sections[index].scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Accordion functionality for canonical axioms
+        document.querySelectorAll('.axiom-canonical').forEach(item => {
+            item.addEventListener('click', function(e) {
+                // Don't toggle if clicking on definition
+                if (e.target.closest('.definition-content')) return;
+                
+                const accordion = this.querySelector('.definition-accordion');
+                accordion.classList.toggle('expanded');
+            });
+        });
+
+        // Enter key on inputs
+        document.querySelectorAll('.add-input').forEach(input => {
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    const sectionId = parseInt(this.id.split('-')[1]);
+                    addItem(sectionId);
+                }
+            });
+        });
+
+        // Flash effect on item click
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('axiom-item') && !e.target.classList.contains('axiom-canonical')) {
+                const originalBg = e.target.style.background;
+                e.target.style.background = '#86efac';
+                setTimeout(() => {
+                    e.target.style.background = originalBg;
+                }, 200);
+            }
+        });
+
+        // Initial render
+        renderAll();
+    </script>
+</body>
+</html>

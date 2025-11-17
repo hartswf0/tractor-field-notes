@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TRACTOR FOLKOLOGICUS — Formalized Comprehensive</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Courier New', monospace; background: #e8e4dc; color: #1a1a1a; overflow-x: hidden; }
+    .container { max-width: 1600px; margin: 0 auto; padding: 20px; }
+    header { background: #f5f3ed; border: 3px solid #1a1a1a; padding: 30px; margin-bottom: 20px; text-align: center; }
+    h1 { font-size: 42px; font-weight: bold; letter-spacing: 6px; margin-bottom: 10px; }
+    .subtitle { font-size: 14px; letter-spacing: 3px; color: #666; }
+
+    .pattern-overview { display: grid; grid-template-columns: repeat(8, 1fr); gap: 10px; margin: 20px 0; }
+    .pattern-tab { background: #f5f3ed; border: 3px solid #1a1a1a; padding: 12px 8px; text-align: center; cursor: pointer; transition: all .2s; font-size: 11px; font-weight: bold; letter-spacing: 1px; }
+    .pattern-tab:hover { background: #fff; transform: translateY(-2px); }
+    .pattern-tab.coda { background: #1a1a1a; color: #e8e4dc; }
+    .pattern-tab.ref { background: #cdeccf; }
+
+    .axiom-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 20px; }
+    .axiom-section { background: #f5f3ed; border: 3px solid #1a1a1a; padding: 20px; }
+    .axiom-header { display: flex; align-items: baseline; gap: 15px; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #1a1a1a; }
+    .axiom-number { font-size: 28px; font-weight: bold; letter-spacing: 2px; }
+    .axiom-title { font-size: 18px; font-weight: bold; letter-spacing: 4px; text-transform: uppercase; }
+    .axiom-zero { background: #1a1a1a; color: #e8e4dc; padding: 8px 10px; margin: 10px 0; font-size: 12px; font-weight: bold; }
+
+    .canonical-section { margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px dashed #1a1a1a; }
+    .section-label { font-size: 10px; letter-spacing: 2px; font-weight: bold; text-transform: uppercase; margin-bottom: 8px; color: #666; }
+
+    .axiom-list { display: grid; gap: 8px; }
+    .axiom-item { background: #e8e4dc; border: 2px solid #1a1a1a; padding: 8px 10px; font-size: 11px; display: flex; align-items: center; gap: 10px; }
+    .axiom-canonical { cursor: pointer; }
+    .axiom-canonical:hover { background: #fff; transform: translateX(2px); }
+    .axiom-ref { font-weight: bold; min-width: 35px; display: inline-block; }
+    .axiom-content { flex: 1; outline: none; }
+
+    .planning-section { margin-top: 16px; padding-top: 12px; border-top: 2px solid #1a1a1a; }
+    .add-controls { display: grid; gap: 8px; }
+    .add-input { font-family: 'Courier New', monospace; font-size: 11px; padding: 8px 10px; border: 2px solid #1a1a1a; background: #fff; outline: none; }
+    .add-input:focus { border-color: #666; }
+    .add-btn { font-family: 'Courier New', monospace; background: #1a1a1a; color: #e8e4dc; border: 2px solid #1a1a1a; padding: 8px; font-size: 11px; font-weight: bold; cursor: pointer; }
+    .add-btn:hover { background: #333; }
+
+    .coda-section { grid-column: 1 / -1; background: #1a1a1a; color: #e8e4dc; }
+    .coda-section .axiom-header { border-bottom-color: #e8e4dc; }
+    .coda-section .axiom-item { background: #2a2a2a; color: #e8e4dc; border-color: #666; }
+    .coda-section .axiom-zero { background: #e8e4dc; color: #1a1a1a; }
+
+    .corner-badge { position: fixed; top: 20px; right: 20px; background: #1a1a1a; color: #e8e4dc; padding: 8px 12px; border: 3px solid #1a1a1a; font-size: 12px; font-weight: bold; z-index: 100; }
+    .footer { background: #1a1a1a; color: #e8e4dc; border: 3px solid #1a1a1a; padding: 16px; text-align: center; font-size: 11px; letter-spacing: 2px; }
+
+    /* Modal */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.8); display: none; align-items: center; justify-content: center; padding: 20px; z-index: 1000; }
+    .modal-content { background: #f5f3ed; border: 3px solid #1a1a1a; max-width: 800px; width: 100%; max-height: 80vh; overflow-y: auto; }
+    .modal-header { background: #1a1a1a; color: #e8e4dc; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; }
+    .modal-title { font-size: 20px; font-weight: bold; letter-spacing: 1px; }
+    .modal-close { background: none; border: none; color: #e8e4dc; font-size: 24px; cursor: pointer; width: 30px; height: 30px; display: grid; place-items: center; }
+    .modal-close:hover { color: #86efac; }
+    .modal-body { padding: 16px; }
+    .modal-axiom-text { font-size: 16px; font-weight: bold; margin-bottom: 10px; }
+    .modal-axiom-definition { font-size: 14px; line-height: 1.6; padding: 12px; background: #e8e4dc; border-left: 4px solid #1a1a1a; }
+
+    .editing { background: #fff !important; box-shadow: 0 0 0 2px #1a1a1a inset; }
+    .coda-section .editing { background: #3a3a3a !important; box-shadow: 0 0 0 2px #86efac inset; }
+
+    /* Currency legend (2.21) */
+    .currency-legend { display: grid; gap: 16px; font-size: 13px; }
+    .currency-grid { display: grid; gap: 10px; grid-template-columns: 1fr; }
+    @media (min-width: 720px) { .currency-grid { grid-template-columns: 1fr 1fr; } }
+    .currency-card { border: 2px solid #1a1a1a; background: #fdfaf2; padding: 10px; }
+
+    /* Formal spec (1) */
+    .formal-spec { font-size: 10px; line-height: 1.5; background: #e8e4dc; border: 2px solid #1a1a1a; padding: 10px; white-space: pre; overflow-x: auto; }
+
+    /* Reference */
+    .reference-section { background: #f5f3ed; border: 3px solid #1a1a1a; padding: 20px; margin: 20px 0; }
+    .reference-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 10px; }
+    .reference-title { font-size: 16px; font-weight: bold; letter-spacing: 3px; text-transform: uppercase; }
+    .reference-controls { display: flex; gap: 8px; margin-bottom: 10px; }
+    .reference-pre { background: #fffdf7; border: 2px dashed #1a1a1a; padding: 12px; font-family: Georgia, 'Times New Roman', serif; font-size: 14px; line-height: 1.6; white-space: pre-wrap; max-height: 60vh; overflow: auto; }
+
+    @media (max-width: 1200px) { .axiom-grid { grid-template-columns: 1fr; } .coda-section { grid-column: 1; } }
+    @media (max-width: 768px) { h1 { font-size: 30px; letter-spacing: 3px; } .pattern-overview { grid-template-columns: repeat(2, 1fr); } .axiom-section { padding: 15px; } .modal-content { max-height: 90vh; } }
+  </style>
+  <base target="_blank" />
+</head>
+<body>
+  <div class="corner-badge">PLAN v1.1</div>
+  <div class="container">
+    <header>
+      <h1>TRACTOR FOLKOLOGICUS</h1>
+      <div class="subtitle">MODULAR PLANNING SYSTEM · FORMALIZED + COMPREHENSIVE</div>
+    </header>
+
+    <div class="pattern-overview">
+      <div class="pattern-tab" onclick="scrollToSection(0)"><div>1</div><div>CIRCLE</div></div>
+      <div class="pattern-tab" onclick="scrollToSection(1)"><div>2</div><div>TRADE</div></div>
+      <div class="pattern-tab" onclick="scrollToSection(2)"><div>3</div><div>HEART</div></div>
+      <div class="pattern-tab" onclick="scrollToSection(3)"><div>4</div><div>SEED</div></div>
+      <div class="pattern-tab" onclick="scrollToSection(4)"><div>5</div><div>CHOICE</div></div>
+      <div class="pattern-tab" onclick="scrollToSection(5)"><div>6</div><div>PATTERN</div></div>
+      <div class="pattern-tab coda" onclick="scrollToSection(6)"><div>7</div><div>ZERO</div></div>
+      <div class="pattern-tab ref" onclick="scrollToReference()"><div>REF</div><div>GUIDE</div></div>
+    </div>
+
+    <div class="axiom-grid">
+      <!-- 1. THE CIRCLE -->
+      <div class="axiom-section" data-section="0">
+        <div class="axiom-header"><div class="axiom-number">1</div><div class="axiom-title">THE CIRCLE</div></div>
+        <div class="axiom-zero">1.0 The world of a system is bounded.</div>
+        <div class="canonical-section">
+          <div class="section-label">Canonical Axioms</div>
+          <div class="axiom-list" id="canonical-1">
+            <div class="axiom-item axiom-canonical" data-definition="A boundary is the fundamental act of creation in any system. It separates inside from outside, establishing identity."><span class="axiom-ref">1.1</span>A boundary drawn is a circle.</div>
+            <div class="axiom-item axiom-canonical" data-definition="This is the primary duality of all systems: Us vs. Them. The boundary creates identity and otherness."><span class="axiom-ref">1.2</span>What lies inside the circle is called Us; what lies outside is called Them.</div>
+            <div class="axiom-item axiom-canonical" data-definition="Every entity must exist within some boundary to have identity. No thing can exist nowhere."><span class="axiom-ref">1.3</span>Every entity belongs to at least one circle.</div>
+            <div class="axiom-item axiom-canonical" data-definition="To exist outside all circles is to have no boundary, no identity, no perception. It is imperceptible."><span class="axiom-ref">1.31</span>To exist outside all circles is to be unperceived.</div>
+            <div class="axiom-item axiom-canonical" data-definition="Multiplicity of roles comes from multiplicity of circle membership. Each circle is a different context."><span class="axiom-ref">1.32</span>To exist in many circles is to play many roles.</div>
+            <div class="axiom-item axiom-canonical" data-definition="A strong circle has both clear identity (boundary) and healthy exchange (flow). Too rigid or too porous fails."><span class="axiom-ref">1.4</span>The strength of a circle lies in the clarity of its boundary and the flow that crosses it.</div>
+            <div class="axiom-item axiom-canonical" data-definition="A closed system, without new input, becomes stagnant and loses vitality. It hollows out."><span class="axiom-ref">1.5</span>A circle that admits nothing new becomes hollow.</div>
+            <div class="axiom-item axiom-canonical" data-definition="Without a boundary, there is no identity. The circle ceases to exist as a distinct entity."><span class="axiom-ref">1.6</span>A circle that loses its boundary dissolves.</div>
+            <div class="axiom-item axiom-canonical" data-definition="Healthy systems pulse: they close to maintain identity, then open to exchange and renew."><span class="axiom-ref">1.7</span>The living circle alternates between closing and opening.</div>
+          </div>
+        </div>
+        <div class="canonical-section">
+          <div class="section-label">Formalization – Axiom 1 (Circle)</div>
+          <pre class="formal-spec">1.0 &lt;World&gt; [of] &lt;System&gt; [is-in-state] &lt;Bounded&gt;.
+1.1 &lt;Boundary&gt; [that-is] [drawn] [counts-as] &lt;Circle&gt;.
+1.2a &lt;Entity&gt; [that-lies-in] &lt;Inside-Region&gt; [of] &lt;Circle&gt; [is-labeled] &lt;Us&gt;.
+1.2b &lt;Entity&gt; [that-lies-in] &lt;Outside-Region&gt; [of] &lt;Circle&gt; [is-labeled] &lt;Them&gt;.
+1.3 &lt;Every-Entity&gt; [belongs-to-at-least-one] &lt;Circle&gt;.
+1.31 &lt;Entity&gt; [that-exists-in] &lt;Outside-Region&gt; [of] &lt;All-Circles&gt; [is-in-state] &lt;Unperceived&gt;.
+1.32 &lt;Entity&gt; [that-exists-in] &lt;Many-Circles&gt; [plays] &lt;Many-Roles&gt;.
+1.4 &lt;Strength&gt; [of] &lt;Circle&gt; [lies-in] { &lt;Clarity&gt; [of] &lt;Boundary&gt;, &lt;Flow&gt; [that-crosses] &lt;Boundary&gt; }.
+1.5 &lt;Circle&gt; [that-admits] &lt;Nothing-New&gt; [enters-state] &lt;Hollow&gt;.
+1.6 &lt;Circle&gt; [that-loses] &lt;Its-Boundary&gt; [dissolves-into] &lt;Dissolved-State&gt;.
+1.7 &lt;Living-Circle&gt; [alternates-between] { &lt;Closing&gt;, &lt;Opening&gt; }.</pre>
+        </div>
+        <div class="planning-section">
+          <div class="section-label">Planning Items</div>
+          <div class="axiom-list" id="list-1"></div>
+          <div class="add-controls">
+            <input class="add-input" id="input-1" placeholder="PROJECT NAME: BOUNDARY DEFINITION" maxlength="100" />
+            <button class="add-btn" onclick="addItem(1)">+ ADD CIRCLE</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. THE TRADE -->
+      <div class="axiom-section" data-section="1">
+        <div class="axiom-header"><div class="axiom-number">2</div><div class="axiom-title">THE TRADE</div></div>
+        <div class="axiom-zero">2.0 Nothing moves without exchange.</div>
+        <div class="canonical-section">
+          <div class="section-label">Canonical Axioms</div>
+          <div class="axiom-list" id="canonical-2">
+            <div class="axiom-item axiom-canonical" data-definition="Exchange is movement. To give is to change your position in the relationship; to receive is to allow that change."><span class="axiom-ref">2.1</span>To receive is to give; to give is to change position in the circle.</div>
+            <div class="axiom-item axiom-canonical" data-definition="All access, all movement across boundaries, has a cost. Nothing is free."><span class="axiom-ref">2.2</span>Every access has a price.</div>
+            <div class="axiom-item axiom-canonical" data-definition="Price is paid in voice, memory, heart, choice, name, and a local sixth." data-is-currency-legend="true"><span class="axiom-ref">2.21</span>The price is paid in voice, memory, heart, choice, name, and one more thing yet unnamed.</div>
+            <div class="axiom-item axiom-canonical" data-definition="Trade seeks equilibrium. When balance is disturbed, movement occurs to restore it."><span class="axiom-ref">2.3</span>Trade creates balance; imbalance creates motion.</div>
+            <div class="axiom-item axiom-canonical" data-definition="Unpaid debts break boundaries, creating new circles within the original."><span class="axiom-ref">2.4</span>Unpaid exchange breaks the circle and multiplies new circles.</div>
+            <div class="axiom-item axiom-canonical" data-definition="Value resides in the pattern of making, not in the traded thing."><span class="axiom-ref">2.5</span>Value does not rest in the thing traded but in the pattern of its making.</div>
+            <div class="axiom-item axiom-canonical" data-definition="Patterns are knowledge; they can be learned, not stolen."><span class="axiom-ref">2.6</span>The pattern cannot be stolen; it can only be learned.</div>
+            <div class="axiom-item axiom-canonical" data-definition="All economy is coordinated movement and positioning—choreography."><span class="axiom-ref">2.7</span>All economy is choreography.</div>
+          </div>
+        </div>
+        <div class="planning-section">
+          <div class="section-label">Planning Items</div>
+          <div class="axiom-list" id="list-2"></div>
+          <div class="add-controls">
+            <input class="add-input" id="input-2" placeholder="RESOURCE: FROM → TO" maxlength="100" />
+            <button class="add-btn" onclick="addItem(2)">+ LOG EXCHANGE</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. THE HEART -->
+      <div class="axiom-section" data-section="2">
+        <div class="axiom-header"><div class="axiom-number">3</div><div class="axiom-title">THE HEART</div></div>
+        <div class="axiom-zero">3.0 Every system has a heart.</div>
+        <div class="canonical-section">
+          <div class="section-label">Canonical Axioms</div>
+          <div class="axiom-list" id="canonical-3">
+            <div class="axiom-item axiom-canonical" data-definition="A conduit through which vitality flows to the whole."><span class="axiom-ref">3.1</span>The heart is that through which life flows to the whole.</div>
+            <div class="axiom-item axiom-canonical" data-definition="A system depends on its heart and must feed it."><span class="axiom-ref">3.2</span>A system depends on its heart and must feed it.</div>
+            <div class="axiom-item axiom-canonical" data-definition="When the heart is unfed, the system decays."><span class="axiom-ref">3.3</span>When the heart is unfed, the system decays.</div>
+            <div class="axiom-item axiom-canonical" data-definition="Care is the act by which the heart is fed."><span class="axiom-ref">3.4</span>Care is the act by which the heart is fed.</div>
+            <div class="axiom-item axiom-canonical" data-definition="Attention is the substance of care."><span class="axiom-ref">3.5</span>Attention is the substance of care.</div>
+            <div class="axiom-item axiom-canonical" data-definition="Where attention ceases, the heart stops."><span class="axiom-ref">3.6</span>Where attention ceases, the heart stops.</div>
+            <div class="axiom-item axiom-canonical" data-definition="To tend the heart is to tend the boundary itself."><span class="axiom-ref">3.7</span>To tend the heart is to tend the boundary itself.</div>
+          </div>
+        </div>
+        <div class="planning-section">
+          <div class="section-label">Planning Items</div>
+          <div class="axiom-list" id="list-3"></div>
+          <div class="add-controls">
+            <input class="add-input" id="input-3" placeholder="ENTITY: ATTENTION LEVEL" maxlength="100" />
+            <button class="add-btn" onclick="addItem(3)">+ TRACK CARE</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. THE SEED -->
+      <div class="axiom-section" data-section="3">
+        <div class="axiom-header"><div class="axiom-number">4</div><div class="axiom-title">THE SEED</div></div>
+        <div class="axiom-zero">4.0 All building begins from zero.</div>
+        <div class="canonical-section">
+          <div class="section-label">Canonical Axioms</div>
+          <div class="axiom-list" id="canonical-4">
+            <div class="axiom-item axiom-canonical" data-definition="Zero is not nothing but the clear admission of nothing owed."><span class="axiom-ref">4.1</span>Zero is not nothing but the clear admission of nothing owed.</div>
+            <div class="axiom-item axiom-canonical" data-definition="Honesty about zero grants stability."><span class="axiom-ref">4.2</span>Honesty about zero grants stability.</div>
+            <div class="axiom-item axiom-canonical" data-definition="A system that forgets its zero builds on debt."><span class="axiom-ref">4.3</span>A system that forgets its zero builds on debt.</div>
+            <div class="axiom-item axiom-canonical" data-definition="When taken or copied, a true system leaves only its pattern; the pattern becomes seed."><span class="axiom-ref">4.4</span>When taken or copied, a true system leaves only its pattern; the pattern becomes seed.</div>
+            <div class="axiom-item axiom-canonical" data-definition="A seed is a pattern capable of taking root in any soil."><span class="axiom-ref">4.5</span>A seed is a pattern capable of taking root in any soil.</div>
+            <div class="axiom-item axiom-canonical" data-definition="What is stolen replicates; what is hidden decays."><span class="axiom-ref">4.6</span>What is stolen replicates; what is hidden decays.</div>
+            <div class="axiom-item axiom-canonical" data-definition="The seed endures by teaching its pattern, not by defending its artifact."><span class="axiom-ref">4.7</span>The seed endures by teaching its pattern, not by defending its artifact.</div>
+          </div>
+        </div>
+        <div class="planning-section">
+          <div class="section-label">Planning Items</div>
+          <div class="axiom-list" id="list-4"></div>
+          <div class="add-controls"><input class="add-input" id="input-4" placeholder="TEMPLATE NAME: PATTERN" maxlength="100" /><button class="add-btn" onclick="addItem(4)">+ SAVE SEED</button></div>
+        </div>
+      </div>
+
+      <!-- 5. THE CHOICE -->
+      <div class="axiom-section" data-section="4">
+        <div class="axiom-header"><div class="axiom-number">5</div><div class="axiom-title">THE CHOICE</div></div>
+        <div class="axiom-zero">5.0 Each actor stands between two gestures: reaching out or closing in.</div>
+        <div class="canonical-section">
+          <div class="section-label">Canonical Axioms</div>
+          <div class="axiom-list" id="canonical-5">
+            <div class="axiom-item axiom-canonical" data-definition="Reaching out brings risk and renewal."><span class="axiom-ref">5.1</span>Reaching out brings risk and renewal.</div>
+            <div class="axiom-item axiom-canonical" data-definition="Closing in brings safety and stillness."><span class="axiom-ref">5.2</span>Closing in brings safety and stillness.</div>
+            <div class="axiom-item axiom-canonical" data-definition="There is no third gesture."><span class="axiom-ref">5.3</span>There is no third gesture.</div>
+            <div class="axiom-item axiom-canonical" data-definition="Life in a system is the rhythm between these two gestures."><span class="axiom-ref">5.4</span>Life in a system is the rhythm between these two gestures.</div>
+            <div class="axiom-item axiom-canonical" data-definition="Where rhythm ceases, the circle ends."><span class="axiom-ref">5.5</span>Where rhythm ceases, the circle ends.</div>
+            <div class="axiom-item axiom-canonical" data-definition="To choose movement is to stay alive."><span class="axiom-ref">5.6</span>To choose movement is to stay alive.</div>
+          </div>
+        </div>
+        <div class="planning-section">
+          <div class="section-label">Planning Items</div>
+          <div class="axiom-list" id="list-5"></div>
+          <div class="add-controls"><input class="add-input" id="input-5" placeholder="CHOICE POINT: DECISION" maxlength="100" /><button class="add-btn" onclick="addItem(5)">+ LOG CHOICE</button></div>
+        </div>
+      </div>
+
+      <!-- 6. THE PATTERN -->
+      <div class="axiom-section" data-section="5">
+        <div class="axiom-header"><div class="axiom-number">6</div><div class="axiom-title">THE PATTERN</div></div>
+        <div class="axiom-zero">6.0 The pattern is the unseen order that binds all circles.</div>
+        <div class="canonical-section">
+          <div class="section-label">Canonical Axioms</div>
+          <div class="axiom-list" id="canonical-6">
+            <div class="axiom-item axiom-canonical" data-definition="Circles, trades, hearts, and seeds are manifestations of pattern."><span class="axiom-ref">6.1</span>Circles, trades, hearts, and seeds are manifestations of pattern.</div>
+            <div class="axiom-item axiom-canonical" data-definition="Patterns replicate through actors who have learned them."><span class="axiom-ref">6.2</span>Patterns replicate through actors who have learned them.</div>
+            <div class="axiom-item axiom-canonical" data-definition="When systems fall, patterns scatter and reform."><span class="axiom-ref">6.3</span>When systems fall, patterns scatter and reform.</div>
+            <div class="axiom-item axiom-canonical" data-definition="The measure of truth in a pattern is its capacity to regenerate without command."><span class="axiom-ref">6.4</span>The measure of truth in a pattern is its capacity to regenerate without command.</div>
+            <div class="axiom-item axiom-canonical" data-definition="Where patterns align, larger wholes appear."><span class="axiom-ref">6.5</span>Where patterns align, larger wholes appear.</div>
+            <div class="axiom-item axiom-canonical" data-definition="Where patterns conflict, new seeds are born."><span class="axiom-ref">6.6</span>Where patterns conflict, new seeds are born.</div>
+            <div class="axiom-item axiom-canonical" data-definition="The world of folk systems is the totality of living patterns."><span class="axiom-ref">6.7</span>The world of folk systems is the totality of living patterns.</div>
+          </div>
+        </div>
+        <div class="planning-section">
+          <div class="section-label">Planning Items</div>
+          <div class="axiom-list" id="list-6"></div>
+          <div class="add-controls"><input class="add-input" id="input-6" placeholder="PATTERN NAME: DESCRIPTION" maxlength="100" /><button class="add-btn" onclick="addItem(6)">+ DOCUMENT</button></div>
+        </div>
+      </div>
+
+      <!-- 7. THE ZERO POINT -->
+      <div class="axiom-section coda-section" data-section="6">
+        <div class="axiom-header"><div class="axiom-number">7</div><div class="axiom-title">THE ZERO POINT</div></div>
+        <div class="axiom-zero">7.0 To build, one must first stand at zero.</div>
+        <div class="canonical-section">
+          <div class="section-label">Canonical Axioms</div>
+          <div class="axiom-list" id="canonical-7">
+            <div class="axiom-item axiom-canonical" data-definition="To stand at zero is to see circles, trades, and hearts as patterns, not possessions."><span class="axiom-ref">7.1</span>To stand at zero is to see circles, trades, and hearts as patterns, not possessions.</div>
+            <div class="axiom-item axiom-canonical" data-definition="He who sees thus cannot steal, for all things replicate through understanding."><span class="axiom-ref">7.2</span>He who sees thus cannot steal, for all things replicate through understanding.</div>
+            <div class="axiom-item axiom-canonical" data-definition="The work of life is to keep the heart fed and the pattern alive."><span class="axiom-ref">7.3</span>The work of life is to keep the heart fed and the pattern alive.</div>
+            <div class="axiom-item axiom-canonical" data-definition="When this is seen clearly, the system needs no further law."><span class="axiom-ref">7.4</span>When this is seen clearly, the system needs no further law.</div>
+          </div>
+        </div>
+        <div class="planning-section">
+          <div class="section-label">Planning Items</div>
+          <div class="axiom-list" id="list-7"></div>
+          <div class="add-controls"><input class="add-input" id="input-7" placeholder="ITEM: REASON FOR ARCHIVE" maxlength="100" /><button class="add-btn" onclick="addItem(7)">+ SEND TO ZERO</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">7 MODULES · INFINITE CONFIGURATIONS · ONE ZERO POINT</div>
+
+    <!-- Comprehensive Reference -->
+    <section id="reference" class="reference-section">
+      <div class="reference-header"><div class="axiom-number">REF</div><div class="reference-title">COMPREHENSIVE AXIOM FRAMEWORK</div></div>
+      <div class="reference-controls">
+        <button class="add-btn" onclick="loadReference()">Load Full Reference</button>
+        <button class="add-btn" onclick="clearReference()">Clear</button>
+      </div>
+      <pre id="reference-pre" class="reference-pre">Reference not loaded. Click "Load Full Reference" to insert the comprehensive essay and bibliography.</pre>
+    </section>
+  </div>
+
+  <!-- Inline Reference: Axiom Explanations and Context (non-rendered, used by loader) -->
+  <script type="text/plain" id="explanations-inline">
+Tractor Folkologicus: Axiom Explanations and Context
+
+### 1. The Circle
+
+1.1 A boundary drawn is a circle. Every system is defined by a boundary separating it from its environment. Drawing a boundary is the fundamental act that creates identity – it delineates “inside” vs. “outside”. As systems theorists note, “Boundaries are critical in establishing the identity of the system”. In other words, the moment we draw a circle (boundary), we establish what the system is (inside) and what it is not (outside). This initial separation is the birth of any entity as a distinct thing.
+
+1.2 What lies inside the circle is called Us; what lies outside is called Them. By defining an inside, we implicitly create an outside. This is the root of the Us vs. Them dichotomy – the primary duality that emerges from any boundary. Psychology confirms that people instinctively sort themselves and others into in-groups (“us”) and out-groups (“them”) based on group boundaries. The mere act of dividing the world by a circle creates a sense of identity for those within and otherness for those without. As one social identity scholar put it, “we divided the world into ‘them’ and ‘us’… the in-group (us) and out-group (them)”. This divisive perception is a natural consequence of any boundary drawing.
+
+1.3 Every entity belongs to at least one circle. Nothing exists in total isolation – to exist is to be contextualized within some boundary or system. In systems thinking, every part is simultaneously a whole in itself and part of a larger whole. Arthur Koestler coined the term “holon” for such entities, noting that “everything is both a whole and a part of a larger system”. Even a person (“whole”) exists within circles like family, community, or society. As the poet John Donne famously wrote, “No man is an island, entire of itself; every man is a piece of the continent”. In short, every entity is encircled by context – at least one “Us” that it’s part of.
+
+1.31 To exist outside all circles is to be unperceived. If something truly fell outside every boundary – belonging to no context or system – it would be effectively invisible and without identity. Philosophers argue that an entity with no interaction or relationship (no circle) might as well not exist from our perspective. “If something [were] unobservable in principle… it would have no effect on us… though it would exist, it would be as if it didn’t”. In practical terms, anything completely outside of any circle has no observers or connections to give it meaning – it is imperceptible. Thus, being in at least one circle is a prerequisite for being noticed or known at all.
+
+1.32 To exist in many circles is to play many roles. Membership in multiple circles means an entity will have different identities in each context – like an individual who is a parent at home, an employee at work, and a citizen in society. Social science observes that we all “wear many different hats” in life, switching personas as we move between groups. Each circle provides a distinct role and set of expectations. A person belonging to several circles will thus juggle multiple roles (e.g. leader in one circle, follower in another). The more circles you belong to, the more contexts you have to navigate – and with each context comes a different role or facet of identity. Far from being one-dimensional, such an entity is multifaceted by virtue of its many circle memberships.
+
+1.4 The strength of a circle lies in the clarity of its boundary and the flow that crosses it. A healthy system has clear identity and open exchange. A boundary must be well-defined enough to maintain the system’s integrity, yet permeable enough to allow fresh inputs and outputs. If a boundary is too rigid (totally closed), the system stagnates; if too diffuse (totally open), the system loses distinct identity. Family therapist Salvador Minuchin noted that dysfunctional families often have boundaries that are either too rigid or too enmeshed – both extremes cause breakdown. By contrast, clear but flexible boundaries create strong systems. Biologically, an organism’s cell membrane illustrates this principle: it clearly defines the cell, but is semi-permeable to let nutrients in and waste out. As General Systems Theory founder Ludwig von Bertalanffy explained, “A system must have a clear boundary that separates it from its environment” yet living systems also continuously exchange matter and energy with their surroundings to survive. In short, a circle’s vitality comes from both its firm sense of self and the dynamic flow across its border. Research on family systems echoes this: clear, well-managed boundaries with regular exchange lead to a resilient system, whereas “disengagement (too rigid boundaries) and enmeshment (too flexible boundaries) are two extremes that lead to dysfunction”.
+
+1.5 A circle that admits nothing new becomes hollow. A closed system that refuses all outside input will eventually wither from within. Without new information, resources, or members, the system’s internal energy depletes over time. In thermodynamics, an isolated (closed) system inexorably increases in entropy (disorder) and loses useful energy – a metaphorical “hollowing out.” Similarly, in human organizations or communities, lack of fresh ideas and people leads to stagnation. As business leader Ray Kroc quipped, “When you’re green, you’re growing; when you’re ripe, you rot.” This pithy proverb captures the danger of complacent closure: a system that thinks it’s “fully ripe” and stops taking in anything new will decay (rot) from the inside. Continuous renewal is needed to avoid this fate. Indeed, growth and adaptation are the only antidotes to obsolescence – change is life. Histories of once-great organizations often show that when they shut themselves off to new influences, they enter a decline. In short, no new input, no vitality – a circle sealed against the new becomes an empty shell over time.
+
+1.6 A circle that loses its boundary dissolves. If a system’s boundary disappears entirely, the system itself ceases to exist as a distinct entity. The boundary is what gives a circle its form – without it, the contents scatter or merge into the environment. For example, if a living cell’s membrane ruptures, the cell’s contents spill out and it dies; the cell is literally dissolved into its surroundings. Biologically, loss of membrane integrity is a hallmark of necrotic cell death, where the cell’s identity is destroyed as its insides diffuse outward. Likewise, if a community or organization has no defining boundaries (no shared identity or structure), it will not function as a unit – it breaks apart or blends into other groups. The boundary need not be physical; it can be a clear mission, membership criteria, or cultural norm – but something must delineate the circle. Without any defining boundary, an entity cannot maintain itself. Thus, losing all boundaries means losing the self: the circle “dissolves” into the larger context and is no longer a circle at all.
+
+1.7 The living circle alternates between closing and opening. Healthy systems pulse – they contract inward at times (for stability) and expand outward at others (for exchange). This rhythmic alternation is the key to maintaining both identity and growth. Think of a beating heart: it closes (contracts) to pump blood out, then opens (relaxes) to refill – a continuous cycle of in-and-out that sustains life. Or consider breathing: we inhale (taking in from outside) and exhale (releasing from inside) in steady rhythm. A similar pulse occurs in thriving communities or organizations: periods of consolidation and introspection followed by periods of engagement and innovation. A good boundary, in fact, acts like a gate that can open or close intentionally. As one counselor put it, “A good boundary isn’t a wall. It’s a gate – something you open and close with intention, based on safety [and] energy”. In practice, this means a living circle knows when to tighten up (protect its core) and when to open up (allow exchange). Continuous openness or perpetual closedness are both unhealthy extremes. Life happens in the oscillation: the heart beating, the lung breathing, the group periodically welcoming new influences and then integrating them. This dynamic rhythm of boundary-play is essential – it’s how the system stays both secure and responsive. When a circle loses this rhythm (locking itself fully or falling completely apart), it loses the hallmark of life: movement and change.
+
+### 2. The Trade
+
+2.1 To receive is to give; to give is to change position in the circle. Every exchange is a two-way street. When you receive something from the circle (support, resources, recognition), you incur an obligation – you give back in response, even if indirectly. Likewise, any act of giving shifts your status or relationship within the system. Anthropologists have long observed that gift exchanges bind people in mutual obligations: accepting a gift means you owe a return gift. Marcel Mauss famously noted that in gift-giving cultures, “the objects are never completely separated from the men who exchange them” – a piece of the giver’s identity travels with the gift. Thus, to receive is also to give something of oneself (e.g. gratitude, debt, loyalty). Conversely, to give is to alter one’s standing. In social terms, giving can elevate one’s status or shift the power dynamic. The exchange literally moves people’s positions relative to one another. In economic terms, any voluntary trade rearranges who has what – changing the participants’ positions in the network of value. In sum, exchange is movement: giving and receiving are complementary acts that together reconfigure relationships. When you give, you aren’t just handing over a thing – you are changing your position in the circle (perhaps gaining influence, or relinquishing claim). And when you receive, you implicitly give back (by indebtedness or reciprocation) and thus also shift your position. Exchange is never one-directional; it always involves a relational repositioning within the circle’s dance.
+
+2.2 Every access has a price. Nothing is truly free – entry into a circle or use of a resource always carries some cost, visible or not. This principle is often summarized by the adage “There ain’t no such thing as a free lunch”. Economically, if something is provided at zero monetary cost, you are likely paying in another coin (your time, attention, data, goodwill, etc.). A classic example is “free” online services where users pay by giving up personal data and attention to ads – “if you’re not paying for the product, you are the product”. In general, accessing any circle’s benefits means you must give something in return (effort, loyalty, information, etc.) – a principle rooted in reciprocity and resource balance. Physics even echoes this truth: any transfer of energy or matter has an associated cost (entropy increase elsewhere, for instance). The bottom line is that nothing moves without exchange. As one formulation states, TANSTAAFL – “You can’t get something for nothing”. If the price isn’t immediately obvious, it’s likely hidden or distributed, but it’s there. Recognizing these “prices” (which may be intangible) is crucial. Whether it’s the emotional energy spent maintaining a relationship or the opportunity cost of a decision, every gain requires some give. Healthy systems acknowledge and manage these costs rather than pretending they don’t exist.
+
+2.21 The price is paid in voice, memory, heart, choice, name, and one more thing yet unnamed. Not all currencies are monetary. In human circles especially, we “pay” for access or favors in subtle, intangible ways. This axiom lists six metaphorical currencies: voice, memory, heart, choice, name, and an unnamed sixth. These represent things like: Voice – your ability to speak or be heard (e.g. one might sacrifice their voice/opinion for inclusion). Memory – your history or story (e.g. access might cost sharing personal history or inheriting historical debts). Heart – your care or emotional commitment (we pay with loyalty or love). Choice – your autonomy or agency (joining a strict circle might cost some personal freedom). Name – your identity or reputation (you might give your name/endorsement, or risk your good name). These intangible payments are often the real currency of social exchange. For example, using a “free” social network costs you privacy and attention – pieces of your memory and focus. A mentorship might be “paid” with gratitude and continued loyalty (heart). Even the simple act of listening can be a form of payment in attention. As Simone Weil observed, “Attention is the rarest and purest form of generosity” – meaning giving someone your attention (focus of heart and mind) is itself a valuable gift. In short, exchanges may be settled in non-material currencies: influence, goodwill, commitment, knowledge, and so on. Wise circles recognize these subtle currencies. For instance, trust and reputation (name) are often valued more than money in tight-knit communities. The “one more thing yet unnamed” hints that there’s always some elusive value (perhaps dignity or soul) that also plays a role. The key point: whenever something flows into a circle, some form of value flows back out – be it voice, memory, heart, choice, name, or another subtle asset.
+
+2.3 Trade creates balance; imbalance creates motion. Exchange is fundamentally about restoring equilibrium. When one part of a system has a surplus and another a deficit, trade (movement of goods, energy, etc.) tends to occur until balance is achieved. In physics, this is seen in diffusion or water flow: if one side of a U-tube has extra water, water will flow to the other side “until the levels equalize and equilibrium is reached”. In economics, if a commodity is scarce in one region and abundant in another, market forces encourage it to flow to where it’s scarce (through trade or price changes) until a balance (price equilibrium) is found. Thus imbalance drives motion. As long as there’s a gradient or disparity, there is a motive force for exchange. Conversely, when exchange successfully equalizes the imbalance, movement slows or stops (equilibrium). A simple example: consider temperature difference (imbalance) causing heat flow – once both objects reach the same temperature, heat flow stops. Likewise, in a circle, if one member has an unmet need and another has a surplus, that tension prompts a trade (of help, goods, etc.) to balance the scales. Classical economists like Adam Smith and later thinkers described how trade and price mechanisms act as a choreography finding equilibrium in markets. The essence is captured by Le Chatelier’s principle in chemistry and by the invisible hand in economics: any disturbance from balance induces flows or reactions that seek to counteract it. A circle naturally “wants” internal balances – stable relationships – and trade is the process by which it corrects imbalances. Thus, whenever you see movement or exchange, look for the underlying imbalance it addresses. And whenever a system is out of balance, expect movement as the response. Trade is balance-seeking motion.
+
+2.4 Unpaid exchange breaks the circle and multiplies new circles. When obligations are not met – when a debt of exchange is left unpaid – it undermines the integrity of the original circle. Unresolved transactions create rifts or factions. For example, if in a community one party never reciprocates help or violates the norm of fair exchange, trust is broken. The result is often that the community splinters: some members form a new circle (a clique or splinter group) because the original social bond was betrayed. In anthropological terms, failing to reciprocate a gift was historically a serious breach that could lead to ostracism or feud. Mauss noted that “not acting on [the obligation to reciprocate] results in loss of honour and status”, effectively pushing the offending party out of the circle. That vacuum or conflict can then cause new alliances (new circles) to form as people regroup. We see this pattern everywhere: an unpaid debt in a business partnership can break the partnership, each partner then forming separate ventures. A betrayal in a political alliance can fracture the coalition into splinter groups. Even on a personal level, if one friend continually takes without giving, the friendship may dissolve and each person retreats to other friend circles. Moreover, unpaid exchanges accumulate – they become festering “debt” that can create internal schisms. History provides many examples: when obligations (promises, debts, expectations) remain unfulfilled, movements split into factions, empires break into successor states, etc. The original circle effectively “breaks” and in its place multiple smaller circles may arise (each centered around a different subset or principle). In summary, every exchange in a circle must be balanced at some point – if not, the resulting resentment or distrust will crack the unity, and the circle can shatter into new, smaller circles (often pitted against each other). Ensuring reciprocity and closure in exchanges is therefore vital to keeping a circle whole.
+
+2.5 Value does not rest in the thing traded but in the pattern of its making. The true worth of a product or resource lies in the knowledge, process, and relationships that created it – not just in the raw materials themselves. In other words, value is in the pattern, not the artifact. For instance, a Stradivarius violin’s value isn’t merely the wood and varnish (those are ordinary); it’s the intricate craftsmanship, skill, and design (the pattern) behind it that commands a high price. Modern economics reinforces this idea: most value today comes from intangible assets – ideas, designs, intellectual capital – rather than the tangible inputs. As of 2020, roughly 90% of the value of S&P 500 companies was in intangibles (patents, brand, software, knowhow, etc.), up from only 17% in 1975. The physical “things” these companies trade are often cheap to replicate; it’s the pattern (technology, innovation, expertise) that is valuable. This axiom also echoes the concept of a value chain: the value comes from the pattern of production – the way something is made, the story and relationships behind it – rather than the inert end product alone. It’s why a recipe (the pattern) can be more valuable than a single meal, or why teaching a method is more powerful than giving a onetime aid. Additionally, meaning adds value. An object gains worth if it’s embedded in a meaningful pattern (e.g. a handmade item is valued for the craft pattern and tradition it represents). This is recognized in cultural heritage: UNESCO notes that preserving a craft means preserving the skills and knowledge (pattern) rather than just museum-display of old products. In essence, patterns are the real assets – the processes and relationships can create infinite objects, whereas any given object is finite and perishable. Thus, wise circles focus on cultivating patterns (techniques, knowledge networks, culture) because that’s where sustainable value lives. A thing exchanged might be consumed or wear out, but the pattern that produced it can generate value again and again.
+
+2.6 The pattern cannot be stolen; it can only be learned. Knowledge and patterns of behavior are nonrivalrous: if someone “takes” a pattern from you (by learning or copying it), you still have it too. Unlike a physical object, which you lose possession of if stolen, a pattern remains available to all who understand it. Thus, one cannot truly steal a pattern in the zero-sum sense – one can only acquire it through learning or imitation. “If you have an apple and I have an apple and we exchange apples, each of us still has one apple. But if you have an idea and I have an idea and we exchange ideas, then each of us has two ideas.” Knowledge multiplies through sharing; it isn’t destroyed or removed from the original holder. In practical terms, this means you can’t “steal” someone’s knowledge such that they no longer have it – you can only gain it for yourself by understanding it. This is why open-source software or scientific knowledge spreads so rapidly: copying it doesn’t deprive the original. It’s also why attempts to hoard knowledge often fail in the long run – if a pattern is powerful, eventually others will learn or reinvent it. “No thief, however skillful, can rob one of knowledge, and that is why knowledge is the best and safest treasure to acquire.”
+
+2.7 All economy is choreography. The complex dance of buying, selling, giving, and receiving is essentially a coordinated performance. An economy – whether within a small circle or across a global market – is not a chaotic free-for-all but a choreography of countless individual actions that somehow sync up into larger patterns. Adam Smith’s “invisible hand” is one famous metaphor for this spontaneous coordination, where each actor pursuing their own interest ends up contributing to an ordered outcome (as if directed by an unseen choreographer). Jane Jacobs similarly described city life as “an intricate ballet... in which the individual dancers and ensembles all have distinctive parts which miraculously reinforce each other and compose an orderly whole”. In a robust economy, people’s moves (choices) interweave: one’s output is another’s input, supply meets demand, and networks of exchange form rhythms. Nothing moves in isolation – every transaction is a step in the larger dance. It truly resembles a choreography: “This order is all composed of movement and change… we may fancifully call it the art form of the city and liken it to a dance”.
+
+### 3. The Heart
+
+3.1 The heart is that through which life flows to the whole. In any system, the “heart” represents the core function or node that pumps vitality to every part of the circle. It’s not necessarily a literal organ – it can be a central process, hub, or source of energy/nutrients. The key idea is circulation: the heart is the conduit for life-giving flow. If the heart stops functioning, the periphery starves – no part can thrive without that flow. Thus, the heart is essential for system-wide health. The heart is not for itself; it exists to feed the whole.
+
+3.2 A system depends on its heart and must feed it. The heart may serve the whole, but it is not self-sustaining – the system must in turn support its heart. This is a reciprocal dependency: while the heart pumps life outwards, it also requires nourishment and maintenance from the system. Wise circles consciously channel some of their resources back to nourishing their heart. It’s a feedback loop: the system feeds its heart so the heart can continue feeding the system.
+
+3.3 When the heart is unfed, the system decays. Deprive the heart of care or resources, and the entire circle will enter decline. The decay often starts quietly at the furthest edges (the parts first to lose nourishment) but creeps inward. Neglect the core, and the whole structure will rot.
+
+3.4 Care is the act by which the heart is fed. Care – active tending, nurturing, maintenance – is how we “feed” the heart of a system. It’s not enough to passively rely on the heart; one must intentionally support it. Care is any act that preserves or enhances the heart’s function. Attention is the substance of care (see 3.5).
+
+3.5 Attention is the substance of care. At the core of genuine care lies attention – focused awareness and mindfulness toward the needs of the heart. Whatever we give consistent attention to, we effectively care for; whatever we ignore, we neglect. “Attention is the rarest and purest form of generosity.” Regular check-ins, rituals of appreciation, status reviews – structured attention equates to structured care.
+
+3.6 Where attention ceases, the heart stops. If the members of a system stop paying attention to its heart, the heart’s function will eventually fail – and with it, the system dies. Continuous attention is required to keep the heart beating. Maintaining any living system means continually renewing collective attention on what matters.
+
+3.7 To tend the heart is to tend the boundary itself. Caring for the heart of a system involves managing the system’s boundary and what crosses it, because the heart’s health depends on balanced exchange with the outside. The heart and boundary work in tandem: one maintains internal vitality, the other maintains external definition.
+
+### 4. The Seed
+
+4.1 Zero is not nothing but the clear admission of nothing owed. “Zero” in this context means a clean start, free of debt or burden – a baseline equilibrium. Honesty about starting from zero creates a stable platform.
+
+4.2 Honesty about zero grants stability. A system that fully recognizes and discloses its starting conditions – including debts, deficits, or lack of knowledge – is far more stable than one that builds on hidden liabilities or false assumptions.
+
+4.3 A system that forgets its zero builds on debt. Failing to acknowledge initial conditions or the need to periodically reset to equilibrium leads to hidden obligations and fragility.
+
+4.4 When taken or copied, a true system leaves only its pattern; the pattern becomes seed. If you “take” a mature system, the underlying pattern remains – and that pattern can serve as a seed for new systems. This is resilience by pattern.
+
+4.5 A seed is a pattern capable of taking root in any soil. A portable, self-contained pattern that can instantiate a new circle wherever conditions are suitable.
+
+4.6 What is stolen replicates; what is hidden decays. Open patterns propagate and evolve; hidden patterns stagnate and die.
+
+4.7 The seed endures by teaching its pattern, not by defending its artifact. Focus on transmitting the underlying pattern rather than guarding one instance.
+
+### 5. The Choice
+
+5.1 Each actor stands between two gestures: reaching out or closing in. The two fundamental gestures of behavior.
+
+5.2 Reaching out brings risk and renewal. Openness invites novelty and growth; no risk, no renewal.
+
+5.3 There is no third gesture. All actions are opens, closes, or mixtures; even inaction is a kind of closing.
+
+5.4 Life in a system is the rhythm between these two gestures. Alternation between opening and closing sustains vitality.
+
+5.5 When the rhythm ceases, the circle ends. Stuck-open or stuck-closed is terminal.
+
+5.6 To choose movement is to stay alive. Continual choosing sustains the pulse of life.
+
+### 6. The Pattern
+
+6.1 Circles, trades, hearts, and seeds are manifestations of pattern. Concrete forms express underlying templates.
+
+6.2 Patterns replicate through actors who have learned them. Patterns need carriers to propagate.
+
+6.3 When systems fall, patterns scatter and reform. Collapse redistributes pattern elements that recombine elsewhere.
+
+6.4 A true pattern is self-organizing; it can regenerate without command. Strong patterns arise from local rules.
+
+6.5 Where patterns align, larger wholes appear. Alignment produces emergent coherent systems.
+
+6.6 Where patterns conflict, new seeds are born. Tension generates innovation.
+
+6.7 The world of folk systems is the totality of living patterns. Our world is an ecology of patterns.
+
+—
+
+References and examples mentioned inline include: social identity (in-group/out-group), holons (Koestler), John Donne’s “No man is an island”, boundaries in family systems (Minuchin), Bertalanffy’s GST, TANSTAAFL and attention-as-price in “free” services, Mauss on gifts, Simone Weil on attention, diffusion/equilibrium analogies, Jane Jacobs’ “ballet of the sidewalk”, and UNESCO intangible cultural heritage on pattern preservation.
+  </script>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" id="modal-title">AXIOM</div>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-axiom-text" id="modal-text"></div>
+        <div class="modal-axiom-definition" id="modal-definition"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'tractor-planning-system:v1-05';
+    let planningData = loadData();
+
+    function loadData() {
+      try { const saved = localStorage.getItem(STORAGE_KEY); if (saved) return JSON.parse(saved); } catch (e) {}
+      return { 1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: [] };
+    }
+    function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(planningData)); }
+
+    function renderAll() { for (let i = 1; i <= 7; i++) renderList(i); }
+    function renderList(sectionId) {
+      const list = document.getElementById(`list-${sectionId}`);
+      if (!list) return;
+      list.innerHTML = '';
+      planningData[sectionId].forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = 'axiom-item';
+        div.innerHTML = `<span class="axiom-content" contenteditable="true" data-section="${sectionId}" data-index="${index}">${item}</span><button class="add-btn" onclick="deleteItem(${sectionId}, ${index})">×</button>`;
+        list.appendChild(div);
+      });
+      document.querySelectorAll(`#list-${sectionId} .axiom-content`).forEach(el => {
+        el.addEventListener('focus', function(){ this.parentElement.classList.add('editing'); });
+        el.addEventListener('blur', function(){ this.parentElement.classList.remove('editing'); const s = +this.dataset.section; const i = +this.dataset.index; planningData[s][i] = this.textContent; saveData(); });
+        el.addEventListener('keydown', function(e){ if (e.key === 'Enter') { e.preventDefault(); this.blur(); }});
+      });
+    }
+
+    function addItem(sectionId) {
+      const input = document.getElementById(`input-${sectionId}`);
+      const value = (input?.value || '').trim();
+      if (!value) return;
+      planningData[sectionId].push(value); saveData(); renderList(sectionId); input.value=''; input.focus();
+    }
+    function deleteItem(sectionId, index) { planningData[sectionId].splice(index, 1); saveData(); renderList(sectionId); }
+    function scrollToSection(i){ const sections = document.querySelectorAll('[data-section]'); sections[i]?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    function scrollToReference(){ document.getElementById('reference')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+
+    function buildCurrencyLegendHTML(){
+      return `
+      <div class="currency-legend">
+        <div style="font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:bold;color:#555;">AXIOM 2.21 · PRICE CURRENCIES</div>
+        <div style="font-size:16px;font-weight:bold;">The Six Folk Currencies of Price</div>
+        <div class="currency-grid">
+          <div class="currency-card"><div class="currency-name">VOICE</div><div class="currency-tagline">Who can speak and be heard.</div></div>
+          <div class="currency-card"><div class="currency-name">MEMORY</div><div class="currency-tagline">Who controls the record.</div></div>
+          <div class="currency-card"><div class="currency-name">HEART</div><div class="currency-tagline">Relational labor and care.</div></div>
+          <div class="currency-card"><div class="currency-name">CHOICE</div><div class="currency-tagline">Degrees of freedom.</div></div>
+          <div class="currency-card"><div class="currency-name">NAME</div><div class="currency-tagline">Identity and attribution.</div></div>
+          <div class="currency-card"><div class="currency-name">LOCAL SIXTH</div><div class="currency-tagline">The sacred here.</div></div>
+        </div>
+      </div>`;
+    }
+
+    function openModal(ref, text, definition, isCurrencyLegend){
+      document.getElementById('modal-title').textContent = ref;
+      document.getElementById('modal-text').textContent = text;
+      const defEl = document.getElementById('modal-definition');
+      if (ref.trim() === '2.21' || isCurrencyLegend === true) {
+        defEl.innerHTML = buildCurrencyLegendHTML();
+      } else {
+        defEl.textContent = definition || '';
+      }
+      document.getElementById('modal').style.display = 'flex';
+    }
+    function closeModal(){ document.getElementById('modal').style.display = 'none'; }
+
+    document.querySelectorAll('.axiom-canonical').forEach(item => {
+      item.addEventListener('click', function(){
+        const ref = this.querySelector('.axiom-ref')?.textContent || '';
+        const text = this.textContent.trim();
+        const definition = this.dataset.definition || '';
+        const isLegend = this.dataset.isCurrencyLegend === 'true';
+        openModal(ref, text, definition, isLegend);
+      });
+    });
+
+    document.getElementById('modal').addEventListener('click', function(e){ if (e.target === this) closeModal(); });
+
+    document.querySelectorAll('.add-input').forEach(input => {
+      input.addEventListener('keydown', function(e){ if (e.key === 'Enter'){ const id = parseInt(this.id.split('-')[1], 10); addItem(id); }});
+    });
+
+    document.addEventListener('click', function(e){
+      if (e.target.classList?.contains('axiom-item') || e.target.classList?.contains('axiom-content')){
+        const item = e.target.closest('.axiom-item');
+        if (item && !item.classList.contains('axiom-canonical')){
+          const bg = item.style.background; item.style.background = '#86efac'; setTimeout(()=>{ item.style.background = bg; }, 200);
+        }
+      }
+    });
+
+    // Reference loading (content inserted progressively to avoid payload limits)
+    async function loadReference(){
+      const pre = document.getElementById('reference-pre');
+      pre.textContent = 'Loading reference...';
+      // Prefer inline explanations if present (single-file, offline safe)
+      const inline = document.getElementById('explanations-inline')?.textContent?.trim();
+      if (inline && inline.length > 0) { progressiveInsert(pre, inline); return; }
+      try {
+        const res = await fetch('reference-tractor.txt', { cache: 'no-store' });
+        if (!res.ok) throw new Error('Fetch failed');
+        const text = await res.text();
+        progressiveInsert(pre, text);
+      } catch (e) {
+        pre.textContent = (window.TRACTOR_REFERENCE || 'Reference could not be loaded.');
+      }
+    }
+    function progressiveInsert(pre, text){
+      const parts = text.split(/\n\*\*\*\n/g);
+      pre.textContent = '';
+      let i = 0;
+      (function step(){
+        if (i >= parts.length) return;
+        pre.textContent += (i > 0 ? '\n***\n' : '') + parts[i++];
+        setTimeout(step, 0);
+      })();
+    }
+    function clearReference(){ document.getElementById('reference-pre').textContent = 'Reference not loaded.'; }
+
+    // Initial render
+    renderAll();
+
+    // Minimal seed so button shows something; full content will be appended.
+    window.TRACTOR_REFERENCE = '# TRACTOR FOLKOLOGICUS: Comprehensive Axiom Framework\n\nThis page integrates interactive modules (1–7), formalization for Axiom 1, and the currency legend for Axiom 2.21.\nFull expanded reference text and bibliography will be inserted in subsequent steps to avoid size limits.';
+  </script>
+</body>
+</html>

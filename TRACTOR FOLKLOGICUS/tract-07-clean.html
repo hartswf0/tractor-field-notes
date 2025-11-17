@@ -1,0 +1,1843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRACTOR FOLKOLOGICUS — Geometric Thinking Medium</title>
+    <style>
+        /* CORE SYSTEM - SURFACING THE INVISIBLE */
+        :root {
+            --bg-primary: #f0ede5;
+            --bg-secondary: #faf8f3;
+            --text-primary: #1a1a1a;
+            --highlight: #86efac;
+            --warning: #ffab70;
+            --danger: #ff6b6b;
+            --coda: #1a1a1a;
+            --glass: rgba(255, 255, 255, 0.85);
+            --grid: rgba(0, 0, 0, 0.03);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Courier New', monospace;
+            background: var(--bg-primary);
+            overflow: hidden;
+            height: 100vh;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+        }
+
+        /* HEADER - VISUAL CONTROL CENTER */
+        header {
+            background: var(--bg-secondary);
+            border-bottom: 2px solid var(--text-primary);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 50;
+            min-height: 60px;
+        }
+
+        .shape-palette {
+            display: flex;
+            gap: 10px;
+        }
+
+        .shape-tool {
+            width: 30px;
+            height: 30px;
+            border: 2px solid var(--text-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            transition: all 0.2s;
+        }
+
+        .shape-tool:hover { transform: scale(1.1); }
+        .shape-tool.active { background: var(--highlight); }
+
+        .control-panel {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .parameter-knob {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--text-primary);
+            background: conic-gradient(from 0deg, var(--highlight) 0deg, white 0deg);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .knob-label {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 8px;
+            white-space: nowrap;
+        }
+
+        /* MAIN CANVAS - SPATIAL THINKING GROUND */
+        #thinking-canvas {
+            width: 100%;
+            height: 100%;
+            min-height: 500px; /* FORCE MINIMUM HEIGHT */
+            min-width: 900px;  /* FORCE MINIMUM WIDTH */
+            background-image: 
+                radial-gradient(circle at 50px 50px, var(--grid) 1px, transparent 1px),
+                radial-gradient(circle at 150px 150px, var(--grid) 1px, transparent 1px);
+            background-size: 100px 100px;
+            cursor: crosshair;
+            display: block; /* ENSURE IT'S A BLOCK ELEMENT */
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--bg-secondary);
+            border-top: 2px solid var(--text-primary);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 50px;
+        }
+
+        .debug-info {
+            font-size: 9px;
+            color: var(--text-secondary);
+        }
+
+        .control-button {
+            padding: 6px 10px;
+            background: var(--highlight);
+            border: 1px solid var(--text-primary);
+            cursor: pointer;
+            font-size: 9px;
+            font-weight: bold;
+        }
+
+        .context-menu {
+            position: absolute;
+            background: var(--glass);
+            border: 1px solid var(--text-primary);
+            font-size: 9px;
+            padding: 6px 8px;
+            z-index: 200;
+            display: none;
+            min-width: 120px;
+        }
+
+        .context-menu button {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 4px 6px;
+            margin: 2px 0;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 9px;
+        }
+
+        .context-menu button:hover {
+            background: rgba(0, 0, 0, 0.06);
+        }
+
+        .scene-selector {
+            font-size: 9px;
+            padding: 2px 4px;
+            border: 1px solid var(--text-primary);
+            background: white;
+            margin-left: 10px;
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <header>
+        <div class="shape-palette">
+            <div class="shape-tool active" data-shape="circle" title="Circle · actor / node with heart energy">○</div>
+            <div class="shape-tool" data-shape="trade" title="Trade · flow edge carrying moving dots">↔</div>
+            <div class="shape-tool" data-shape="heart" title="Heart · fairness field smoothing inequality">❤</div>
+            <div class="shape-tool" data-shape="seed" title="Seed · potential source that grows and injects flow">ᰔ</div>
+            <div class="shape-tool" data-shape="choice" title="Choice · operator that biases flows on nearby trades">⟷</div>
+            <div class="shape-tool" data-shape="pattern" title="Pattern · region that boosts dots passing through">⬡</div>
+            <div class="shape-tool" data-shape="zero" title="Zero · draining point that damps flows">·</div>
+        </div>
+        <div class="control-panel">
+            <div class="parameter-knob" data-param="boundary" title="Boundary Clarity">
+                <div class="knob-label">CLARITY</div>
+            </div>
+            <div class="parameter-knob" data-param="flow" title="Flow Rate">
+                <div class="knob-label">FLOW</div>
+            </div>
+            <div class="parameter-knob" data-param="balance" title="Balance">
+                <div class="knob-label">BALANCE</div>
+            </div>
+            <select id="sceneSelector" class="scene-selector">
+                <option value="">Scene: Manual</option>
+                <option value="circle-module">1 · CIRCLE</option>
+                <option value="trade-module">2 · TRADE</option>
+                <option value="heart-module">3 · HEART</option>
+                <option value="seed-module">4 · SEED</option>
+                <option value="choice-module">5 · CHOICE</option>
+                <option value="pattern-module">6 · PATTERN</option>
+                <option value="zero-module">7 · ZERO</option>
+            </select>
+        </div>
+    </header>
+
+    <main style="flex: 1; display: flex; align-items: center; justify-content: center; background: #f0ede5;">
+        <canvas id="thinking-canvas"></canvas>
+    </main>
+
+    <footer>
+        <div>
+            <div class="debug-info" id="sceneInfo">Scene: Manual - Draw shapes with the tools above. Moving dots show how flows move.</div>
+            <div class="debug-info" id="debugInfo">Canvas: Loading...</div>
+        </div>
+        <div>
+            <button class="control-button" id="resetBtn">Reset Scene</button>
+            <button class="control-button" id="pauseBtn">Pause</button>
+            <button class="control-button" id="exportBtn">Export Image</button>
+        </div>
+    </footer>
+
+    <script>
+        // DEBUGGING: Immediately check if canvas exists
+        console.log('=== FOLKOLOGICUS INITIALIZATION ===');
+        const canvas = document.getElementById('thinking-canvas');
+
+        const SCENE_DEFINITIONS = {
+            'circle-module': {
+                id: 'circle-module',
+                label: '1 · CIRCLE',
+                module: 'CIRCLE',
+                axioms: '1.x',
+                description: 'World circle with Us/Them and internal trade.',
+                assembler: 'assembleCircleModuleScene',
+                config: {
+                    params: { boundary: 0.8, flow: 0.55, balance: 0.5 },
+                    shapes: [
+                        { id: 'world', type: 'circle', relX: 0.5, relY: 0.5, radius: 150, label: 'WORLD', axiom: 'circle-1.0', heartEnergy: 0.7 },
+                        { id: 'usA', type: 'circle', relX: 0.38, relY: 0.42, label: 'US A', axiom: 'circle-1.2-us', heartEnergy: 0.7 },
+                        { id: 'usB', type: 'circle', relX: 0.60, relY: 0.58, label: 'US B', axiom: 'circle-1.2-us', heartEnergy: 0.7 },
+                        { id: 'themA', type: 'circle', relX: 0.20, relY: 0.5, label: 'THEM A', axiom: 'circle-1.2-them', heartEnergy: 0.4 },
+                        { id: 'pattern', type: 'pattern', relX: 0.5, relY: 0.46, label: 'PATTERN', axiom: 'circle-1.4' },
+                        { id: 'zero', type: 'zero', relX: 0.76, relY: 0.60, label: 'ZERO', axiom: 'circle-1.7' }
+                    ],
+                    edges: [
+                        { from: 'usA', to: 'usB', flowRate: 1 }
+                    ],
+                    focus: { mode: 'none' }
+                }
+            },
+            'trade-module': {
+                id: 'trade-module',
+                label: '2 · TRADE',
+                module: 'TRADE',
+                axioms: '2.x',
+                description: 'Giver/receiver, trade edge, choice, heart, and seed.',
+                assembler: 'assembleTradeModuleScene',
+                config: {
+                    params: { boundary: 0.7, flow: 0.7, balance: 0.5 },
+                    shapes: [
+                        { id: 'giver', type: 'circle', relX: 0.3, relY: 0.5, label: 'GIVER', axiom: 'trade-2.x', heartEnergy: 0.7 },
+                        { id: 'receiver', type: 'circle', relX: 0.7, relY: 0.5, label: 'RECEIVER', axiom: 'trade-2.x', heartEnergy: 0.3 },
+                        { id: 'choice', type: 'choice', relX: 0.5, relY: 0.5, label: 'CHOICE', axiom: 'trade-5.x', attachChoiceToNearest: true },
+                        { id: 'heart', type: 'heart', relX: 0.5, relY: 0.3, label: 'HEART', axiom: 'trade-2.3' },
+                        { id: 'seed', type: 'seed', relX: 0.5, relY: 0.7, label: 'SEED', axiom: 'trade-2.5', attachSeedToNearest: true }
+                    ],
+                    edges: [
+                        { from: 'giver', to: 'receiver', flowRate: 1 }
+                    ],
+                    focus: { mode: 'none' }
+                }
+            },
+            'heart-module': {
+                id: 'heart-module',
+                label: '3 · HEART',
+                module: 'HEART',
+                axioms: '3.x',
+                description: 'Three nodes with unequal energy under a heart field.',
+                assembler: 'assembleHeartModuleScene',
+                config: {
+                    params: { boundary: 0.7, flow: 0.6, balance: 0.6 },
+                    shapes: [
+                        { id: 'nodeA', type: 'circle', relX: 0.3, relY: 0.4, label: 'NODE A', axiom: 'heart-3.x', heartEnergy: 0.9 },
+                        { id: 'nodeB', type: 'circle', relX: 0.7, relY: 0.42, label: 'NODE B', axiom: 'heart-3.x', heartEnergy: 0.3 },
+                        { id: 'nodeC', type: 'circle', relX: 0.45, relY: 0.75, label: 'NODE C', axiom: 'heart-3.x', heartEnergy: 0.5 },
+                        { id: 'heart', type: 'heart', relX: 0.5, relY: 0.55, label: 'HEART', axiom: 'heart-3.0' }
+                    ],
+                    edges: [
+                        { from: 'nodeA', to: 'nodeB', flowRate: 0.8 },
+                        { from: 'nodeB', to: 'nodeC', flowRate: 0.6 }
+                    ],
+                    focus: { mode: 'circleDetail', target: 'nodeA' }
+                }
+            },
+            'seed-module': {
+                id: 'seed-module',
+                label: '4 · SEED',
+                module: 'SEED',
+                axioms: '4.x',
+                description: 'High-energy source, attached seed, and nearby pattern.',
+                assembler: 'assembleSeedModuleScene',
+                config: {
+                    params: { boundary: 0.7, flow: 0.7, balance: 0.5 },
+                    shapes: [
+                        { id: 'source', type: 'circle', relX: 0.4, relY: 0.5, label: 'SOURCE', axiom: 'seed-4.x', heartEnergy: 0.8 },
+                        { id: 'seed', type: 'seed', relX: 0.45, relY: 0.7, label: 'SEED', axiom: 'seed-4.4', attachSeedToNearest: true },
+                        { id: 'pattern', type: 'pattern', relX: 0.7, relY: 0.5, label: 'PATTERN', axiom: 'seed-4.5' }
+                    ],
+                    edges: [],
+                    focus: { mode: 'patternOverview', target: 'pattern' }
+                }
+            },
+            'choice-module': {
+                id: 'choice-module',
+                label: '5 · CHOICE',
+                module: 'CHOICE',
+                axioms: '5.x',
+                description: 'Central actor choosing between reaching out and closing in.',
+                assembler: 'assembleChoiceModuleScene',
+                config: {
+                    params: { boundary: 0.7, flow: 0.65, balance: 0.5 },
+                    shapes: [
+                        { id: 'actor', type: 'circle', relX: 0.5, relY: 0.5, label: 'ACTOR', axiom: 'choice-5.0', heartEnergy: 0.7 },
+                        { id: 'out', type: 'circle', relX: 0.25, relY: 0.35, label: 'OUT', axiom: 'choice-5.1', heartEnergy: 0.5 },
+                        { id: 'in', type: 'circle', relX: 0.75, relY: 0.65, label: 'IN', axiom: 'choice-5.2', heartEnergy: 0.5 },
+                        { id: 'choice', type: 'choice', relX: 0.55, relY: 0.55, label: 'CHOICE', axiom: 'choice-5.x', attachChoiceToNearest: true }
+                    ],
+                    edges: [
+                        { from: 'actor', to: 'out', flowRate: 0.8 },
+                        { from: 'actor', to: 'in', flowRate: 0.8 }
+                    ],
+                    focus: { mode: 'circleDetail', target: 'actor' }
+                }
+            },
+            'pattern-module': {
+                id: 'pattern-module',
+                label: '6 · PATTERN',
+                module: 'PATTERN',
+                axioms: '6.x',
+                description: 'Triangle of circles with trades, covered by a pattern node.',
+                assembler: 'assemblePatternModuleScene',
+                config: {
+                    params: { boundary: 0.7, flow: 0.8, balance: 0.5 },
+                    shapes: [
+                        { id: 'a', type: 'circle', relX: 0.4, relY: 0.4, label: 'A', axiom: 'pattern-6.x', heartEnergy: 0.6 },
+                        { id: 'b', type: 'circle', relX: 0.6, relY: 0.4, label: 'B', axiom: 'pattern-6.x', heartEnergy: 0.6 },
+                        { id: 'c', type: 'circle', relX: 0.5, relY: 0.7, label: 'C', axiom: 'pattern-6.x', heartEnergy: 0.6 },
+                        { id: 'pattern', type: 'pattern', relX: 0.5, relY: 0.5, label: 'PATTERN', axiom: 'pattern-6.0' }
+                    ],
+                    edges: [
+                        { from: 'a', to: 'b', flowRate: 0.7 },
+                        { from: 'b', to: 'c', flowRate: 0.7 },
+                        { from: 'c', to: 'a', flowRate: 0.7 }
+                    ],
+                    focus: { mode: 'patternOverview', target: 'pattern' }
+                }
+            },
+            'zero-module': {
+                id: 'zero-module',
+                label: '7 · ZERO',
+                module: 'ZERO POINT',
+                axioms: '7.x',
+                description: 'System and satellites viewed from a draining zero point.',
+                assembler: 'assembleZeroModuleScene',
+                config: {
+                    params: { boundary: 0.7, flow: 0.6, balance: 0.5 },
+                    shapes: [
+                        { id: 'system', type: 'circle', relX: 0.4, relY: 0.5, label: 'SYSTEM', axiom: 'zero-7.0', heartEnergy: 0.9 },
+                        { id: 'node1', type: 'circle', relX: 0.7, relY: 0.35, label: 'NODE 1', axiom: 'zero-7.1', heartEnergy: 0.6 },
+                        { id: 'node2', type: 'circle', relX: 0.75, relY: 0.65, label: 'NODE 2', axiom: 'zero-7.1', heartEnergy: 0.6 },
+                        { id: 'zero', type: 'zero', relX: 0.55, relY: 0.5, label: 'ZERO POINT', axiom: 'zero-7.0' }
+                    ],
+                    edges: [
+                        { from: 'system', to: 'node1', flowRate: 0.9 },
+                        { from: 'system', to: 'node2', flowRate: 0.9 }
+                    ],
+                    focus: { mode: 'none' }
+                }
+            }
+        };
+        console.log('Canvas element found:', canvas);
+
+        if (!canvas) {
+            alert('ERROR: Canvas element not found in DOM');
+        }
+
+        // SHAPE RENDERER
+        class ShapeRenderer {
+            constructor(ctx) {
+                this.ctx = ctx;
+                this.shapes = new Map();
+                this.connections = [];
+                this.isRunning = true;
+                this.tradeEdges = [];
+                this.focus = { mode: 'none', shapeId: null, level: 0 };
+                console.log('ShapeRenderer initialized with context:', ctx);
+            }
+
+            createShape(type, x, y, data) {
+                const shape = {
+                    id: Date.now() + Math.random(),
+                    type,
+                    x,
+                    y,
+                    data,
+                    radius: this.getDefaultRadius(type),
+                    boundaryWidth: 2,
+                    boundaryOpacity: 1,
+                    fillOpacity: 0.15,
+                    pulsePhase: Math.random() * Math.PI * 2,
+                    color: this.getShapeColor(type)
+                };
+                if (type === 'circle') {
+                    shape.heart = { energy: 0.6, capacity: 1.0, pulsePhase: shape.pulsePhase };
+                }
+                if (type === 'seed') {
+                    shape.growth = 0;
+                    shape.attachedCircleId = null;
+                    shape.germinated = false;
+                    shape.seedTokens = [];
+                    const tokenCount = 12;
+                    for (let i = 0; i < tokenCount; i++) {
+                        shape.seedTokens.push({
+                            t: Math.random(),
+                            speed: 0.25 + Math.random() * 0.15
+                        });
+                    }
+                }
+                if (type === 'heart') {
+                    shape.inequality = 0;
+                }
+                if (type === 'choice') {
+                    shape.mode = 'split';
+                    shape.edgePair = null;
+                }
+                if (type === 'zero') {
+                    shape.effect = 'drain';
+                }
+                this.initializeTokensForShape(shape);
+                this.shapes.set(shape.id, shape);
+                console.log(`Shape created: ${type} at (${x}, ${y})`, shape);
+                return shape;
+            }
+
+            getDefaultRadius(type) {
+                const radii = { circle: 45, heart: 40, seed: 35, trade: 30, choice: 35, pattern: 50, zero: 25 };
+                return radii[type] || 35;
+            }
+
+            getShapeColor(type) {
+                const colors = {
+                    circle: '134, 239, 172',
+                    trade: '255, 204, 128',
+                    heart: '255, 171, 145',
+                    seed: '197, 225, 165',
+                    choice: '179, 157, 219',
+                    pattern: '144, 202, 249',
+                    zero: '176, 190, 197'
+                };
+                return colors[type] || '128, 128, 128';
+            }
+
+            setFocus(mode, shapeId) {
+                if (mode !== 'none' && (!shapeId || !this.shapes.has(shapeId))) {
+                    this.focus.mode = 'none';
+                    this.focus.shapeId = null;
+                    return;
+                }
+                this.focus.mode = mode || 'none';
+                this.focus.shapeId = mode === 'none' ? null : shapeId;
+            }
+
+            initializeTokensForShape(shape) {
+                if (shape.type !== 'circle' && shape.type !== 'heart' && shape.type !== 'pattern') {
+                    return;
+                }
+                const count = shape.type === 'pattern' ? 10 : 6;
+                shape.tokens = [];
+                for (let i = 0; i < count; i++) {
+                    shape.tokens.push({
+                        angle: Math.random() * Math.PI * 2,
+                        radius: shape.radius * (0.3 + 0.25 * Math.random()),
+                        speed: 0.6 * (0.7 + Math.random() * 0.6),
+                        patternBoost: 0
+                    });
+                }
+            }
+
+            handleRightClick(e) {
+                e.preventDefault();
+                const rect = this.canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const shape = this.renderer.getShapeAt(x, y);
+                this.state.contextShape = shape || null;
+                if (!this.contextMenuEl) return;
+                this.contextMenuEl.style.left = `${e.clientX}px`;
+                this.contextMenuEl.style.top = `${e.clientY}px`;
+                this.contextMenuEl.style.display = 'block';
+            }
+
+            hideContextMenu() {
+                if (this.contextMenuEl) {
+                    this.contextMenuEl.style.display = 'none';
+                }
+            }
+
+            render() {
+                // Clear canvas
+                this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+                
+                // Render connections
+                this.connections.forEach(conn => this.renderConnection(conn));
+                
+                // Render shapes
+                this.shapes.forEach(shape => this.renderShape(shape));
+
+                // Render trade edges (tokens/flows)
+                this.tradeEdges.forEach(edge => this.renderTradeEdge(edge));
+            }
+
+            renderShape(shape) {
+                this.ctx.save();
+                let scaleMultiplier = 1;
+                let alphaMultiplier = 1;
+                if (this.focus && this.focus.level > 0 && this.focus.mode !== 'none') {
+                    const f = this.focus;
+                    const focusShape = f.shapeId ? this.shapes.get(f.shapeId) : null;
+                    const level = f.level;
+                    if (f.mode === 'circleDetail' && focusShape) {
+                        if (shape.id === focusShape.id) {
+                            scaleMultiplier = 1 + 0.45 * level;
+                        } else {
+                            alphaMultiplier = 1 - 0.65 * level;
+                        }
+                    } else if (f.mode === 'patternOverview' && focusShape) {
+                        if (shape.id === focusShape.id) {
+                            scaleMultiplier = 1 + 0.35 * level;
+                        } else if (shape.type === 'circle' || shape.type === 'heart') {
+                            scaleMultiplier = 1 - 0.25 * level;
+                            alphaMultiplier = 1 - 0.5 * level;
+                        }
+                    }
+                }
+
+                if (scaleMultiplier !== 1) {
+                    this.ctx.translate(shape.x, shape.y);
+                    this.ctx.scale(scaleMultiplier, scaleMultiplier);
+                    this.ctx.translate(-shape.x, -shape.y);
+                }
+                if (alphaMultiplier !== 1) {
+                    this.ctx.globalAlpha *= Math.max(0.1, alphaMultiplier);
+                }
+                
+                // Pulse animation for hearts
+                if (shape.type === 'heart') {
+                    const pulse = Math.sin(Date.now() * 0.002 + shape.pulsePhase) * 0.08 + 1;
+                    this.ctx.translate(shape.x, shape.y);
+                    this.ctx.scale(pulse, pulse);
+                    this.ctx.translate(-shape.x, -shape.y);
+                }
+
+                // Set visual properties
+                this.ctx.strokeStyle = `rgba(26, 26, 26, ${shape.boundaryOpacity})`;
+                this.ctx.lineWidth = shape.boundaryWidth;
+                this.ctx.fillStyle = `rgba(${shape.color}, ${shape.fillOpacity})`;
+
+                // Draw shape by type
+                switch(shape.type) {
+                    case 'circle':
+                        this.ctx.beginPath();
+                        this.ctx.arc(shape.x, shape.y, shape.radius, 0, Math.PI * 2);
+                        this.ctx.fill();
+                        this.ctx.stroke();
+                        // Draw inner boundary if large enough
+                        if (shape.radius > 30) {
+                            this.ctx.beginPath();
+                            this.ctx.arc(shape.x, shape.y, shape.radius * 0.6, 0, Math.PI * 2);
+                            this.ctx.strokeStyle = 'rgba(0,0,0,0.2)';
+                            this.ctx.lineWidth = 1;
+                            this.ctx.stroke();
+                        }
+                        if (shape.heart) {
+                            const e = Math.max(0, Math.min(1, shape.heart.energy));
+                            const pulse = Math.sin(Date.now() * 0.002 + shape.heart.pulsePhase) * (0.05 + 0.1 * e) + 1;
+                            const r = shape.radius * (0.22 + 0.08 * e) * pulse;
+                            this.ctx.beginPath();
+                            this.ctx.arc(shape.x, shape.y, r, 0, Math.PI * 2);
+                            this.ctx.fillStyle = `rgba(255, 171, 145, ${0.3 + 0.4 * e})`;
+                            this.ctx.fill();
+                            this.ctx.strokeStyle = `rgba(26, 26, 26, ${0.3 + 0.5 * e})`;
+                            this.ctx.lineWidth = 1;
+                            this.ctx.stroke();
+                        }
+                        if (shape.tokens && shape.tokens.length) {
+                            const e = shape.heart ? Math.max(0, Math.min(1, shape.heart.energy)) : 0.5;
+                            for (const token of shape.tokens) {
+                                const tx = shape.x + Math.cos(token.angle) * token.radius;
+                                const ty = shape.y + Math.sin(token.angle) * token.radius;
+                                const boost = token.patternBoost || 0;
+                                const r = 2 + boost * 1.2;
+                                const alpha = (0.2 + 0.4 * e) + boost * 0.3;
+                                this.ctx.beginPath();
+                                this.ctx.arc(tx, ty, r, 0, Math.PI * 2);
+                                this.ctx.fillStyle = `rgba(${shape.color}, ${Math.max(0, Math.min(1, alpha))})`;
+                                this.ctx.fill();
+                            }
+                        }
+                        break;
+
+                    case 'heart':
+                        // Main circle
+                        this.ctx.beginPath();
+                        this.ctx.arc(shape.x, shape.y, shape.radius, 0, Math.PI * 2);
+                        this.ctx.fill();
+                        this.ctx.stroke();
+                        
+                        // Radiating lines (fairness field) scale with inequality
+                        const varScore = Math.max(0, Math.min(1, shape.inequality ?? 0));
+                        const rays = 6;
+                        for (let i = 0; i < rays; i++) {
+                            const angle = (i / rays) * Math.PI * 2;
+                            this.ctx.beginPath();
+                            this.ctx.moveTo(shape.x, shape.y);
+                            const lenFactor = 1.1 + varScore * 0.8;
+                            this.ctx.lineTo(
+                                shape.x + Math.cos(angle) * shape.radius * lenFactor,
+                                shape.y + Math.sin(angle) * shape.radius * lenFactor
+                            );
+                            this.ctx.strokeStyle = `rgba(0,0,0,${0.05 + 0.35 * varScore})`;
+                            this.ctx.lineWidth = 0.8 + varScore * 0.8;
+                            this.ctx.stroke();
+                        }
+                        if (shape.tokens && shape.tokens.length) {
+                            const intensity = Math.max(0, Math.min(1, shape.inequality ?? 0));
+                            for (const token of shape.tokens) {
+                                const tx = shape.x + Math.cos(token.angle) * token.radius;
+                                const ty = shape.y + Math.sin(token.angle) * token.radius;
+                                const boost = token.patternBoost || 0;
+                                const r = 1.8 + boost * 1.0;
+                                const alpha = (0.25 + 0.35 * intensity) + boost * 0.25;
+                                this.ctx.beginPath();
+                                this.ctx.arc(tx, ty, r, 0, Math.PI * 2);
+                                this.ctx.fillStyle = `rgba(${shape.color}, ${Math.max(0, Math.min(1, alpha))})`;
+                                this.ctx.fill();
+                            }
+                        }
+                        break;
+
+                    case 'seed':
+                        // Spiral that brightens and tightens as it grows
+                        {
+                            const g = Math.max(0, Math.min(1, shape.growth ?? 0));
+                            this.ctx.beginPath();
+                            for (let i = 0; i < 20; i++) {
+                                const angle = i * 0.5;
+                                const r = (i / 20) * shape.radius * (0.5 + 0.5 * g);
+                                const x = shape.x + Math.cos(angle) * r;
+                                const y = shape.y + Math.sin(angle) * r;
+                                if (i === 0) this.ctx.moveTo(x, y);
+                                else this.ctx.lineTo(x, y);
+                            }
+                            this.ctx.strokeStyle = `rgba(26, 26, 26, ${0.2 + 0.6 * g})`;
+                            this.ctx.lineWidth = 1 + g * 0.5;
+                            this.ctx.stroke();
+
+                            if (shape.seedTokens && shape.seedTokens.length) {
+                                const steps = 20;
+                                for (const token of shape.seedTokens) {
+                                    const t = Math.max(0, Math.min(1, token.t ?? 0));
+                                    const i = t * (steps - 1);
+                                    const angle = i * 0.5;
+                                    const r = (i / steps) * shape.radius * (0.5 + 0.5 * g);
+                                    const sx = shape.x + Math.cos(angle) * r;
+                                    const sy = shape.y + Math.sin(angle) * r;
+                                    const alpha = 0.2 + 0.5 * g;
+                                    const radius = 1.4 + 0.6 * g;
+                                    this.ctx.beginPath();
+                                    this.ctx.arc(sx, sy, radius, 0, Math.PI * 2);
+                                    this.ctx.fillStyle = `rgba(${shape.color}, ${Math.max(0, Math.min(1, alpha))})`;
+                                    this.ctx.fill();
+                                }
+                            }
+                        }
+                        break;
+
+                    case 'trade':
+                        // Bidirectional arrow
+                        this.drawArrow(shape.x - 20, shape.y, shape.x + 20, shape.y, true);
+                        break;
+
+                    case 'choice':
+                        // Two opposing arrows, styled by choice mode
+                        {
+                            const mode = shape.mode || 'split';
+                            // Top arrow
+                            this.ctx.strokeStyle = mode === 'favorA'
+                                ? 'rgba(26,26,26,0.9)'
+                                : mode === 'favorB'
+                                    ? 'rgba(26,26,26,0.3)'
+                                    : 'rgba(26,26,26,0.6)';
+                            this.ctx.lineWidth = mode === 'favorA' ? 2 : 1;
+                            this.drawArrow(shape.x - 15, shape.y - 10, shape.x + 15, shape.y - 10, false);
+                            // Bottom arrow
+                            this.ctx.strokeStyle = mode === 'favorB'
+                                ? 'rgba(26,26,26,0.9)'
+                                : mode === 'favorA'
+                                    ? 'rgba(26,26,26,0.3)'
+                                    : 'rgba(26,26,26,0.6)';
+                            this.ctx.lineWidth = mode === 'favorB' ? 2 : 1;
+                            this.drawArrow(shape.x + 15, shape.y + 10, shape.x - 15, shape.y + 10, false);
+                        }
+                        break;
+
+                    case 'pattern':
+                        // Nested hexagons
+                        for (let i = 1; i <= 3; i++) {
+                            this.ctx.beginPath();
+                            for (let j = 0; j < 6; j++) {
+                                const angle = (j / 6) * Math.PI * 2;
+                                const x = shape.x + Math.cos(angle) * shape.radius * (i / 3);
+                                const y = shape.y + Math.sin(angle) * shape.radius * (i / 3);
+                                if (j === 0) this.ctx.moveTo(x, y);
+                                else this.ctx.lineTo(x, y);
+                            }
+                            this.ctx.closePath();
+                            this.ctx.stroke();
+                        }
+                        if (shape.tokens && shape.tokens.length) {
+                            for (const token of shape.tokens) {
+                                const tx = shape.x + Math.cos(token.angle) * token.radius;
+                                const ty = shape.y + Math.sin(token.angle) * token.radius;
+                                const boost = token.patternBoost || 0;
+                                const r = 1.6 + boost * 1.1;
+                                const alpha = 0.25 + boost * 0.45;
+                                this.ctx.beginPath();
+                                this.ctx.arc(tx, ty, r, 0, Math.PI * 2);
+                                this.ctx.fillStyle = `rgba(${shape.color}, ${Math.max(0, Math.min(1, alpha))})`;
+                                this.ctx.fill();
+                            }
+                        }
+                        break;
+
+                    case 'zero':
+                        // Center point
+                        this.ctx.beginPath();
+                        this.ctx.arc(shape.x, shape.y, 3, 0, Math.PI * 2);
+                        this.ctx.fill();
+                        this.ctx.stroke();
+                        
+                        // Outer ring
+                        this.ctx.beginPath();
+                        const t = Date.now() * 0.001 + (shape.pulsePhase || 0);
+                        const pulseR = shape.radius * (0.9 + 0.1 * Math.sin(t));
+                        this.ctx.arc(shape.x, shape.y, pulseR, 0, Math.PI * 2);
+                        this.ctx.strokeStyle = 'rgba(0,0,0,0.25)';
+                        this.ctx.lineWidth = 1;
+                        this.ctx.stroke();
+                        break;
+                }
+
+                // Label
+                this.ctx.fillStyle = '#1a1a1a';
+                let fontSize = 10;
+                let labelY = shape.y + shape.radius + 15;
+                if (shape.type === 'circle' && this.focus && this.focus.mode === 'circleDetail' && this.focus.shapeId === shape.id && this.focus.level > 0.3) {
+                    fontSize = 12;
+                    labelY = shape.y + 3;
+                }
+                this.ctx.font = `${fontSize}px monospace`;
+                this.ctx.textAlign = 'center';
+                this.ctx.fillText(shape.data.label, shape.x, labelY);
+
+                this.ctx.restore();
+            }
+
+            drawArrow(x1, y1, x2, y2, bidirectional) {
+                const headlen = 8;
+                const angle = Math.atan2(y2 - y1, x2 - x1);
+                
+                // Shaft
+                this.ctx.beginPath();
+                this.ctx.moveTo(x1, y1);
+                this.ctx.lineTo(x2, y2);
+                this.ctx.stroke();
+                
+                // Head
+                this.ctx.beginPath();
+                this.ctx.moveTo(x2, y2);
+                this.ctx.lineTo(x2 - headlen * Math.cos(angle - Math.PI/6), y2 - headlen * Math.sin(angle - Math.PI/6));
+                this.ctx.moveTo(x2, y2);
+                this.ctx.lineTo(x2 - headlen * Math.cos(angle + Math.PI/6), y2 - headlen * Math.sin(angle + Math.PI/6));
+                this.ctx.stroke();
+                
+                if (bidirectional) {
+                    // Back arrow
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(x1, y1);
+                    this.ctx.lineTo(x1 + headlen * Math.cos(angle - Math.PI/6), y1 + headlen * Math.sin(angle - Math.PI/6));
+                    this.ctx.moveTo(x1, y1);
+                    this.ctx.lineTo(x1 + headlen * Math.cos(angle + Math.PI/6), y1 + headlen * Math.sin(angle + Math.PI/6));
+                    this.ctx.stroke();
+                }
+            }
+
+            renderConnection(conn) {
+                this.ctx.save();
+                this.ctx.strokeStyle = 'rgba(0, 0, 0, 0.2)';
+                this.ctx.lineWidth = 1;
+                this.ctx.setLineDash([4, 4]);
+                
+                this.ctx.beginPath();
+                this.ctx.moveTo(conn.from.x, conn.from.y);
+                this.ctx.lineTo(conn.to.x, conn.to.y);
+                this.ctx.stroke();
+                this.ctx.restore();
+            }
+
+            addTradeEdge(fromCircleId, toCircleId, opts = {}) {
+                const from = this.shapes.get(fromCircleId);
+                const to = this.shapes.get(toCircleId);
+                if (!from || !to || from.type !== 'circle' || to.type !== 'circle') return null;
+                const edge = {
+                    id: Date.now() + Math.random(),
+                    fromId: fromCircleId,
+                    toId: toCircleId,
+                    flowRate: typeof opts.flowRate === 'number' ? opts.flowRate : 1,
+                    particles: []
+                };
+                const total = 18;
+                for (let i = 0; i < total; i++) {
+                    edge.particles.push({
+                        t: Math.random(),
+                        dir: i % 2 === 0 ? 1 : -1,
+                        speed: 0.15 + Math.random() * 0.1,
+                        seedBoost: 0
+                    });
+                }
+                this.tradeEdges.push(edge);
+                return edge;
+            }
+
+            renderTradeEdge(edge) {
+                const from = this.shapes.get(edge.fromId);
+                const to = this.shapes.get(edge.toId);
+                if (!from || !to) return;
+                const ax = from.x, ay = from.y, bx = to.x, by = to.y;
+
+                this.ctx.save();
+                const flowScale = edge.flowScale != null ? edge.flowScale : 1;
+                const bias = edge.bias != null ? edge.bias : 0.5;
+                const strength = Math.max(0, Math.min(1, (edge.flowRate || 0) * flowScale));
+                const choiceHighlight = this.getChoiceHighlight(edge);
+                this.ctx.strokeStyle = `rgba(0,0,0,${0.12 + 0.3 * strength})`;
+                this.ctx.lineWidth = 0.5 + 1.5 * strength;
+                this.ctx.setLineDash([3, 3]);
+                this.ctx.beginPath();
+                this.ctx.moveTo(ax, ay);
+                this.ctx.lineTo(bx, by);
+                this.ctx.stroke();
+                this.ctx.setLineDash([]);
+
+                if (choiceHighlight > 0) {
+                    const choiceColor = this.getShapeColor('choice');
+                    const alpha = Math.max(0, Math.min(1, 0.15 + 0.35 * choiceHighlight));
+                    this.ctx.strokeStyle = `rgba(${choiceColor}, ${alpha})`;
+                    this.ctx.lineWidth = 0.8 + 2.0 * choiceHighlight;
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(ax, ay);
+                    this.ctx.lineTo(bx, by);
+                    this.ctx.stroke();
+                }
+
+                const mx1x = ax + (bx - ax) * 0.3;
+                const mx1y = ay + (by - ay) * 0.3;
+                const mx2x = ax + (bx - ax) * 0.4;
+                const mx2y = ay + (by - ay) * 0.4;
+                this.ctx.strokeStyle = `rgba(26,26,26,${0.25 + 0.5 * bias})`;
+                this.ctx.lineWidth = 0.7 + 1.3 * bias * strength;
+                this.drawArrow(mx1x, mx1y, mx2x, mx2y, false);
+
+                const backBias = 1 - bias;
+                if (backBias > 0.05) {
+                    const bx2x = ax + (bx - ax) * 0.7;
+                    const bx2y = ay + (by - ay) * 0.7;
+                    const bx1x = ax + (bx - ax) * 0.6;
+                    const bx1y = ay + (by - ay) * 0.6;
+                    this.ctx.strokeStyle = `rgba(26,26,26,${0.18 + 0.4 * backBias})`;
+                    this.ctx.lineWidth = 0.5 + 1.0 * backBias * strength;
+                    this.drawArrow(bx2x, bx2y, bx1x, bx1y, false);
+                }
+
+                for (const p of edge.particles) {
+                    const t = Math.max(0, Math.min(1, p.t));
+                    const x = ax + (bx - ax) * t;
+                    const y = ay + (by - ay) * t;
+                    let boost = 0;
+                    for (const shape of this.shapes.values()) {
+                        if (shape.type !== 'pattern') continue;
+                        const dx = x - shape.x;
+                        const dy = y - shape.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist <= shape.radius) {
+                            boost = 1;
+                            break;
+                        }
+                    }
+                    const directionalBias = p.dir > 0 ? bias : 1 - bias;
+                    const seedBoost = p.seedBoost || 0;
+                    const radius = 1.4 + 2.0 * strength * directionalBias + boost * 1.0 + seedBoost * 1.2;
+                    const alphaBase = (0.2 + 0.5 * strength) * (0.3 + 0.7 * directionalBias);
+                    const alpha = alphaBase + boost * 0.3 + seedBoost * 0.4;
+                    const baseColor = p.dir > 0 ? '255, 171, 145' : '144, 202, 249';
+                    this.ctx.beginPath();
+                    this.ctx.arc(x, y, radius, 0, Math.PI * 2);
+                    this.ctx.fillStyle = `rgba(${baseColor}, ${Math.max(0, Math.min(1, alpha))})`;
+                    this.ctx.fill();
+                }
+                this.ctx.restore();
+            }
+
+            getEdgeFlowScale(edge) {
+                let scale = 1;
+                const from = this.shapes.get(edge.fromId);
+                const to = this.shapes.get(edge.toId);
+                if (!from || !to) return scale;
+                const ax = from.x, ay = from.y;
+                const bx = to.x, by = to.y;
+                const mx = (ax + bx) * 0.5;
+                const my = (ay + by) * 0.5;
+                for (const shape of this.shapes.values()) {
+                    if (shape.type !== 'zero') continue;
+                    const dx = mx - shape.x;
+                    const dy = my - shape.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist <= shape.radius) {
+                        scale = 0.4;
+                        break;
+                    }
+                }
+                return scale;
+            }
+
+            computeEdgeBias(edge, baseBalance) {
+                let bias = Math.max(0, Math.min(1, baseBalance));
+                for (const shape of this.shapes.values()) {
+                    if (shape.type !== 'choice' || !shape.edgePair) continue;
+                    const aId = shape.edgePair.aId;
+                    const bId = shape.edgePair.bId;
+                    if (!aId && !bId) continue;
+                    const matchesA = aId && edge.id === aId;
+                    const matchesB = bId && edge.id === bId;
+                    if (!matchesA && !matchesB) continue;
+                    if (shape.mode === 'favorA') {
+                        bias = matchesA ? 0.9 : 0.1;
+                    } else if (shape.mode === 'favorB') {
+                        bias = matchesB ? 0.9 : 0.1;
+                    } else if (shape.mode === 'split') {
+                        bias = 0.5;
+                    }
+                    break;
+                }
+                return bias;
+            }
+
+            getChoiceHighlight(edge) {
+                let highlight = 0;
+                for (const shape of this.shapes.values()) {
+                    if (shape.type !== 'choice' || !shape.edgePair) continue;
+                    const aId = shape.edgePair.aId;
+                    const bId = shape.edgePair.bId;
+                    if (!aId && !bId) continue;
+                    const matchesA = aId && edge.id === aId;
+                    const matchesB = bId && edge.id === bId;
+                    if (!matchesA && !matchesB) continue;
+                    if (shape.mode === 'favorA') {
+                        highlight = matchesA ? 1 : 0.4;
+                    } else if (shape.mode === 'favorB') {
+                        highlight = matchesB ? 1 : 0.4;
+                    } else {
+                        highlight = 0.7;
+                    }
+                    break;
+                }
+                return Math.max(0, Math.min(1, highlight));
+            }
+
+            update(dt, params) {
+                if (!this.focus) {
+                    this.focus = { mode: 'none', shapeId: null, level: 0 };
+                }
+                if (this.focus.shapeId && !this.shapes.has(this.focus.shapeId)) {
+                    this.focus.mode = 'none';
+                    this.focus.shapeId = null;
+                }
+                const targetFocus = (this.focus.mode === 'none' || !this.focus.shapeId) ? 0 : 1;
+                this.focus.level += (targetFocus - this.focus.level) * 4 * dt;
+                this.focus.level = Math.max(0, Math.min(1, this.focus.level));
+
+                const baseBoundary = params.boundary ?? 0.7;
+                const baseFlow = params.flow ?? 0.6;
+                const baseBalance = params.balance ?? 0.5;
+
+                // Trade edges: move energy and particles
+                for (const edge of this.tradeEdges) {
+                    const from = this.shapes.get(edge.fromId);
+                    const to = this.shapes.get(edge.toId);
+                    if (!from || !to) continue;
+                    const flowScale = this.getEdgeFlowScale(edge);
+                    const flowBase = 0.25 * edge.flowRate * baseFlow * dt * flowScale;
+                    const bias = this.computeEdgeBias(edge, baseBalance);
+                    edge.flowScale = flowScale;
+                    edge.bias = bias;
+                    const forwardCount = Math.round(edge.particles.length * bias);
+                    for (let i = 0; i < edge.particles.length; i++) {
+                        edge.particles[i].dir = i < forwardCount ? 1 : -1;
+                    }
+                    const outFT = flowBase * bias;
+                    const outTF = flowBase * (1 - bias);
+                    if (from.heart && to.heart) {
+                        from.heart.energy = Math.max(0, Math.min(1, from.heart.energy - outFT + outTF * 0.8));
+                        to.heart.energy = Math.max(0, Math.min(1, to.heart.energy - outTF + outFT * 0.8));
+                    }
+                    for (const p of edge.particles) {
+                        const v = (p.speed) * baseFlow * dt * (edge.flowRate) * flowScale;
+                        p.t += v * (p.dir > 0 ? 1 : -1);
+                        if (p.t > 1) p.t = 0;
+                        if (p.t < 0) p.t = 1;
+                    }
+                }
+
+                // Circles: natural decay and visual coupling
+                for (const shape of this.shapes.values()) {
+                    if (shape.type === 'circle' && shape.heart) {
+                        shape.heart.energy = Math.max(0, Math.min(1, shape.heart.energy - 0.02 * dt));
+                        const e = shape.heart.energy;
+                        shape.boundaryOpacity = 0.25 + 0.75 * e * baseBoundary;
+                        shape.fillOpacity = 0.05 + 0.25 * e;
+                    }
+                }
+
+                // Seeds: grow off attached circles and germinate new circles
+                for (const shape of this.shapes.values()) {
+                    if (shape.type !== 'seed' || shape.germinated) continue;
+                    const circle = shape.attachedCircleId ? this.shapes.get(shape.attachedCircleId) : null;
+                    const energy = circle && circle.heart ? circle.heart.energy : 0;
+                    const growthRate = 0.4 * baseFlow;
+                    shape.growth = Math.max(0, Math.min(1, shape.growth + energy * growthRate * dt));
+                    if (shape.growth >= 1 && circle) {
+                        const angle = Math.random() * Math.PI * 2;
+                        const dist = circle.radius * 1.8;
+                        const nx = circle.x + Math.cos(angle) * dist;
+                        const ny = circle.y + Math.sin(angle) * dist;
+                        const newCircle = this.createShape('circle', nx, ny, { label: 'CIRCLE', axiom: 'circle' });
+                        if (newCircle.heart) {
+                            newCircle.heart.energy = Math.max(0.2, circle.heart.energy * 0.6);
+                        }
+                        this.addTradeEdge(circle.id, newCircle.id, { flowRate: 0.8 });
+                        shape.germinated = true;
+                    }
+                }
+
+                const seedDriven = [];
+                for (const shape of this.shapes.values()) {
+                    if (shape.type === 'seed' && shape.attachedCircleId) {
+                        seedDriven.push(shape);
+                    }
+                }
+                if (seedDriven.length && this.tradeEdges.length) {
+                    for (const seed of seedDriven) {
+                        const attachedId = seed.attachedCircleId;
+                        const power = Math.max(0, Math.min(1, seed.growth ?? 0));
+                        if (power <= 0) continue;
+                        const injectionsPerFrame = 1 + Math.floor(2 * power * baseFlow);
+                        for (const edge of this.tradeEdges) {
+                            if (edge.fromId !== attachedId && edge.toId !== attachedId) continue;
+                            const injectionDir = edge.fromId === attachedId ? 1 : -1;
+                            for (let n = 0; n < injectionsPerFrame; n++) {
+                                const p = edge.particles[Math.floor(Math.random() * edge.particles.length)];
+                                if (!p) continue;
+                                p.dir = injectionDir;
+                                p.t = injectionDir > 0 ? 0.02 * Math.random() : 1 - 0.02 * Math.random();
+                                p.seedBoost = 1;
+                            }
+                        }
+                    }
+                }
+
+                // Heart nodes: measure inequality and gently redistribute
+                for (const shape of this.shapes.values()) {
+                    if (shape.type !== 'heart') continue;
+                    const neighborCircles = [];
+                    for (const s of this.shapes.values()) {
+                        if (s.type !== 'circle' || !s.heart) continue;
+                        const dx = s.x - shape.x;
+                        const dy = s.y - shape.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist <= shape.radius * 2.2) {
+                            neighborCircles.push(s);
+                        }
+                    }
+                    if (neighborCircles.length >= 2) {
+                        let sum = 0;
+                        for (const c of neighborCircles) sum += c.heart.energy;
+                        const mean = sum / neighborCircles.length;
+                        let varSum = 0;
+                        for (const c of neighborCircles) {
+                            const diff = c.heart.energy - mean;
+                            varSum += diff * diff;
+                        }
+                        const variance = varSum / neighborCircles.length;
+                        shape.inequality = Math.max(0, Math.min(1, variance));
+
+                        // Soft redistribution toward local mean
+                        const k = 0.4 * baseBalance;
+                        for (const c of neighborCircles) {
+                            const delta = (mean - c.heart.energy) * k * dt;
+                            c.heart.energy = Math.max(0, Math.min(1, c.heart.energy + delta));
+                        }
+                    } else {
+                        shape.inequality = 0;
+                    }
+                }
+
+                // Zero zones: gently drain circles inside radius
+                for (const shape of this.shapes.values()) {
+                    if (shape.type !== 'zero') continue;
+                    for (const c of this.shapes.values()) {
+                        if (c.type !== 'circle' || !c.heart) continue;
+                        const dx = c.x - shape.x;
+                        const dy = c.y - shape.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist <= shape.radius) {
+                            const drainRate = 0.6 * baseBoundary;
+                            c.heart.energy = Math.max(0, c.heart.energy - drainRate * dt);
+                        }
+                    }
+                }
+
+                for (const shape of this.shapes.values()) {
+                    if (shape.type !== 'seed' || !shape.seedTokens) continue;
+                    for (const token of shape.seedTokens) {
+                        const speed = token.speed || 0.3;
+                        token.t = (token.t + speed * baseFlow * dt) % 1;
+                    }
+                }
+
+                for (const edge of this.tradeEdges) {
+                    for (const p of edge.particles) {
+                        if (!p.seedBoost) continue;
+                        p.seedBoost = Math.max(0, p.seedBoost - 1.5 * dt);
+                    }
+                }
+
+                const patternShapes = [];
+                for (const s of this.shapes.values()) {
+                    if (s.type === 'pattern') {
+                        patternShapes.push(s);
+                    }
+                }
+                for (const shape of this.shapes.values()) {
+                    if (!shape.tokens || !shape.tokens.length) continue;
+                    for (const token of shape.tokens) {
+                        token.angle += token.speed * dt;
+                        const tx = shape.x + Math.cos(token.angle) * token.radius;
+                        const ty = shape.y + Math.sin(token.angle) * token.radius;
+                        let boosted = false;
+                        for (const p of patternShapes) {
+                            const dx = tx - p.x;
+                            const dy = ty - p.y;
+                            const dist = Math.sqrt(dx * dx + dy * dy);
+                            if (dist <= p.radius) {
+                                boosted = true;
+                                break;
+                            }
+                        }
+                        const target = boosted ? 1 : 0;
+                        const current = token.patternBoost || 0;
+                        const next = current + (target - current) * 4 * dt;
+                        token.patternBoost = Math.max(0, Math.min(1, next));
+                    }
+                }
+            }
+
+            connectShapes(fromId, toId) {
+                const from = this.shapes.get(fromId);
+                const to = this.shapes.get(toId);
+                if (from && to) {
+                    this.connections.push({ from, to });
+                }
+            }
+
+            getShapeAt(x, y) {
+                for (const shape of this.shapes.values()) {
+                    const dx = x - shape.x;
+                    const dy = y - shape.y;
+                    if (Math.sqrt(dx * dx + dy * dy) < shape.radius) {
+                        return shape;
+                    }
+                }
+                return null;
+            }
+
+            clear() {
+                this.shapes.clear();
+                this.connections = [];
+            }
+        }
+
+        // MAIN APPLICATION
+        class GeometricThinkingApp {
+            constructor() {
+                console.log('GeometricThinkingApp initializing...');
+                this.canvas = document.getElementById('thinking-canvas');
+                
+                // EMERGENCY CHECK: If canvas doesn't exist, create it
+                if (!this.canvas) {
+                    console.error('CANVAS NOT FOUND IN DOM!');
+                    const emergencyCanvas = document.createElement('canvas');
+                    emergencyCanvas.id = 'thinking-canvas';
+                    emergencyCanvas.style.width = '100%';
+                    emergencyCanvas.style.height = '100%';
+                    emergencyCanvas.style.background = 'white';
+                    document.querySelector('main').appendChild(emergencyCanvas);
+                    this.canvas = emergencyCanvas;
+                }
+                
+                this.ctx = this.canvas.getContext('2d');
+                console.log('Canvas context:', this.ctx);
+                
+                this.renderer = new ShapeRenderer(this.ctx);
+                this.state = { selectedShape: null, isDragging: false, dragOffset: { x: 0, y: 0 }, tradeFromCircleId: null, contextShape: null };
+                this.params = { boundary: 0.7, flow: 0.6, balance: 0.5 };
+                this._lastTs = performance.now();
+                this.setupCanvas();
+                this.setupEventListeners();
+            }
+        }
+    }
+}
+
+// Heart nodes: measure inequality and gently redistribute
+for (const shape of this.shapes.values()) {
+    if (shape.type !== 'heart') continue;
+    const neighborCircles = [];
+    for (const s of this.shapes.values()) {
+        if (s.type !== 'circle' || !s.heart) continue;
+        const dx = s.x - shape.x;
+        const dy = s.y - shape.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist <= shape.radius * 2.2) {
+            neighborCircles.push(s);
+        }
+    }
+    if (neighborCircles.length >= 2) {
+        let sum = 0;
+        for (const c of neighborCircles) sum += c.heart.energy;
+        const mean = sum / neighborCircles.length;
+        let varSum = 0;
+        for (const c of neighborCircles) {
+            const diff = c.heart.energy - mean;
+            varSum += diff * diff;
+        }
+        const variance = varSum / neighborCircles.length;
+        shape.inequality = Math.max(0, Math.min(1, variance));
+
+        // Soft redistribution toward local mean
+        const k = 0.4 * baseBalance;
+        for (const c of neighborCircles) {
+            const delta = (mean - c.heart.energy) * k * dt;
+            c.heart.energy = Math.max(0, Math.min(1, c.heart.energy + delta));
+        }
+    } else {
+        shape.inequality = 0;
+    }
+}
+
+// Zero zones: gently drain circles inside radius
+for (const shape of this.shapes.values()) {
+    if (shape.type !== 'zero') continue;
+    for (const c of this.shapes.values()) {
+        if (c.type !== 'circle' || !c.heart) continue;
+        const dx = c.x - shape.x;
+        const dy = c.y - shape.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist <= shape.radius) {
+            const drainRate = 0.6 * baseBoundary;
+            c.heart.energy = Math.max(0, c.heart.energy - drainRate * dt);
+        }
+    }
+}
+
+for (const shape of this.shapes.values()) {
+    if (shape.type !== 'seed' || !shape.seedTokens) continue;
+    for (const token of shape.seedTokens) {
+        const speed = token.speed || 0.3;
+        token.t = (token.t + speed * baseFlow * dt) % 1;
+    }
+}
+
+for (const edge of this.tradeEdges) {
+    for (const p of edge.particles) {
+        if (!p.seedBoost) continue;
+        p.seedBoost = Math.max(0, p.seedBoost - 1.5 * dt);
+    }
+}
+
+const patternShapes = [];
+for (const s of this.shapes.values()) {
+    if (s.type === 'pattern') {
+        patternShapes.push(s);
+    }
+}
+for (const shape of this.shapes.values()) {
+    if (!shape.tokens || !shape.tokens.length) continue;
+    for (const token of shape.tokens) {
+        token.angle += token.speed * dt;
+        const tx = shape.x + Math.cos(token.angle) * token.radius;
+        const ty = shape.y + Math.sin(token.angle) * token.radius;
+        let boosted = false;
+        for (const p of patternShapes) {
+            const dx = tx - p.x;
+            const dy = ty - p.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist <= p.radius) {
+                boosted = true;
+                break;
+            }
+        }
+        const target = boosted ? 1 : 0;
+        const current = token.patternBoost || 0;
+        const next = current + (target - current) * 4 * dt;
+        token.patternBoost = Math.max(0, Math.min(1, next));
+    }
+}
+}
+
+connectShapes(fromId, toId) {
+    const from = this.shapes.get(fromId);
+    const to = this.shapes.get(toId);
+    if (from && to) {
+        this.connections.push({ from, to });
+    }
+}
+
+getShapeAt(x, y) {
+    for (const shape of this.shapes.values()) {
+        const dx = x - shape.x;
+        const dy = y - shape.y;
+        if (Math.sqrt(dx * dx + dy * dy) < shape.radius) {
+            return shape;
+        }
+    }
+    return null;
+}
+
+clear() {
+    this.shapes.clear();
+    this.connections = [];
+}
+}
+
+// MAIN APPLICATION
+class GeometricThinkingApp {
+constructor() {
+    console.log('GeometricThinkingApp initializing...');
+    this.canvas = document.getElementById('thinking-canvas');
+    
+    // EMERGENCY CHECK: If canvas doesn't exist, create it
+    if (!this.canvas) {
+        console.error('CANVAS NOT FOUND IN DOM!');
+        const emergencyCanvas = document.createElement('canvas');
+        emergencyCanvas.id = 'thinking-canvas';
+        emergencyCanvas.style.width = '100%';
+        emergencyCanvas.style.height = '100%';
+        emergencyCanvas.style.background = 'white';
+        document.querySelector('main').appendChild(emergencyCanvas);
+        this.canvas = emergencyCanvas;
+    }
+    
+    this.ctx = this.canvas.getContext('2d');
+    console.log('Canvas context:', this.ctx);
+    
+    this.renderer = new ShapeRenderer(this.ctx);
+    this.state = { selectedShape: null, isDragging: false, dragOffset: { x: 0, y: 0 }, tradeFromCircleId: null, contextShape: null };
+    this.params = { boundary: 0.7, flow: 0.6, balance: 0.5 };
+    this._lastTs = performance.now();
+    this.setupCanvas();
+    this.setupEventListeners();
+    this.setupContextMenu();
+    this.initializeDefaultShapes();
+    this.animate();
+    
+    console.log('Application fully initialized');
+    this.updateSceneInfo('');
+    document.getElementById('debugInfo').textContent = 'Canvas: Ready - Shapes: ' + this.renderer.shapes.size;
+}
+
+setupContextMenu() {
+    const menu = document.createElement('div');
+    menu.id = 'context-menu';
+    menu.className = 'context-menu';
+    menu.innerHTML = `
+        <button data-action="export">Export image</button>
+        <button data-action="clear-focus">Clear focus</button>
+    `;
+    document.body.appendChild(menu);
+    this.contextMenuEl = menu;
+
+    menu.addEventListener('click', (e) => {
+        const target = e.target;
+        if (!(target instanceof HTMLElement)) return;
+        const action = target.getAttribute('data-action');
+        if (action === 'export') {
+            this.exportImage();
+        } else if (action === 'clear-focus') {
+            this.renderer.setFocus('none', null);
+        }
+        this.hideContextMenu();
+    });
+                for (const edge of this.renderer.tradeEdges) {
+                    if (edge.fromId === center.id || edge.toId === center.id) {
+                        attachedEdges.push(edge);
+                    }
+                }
+                if (!attachedEdges.length) return;
+                const aEdge = attachedEdges[0];
+                const bEdge = attachedEdges[1] || null;
+                choiceShape.edgePair = { aId: aEdge.id, bId: bEdge ? bEdge.id : null };
+            }
+
+            cycleChoiceMode(choiceShape) {
+                const current = choiceShape.mode || 'split';
+                if (current === 'split') {
+                    choiceShape.mode = 'favorA';
+                } else if (current === 'favorA') {
+                    choiceShape.mode = 'favorB';
+                } else {
+                    choiceShape.mode = 'split';
+                }
+            }
+
+            updateSceneInfo(sceneId) {
+                const el = document.getElementById('sceneInfo');
+                if (!el) return;
+                if (!sceneId) {
+                    el.textContent = 'Scene: Manual - Draw shapes with the tools above. Moving dots show how flows move.';
+                    return;
+                }
+                const def = SCENE_DEFINITIONS[sceneId];
+                if (!def) {
+                    el.textContent = 'Scene: ' + sceneId;
+                    return;
+                }
+                el.textContent = 'Scene: ' + def.label + ' - ' + def.description;
+            }
+
+            handleSceneChange(sceneId) {
+                if (!sceneId) {
+                    this.resetScene();
+                    this.updateSceneInfo('');
+                    return;
+                }
+                const def = SCENE_DEFINITIONS[sceneId];
+                if (!def) {
+                    this.updateSceneInfo('');
+                    return;
+                }
+                if (def.config) {
+                    this.assembleSceneFromConfig(def);
+                } else if (def.assembler) {
+                    const fn = this[def.assembler];
+                    if (typeof fn === 'function') {
+                        fn.call(this);
+                    }
+                }
+                this.updateSceneInfo(sceneId);
+            }
+
+            assembleSceneFromConfig(def) {
+                const cfg = def && def.config;
+                if (!cfg) return;
+                this.clearScene();
+
+                const rect = this.canvas.getBoundingClientRect();
+                const w = rect.width;
+                const h = rect.height;
+                const r = this.renderer;
+
+                if (cfg.params) {
+                    this.params.boundary = cfg.params.boundary ?? this.params.boundary;
+                    this.params.flow = cfg.params.flow ?? this.params.flow;
+                    this.params.balance = cfg.params.balance ?? this.params.balance;
+                }
+
+                const idMap = {};
+                const choicesToAttach = [];
+                if (Array.isArray(cfg.shapes)) {
+                    for (const spec of cfg.shapes) {
+                        const relX = typeof spec.relX === 'number' ? spec.relX : 0.5;
+                        const relY = typeof spec.relY === 'number' ? spec.relY : 0.5;
+                        const x = spec.x != null ? spec.x : w * relX;
+                        const y = spec.y != null ? spec.y : h * relY;
+                        const shape = r.createShape(spec.type, x, y, {
+                            label: spec.label || spec.type.toUpperCase(),
+                            axiom: spec.axiom || def.module
+                        });
+                        if (typeof spec.radius === 'number') {
+                            shape.radius = spec.radius;
+                        }
+                        if (typeof spec.heartEnergy === 'number' && shape.heart) {
+                            shape.heart.energy = spec.heartEnergy;
+                        }
+                        idMap[spec.id] = shape.id;
+                        if (spec.attachSeedToNearest && spec.type === 'seed') {
+                            this.attachSeedToNearestCircle(shape);
+                        }
+                        if (spec.attachChoiceToNearest && spec.type === 'choice') {
+                            choicesToAttach.push(shape);
+                        }
+                    }
+                }
+
+                if (Array.isArray(cfg.edges)) {
+                    for (const edge of cfg.edges) {
+                        const fromId = idMap[edge.from];
+                        const toId = idMap[edge.to];
+                        if (!fromId || !toId) continue;
+                        r.addTradeEdge(fromId, toId, { flowRate: edge.flowRate ?? 1 });
+                    }
+                }
+
+                if (choicesToAttach.length) {
+                    for (const choice of choicesToAttach) {
+                        this.attachChoiceToNearestPair(choice);
+                    }
+                }
+
+                if (cfg.focus && cfg.focus.mode) {
+                    const targetKey = cfg.focus.target;
+                    const mappedId = targetKey ? idMap[targetKey] : null;
+                    this.renderer.setFocus(cfg.focus.mode, mappedId || null);
+                } else {
+                    this.renderer.setFocus('none', null);
+                }
+            }
+
+            handleMouseDown(e) {
+                const rect = this.canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const activeTool = document.querySelector('.shape-tool.active')?.dataset.shape;
+
+                if (activeTool === 'trade') {
+                    const circle = this.getCircleAt(x, y);
+                    if (circle) {
+                        if (!this.state.tradeFromCircleId) {
+                            this.state.tradeFromCircleId = circle.id;
+                        } else if (this.state.tradeFromCircleId !== circle.id) {
+                            this.renderer.addTradeEdge(this.state.tradeFromCircleId, circle.id, { flowRate: 1 });
+                            this.state.tradeFromCircleId = null;
+                        } else {
+                            this.state.tradeFromCircleId = null;
+                        }
+                    }
+                    return;
+                }
+
+                let clickedShape = this.renderer.getShapeAt(x, y);
+                
+                if (clickedShape && clickedShape.type === 'choice' && activeTool === 'choice') {
+                    this.cycleChoiceMode(clickedShape);
+                    return;
+                }
+
+                if (clickedShape) {
+                    console.log('Clicked shape:', clickedShape.data.label);
+                } else if (activeTool) {
+                    console.log('Creating new shape:', activeTool, 'at', x, y);
+                    const shape = this.renderer.createShape(activeTool, x, y, { 
+                        label: activeTool.toUpperCase(), 
+                        axiom: activeTool 
+                    });
+                    if (activeTool === 'seed') {
+                        this.attachSeedToNearestCircle(shape);
+                    }
+                    if (activeTool === 'choice') {
+                        this.attachChoiceToNearestPair(shape);
+                    }
+                    if (activeTool === 'heart') {
+                        const nearest = this.getNearestCircles({ x, y }, 1);
+                        if (nearest.length > 0) {
+                            this.renderer.setFocus('circleDetail', nearest[0].id);
+                        }
+                    }
+                    if (activeTool === 'pattern') {
+                        this.renderer.setFocus('patternOverview', shape.id);
+                    }
+                    if (activeTool === 'zero') {
+                        this.renderer.setFocus('none', null);
+                    }
+                    clickedShape = shape;
+                }
+
+                this.state.selectedShape = clickedShape;
+                this.state.isDragging = true;
+                this.state.dragOffset = clickedShape ? 
+                    { x: x - clickedShape.x, y: y - clickedShape.y } : 
+                    { x: 0, y: 0 };
+            }
+
+            handleMouseMove(e) {
+                const rect = this.canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                if (this.state.isDragging && this.state.selectedShape) {
+                    this.state.selectedShape.x = x - this.state.dragOffset.x;
+                    this.state.selectedShape.y = y - this.state.dragOffset.y;
+                }
+
+                const hovered = this.renderer.getShapeAt(x, y);
+                this.canvas.style.cursor = hovered ? 'move' : 'crosshair';
+            }
+
+            handleMouseUp() {
+                this.state.isDragging = false;
+            }
+
+            resetScene() {
+                console.log('Resetting scene...');
+                this.clearScene();
+                this.initializeDefaultShapes();
+                this.updateSceneInfo('');
+            }
+
+            exportImage() {
+                try {
+                    const dataUrl = this.canvas.toDataURL('image/png');
+                    const link = document.createElement('a');
+                    link.href = dataUrl;
+                    link.download = `tractor-scene-${Date.now()}.png`;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                } catch (err) {
+                    console.error('Export image failed:', err);
+                }
+            }
+
+            clearScene() {
+                this.renderer.clear();
+                this.renderer.tradeEdges = [];
+                this.renderer.focus = { mode: 'none', shapeId: null, level: 0 };
+                this.state.tradeFromCircleId = null;
+            }
+
+            assembleCircleModuleScene() {
+                this.clearScene();
+                const rect = this.canvas.getBoundingClientRect();
+                const cx = rect.width * 0.5;
+                const cy = rect.height * 0.5;
+                const r = this.renderer;
+
+                const world = r.createShape('circle', cx, cy, { label: 'WORLD', axiom: 'circle-1.0' });
+                world.radius = 150;
+
+                const usA = r.createShape('circle', cx - 90, cy - 40, { label: 'US A', axiom: 'circle-1.2-us' });
+                const usB = r.createShape('circle', cx + 70, cy + 20, { label: 'US B', axiom: 'circle-1.2-us' });
+                const themA = r.createShape('circle', cx - 220, cy, { label: 'THEM A', axiom: 'circle-1.2-them' });
+
+                this.params.boundary = 0.8;
+                this.params.flow = 0.55;
+                this.params.balance = 0.5;
+
+                r.addTradeEdge(usA.id, usB.id, { flowRate: 1 });
+
+                const pattern = r.createShape('pattern', cx, cy - 10, { label: 'PATTERN', axiom: 'circle-1.4' });
+                const zero = r.createShape('zero', cx + 260, cy + 40, { label: 'ZERO', axiom: 'circle-1.7' });
+
+                this.renderer.setFocus('none', null);
+            }
+
+            assembleTradeModuleScene() {
+                this.clearScene();
+                const rect = this.canvas.getBoundingClientRect();
+                const cx = rect.width * 0.5;
+                const cy = rect.height * 0.5;
+                const r = this.renderer;
+
+                const left = r.createShape('circle', cx - 140, cy, { label: 'GIVER', axiom: 'trade-2.x' });
+                const right = r.createShape('circle', cx + 140, cy, { label: 'RECEIVER', axiom: 'trade-2.x' });
+                const edge = r.addTradeEdge(left.id, right.id, { flowRate: 1 });
+
+                const choice = r.createShape('choice', cx, cy, { label: 'CHOICE', axiom: 'trade-5.x' });
+                this.attachChoiceToNearestPair(choice);
+
+                const heart = r.createShape('heart', cx, cy - 120, { label: 'HEART', axiom: 'trade-2.3' });
+                const seed = r.createShape('seed', cx, cy + 120, { label: 'SEED', axiom: 'trade-2.5' });
+                this.attachSeedToNearestCircle(seed);
+
+                this.params.flow = 0.7;
+                this.params.balance = 0.5;
+                this.renderer.setFocus('none', null);
+            }
+
+            assembleHeartModuleScene() {
+                this.clearScene();
+                const rect = this.canvas.getBoundingClientRect();
+                const cx = rect.width * 0.5;
+                const cy = rect.height * 0.5;
+                const r = this.renderer;
+
+                const c1 = r.createShape('circle', cx - 140, cy - 40, { label: 'NODE A', axiom: 'heart-3.x' });
+                const c2 = r.createShape('circle', cx + 120, cy - 30, { label: 'NODE B', axiom: 'heart-3.x' });
+                const c3 = r.createShape('circle', cx - 40, cy + 130, { label: 'NODE C', axiom: 'heart-3.x' });
+
+                c1.heart.energy = 0.9;
+                c2.heart.energy = 0.3;
+                c3.heart.energy = 0.5;
+
+                r.addTradeEdge(c1.id, c2.id, { flowRate: 0.8 });
+                r.addTradeEdge(c2.id, c3.id, { flowRate: 0.6 });
+
+                const heart = r.createShape('heart', cx, cy + 10, { label: 'HEART', axiom: 'heart-3.0' });
+
+                this.params.flow = 0.6;
+                this.params.balance = 0.6;
+                this.renderer.setFocus('circleDetail', c1.id);
+            }
+
+            assembleSeedModuleScene() {
+                this.clearScene();
+                const rect = this.canvas.getBoundingClientRect();
+                const cx = rect.width * 0.5;
+                const cy = rect.height * 0.5;
+                const r = this.renderer;
+
+                const base = r.createShape('circle', cx - 80, cy, { label: 'SOURCE', axiom: 'seed-4.x' });
+                base.heart.energy = 0.8;
+
+                const seed = r.createShape('seed', cx - 20, cy + 60, { label: 'SEED', axiom: 'seed-4.4' });
+                this.attachSeedToNearestCircle(seed);
+
+                const pattern = r.createShape('pattern', cx + 160, cy, { label: 'PATTERN', axiom: 'seed-4.5' });
+
+                this.params.flow = 0.7;
+                this.params.balance = 0.5;
+                this.renderer.setFocus('patternOverview', pattern.id);
+            }
+
+            assembleChoiceModuleScene() {
+                this.clearScene();
+                const rect = this.canvas.getBoundingClientRect();
+                const cx = rect.width * 0.5;
+                const cy = rect.height * 0.5;
+                const r = this.renderer;
+
+                const inner = r.createShape('circle', cx, cy, { label: 'ACTOR', axiom: 'choice-5.0' });
+                const outerLeft = r.createShape('circle', cx - 200, cy - 80, { label: 'OUT', axiom: 'choice-5.1' });
+                const outerRight = r.createShape('circle', cx + 200, cy + 80, { label: 'IN', axiom: 'choice-5.2' });
+
+                r.addTradeEdge(inner.id, outerLeft.id, { flowRate: 0.8 });
+                r.addTradeEdge(inner.id, outerRight.id, { flowRate: 0.8 });
+
+                const choice = r.createShape('choice', cx + 40, cy + 10, { label: 'CHOICE', axiom: 'choice-5.x' });
+                this.attachChoiceToNearestPair(choice);
+
+                this.params.flow = 0.65;
+                this.params.balance = 0.5;
+                this.renderer.setFocus('circleDetail', inner.id);
+            }
+
+            assemblePatternModuleScene() {
+                this.clearScene();
+                const rect = this.canvas.getBoundingClientRect();
+                const cx = rect.width * 0.5;
+                const cy = rect.height * 0.5;
+                const r = this.renderer;
+
+                const a = r.createShape('circle', cx - 80, cy - 60, { label: 'A', axiom: 'pattern-6.x' });
+                const b = r.createShape('circle', cx + 80, cy - 60, { label: 'B', axiom: 'pattern-6.x' });
+                const c = r.createShape('circle', cx, cy + 80, { label: 'C', axiom: 'pattern-6.x' });
+
+                r.addTradeEdge(a.id, b.id, { flowRate: 0.7 });
+                r.addTradeEdge(b.id, c.id, { flowRate: 0.7 });
+                r.addTradeEdge(c.id, a.id, { flowRate: 0.7 });
+
+                const pattern = r.createShape('pattern', cx, cy, { label: 'PATTERN', axiom: 'pattern-6.0' });
+
+                this.params.flow = 0.8;
+                this.params.balance = 0.5;
+                this.renderer.setFocus('patternOverview', pattern.id);
+            }
+
+            assembleZeroModuleScene() {
+                this.clearScene();
+                const rect = this.canvas.getBoundingClientRect();
+                const cx = rect.width * 0.5;
+                const cy = rect.height * 0.5;
+                const r = this.renderer;
+
+                const inner = r.createShape('circle', cx - 80, cy, { label: 'SYSTEM', axiom: 'zero-7.0' });
+                inner.heart.energy = 0.9;
+                const outer1 = r.createShape('circle', cx + 140, cy - 80, { label: 'NODE 1', axiom: 'zero-7.1' });
+                const outer2 = r.createShape('circle', cx + 190, cy + 60, { label: 'NODE 2', axiom: 'zero-7.1' });
+
+                r.addTradeEdge(inner.id, outer1.id, { flowRate: 0.9 });
+                r.addTradeEdge(inner.id, outer2.id, { flowRate: 0.9 });
+
+                const zero = r.createShape('zero', cx + 40, cy, { label: 'ZERO POINT', axiom: 'zero-7.0' });
+
+                this.params.flow = 0.6;
+                this.params.balance = 0.5;
+                this.renderer.setFocus('none', null);
+            }
+
+            toggleAnimation() {
+                this.renderer.isRunning = !this.renderer.isRunning;
+                const btn = document.getElementById('pauseBtn');
+                btn.textContent = this.renderer.isRunning ? 'Pause' : 'Resume';
+                if (this.renderer.isRunning) this.animate();
+            }
+
+            animate() {
+                const now = performance.now();
+                const dt = Math.max(0.001, Math.min(0.05, (now - this._lastTs) / 1000));
+                this._lastTs = now;
+                this.renderer.update(dt, this.params);
+                this.renderer.render();
+                document.getElementById('debugInfo').textContent = `Canvas: Ready • Circles: ${Array.from(this.renderer.shapes.values()).filter(s=>s.type==='circle').length} • Trades: ${this.renderer.tradeEdges.length}`;
+                if (this.renderer.isRunning) {
+                    requestAnimationFrame(() => this.animate());
+                }
+            }
+        }
+
+        // EMERGENCY FALLBACK: If DOM isn't ready, wait
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                console.log('DOM ready, initializing app...');
+                window.tractorApp = new GeometricThinkingApp();
+            });
+        } else {
+            console.log('DOM already ready, initializing immediately...');
+            window.tractorApp = new GeometricThinkingApp();
+        }
+    </script>
+</body>
+</html>

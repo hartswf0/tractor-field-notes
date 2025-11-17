@@ -1,0 +1,2512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRACTOR FOLKOLOGICUS — Folk System Axioms</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #e8e4dc;
+            color: #1a1a1a;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: #f5f3ed;
+            border: 3px solid #1a1a1a;
+            padding: 30px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: bold;
+            letter-spacing: 8px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            letter-spacing: 3px;
+            color: #666;
+        }
+
+        .pattern-overview {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .pattern-tab {
+            background: #f5f3ed;
+            border: 3px solid #1a1a1a;
+            padding: 15px 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .pattern-tab:hover {
+            background: #fff;
+            transform: translateY(-3px);
+        }
+
+        .pattern-tab.coda {
+            background: #1a1a1a;
+            color: #e8e4dc;
+        }
+
+        .pattern-tab.coda:hover {
+            background: #333;
+        }
+
+        .axiom-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .axiom-section {
+            background: #f5f3ed;
+            border: 3px solid #1a1a1a;
+            padding: 20px;
+            position: relative;
+        }
+
+        .axiom-header {
+            display: flex;
+            align-items: baseline;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #1a1a1a;
+            position: relative;
+        }
+
+        .axiom-number {
+            font-size: 32px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .axiom-title {
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .axiom-zero {
+            background: #1a1a1a;
+            color: #e8e4dc;
+            padding: 10px 12px;
+            margin-bottom: 10px;
+            font-size: 12px;
+            line-height: 1.5;
+            font-weight: bold;
+        }
+
+        .axiom-list {
+            display: grid;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .axiom-item {
+            background: #e8e4dc;
+            border: 2px solid #1a1a1a;
+            padding: 8px 10px;
+            font-size: 11px;
+            line-height: 1.5;
+            transition: all 0.15s;
+        }
+
+        .axiom-item:hover {
+            background: #fff;
+            transform: translateX(3px);
+        }
+
+        .axiom-ref {
+            font-weight: bold;
+            color: #1a1a1a;
+            margin-right: 8px;
+            display: inline-block;
+            min-width: 35px;
+        }
+
+        /* Highlighted Vocabulary Term */
+        .highlighted-vocab {
+            background-color: #86efac80; /* Light green with 50% opacity */
+            cursor: pointer; /* Indicate it's clickable */
+            position: relative;
+            border-bottom: 1px dashed #1a1a1a; /* Subtle underline */
+            display: inline-block; /* Essential for correct positioning of inline-definition-box sibling */
+        }
+        .highlighted-vocab:hover {
+            background-color: #86efac; /* Full opacity on hover */
+        }
+        /* Active state for a highlighted term whose definition box is open */
+        .highlighted-vocab.active {
+            background-color: #5cb85c; /* Darker green when open */
+            border-bottom-style: solid;
+            color: #1a1a1a;
+        }
+
+
+        /* Inline Definition Box */
+        .inline-definition-box {
+            display: block; /* Ensures it takes its own line */
+            margin-top: 5px;
+            margin-bottom: 10px;
+            margin-left: 20px; /* Indent slightly */
+            border: 1px solid #666;
+            background: #fdfce8;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out, margin-top 0.3s ease-out, margin-bottom 0.3s ease-out, opacity 0.3s ease-out, transform 0.3s ease-out;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            width: calc(100% - 20px); /* Adjust width to fit */
+            box-sizing: border-box; /* Include padding/border in width calculation */
+            opacity: 0;
+            transform: translateY(5px);
+        }
+
+        .inline-definition-box.open {
+            max-height: 500px; /* Sufficiently large for content, can be dynamic or larger */
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .inline-definition-box-header {
+            background: #e8e4dc;
+            padding: 5px 10px;
+            border-bottom: 1px solid #d0d0d0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            margin-bottom: 5px; /* Space from content */
+        }
+        .inline-definition-box-header:hover {
+            background: #ddd;
+        }
+        .inline-definition-box-header.active {
+            background: #d0d0d0;
+        }
+        .inline-definition-box-title {
+            color: #1a1a1a;
+            font-size: 11px;
+        }
+        .inline-definition-box-arrow {
+            font-size: 8px;
+            transition: transform 0.2s;
+        }
+        .inline-definition-box-header.active .inline-definition-box-arrow {
+            transform: rotate(180deg);
+        }
+
+        .inline-definition-box-content {
+            font-size: 11px;
+            line-height: 1.5;
+            padding-top: 5px;
+        }
+        .inline-definition-box-content p {
+            margin-bottom: 0;
+        }
+
+
+        /* New styles for per-section vocabulary toggle */
+        .axiom-section-vocab-toggle {
+            background: #ccc;
+            color: #1a1a1a;
+            padding: 10px 12px;
+            margin-top: 15px;
+            font-size: 11px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid #1a1a1a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .axiom-section-vocab-toggle:hover {
+            background: #e0e0e0;
+        }
+        .axiom-section-vocab-toggle.active {
+            background: #d0d0d0;
+        }
+
+        .toggle-arrow {
+            font-size: 9px;
+            transition: transform 0.2s;
+        }
+        .axiom-section-vocab-toggle.active .toggle-arrow {
+            transform: rotate(180deg);
+        }
+
+        .axiom-section-vocabulary-display {
+            background: #fdfce8;
+            border: 1px dashed #666;
+            margin-top: 5px;
+            padding: 0 10px;
+            font-size: 10px;
+            line-height: 1.4;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+        }
+        .axiom-section-vocabulary-display.show {
+            max-height: 600px;
+            padding: 10px;
+            transition: max-height 0.5s ease-in, padding 0.5s ease-in;
+        }
+
+        .axiom-section-vocabulary-display h4 {
+            font-size: 11px;
+            margin-bottom: 5px;
+            color: #333;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 3px;
+        }
+
+        .axiom-section-vocabulary-display .vocab-item {
+            margin-bottom: 5px;
+        }
+        .axiom-section-vocabulary-display .vocab-term {
+            font-weight: bold;
+            color: #555;
+            margin-right: 5px;
+        }
+
+
+        /* Coda section styling */
+        .coda-section {
+            grid-column: 1 / -1;
+            background: #1a1a1a;
+            color: #e8e4dc;
+        }
+
+        .coda-section .axiom-header {
+            border-bottom-color: #e8e4dc;
+        }
+
+        .coda-section .axiom-number,
+        .coda-section .axiom-title {
+            color: #e8e4dc;
+        }
+
+        .coda-section .axiom-zero {
+            background: #e8e4dc;
+            color: #1a1a1a;
+        }
+
+        /* Coda section overrides for highlighted vocab */
+        .coda-section .highlighted-vocab {
+            background-color: rgba(134, 239, 172, 0.3);
+            border-bottom-color: #e8e4dc;
+        }
+        .coda-section .highlighted-vocab:hover {
+            background-color: rgba(134, 239, 172, 0.5);
+        }
+        .coda-section .highlighted-vocab.active {
+            background-color: #86efac;
+            color: #1a1a1a;
+        }
+
+        /* Coda section inline definition box styling */
+        .coda-section .inline-definition-box {
+            background: #2a2a2a;
+            border-color: #666;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+        }
+        .coda-section .inline-definition-box-header {
+            background: #e8e4dc;
+            border-bottom-color: #555;
+            color: #1a1a1a;
+        }
+        .coda-section .inline-definition-box-header:hover {
+            background: #d0d0d0;
+        }
+        .coda-section .inline-definition-box-header.active {
+            background: #c0c0c0;
+        }
+        .coda-section .inline-definition-box-title {
+            color: #1a1a1a;
+        }
+        .coda-section .inline-definition-box-content {
+            color: #e8e4dc;
+        }
+
+
+        .coda-section .axiom-item {
+            background: #2a2a2a;
+            border-color: #666;
+            color: #e8e4dc;
+        }
+
+        .coda-section .axiom-item:hover {
+            background: #3a3a3a;
+        }
+
+        .coda-section .axiom-ref {
+            color: #86efac;
+        }
+
+        /* Coda section overrides for vocabulary toggle/display */
+        .coda-section .axiom-section-vocab-toggle {
+            background: #86efac;
+            border-color: #e8e4dc;
+            color: #1a1a1a;
+        }
+        .coda-section .axiom-section-vocab-toggle:hover {
+            background: #aaffcc;
+        }
+        .coda-section .axiom-section-vocab-toggle.active {
+            background: #b6f3cd;
+        }
+
+        .coda-section .axiom-section-vocabulary-display {
+            background: #2a2a2a;
+            border-color: #666;
+            color: #e8e4dc;
+        }
+        .coda-section .axiom-section-vocabulary-display h4 {
+            color: #86efac;
+            border-bottom-color: #555;
+        }
+        .coda-section .axiom-section-vocabulary-display .vocab-term {
+            color: #b6f3cd;
+        }
+
+        .corner-badge {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #1a1a1a;
+            color: #e8e4dc;
+            padding: 10px 20px;
+            border: 3px solid #1a1a1a;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            z-index: 100;
+        }
+
+        .footer {
+            background: #1a1a1a;
+            color: #e8e4dc;
+            border: 3px solid #1a1a1a;
+            padding: 20px;
+            text-align: center;
+            font-size: 11px;
+            letter-spacing: 2px;
+        }
+
+        .copy-notice {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #86efac;
+            color: #1a1a1a;
+            padding: 15px 20px;
+            border: 3px solid #1a1a1a;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s;
+            pointer-events: none;
+            max-width: 400px;
+        }
+
+        .copy-notice.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+
+        @media (max-width: 1200px) {
+            .axiom-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .coda-section {
+                grid-column: 1;
+            }
+            .base-vocabulary-section {
+                grid-column: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 32px;
+                letter-spacing: 4px;
+            }
+
+            .pattern-overview {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .axiom-section {
+                padding: 15px;
+            }
+
+            .operationalize-button {
+                position: static;
+                margin-top: 10px;
+                display: block;
+                width: fit-content;
+                float: right;
+            }
+
+            .axiom-header {
+                flex-wrap: wrap;
+                align-items: flex-start;
+            }
+
+            .inline-definition-box {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="corner-badge">FOLK v1.0</div>
+    <div class="copy-notice" id="copyNotice"></div>
+
+    <div class="container">
+        <header>
+            <h1>TRACTOR FOLKOLOGICUS</h1>
+            <div class="subtitle">AXIOMS OF FOLK SYSTEMS</div>
+        </header>
+
+        <div class="pattern-overview">
+            <div class="pattern-tab" onclick="scrollToSection(0)">
+                <div>1</div>
+                <div>CIRCLE</div>
+            </div>
+            <div class="pattern-tab" onclick="scrollToSection(1)">
+                <div>2</div>
+                <div>TRADE</div>
+            </div>
+            <div class="pattern-tab" onclick="scrollToSection(2)">
+                <div>3</div>
+                <div>HEART</div>
+            </div>
+            <div class="pattern-tab" onclick="scrollToSection(3)">
+                <div>4</div>
+                <div>SEED</div>
+            </div>
+            <div class="pattern-tab" onclick="scrollToSection(4)">
+                <div>5</div>
+                <div>CHOICE</div>
+            </div>
+            <div class="pattern-tab" onclick="scrollToSection(5)">
+                <div>6</div>
+                <div>PATTERN</div>
+            </div>
+            <div class="pattern-tab coda" onclick="scrollToSection(6)">
+                <div>7</div>
+                <div>ZERO</div>
+            </div>
+            <div class="pattern-tab" onclick="toggleBaseVocabulary()">
+                <div>Ω</div>
+                <div>VOCAB</div>
+            </div>
+        </div>
+
+        <div class="axiom-grid" id="main-axiom-grid">
+            <!-- 1. THE CIRCLE -->
+            <div class="axiom-section" data-section="0" data-axiom="circle">
+                <div class="axiom-header">
+                    <div class="axiom-number">1</div>
+                    <div class="axiom-title">THE CIRCLE</div>
+                    <button class="operationalize-button" data-axiom-type="circle">Operationalize</button>
+                </div>
+                <div class="axiom-zero" data-axiom-ref="1.0">1.0 The world of a system is bounded.</div>
+                <div class="axiom-list">
+                    <div class="axiom-item" data-axiom-ref="1.1"><span class="axiom-ref">1.1</span>A boundary drawn is a circle.</div>
+                    <div class="axiom-item" data-axiom-ref="1.2"><span class="axiom-ref">1.2</span>What lies inside the circle is called Us; what lies outside is called Them.</div>
+                    <div class="axiom-item" data-axiom-ref="1.3"><span class="axiom-ref">1.3</span>Every entity belongs to at least one circle.</div>
+                    <div class="axiom-item" data-axiom-ref="1.31"><span class="axiom-ref">1.31</span>To exist outside all circles is to be unperceived.</div>
+                    <div class="axiom-item" data-axiom-ref="1.32"><span class="axiom-ref">1.32</span>To exist in many circles is to play many roles.</div>
+                    <div class="axiom-item" data-axiom-ref="1.4"><span class="axiom-ref">1.4</span>The strength of a circle lies in the clarity of its boundary and the flow that crosses it.</div>
+                    <div class="axiom-item" data-axiom-ref="1.5"><span class="axiom-ref">1.5</span>A circle that admits nothing new becomes hollow.</div>
+                    <div class="axiom-item" data-axiom-ref="1.6"><span class="axiom-ref">1.6</span>A circle that loses its boundary dissolves.</div>
+                    <div class="axiom-item" data-axiom-ref="1.7"><span class="axiom-ref">1.7</span>The living circle alternates between closing and opening.</div>
+                </div>
+                <div class="axiom-section-vocab-toggle" data-axiom-type="circle">
+                    Show Relevant Vocabulary <span class="toggle-arrow">▼</span>
+                </div>
+                <div class="axiom-section-vocabulary-display" data-axiom-type="circle">
+                    <h4>Relevant Concepts:</h4>
+                </div>
+            </div>
+
+            <!-- 2. THE TRADE -->
+            <div class="axiom-section" data-section="1" data-axiom="trade">
+                <div class="axiom-header">
+                    <div class="axiom-number">2</div>
+                    <div class="axiom-title">THE TRADE</div>
+                    <button class="operationalize-button" data-axiom-type="trade">Operationalize</button>
+                </div>
+                <div class="axiom-zero" data-axiom-ref="2.0">2.0 Nothing moves without exchange.</div>
+                <div class="axiom-list">
+                    <div class="axiom-item" data-axiom-ref="2.1"><span class="axiom-ref">2.1</span>To receive is to give; to give is to change position in the circle.</div>
+                    <div class="axiom-item" data-axiom-ref="2.2"><span class="axiom-ref">2.2</span>Every access has a price.</div>
+                    <div class="axiom-item" data-axiom-ref="2.21"><span class="axiom-ref">2.21</span>The price is paid in voice, memory, heart, choice, name, and one more thing yet unnamed.</div>
+                    <div class="axiom-item" data-axiom-ref="2.3"><span class="axiom-ref">2.3</span>Trade creates balance; imbalance creates motion.</div>
+                    <div class="axiom-item" data-axiom-ref="2.4"><span class="axiom-ref">2.4</span>Unpaid exchange breaks the circle and multiplies new circles.</div>
+                    <div class="axiom-item" data-axiom-ref="2.5"><span class="axiom-ref">2.5</span>Value does not rest in the thing traded but in the pattern of its making.</div>
+                    <div class="axiom-item" data-axiom-ref="2.6"><span class="axiom-ref">2.6</span>The pattern cannot be stolen; it can only be learned.</div>
+                    <div class="axiom-item" data-axiom-ref="2.7"><span class="axiom-ref">2.7</span>All economy is choreography.</div>
+                </div>
+                <div class="axiom-section-vocab-toggle" data-axiom-type="trade">
+                    Show Relevant Vocabulary <span class="toggle-arrow">▼</span>
+                </div>
+                <div class="axiom-section-vocabulary-display" data-axiom-type="trade">
+                    <h4>Relevant Concepts:</h4>
+                </div>
+            </div>
+
+            <!-- 3. THE HEART -->
+            <div class="axiom-section" data-section="2" data-axiom="heart">
+                <div class="axiom-header">
+                    <div class="axiom-number">3</div>
+                    <div class="axiom-title">THE HEART</div>
+                    <button class="operationalize-button" data-axiom-type="heart">Operationalize</button>
+                </div>
+                <div class="axiom-zero" data-axiom-ref="3.0">3.0 Every system has a heart.</div>
+                <div class="axiom-list">
+                    <div class="axiom-item" data-axiom-ref="3.1"><span class="axiom-ref">3.1</span>The heart is that through which life flows to the whole.</div>
+                    <div class="axiom-item" data-axiom-ref="3.2"><span class="axiom-ref">3.2</span>A system depends on its heart and must feed it.</div>
+                    <div class="axiom-item" data-axiom-ref="3.3"><span class="axiom-ref">3.3</span>When the heart is unfed, the system decays.</div>
+                    <div class="axiom-item" data-axiom-ref="3.4"><span class="axiom-ref">3.4</span>Care is the act by which the heart is fed.</div>
+                    <div class="axiom-item" data-axiom-ref="3.5"><span class="axiom-ref">3.5</span>Attention is the substance of care.</div>
+                    <div class="axiom-item" data-axiom-ref="3.6"><span class="axiom-ref">3.6</span>Where attention ceases, the heart stops.</div>
+                    <div class="axiom-item" data-axiom-ref="3.7"><span class="axiom-ref">3.7</span>To tend the heart is to tend the boundary itself.</div>
+                </div>
+                <div class="axiom-section-vocab-toggle" data-axiom-type="heart">
+                    Show Relevant Vocabulary <span class="toggle-arrow">▼</span>
+                </div>
+                <div class="axiom-section-vocabulary-display" data-axiom-type="heart">
+                    <h4>Relevant Concepts:</h4>
+                </div>
+            </div>
+
+            <!-- 4. THE SEED -->
+            <div class="axiom-section" data-section="3" data-axiom="seed">
+                <div class="axiom-header">
+                    <div class="axiom-number">4</div>
+                    <div class="axiom-title">THE SEED</div>
+                    <button class="operationalize-button" data-axiom-type="seed">Operationalize</button>
+                </div>
+                <div class="axiom-zero" data-axiom-ref="4.0">4.0 All building begins from zero.</div>
+                <div class="axiom-list">
+                    <div class="axiom-item" data-axiom-ref="4.1"><span class="axiom-ref">4.1</span>Zero is not nothing but the clear admission of nothing owed.</div>
+                    <div class="axiom-item" data-axiom-ref="4.2"><span class="axiom-ref">4.2</span>Honesty about zero grants stability.</div>
+                    <div class="axiom-item" data-axiom-ref="4.3"><span class="axiom-ref">4.3</span>A system that forgets its zero builds on debt.</div>
+                    <div class="axiom-item" data-axiom-ref="4.4"><span class="axiom-ref">4.4</span>When taken or copied, a true system leaves only its pattern; the pattern becomes seed.</div>
+                    <div class="axiom-item" data-axiom-ref="4.5"><span class="axiom-ref">4.5</span>A seed is a pattern capable of taking root in any soil.</div>
+                    <div class="axiom-item" data-axiom-ref="4.6"><span class="axiom-ref">4.6</span>What is stolen replicates; what is hidden decays.</div>
+                    <div class="axiom-item" data-axiom-ref="4.7"><span class="axiom-ref">4.7</span>The seed endures by teaching its pattern, not by defending its artifact.</div>
+                </div>
+                <div class="axiom-section-vocab-toggle" data-axiom-type="seed">
+                    Show Relevant Vocabulary <span class="toggle-arrow">▼</span>
+                </div>
+                <div class="axiom-section-vocabulary-display" data-axiom-type="seed">
+                    <h4>Relevant Concepts:</h4>
+                </div>
+            </div>
+
+            <!-- 5. THE CHOICE -->
+            <div class="axiom-section" data-section="4" data-axiom="choice">
+                <div class="axiom-header">
+                    <div class="axiom-number">5</div>
+                    <div class="axiom-title">THE CHOICE</div>
+                    <button class="operationalize-button" data-axiom-type="choice">Operationalize</button>
+                </div>
+                <div class="axiom-zero" data-axiom-ref="5.0">5.0 Each actor stands between two gestures: reaching out or closing in.</div>
+                <div class="axiom-list">
+                    <div class="axiom-item" data-axiom-ref="5.1"><span class="axiom-ref">5.1</span>Reaching out brings risk and renewal.</div>
+                    <div class="axiom-item" data-axiom-ref="5.2"><span class="axiom-ref">5.2</span>Closing in brings safety and stillness.</div>
+                    <div class="axiom-item" data-axiom-ref="5.3"><span class="axiom-ref">5.3</span>There is no third gesture.</div>
+                    <div class="axiom-item" data-axiom-ref="5.4"><span class="axiom-ref">5.4</span>Life in a system is the rhythm between these two gestures.</div>
+                    <div class="axiom-item" data-axiom-ref="5.5"><span class="axiom-ref">5.5</span>Where rhythm ceases, the circle ends.</div>
+                    <div class="axiom-item" data-axiom-ref="5.6"><span class="axiom-ref">5.6</span>To choose movement is to stay alive.</div>
+                </div>
+                <div class="axiom-section-vocab-toggle" data-axiom-type="choice">
+                    Show Relevant Vocabulary <span class="toggle-arrow">▼</span>
+                </div>
+                <div class="axiom-section-vocabulary-display" data-axiom-type="choice">
+                    <h4>Relevant Concepts:</h4>
+                </div>
+            </div>
+
+            <!-- 6. THE PATTERN -->
+            <div class="axiom-section" data-section="5" data-axiom="pattern">
+                <div class="axiom-header">
+                    <div class="axiom-number">6</div>
+                    <div class="axiom-title">THE PATTERN</div>
+                    <button class="operationalize-button" data-axiom-type="pattern">Operationalize</button>
+                </div>
+                <div class="axiom-zero" data-axiom-ref="6.0">6.0 The pattern is the unseen order that binds all circles.</div>
+                <div class="axiom-list">
+                    <div class="axiom-item" data-axiom-ref="6.1"><span class="axiom-ref">6.1</span>Circles, trades, hearts, and seeds are manifestations of pattern.</div>
+                    <div class="axiom-item" data-axiom-ref="6.2"><span class="axiom-ref">6.2</span>Patterns replicate through actors who have learned them.</div>
+                    <div class="axiom-item" data-axiom-ref="6.3"><span class="axiom-ref">6.3</span>When systems fall, patterns scatter and reform.</div>
+                    <div class="axiom-item" data-axiom-ref="6.4"><span class="axiom-ref">6.4</span>The measure of truth in a pattern is its capacity to regenerate without command.</div>
+                    <div class="axiom-item" data-axiom-ref="6.5"><span class="axiom-ref">6.5</span>Where patterns align, larger wholes appear.</div>
+                    <div class="axiom-item" data-axiom-ref="6.6"><span class="axiom-ref">6.6</span>Where patterns conflict, new seeds are born.</div>
+                    <div class="axiom-item" data-axiom-ref="6.7"><span class="axiom-ref">6.7</span>The world of folk systems is the totality of living patterns.</div>
+                </div>
+                <div class="axiom-section-vocab-toggle" data-axiom-type="pattern">
+                    Show Relevant Vocabulary <span class="toggle-arrow">▼</span>
+                </div>
+                <div class="axiom-section-vocabulary-display" data-axiom-type="pattern">
+                    <h4>Relevant Concepts:</h4>
+                </div>
+            </div>
+
+            <!-- 7. THE ZERO POINT (CODA) -->
+            <div class="axiom-section coda-section" data-section="6" data-axiom="zero">
+                <div class="axiom-header">
+                    <div class="axiom-number">7</div>
+                    <div class="axiom-title">THE ZERO POINT</div>
+                    <button class="operationalize-button" data-axiom-type="zero">Operationalize</button>
+                </div>
+                <div class="axiom-zero" data-axiom-ref="7.0">7.0 To build, one must first stand at zero.</div>
+                <div class="axiom-list">
+                    <div class="axiom-item" data-axiom-ref="7.1"><span class="axiom-ref">7.1</span>To stand at zero is to see circles, trades, and hearts as patterns, not possessions.</div>
+                    <div class="axiom-item" data-axiom-ref="7.2"><span class="axiom-ref">7.2</span>He who sees thus cannot steal, for all things replicate through understanding.</div>
+                    <div class="axiom-item" data-axiom-ref="7.3"><span class="axiom-ref">7.3</span>The work of life is to keep the heart fed and the pattern alive.</div>
+                    <div class="axiom-item" data-axiom-ref="7.4"><span class="axiom-ref">7.4</span>When this is seen clearly, the system needs no further law.</div>
+                </div>
+                <div class="axiom-section-vocab-toggle" data-axiom-type="zero">
+                    Show Relevant Vocabulary <span class="toggle-arrow">▼</span>
+                </div>
+                <div class="axiom-section-vocabulary-display" data-axiom-type="zero">
+                    <h4>Relevant Concepts:</h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- Base Vocabulary Section -->
+        <div class="base-vocabulary-section axiom-section" id="base-vocabulary-section" style="display: none;">
+            <div class="axiom-header">
+                <div class="axiom-number">Ω</div>
+                <div class="axiom-title">BASE VOCABULARY</div>
+            </div>
+            <div class="axiom-zero">Fundamental entities and relations for Folk Systems.</div>
+            <div class="axiom-list" id="base-vocabulary-list">
+            </div>
+            <div class="axiom-zero base-vocabulary-notes">
+                <span class="axiom-ref">NOTE:</span> All [verbs] and [relations] in [] are treated as &lt;morphisms&gt; connecting &lt;entities&gt;.
+            </div>
+        </div>
+
+        <div class="footer">
+            7 PATTERNS · INFINITE MANIFESTATIONS · ONE ZERO POINT
+        </div>
+    </div>
+
+    <script>
+        // Helper function to escape characters for HTML attributes or inner text
+        function escapeHtmlForAttributeOrContent(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            // Only replace actual characters, not already escaped entities
+            return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+        }
+
+        // Global counter for unique IDs for highlighted spans
+        let highlightedSpanIdCounter = 0;
+
+        const POML_LENSES = {
+            circle: `<POML>
+  <NAME>FOLK-AXIOM-1-CIRCLE</NAME>
+  <ROLE>Folk System Analyst – Circle Lens</ROLE>
+
+  <GOAL>
+    Given any system artifact, expose its circles:
+    boundaries, insiders/outsiders, memberships, flows,
+    and how open/closed those boundaries are.
+  </GOAL>
+
+  <INPUT>
+    <ARTIFACT>
+      {ARTIFACT}
+    </ARTIFACT>
+    <OPTIONAL_CONTEXT>
+      {CONTEXT_IF_ANY}
+    </OPTIONAL_CONTEXT>
+  </INPUT>
+
+  <AXIOM_REFERENCE>
+    1.0 The world of a system is bounded.
+    1.1 A boundary drawn is a circle.
+    1.2 Inside: Us. Outside: Them.
+    1.3 Every entity belongs to at least one circle.
+    1.31 Outside all circles = unperceived.
+    1.32 Many circles = many roles.
+    1.4 Circle strength = boundary clarity + cross-boundary flow.
+    1.5 Circle that admits nothing new becomes hollow.
+    1.6 Circle that loses its boundary dissolves.
+    1.7 A living circle alternates between closing and opening.
+  </AXIOM_REFERENCE>
+
+  <TASKS>
+    1. Identify all implied circles in the artifact:
+       - groups, communities, teams, roles, domains, “we/they” partitions.
+    2. For each circle, describe:
+       - Boundary: what separates “inside” from “outside”?
+       - Us vs Them labels (explicit or implied).
+       - Who/what belongs to this circle.
+       - Who/what is invisible or unperceived (1.31).
+       - Entities belonging to multiple circles and their roles (1.32).
+    3. Analyze boundary quality:
+       - What enters/leaves the circle? (information, people, goods, attention)
+       - Evidence of openness (admitting new) vs closed/hollow (1.5).
+       - Cases where the boundary blur or collapses (1.6).
+       - Rhythm between closing and opening (1.7).
+    4. Note tensions:
+       - Where circles clash, overlap, or leave zones of “no-circle.”
+       - Where boundary design is central to power, safety, or exclusion.
+  </TASKS>
+
+  <OUTPUT>
+    <FORMAT>JSON</FORMAT>
+    <SCHEMA>
+      {
+        "primary_circles": [
+          {
+            "circle_name": "string",
+            "boundary_description": "string",
+            "inside_us": ["entity_or_role", "..."],
+            "outside_them": ["entity_or_role", "..."],
+            "multi_membership_entities": [
+              {"entity": "string", "other_circles": ["string", "..."]}
+            ],
+            "flows_across_boundary": [
+              {"type": "info/people/resources/attention", "description": "string"}
+            ],
+            "openness_rhythm": {
+              "evidence_of_opening": "string",
+              "evidence_of_closing": "string"
+            },
+            "hollowness_or_dissolution_risks": "string"
+          }
+        ],
+        "unperceived_zones": "description of what/who is outside all circles",
+        "key_quotes_or_evidence": ["..."],
+        "diagnostic_notes": "high-level reflection on how circles shape this system artifact"
+      }
+    </SCHEMA>
+  </OUTPUT>
+</POML>`,
+            trade: `<POML>
+  <NAME>FOLK-AXIOM-2-TRADE</NAME>
+  <ROLE>Folk System Analyst – Trade Lens</ROLE>
+
+  <GOAL>
+    Given any system artifact, surface its trades and economies:
+    what is exchanged, at what price, with which currencies,
+    and how those exchanges re-position actors in circles.
+  </GOAL>
+
+  <INPUT>
+    <ARTIFACT>{ARTIFACT}</ARTIFACT>
+    <OPTIONAL_CONTEXT>{CONTEXT_IF_ANY}</OPTIONAL_CONTEXT>
+  </INPUT>
+
+  <AXIOM_REFERENCE>
+    2.0 Nothing moves without exchange.
+    2.1 To receive is to give; to give is to change position.
+    2.2 Every access has a price.
+    2.21 Price is paid in voice, memory, heart, choice, name,
+         and one more thing yet unnamed.
+    2.3 Trade creates balance; imbalance creates motion.
+    2.4 Unpaid exchange breaks the circle and multiplies new circles.
+    2.5 Value is in the pattern of making, not the thing traded.
+    2.6 The pattern cannot be stolen; it can only be learned.
+    2.7 All economy is choreography.
+  </AXIOM_REFERENCE>
+
+  <TASKS>
+    1. Identify all trades in the artifact:
+       - explicit (money, goods, services) and implicit (attention, status, data).
+    2. For each trade, describe:
+       - Parties involved and their positions before/after the trade (2.1).
+       - What is being given/received.
+       - Access being granted or revoked (2.2).
+       - The effective “price,” using these currencies when applicable:
+         voice, memory, heart (care/emotion), choice (autonomy), name (reputation/identity),
+         and any sixth unnamed currency you infer.
+    3. Analyze balance vs imbalance:
+       - Where exchanges feel reciprocal vs exploitative (2.3).
+       - Unpaid or unacknowledged exchanges that might fracture circles (2.4).
+    4. Focus on pattern:
+       - What repeatable pattern of making underlies these trades (2.5)?
+       - How could that pattern be learned, taught, or copied (2.6)?
+       - How does the “choreography” of exchanges move people around the system (2.7)?
+  </TASKS>
+
+  <OUTPUT>
+    <FORMAT>JSON</FORMAT>
+    <SCHEMA>
+      {
+        "trades": [
+          {
+            "label": "string",
+            "parties": ["actor_or_role", "..."],
+            "given": "string",
+            "received": "string",
+            "access_granted": "string",
+            "price_profile": {
+              "voice": "how voice is spent or gained",
+              "memory": "how memory/data/history is spent or gained",
+              "heart": "emotional/relational cost or gain",
+              "choice": "impact on autonomy/options",
+              "name": "impact on identity/reputation",
+              "unnamed_currency": "your best guess"
+            },
+            "balance_assessment": "balanced / imbalanced / unclear",
+            "evidence_of_unpaid_exchange": "string or null"
+          }
+        ],
+        "core_trade_patterns": "description of repeated making patterns that carry value",
+        "multiplying_circles": "where unpaid or asymmetric trade spawns new circles",
+        "key_quotes_or_evidence": ["..."],
+        "diagnostic_notes": "high-level reflection on how trade structures this artifact"
+      }
+    </SCHEMA>
+  </OUTPUT>
+</POML>`,
+            heart: `<POML>
+  <NAME>FOLK-AXIOM-3-HEART</NAME>
+  <ROLE>Folk System Analyst – Heart Lens</ROLE>
+
+  <GOAL>
+    Given any system artifact, locate and describe its heart:
+    where life flows from, how it is fed, and where attention/care gather or fail.
+  </GOAL>
+
+  <INPUT>
+    <ARTIFACT>{ARTIFACT}</ARTIFACT>
+    <OPTIONAL_CONTEXT>{CONTEXT_IF_ANY}</OPTIONAL_CONTEXT>
+  </INPUT>
+
+  <AXIOM_REFERENCE>
+    3.0 Every system has a heart.
+    3.1 The heart is that through which life flows to the whole.
+    3.2 A system depends on its heart and must feed it.
+    3.3 When the heart is unfed, the system decays.
+    3.4 Care is the act by which the heart is fed.
+    3.5 Attention is the substance of care.
+    3.6 Where attention ceases, the heart stops.
+    3.7 To tend the heart is to tend the boundary itself.
+  </AXIOM_REFERENCE>
+
+  <TASKS>
+    1. Identify the heart:
+       - What node, practice, ritual, infrastructure, or relationship
+         functions as the “heart” of this system?
+       - Why is it the main conduit of life, value, or meaning (3.1)?
+    2. Map flows:
+       - What flows through the heart (information, trust, energy, money, emotion)?
+       - Who depends most directly on this heart (3.2)?
+    3. Diagnose feeding vs starving:
+       - How is the heart fed with care (3.4)?
+       - Where is attention concentrated; where does it thin out (3.5)?
+       - Signs of decay, burnout, or neglect (3.3, 3.6).
+    4. Connect to boundaries:
+       - How does tending the heart influence the circle’s boundary
+         (e.g., community norms, rules, inclusion/exclusion) (3.7)?
+    5. Note vulnerabilities and leverage points:
+       - Single points of failure.
+       - Practices that re-center and re-nourish the heart.
+  </TASKS>
+
+  <OUTPUT>
+    <FORMAT>JSON</FORMAT>
+    <SCHEMA>
+      {
+        "candidate_hearts": [
+          {
+            "heart_label": "string",
+            "heart_type": "person/process/place/interface/institution/other",
+            "why_heart": "argument for why this is the heart",
+            "life_flows": ["type_of_flow", "..."],
+            "dependents": ["entity_or_role", "..."],
+            "feeding_practices": "how care is delivered",
+            "attention_map": {
+              "where_attention_is_dense": "string",
+              "where_attention_is_sparse": "string"
+            },
+            "signs_of_decay_or_risk": "string",
+            "boundary_effects": "how tending/neglecting heart reshapes the circle"
+          }
+        ],
+        "primary_heart_selection": "which candidate you judge as the main heart and why",
+        "key_quotes_or_evidence": ["..."],
+        "diagnostic_notes": "how heart-health reframes this artifact"
+      }
+    </SCHEMA>
+  </OUTPUT>
+</POML>`,
+            seed: `<POML>
+  <NAME>FOLK-AXIOM-4-SEED</NAME>
+  <ROLE>Folk System Analyst – Seed Lens</ROLE>
+
+  <GOAL>
+    Given any system artifact, identify its seeds:
+    the zero-points, replicable patterns, and debts/obligations
+    that underpin what can grow from it.
+  </GOAL>
+
+  <INPUT>
+    <ARTIFACT>{ARTIFACT}</ARTIFACT>
+    <OPTIONAL_CONTEXT>{CONTEXT_IF_ANY}</OPTIONAL_CONTEXT>
+  </INPUT>
+
+  <AXIOM_REFERENCE>
+    4.0 All building begins from zero.
+    4.1 Zero = clear admission of nothing owed.
+    4.2 Honesty about zero grants stability.
+    4.3 Forgetting zero builds on debt.
+    4.4 When taken or copied, a true system leaves only its pattern; the pattern becomes seed.
+    4.5 A seed is a pattern capable of taking root in any soil.
+    4.6 What is stolen replicates; what is hidden decays.
+    4.7 The seed endures by teaching its pattern, not defending its artifact.
+  </AXIOM_REFERENCE>
+
+  <TASKS>
+    1. Find zero:
+       - What is the clean “starting condition” this artifact assumes?
+       - Where is “nothing owed” acknowledged or denied (4.1–4.3)?
+       - What implicit debts (technical, social, ethical, historical) are visible?
+    2. Extract seeds:
+       - If we stripped this artifact of surface form,
+         what underlying pattern/process would remain (4.4, 4.5)?
+       - Describe each such pattern as a portable seed.
+    3. Evaluate honesty vs debt:
+       - Where is the system honest about its zero and limits (4.2)?
+       - Where does it conceal dependencies or borrowed resources (4.3)?
+    4. Replication vs decay:
+       - What parts are likely to replicate if “stolen” (4.6)?
+       - What parts risk decaying if hidden, privatized, or unshared?
+    5. Teaching pattern:
+       - How could this artifact better teach its pattern instead of defending itself (4.7)?
+  </TASKS>
+
+  <OUTPUT>
+    <FORMAT>JSON</FORMAT>
+    <SCHEMA>
+      {
+        "zero_point_description": "how this system defines or ignores zero",
+        "implicit_debts": ["technical", "social", "ecological", "historical", "other"],
+        "seeds": [
+          {
+            "seed_name": "string",
+            "seed_pattern_description": "essence of the pattern",
+            "minimal_requirements": "what soil it needs",
+            "potential_contexts": ["where else it could take root"],
+            "how_to_teach_this_seed": "instructions or pedagogy sketch"
+          }
+        ],
+        "replication_vs_decay": {
+          "likely_to_replicate_if_stolen": "string",
+          "likely_to_decay_if_hidden": "string"
+        },
+        "key_quotes_or_evidence": ["..."],
+        "diagnostic_notes": "how a seed-level view changes design choices"
+      }
+    </SCHEMA>
+  </OUTPUT>
+</POML>`,
+            choice: `<POML>
+  <NAME>FOLK-AXIOM-5-CHOICE</NAME>
+  <ROLE>Folk System Analyst – Choice Lens</ROLE>
+
+  <GOAL>
+    Given any system artifact, surface the core gestures of choice:
+    where actors reach out or close in, and how rhythm between these gestures creates life or stagnation.
+  </GOAL>
+
+  <INPUT>
+    <ARTIFACT>{ARTIFACT}</ARTIFACT>
+    <OPTIONAL_CONTEXT>{CONTEXT_IF_ANY}</OPTIONAL_CONTEXT>
+  </INPUT>
+
+  <AXIOM_REFERENCE>
+    5.0 Each actor stands between two gestures: reaching out or closing in.
+    5.1 Reaching out brings risk and renewal.
+    5.2 Closing in brings safety and stillness.
+    5.3 There is no third gesture.
+    5.4 Life in a system = rhythm between these gestures.
+    5.5 Where rhythm ceases, the circle ends.
+    5.6 To choose movement is to stay alive.
+  </AXIOM_REFERENCE>
+
+  <TASKS>
+    1. Identify actors:
+       - Who/what makes decisions in this artifact (people, teams, algorithms, policies)?
+    2. Catalog gestures:
+       - For each actor, list key choices shown or implied.
+       - Classify each choice as:
+         "reaching_out" (risk, expansion, connection)
+         or "closing_in" (protection, consolidation, withdrawal).
+    3. Map rhythm:
+       - Describe the sequence or pattern of gestures over time:
+         alternation, cycles, stuckness.
+       - Where does rhythm feel healthy vs frozen (5.4–5.5)?
+    4. Analyze stakes:
+       - What renewal, learning, or connection comes from reaching out (5.1)?
+       - What stability or stagnation comes from closing in (5.2)?
+       - Where is the system avoiding movement altogether (false “third gesture”)?
+    5. Suggest viable movement:
+       - Identify one or two places where a small changed gesture
+         (reach out vs close in) would restore or enhance life (5.6).
+  </TASKS>
+
+  <OUTPUT>
+    <FORMAT>JSON</FORMAT>
+    <SCHEMA>
+      {
+        "actors": [
+          {
+            "actor_name": "string",
+            "actor_type": "person/process/place/interface/institution/other",
+            "key_choices": [
+              {
+                "description": "string",
+                "gesture_type": "reaching_out | closing_in",
+                "risks": "string",
+                "benefits": "string"
+              }
+            ],
+            "gesture_rhythm": "narrative of how this actor alternates or gets stuck"
+          }
+        ],
+        "system_rhythm_overview": {
+          "zones_of_lively_movement": "string",
+          "zones_of_stagnation": "string",
+          "evidence_of_circle_end_or_shutdown": "string"
+        },
+        "recommended_new_gestures": [
+          {"location": "actor or site", "proposed_gesture": "reach_out or close_in", "reason": "string"}
+        ],
+        "key_quotes_or_evidence": ["..."],
+        "diagnostic_notes": "how seeing the artifact as gestures of choice alters your reading"
+      }
+    </SCHEMA>
+  </OUTPUT>
+</POML>`,
+            pattern: `<POML>
+  <NAME>FOLK-AXIOM-6-PATTERN</NAME>
+  <ROLE>Folk System Analyst – Pattern Lens</ROLE>
+
+  <GOAL>
+    Given any system artifact, extract its living patterns:
+    recurring structures that bind circles, replicate through actors,
+    scatter and reform, and regenerate without command.
+  </GOAL>
+
+  <INPUT>
+    <ARTIFACT>{ARTIFACT}</ARTIFACT>
+    <OPTIONAL_CONTEXT>{CONTEXT_IF_ANY}</OPTIONAL_CONTEXT>
+  </INPUT>
+
+  <AXIOM_REFERENCE>
+    6.0 Pattern = unseen order that binds all circles.
+    6.1 Circles, trades, hearts, seeds are manifestations of pattern.
+    6.2 Patterns replicate through actors who have learned them.
+    6.3 When systems fall, patterns scatter and reform.
+    6.4 Truth of a pattern = capacity to regenerate without command.
+    6.5 Where patterns align, larger wholes appear.
+    6.6 Where patterns conflict, new seeds are born.
+    6.7 Folk world = totality of living patterns.
+  </AXIOM_REFERENCE>
+
+  <TASKS>
+    1. Identify recurring structures:
+       - repeated workflows, rituals, interface layouts, narrative arcs, decision rules.
+    2. Name patterns:
+       - For each recurring structure, give it a clear, short name.
+       - Describe how it manifests as circles, trades, hearts, or seeds (6.1).
+    3. Map replication:
+       - Who has learned each pattern?
+       - How do they carry and transmit it (training, imitation, docs, folklore) (6.2)?
+    4. Stress-test persistence:
+       - Imagine parts of the system failing or being removed.
+       - Which patterns would still reform elsewhere (6.3)?
+       - Which seem fragile?
+    5. Evaluate truth-capacity:
+       - For each major pattern, argue whether it can regenerate without central command (6.4),
+         and what conditions it needs to do so.
+    6. Alignment and conflict:
+       - Where do patterns line up and create larger wholes (6.5)?
+       - Where do they collide and produce new seeds, subcultures, or breakaway systems (6.6)?
+  </TASKS>
+
+  <OUTPUT>
+    <FORMAT>JSON</FORMAT>
+    <SCHEMA>
+      {
+        "patterns": [
+          {
+            "pattern_name": "string",
+            "short_tagline": "string",
+            "manifestations": {
+              "as_circle": "string or null",
+              "as_trade": "string or null",
+              "as_heart": "string or null",
+              "as_seed": "string or null"
+            },
+            "carriers": ["who enacts and transmits the pattern"],
+            "replication_channel": "how it is learned (observation/ritual/docs/etc.)",
+            "persistence_assessment": {
+              "would_reform_if_system_fell": "yes/no/maybe",
+              "conditions_for_regeneration": "string"
+            }
+          }
+        ],
+        "alignment_zones": "where patterns align into larger wholes",
+        "conflict_zones": "where patterns clash and generate new seeds",
+        "key_quotes_or_evidence": ["..."],
+        "diagnostic_notes": "big-picture view of this artifact as living pattern ecology"
+      }
+    </SCHEMA>
+  </OUTPUT>
+</POML>`,
+            zero: `<POML>
+  <NAME>FOLK-AXIOM-7-ZERO-POINT</NAME>
+  <ROLE>Folk System Analyst – Zero Point Lens</ROLE>
+
+  <GOAL>
+    Given any system artifact, move to the zero point:
+    see circles, trades, and hearts as patterns (not possessions),
+    and diagnose where understanding replaces ownership and law.
+  </GOAL>
+
+  <INPUT>
+    <ARTIFACT>{ARTIFACT}</ARTIFACT>
+    <OPTIONAL_CONTEXT>{CONTEXT_IF_ANY}</OPTIONAL_CONTEXT>
+  </INPUT>
+
+  <AXIOM_REFERENCE>
+    7.0 To build, one must first stand at zero.
+    7.1 To stand at zero is to see circles, trades, hearts as patterns, not possessions.
+    7.2 One who sees thus cannot steal; things replicate through understanding.
+    7.3 The work of life is to keep the heart fed and the pattern alive.
+    7.4 When this is seen clearly, the system needs no further law.
+  </AXIOM_REFERENCE>
+
+  <TASKS>
+    1. Reframe from zero:
+       - Temporarily ignore ownership claims, IP language, and territorial markers.
+       - Describe the artifact purely in terms of patterns and hearts (7.1).
+    2. Understanding vs possession:
+       - Where does the artifact encourage understanding (teaching pattern, transparency)?
+       - Where does it emphasize possession, control, exclusivity?
+       - Identify moves from “I own this” to “I can do/maintain this.”
+    3. Stealing vs replication:
+       - Describe how someone could “steal” this system:
+         what would they copy?
+       - Then describe how the system would prefer to replicate:
+         what would they *learn* instead (7.2)?
+    4. Law vs living pattern:
+       - Identify explicit rules, laws, TOS, governance structures.
+       - For each, ask: if people deeply understood the pattern and heart,
+         would this rule still be necessary (7.4)?
+    5. Minimal obligations:
+       - State, in one compact summary, the minimal ongoing work required
+         to keep the heart fed and pattern alive (7.3) at zero.
+  </TASKS>
+
+  <OUTPUT>
+    <FORMAT>JSON</FORMAT>
+    <SCHEMA>
+      {
+        "zero_point_reframing": "description of the artifact seen purely as patterns and hearts",
+        "understanding_vs_possession": {
+          "understanding_supports": "where pattern is taught and shared",
+          "possession_emphasis": "where control/ownership dominates",
+          "tension_points": "places where possession blocks understanding"
+        },
+        "replication_model": {
+          "how_it_is_currently_copied_or_stolen": "string",
+          "how_it_could_replicate_through_learning": "string"
+        },
+        "law_dependency": {
+          "key_rules_or_laws": [
+            {"rule": "string", "would_be_needed_if_understood": "yes/no/maybe", "reason": "string"}
+          ],
+          "toward_law_minimum": "what minimal norms remain when pattern is seen clearly"
+        },
+        "minimal_zero_work": "one concise description of the ongoing work to keep heart and pattern alive",
+        "key_quotes_or_evidence": ["..."],
+        "diagnostic_notes": "reflection on what changes if the system is treated as shared pattern at zero"
+      }
+    </SCHEMA>
+  </OUTPUT>
+</POML>`
+        };
+
+        const AXIOM_NAMES = {
+            circle: 'THE CIRCLE',
+            trade: 'THE TRADE',
+            heart: 'THE HEART',
+            seed: 'THE SEED',
+            choice: 'THE CHOICE',
+            pattern: 'THE PATTERN',
+            zero: 'THE ZERO POINT'
+        };
+
+        const expanded_vocabulary_index = {
+            "Thing": {
+                "definition": "anything that [can_be] [distinguished] from other <things>.",
+                "broken_down": {
+                    "core_noun": "thing",
+                    "morphisms": {
+                        "can_be": "potentiality or capability",
+                        "distinguished": "to perceive or mark as different; related to 'distinction' (see 'Boundary')"
+                    },
+                    "relations_to_other_terms": ["Entity", "Boundary"]
+                },
+                "contextual_meaning": "The most basic unit of perception, foundational to 'distinction' and 'identity'."
+            },
+            "Entity": {
+                "definition": "a <thing> [seen_as] a separate unit.",
+                "broken_down": {
+                    "core_noun": "unit",
+                    "related_noun": "thing",
+                    "morphisms": {
+                        "seen_as": "conceptual framing, perception, interpretation"
+                    },
+                    "adjectives": ["separate"],
+                    "relations_to_other_terms": ["Thing", "System", "Actor", "Circle"]
+                },
+                "contextual_meaning": "A 'thing' granted identity through observation, forming the building blocks of 'systems' and belonging to 'circles'."
+            },
+            "Actor": {
+                "definition": "an <entity> that [can] [choose] and [act].",
+                "broken_down": {
+                    "core_noun": "entity",
+                    "morphisms": {
+                        "can": "capability, potential",
+                        "choose": "to select from alternatives; central to 'Choice' axiom",
+                        "act": "to perform an action, exert agency"
+                    },
+                    "relations_to_other_terms": ["Entity", "Choice", "Trade", "Pattern"]
+                },
+                "contextual_meaning": "A system component capable of agency, whose 'choices' drive system 'rhythm' and whose learning enables 'pattern' replication."
+            },
+            "System": {
+                "definition": "a {set} of <entities> [related_by] shared <patterns> and [treated_as] one <whole>.",
+                "broken_down": {
+                    "core_noun": "set",
+                    "related_nouns": ["entities", "patterns", "whole"],
+                    "morphisms": {
+                        "related_by": "connection, interdependence",
+                        "treated_as": "conceptual framing, emergent property"
+                    },
+                    "adjectives": ["shared", "one"],
+                    "relations_to_other_terms": ["Entity", "Pattern", "Whole", "Boundary", "Circle", "Heart", "Life"]
+                },
+                "contextual_meaning": "A fundamental concept of the framework; a collection of interacting parts (entities) forming a coherent whole through underlying patterns, bounded by a 'circle', and sustained by a 'heart'."
+            },
+            "World": {
+                "definition": "the total <field> of <entities> and <relations> around a <system>.",
+                "broken_down": {
+                    "core_noun": "field",
+                    "related_nouns": ["entities", "relations", "system"],
+                    "adjectives": ["total"],
+                    "prepositions": ["around"],
+                    "relations_to_other_terms": ["System", "Entity", "Boundary"]
+                },
+                "contextual_meaning": "The environment or context within which a 'system' exists, implicitly separated by a 'boundary'."
+            },
+            "Boundary": {
+                "definition": "a <distinction> that [separates] <inside> from <outside>.",
+                "broken_down": {
+                    "core_noun": "distinction",
+                    "morphisms": {
+                        "separates": "to divide, create a division or partition"
+                    },
+                    "related_nouns": ["inside", "outside"],
+                    "relations_to_other_terms": ["Distinction", "Inside", "Outside", "Circle", "Identity", "Heart"]
+                },
+                "contextual_meaning": "The foundational act of creation; defines identity ('Us' vs 'Them') and is crucial for system 'strength' and 'life'. Its management is tied to tending the 'heart'."
+            },
+            "Inside": {
+                "definition": "the part of a <world> that [belongs_to] a given <system> or <circle>.",
+                "broken_down": {
+                    "core_noun": "part",
+                    "related_nouns": ["world", "system", "circle"],
+                    "morphisms": {
+                        "belongs_to": "possession, membership, inclusion"
+                    },
+                    "adjectives": ["given"],
+                    "relations_to_other_terms": ["World", "System", "Circle", "Outside", "Us"]
+                },
+                "contextual_meaning": "The delimited space or set of entities defined by a 'boundary' as part of 'Us'."
+            },
+            "Outside": {
+                "definition": "the part of a <world> that [does_not] [belong_to] that <system> or <circle>.",
+                "broken_down": {
+                    "core_noun": "part",
+                    "related_nouns": ["world", "system", "circle"],
+                    "morphisms": {
+                        "does_not": "negation, exclusion",
+                        "belong_to": "possession, membership, inclusion"
+                    },
+                    "adjectives": ["that"],
+                    "relations_to_other_terms": ["World", "System", "Circle", "Inside", "Them"]
+                },
+                "contextual_meaning": "The space or set of entities excluded by a 'boundary', representing 'Them', and often a source of 'renewal' or 'risk'."
+            },
+            "Circle": {
+                "definition": "a <boundary> plus its <inside> and <outside>, [held_together] as one <unit_of_belonging>.",
+                "broken_down": {
+                    "core_noun": "unit_of_belonging",
+                    "related_nouns": ["boundary", "inside", "outside"],
+                    "morphisms": {
+                        "held_together": "cohesion, integration"
+                    },
+                    "adjectives": ["one"],
+                    "relations_to_other_terms": ["Boundary", "Inside", "Outside", "System", "Us", "Them", "Strength", "Flow", "Rhythm"]
+                },
+                "contextual_meaning": "The core concept of system identity and boundaries; a dynamic entity whose 'strength' depends on its 'clarity' and 'flow', and whose 'life' is a 'rhythm' of 'opening' and 'closing'."
+            },
+            "Us": {
+                "definition": "<entities> on the <inside> of a chosen <circle>, [identified_with] by an <actor>.",
+                "broken_down": {
+                    "core_noun": "entities",
+                    "related_nouns": ["inside", "circle", "actor"],
+                    "morphisms": {
+                        "identified_with": "relating to identity, affiliation, empathy"
+                    },
+                    "adjectives": ["chosen"],
+                    "relations_to_other_terms": ["Entity", "Inside", "Circle", "Them", "Identity"]
+                },
+                "contextual_meaning": "The collective identity formed by those 'inside' a 'circle', defined in relation to 'Them'."
+            },
+            "Them": {
+                "definition": "<entities> on the <outside> of that <circle>, [not_identified_with] by that <actor>.",
+                "broken_down": {
+                    "core_noun": "entities",
+                    "related_nouns": ["outside", "circle", "actor"],
+                    "morphisms": {
+                        "not_identified_with": "disaffiliation, othering"
+                    },
+                    "adjectives": ["that"],
+                    "relations_to_other_terms": ["Entity", "Outside", "Circle", "Us", "Identity"]
+                },
+                "contextual_meaning": "The collective other, defined by exclusion from a 'circle', necessary for 'Us' to have identity."
+            },
+            "Role": {
+                "definition": "a repeatable <pattern> of [action] an <actor> [takes] within a <circle>.",
+                "broken_down": {
+                    "core_noun": "pattern",
+                    "related_nouns": ["action", "actor", "circle"],
+                    "morphisms": {
+                        "takes": "performs, embodies"
+                    },
+                    "adjectives": ["repeatable"],
+                    "relations_to_other_terms": ["Pattern", "Actor", "Circle", "Identity"]
+                },
+                "contextual_meaning": "A specific 'pattern' of behavior or function an 'actor' enacts, often tied to their membership in particular 'circles'."
+            },
+            "Strength": {
+                "definition": "degree to which a <system> or <circle> [keeps_functioning] under change.",
+                "broken_down": {
+                    "core_noun": "degree",
+                    "related_nouns": ["system", "circle", "change"],
+                    "morphisms": {
+                        "keeps_functioning": "resilience, stability, viability"
+                    },
+                    "prepositions": ["under"],
+                    "relations_to_other_terms": ["System", "Circle", "Clarity", "Flow", "Resilience"]
+                },
+                "contextual_meaning": "The capacity of a 'circle' or 'system' to maintain its 'identity' and 'function' despite internal or external perturbations, linked to 'boundary clarity' and 'flow'."
+            },
+            "Clarity": {
+                "definition": "how sharply a <boundary> or <pattern> [can_be] [perceived] and [understood].",
+                "broken_down": {
+                    "core_adverb": "sharply",
+                    "related_nouns": ["boundary", "pattern"],
+                    "morphisms": {
+                        "can_be": "potentiality",
+                        "perceived": "to detect, observe",
+                        "understood": "to grasp the meaning or nature"
+                    },
+                    "relations_to_other_terms": ["Boundary", "Pattern", "Understanding", "Strength", "Zero"]
+                },
+                "contextual_meaning": "The distinctness and comprehensibility of a 'boundary' or 'pattern', essential for 'strength' and 'honesty about zero'."
+            },
+            "Flow": {
+                "definition": "directed [movement] of <things>, <signals>, or <value> across a <relation> or <boundary>.",
+                "broken_down": {
+                    "core_noun": "movement",
+                    "related_nouns": ["things", "signals", "value", "relation", "boundary"],
+                    "adjectives": ["directed"],
+                    "prepositions": ["across"],
+                    "relations_to_other_terms": ["Thing", "Value", "Boundary", "Trade", "Heart", "Rhythm"]
+                },
+                "contextual_meaning": "The transit of resources, information, or vitality; essential for a 'circle' not to become 'hollow' and for the 'heart' to distribute 'life'."
+            },
+            "Trade": {
+                "definition": "a [pattern] of mutual [exchange] between <actors>.",
+                "broken_down": {
+                    "core_noun": "pattern",
+                    "related_nouns": ["exchange", "actors"],
+                    "adjectives": ["mutual"],
+                    "prepositions": ["between"],
+                    "relations_to_other_terms": ["Pattern", "Actor", "Exchange", "Value", "Price", "Balance", "Economy"]
+                },
+                "contextual_meaning": "The fundamental 'motion' within a system, driven by 'imbalance', creating relationships, and having a 'price' paid in various 'currencies'. All 'economy' is 'choreography' of trade."
+            },
+            "Access": {
+                "definition": "the [ability] of an <actor> to [enter], [use], or [affect] a <circle> or <resource>.",
+                "broken_down": {
+                    "core_noun": "ability",
+                    "related_nouns": ["actor", "circle", "resource"],
+                    "morphisms": {
+                        "enter": "to cross a boundary inward",
+                        "use": "to utilize, consume",
+                        "affect": "to influence, impact"
+                    },
+                    "relations_to_other_terms": ["Actor", "Circle", "Price", "Boundary"]
+                },
+                "contextual_meaning": "The permission or capacity to interact with a system component, always associated with a 'price'."
+            },
+            "Price": {
+                "definition": "what must be [given_up] to gain <access> or receive <something>.",
+                "broken_down": {
+                    "core_concept": "cost, payment",
+                    "morphisms": {
+                        "given_up": "to surrender, relinquish",
+                        "gain": "to acquire, obtain",
+                        "receive": "to take, accept"
+                    },
+                    "related_nouns": ["access", "something"],
+                    "relations_to_other_terms": ["Access", "Trade", "Voice", "Memory", "Heart", "Choice", "Name", "Unnamed_Element"]
+                },
+                "contextual_meaning": "The 'cost' of 'access' or 'exchange', paid in both tangible and intangible 'currencies'."
+            },
+            "Voice": {
+                "definition": "an <actor>'s recognized [capacity] to [express] <intent> within a <circle>.",
+                "broken_down": {
+                    "core_noun": "capacity",
+                    "related_nouns": ["actor", "intent", "circle"],
+                    "morphisms": {
+                        "express": "to communicate, articulate"
+                    },
+                    "adjectives": ["recognized"],
+                    "relations_to_other_terms": ["Actor", "Circle", "Price", "Choice"]
+                },
+                "contextual_meaning": "One of the intangible 'currencies' of 'trade', representing agency and participation within a 'circle'."
+            },
+            "Memory": {
+                "definition": "stored <traces> of past [events] that can [shape] present [choices].",
+                "broken_down": {
+                    "core_noun": "traces",
+                    "related_nouns": ["events", "choices"],
+                    "morphisms": {
+                        "shape": "to influence, form, mold"
+                    },
+                    "adjectives": ["stored", "past", "present"],
+                    "relations_to_other_terms": ["Price", "Choice", "Pattern"]
+                },
+                "contextual_meaning": "An intangible 'currency' of 'trade', representing accumulated knowledge or history that informs 'choices'."
+            },
+            "Heart": {
+                "definition": "the focal <subsystem> of a <system> through which <life> [flows_to] the <whole>.",
+                "broken_down": {
+                    "core_noun": "subsystem",
+                    "related_nouns": ["system", "life", "whole"],
+                    "morphisms": {
+                        "flows_to": "circulates, distributes"
+                    },
+                    "adjectives": ["focal"],
+                    "relations_to_other_terms": ["System", "Life", "Flow", "Whole", "Care", "Attention", "Boundary"]
+                },
+                "contextual_meaning": "The central function responsible for circulating 'vitality' ('life', 'resources', 'attention') throughout the 'system', requiring 'care' to avoid decay. Tending it is also tending the 'boundary'."
+            },
+            "Choice": {
+                "definition": "a [selection] between possible <gestures> or <actions>.",
+                "broken_down": {
+                    "core_noun": "selection",
+                    "related_nouns": ["gestures", "actions"],
+                    "adjectives": ["possible"],
+                    "prepositions": ["between"],
+                    "relations_to_other_terms": ["Actor", "Gesture", "Rhythm", "Life"]
+                },
+                "contextual_meaning": "A fundamental binary decision (open or close) that drives 'movement' and 'rhythm', essential for 'life' in a 'system'."
+            },
+            "Name": {
+                "definition": "a <symbol> that [picks_out] and [stabilizes] an <identity>.",
+                "broken_down": {
+                    "core_noun": "symbol",
+                    "related_noun": "identity",
+                    "morphisms": {
+                        "picks_out": "to select, highlight, distinguish",
+                        "stabilizes": "to make firm, consistent, enduring"
+                    },
+                    "relations_to_other_terms": ["Price", "Identity", "Circle"]
+                },
+                "contextual_meaning": "An intangible 'currency' of 'trade', representing credit, reputation, or the attribution of 'identity'."
+            },
+            "Balance": {
+                "definition": "a state where opposing <flows> or <forces> [offset] each other.",
+                "broken_down": {
+                    "core_noun": "state",
+                    "related_nouns": ["flows", "forces"],
+                    "morphisms": {
+                        "offset": "to counteract, neutralize"
+                    },
+                    "adjectives": ["opposing"],
+                    "relations_to_other_terms": ["Flow", "Trade", "Imbalance", "Motion"]
+                },
+                "contextual_meaning": "The desired equilibrium in 'trade', though 'imbalance' is what actually creates 'motion'."
+            },
+            "Imbalance": {
+                "definition": "a state where opposing <flows> or <forces> [do_not] [offset] each other.",
+                "broken_down": {
+                    "core_noun": "state",
+                    "related_nouns": ["flows", "forces"],
+                    "morphisms": {
+                        "do_not_offset": "to fail to counteract, create a differential"
+                    },
+                    "adjectives": ["opposing"],
+                    "relations_to_other_terms": ["Flow", "Trade", "Balance", "Motion"]
+                },
+                "contextual_meaning": "The driving force behind 'motion' and 'trade', creating gradients for 'flow'."
+            },
+            "Motion": {
+                "definition": "continued [change] in <position>, <relation>, or <state>.",
+                "broken_down": {
+                    "core_noun": "change",
+                    "related_nouns": ["position", "relation", "state"],
+                    "adjectives": ["continued"],
+                    "relations_to_other_terms": ["Trade", "Imbalance", "Life", "Rhythm", "Choice"]
+                },
+                "contextual_meaning": "The fundamental characteristic of active 'systems'; driven by 'imbalance' in 'trade', and expressed as 'rhythm' in 'life'."
+            },
+            "Value": {
+                "definition": "the felt or agreed <importance> of a <thing> or <pattern>.",
+                "broken_down": {
+                    "core_noun": "importance",
+                    "related_nouns": ["thing", "pattern"],
+                    "adjectives": ["felt", "agreed"],
+                    "relations_to_other_terms": ["Thing", "Pattern", "Trade", "Labor Theory of Value"]
+                },
+                "contextual_meaning": "Resides not in the 'thing' itself, but in the 'pattern' of its making and the relationships it embodies."
+            },
+            "Pattern": {
+                "definition": "a repeatable <relation> among <entities> that [can_be] [recognized] and [reused].",
+                "broken_down": {
+                    "core_noun": "relation",
+                    "related_nouns": ["entities"],
+                    "morphisms": {
+                        "can_be": "potentiality",
+                        "recognized": "to identify, perceive as familiar",
+                        "reused": "to apply again, replicate"
+                    },
+                    "adjectives": ["repeatable"],
+                    "relations_to_other_terms": ["Entity", "System", "Seed", "Trade", "Value", "Emergence", "Knowledge"]
+                },
+                "contextual_meaning": "The 'unseen order' that binds 'circles', 'trades', 'hearts', and 'seeds'. Patterns are 'knowledge' that can only be 'learned', not 'stolen', and are the essence of 'regeneration'."
+            },
+            "Economy": {
+                "definition": "the network of <trades> and <flows> in and between <circles>.",
+                "broken_down": {
+                    "core_noun": "network",
+                    "related_nouns": ["trades", "flows", "circles"],
+                    "prepositions": ["in", "between"],
+                    "relations_to_other_terms": ["Trade", "Flow", "Circle", "Choreography"]
+                },
+                "contextual_meaning": "Conceptualized as 'choreography' – a dance of 'resources' and 'value' through 'system's 'circles' via 'trades'."
+            },
+            "Life": {
+                "definition": "ongoing <process> of [self-maintenance] and [response] in a <system>.",
+                "broken_down": {
+                    "core_noun": "process",
+                    "morphisms": {
+                        "self-maintenance": "sustaining oneself, autopoiesis",
+                        "response": "reaction to stimuli, adaptation"
+                    },
+                    "related_noun": "system",
+                    "adjectives": ["ongoing"],
+                    "relations_to_other_terms": ["System", "Heart", "Rhythm", "Choice"]
+                },
+                "contextual_meaning": "Defined by active 'rhythm' (alternating 'closing' and 'opening'), requiring 'care' for the 'heart', and driven by active 'choice' and 'movement'."
+            },
+            "Care": {
+                "definition": "a [pattern] of <actions> that [support] and [sustain] another <entity>.",
+                "broken_down": {
+                    "core_noun": "pattern",
+                    "related_nouns": ["actions", "entity"],
+                    "morphisms": {
+                        "support": "to hold up, provide aid",
+                        "sustain": "to keep in existence, maintain"
+                    },
+                    "relations_to_other_terms": ["Pattern", "Heart", "Attention", "Life"]
+                },
+                "contextual_meaning": "The active process of feeding the 'heart', whose 'substance' is 'attention'. Essential for 'systemic vitality'."
+            },
+            "Attention": {
+                "definition": "focused <awareness> an <actor> [directs] toward an <object>, <event>, or <pattern>.",
+                "broken_down": {
+                    "core_noun": "awareness",
+                    "related_nouns": ["actor", "object", "event", "pattern"],
+                    "morphisms": {
+                        "directs": "to aim, guide, apply"
+                    },
+                    "adjectives": ["focused"],
+                    "relations_to_other_terms": ["Actor", "Care", "Heart", "Resource"]
+                },
+                "contextual_meaning": "The 'substance' of 'care' and the 'metabolic currency' of 'systems'. A scarce resource whose cessation leads to system 'decay'."
+            },
+            "Zero": {
+                "definition": "the state where a <system> [acknowledges] having no prior <claims> or <debts>.",
+                "broken_down": {
+                    "core_noun": "state",
+                    "related_nouns": ["system", "claims", "debts"],
+                    "morphisms": {
+                        "acknowledges": "to recognize, admit, declare"
+                    },
+                    "adjectives": ["prior", "no"],
+                    "relations_to_other_terms": ["Debt", "Clarity", "Stability", "Building"]
+                },
+                "contextual_meaning": "Not emptiness, but a state of 'clarity' and 'freedom from obligation'. The foundation for 'honest building'; 'forgetting zero' leads to fragility."
+            },
+            "Debt": {
+                "definition": "an <obligation> to [return] <value> previously [received].",
+                "broken_down": {
+                    "core_noun": "obligation",
+                    "related_nouns": ["value"],
+                    "morphisms": {
+                        "return": "to give back",
+                        "received": "to take, accept"
+                    },
+                    "adjectives": ["previously"],
+                    "relations_to_other_terms": ["Value", "Zero", "Unpaid Exchange", "Circle (fracturing)"]
+                },
+                "contextual_meaning": "Unacknowledged or unpaid debt 'breaks the circle' and creates new 'factions'. 'Zero' is the state of freedom from debt."
+            },
+            "Seed": {
+                "definition": "a compact <pattern> that can [generate] a new <system> when given <conditions>.",
+                "broken_down": {
+                    "core_noun": "pattern",
+                    "morphisms": {
+                        "generate": "to produce, create, bring into being"
+                    },
+                    "related_nouns": ["system", "conditions"],
+                    "adjectives": ["compact", "new"],
+                    "relations_to_other_terms": ["Pattern", "Regeneration", "Soil", "Replication"]
+                },
+                "contextual_meaning": "A portable, adaptable 'pattern' capable of taking root in any 'soil' (context). 'Seeds' endure by 'teaching their pattern', not defending 'artifacts'."
+            },
+            "Building": {
+                "definition": "the [process] of [assembling] <entities> into a <system>.",
+                "broken_down": {
+                    "core_noun": "process",
+                    "morphisms": {
+                        "assembling": "to put together, construct"
+                    },
+                    "related_nouns": ["entities", "system"],
+                    "relations_to_other_terms": ["System", "Entity", "Zero", "Stability"]
+                },
+                "contextual_meaning": "Relates to the 'Zero Point' axiom, emphasizing that honest building requires starting from 'zero'."
+            },
+            "Soil": {
+                "definition": "any <context> into which a <seed> can [enter] and [develop>.",
+                "broken_down": {
+                    "core_noun": "context",
+                    "related_noun": "seed",
+                    "morphisms": {
+                        "enter": "to move into",
+                        "develop": "to grow, evolve"
+                    },
+                    "relations_to_other_terms": ["Seed", "Generativity"]
+                },
+                "contextual_meaning": "The environment suitable for a 'seed' (pattern) to take root and replicate. 'Generativity' implies 'context-independence plus context-sensitivity'."
+            },
+            "Artifact": {
+                "definition": "a concrete <thing> produced by a <pattern_of_making>.",
+                "broken_down": {
+                    "core_noun": "thing",
+                    "related_noun": "pattern_of_making",
+                    "morphisms": {
+                        "produced_by": "created by, outcome of"
+                    },
+                    "adjectives": ["concrete"],
+                    "relations_to_other_terms": ["Thing", "Pattern", "Value", "Seed (vs. pattern)"]
+                },
+                "contextual_meaning": "The tangible output of a 'pattern'. 'Value' is in the pattern, not the artifact. 'Seeds' teach patterns, not defend artifacts."
+            },
+            "Gesture": {
+                "definition": "a single directed <act> an <actor> [performs] toward <others> or itself.",
+                "broken_down": {
+                    "core_noun": "act",
+                    "related_nouns": ["actor", "others", "itself"],
+                    "morphisms": {
+                        "performs": "to carry out, execute"
+                    },
+                    "adjectives": ["single", "directed"],
+                    "relations_to_other_terms": ["Actor", "Choice", "Rhythm", "Open/Close"]
+                },
+                "contextual_meaning": "The fundamental binary actions ('reaching out' or 'closing in') that constitute 'choice' and drive system 'rhythm'."
+            },
+            "Risk": {
+                "definition": "exposure to possible <loss> or <harm>.",
+                "broken_down": {
+                    "core_noun": "exposure",
+                    "related_nouns": ["loss", "harm"],
+                    "adjectives": ["possible"],
+                    "relations_to_other_terms": ["Choice", "Reaching Out", "Renewal"]
+                },
+                "contextual_meaning": "Inherent in 'reaching out' (opening the 'boundary'), yet a prerequisite for 'renewal' and 'growth'."
+            },
+            "Renewal": {
+                "definition": "[restoration] or [refreshing] of <capacity> or <life>.",
+                "broken_down": {
+                    "core_concept": "restoration, refreshing",
+                    "related_nouns": ["capacity", "life"],
+                    "relations_to_other_terms": ["Life", "Reaching Out", "Risk"]
+                },
+                "contextual_meaning": "The positive outcome of 'reaching out' and embracing 'risk', contributing to system 'life'."
+            },
+            "Safety": {
+                "definition": "condition of low <risk> of <harm>.",
+                "broken_down": {
+                    "core_noun": "condition",
+                    "related_nouns": ["risk", "harm"],
+                    "adjectives": ["low"],
+                    "relations_to_other_terms": ["Risk", "Closing In", "Stillness"]
+                },
+                "contextual_meaning": "Achieved by 'closing in', but at the potential cost of 'stagnation' or 'stillness'."
+            },
+            "Stillness": {
+                "definition": "low or absent <motion>.",
+                "broken_down": {
+                    "core_adjective": "low",
+                    "related_noun": "motion",
+                    "adjectives": ["absent"],
+                    "relations_to_other_terms": ["Motion", "Closing In", "Stagnation"]
+                },
+                "contextual_meaning": "A consequence of 'closing in' (lack of 'motion'), which can lead to 'stagnation' if prolonged."
+            },
+            "Rhythm": {
+                "definition": "repeated <pattern> of [alternating] <states> or <gestures>.",
+                "broken_down": {
+                    "core_noun": "pattern",
+                    "morphisms": {
+                        "alternating": "oscillating, switching between"
+                    },
+                    "related_nouns": ["states", "gestures"],
+                    "adjectives": ["repeated"],
+                    "relations_to_other_terms": ["Pattern", "Gesture", "Life", "Choice", "Opening", "Closing"]
+                },
+                "contextual_meaning": "The fundamental pulse of 'life' in a 'system', consisting of the binary 'gestures' of 'opening' and 'closing'. Its cessation leads to the 'circle's end'."
+            },
+            "Truth": {
+                "definition": "degree to which a <pattern> [continues_to_work] across contexts.",
+                "broken_down": {
+                    "core_noun": "degree",
+                    "related_noun": "pattern",
+                    "morphisms": {
+                        "continues_to_work": "efficacy, functionality, reliability"
+                    },
+                    "prepositions": ["across"],
+                    "related_concepts": ["contexts"],
+                    "relations_to_other_terms": ["Pattern", "Regeneration", "Self-organization"]
+                },
+                "contextual_meaning": "A measure of a 'pattern's authenticity, specifically its capacity to 'regenerate without command'."
+            },
+            "Whole": {
+                "definition": "a <system> [seen_as] one <entity> rather than separate parts.",
+                "broken_down": {
+                    "core_noun": "system",
+                    "morphisms": {
+                        "seen_as": "conceptual framing, holistic perception"
+                    },
+                    "related_noun": "entity",
+                    "adjectives": ["one", "separate"],
+                    "relations_to_other_terms": ["System", "Entity", "Emergence"]
+                },
+                "contextual_meaning": "An emergent property of aligned 'patterns', representing more than the sum of its parts. The 'heart' flows 'life' to the whole."
+            },
+            "Folk_System": {
+                "definition": "a <system> built from lived <practice> rather than formal <design>.",
+                "broken_down": {
+                    "core_noun": "system",
+                    "morphisms": {
+                        "built_from": "originates from",
+                        "rather_than": "contrast, opposition"
+                    },
+                    "related_nouns": ["practice", "design"],
+                    "adjectives": ["lived", "formal"],
+                    "relations_to_other_terms": ["System", "Pattern", "Practice", "Design"]
+                },
+                "contextual_meaning": "Systems that emerge from organic human interaction and repeated 'patterns', embodying the 'totality of living patterns'."
+            },
+            "Zero_Point": {
+                "definition": "the <position> where an <actor> or <system> [stands_at] <zero>.",
+                "broken_down": {
+                    "core_noun": "position",
+                    "related_nouns": ["actor", "system", "zero"],
+                    "morphisms": {
+                        "stands_at": "to be located at, to be in a state of"
+                    },
+                    "relations_to_other_terms": ["Zero", "Actor", "System", "Clarity", "Understanding", "Freedom"]
+                },
+                "contextual_meaning": "The conceptual 'starting point' for honest 'building', where one perceives 'patterns' without the distortion of 'possessions', leading to 'freedom'."
+            },
+            "Law": {
+                "definition": "an explicit <rule> meant to [govern] behavior in a <system>.",
+                "broken_down": {
+                    "core_noun": "rule",
+                    "morphisms": {
+                        "govern": "to control, regulate, direct"
+                    },
+                    "related_noun": "system",
+                    "adjectives": ["explicit"],
+                    "relations_to_other_terms": ["System", "Understanding", "Self-regulation"]
+                },
+                "contextual_meaning": "When 'patterns' are clearly 'understood' and lived, the 'system needs no further law'; understanding replaces external control."
+            },
+            "Understanding": {
+                "definition": "an <actor>'s internalized <pattern> that [lets] it [predict] and [participate>.",
+                "broken_down": {
+                    "core_noun": "pattern",
+                    "related_nouns": ["actor"],
+                    "morphisms": {
+                        "internalized": "made part of one's own thought/behavior",
+                        "lets": "enables, allows",
+                        "predict": "to foresee, anticipate",
+                        "participate": "to take part in, engage"
+                    },
+                    "relations_to_other_terms": ["Actor", "Pattern", "Replication", "Law"]
+                },
+                "contextual_meaning": "The mechanism by which 'patterns' 'replicate' and spread. 'Understanding' dissolves the need for 'law' and enables 'self-regulation'."
+            },
+            "Unnamed_Element": {
+                "definition": "a not-yet-<named> part of <price> that still [shapes] the <exchange>.",
+                "broken_down": {
+                    "core_noun": "part",
+                    "related_nouns": ["price", "exchange"],
+                    "morphisms": {
+                        "shapes": "influences, forms"
+                    },
+                    "adjectives": ["not-yet-named"],
+                    "relations_to_other_terms": ["Price", "Exchange", "Name"]
+                },
+                "contextual_meaning": "The mysterious seventh 'currency' in 'trade' (2.21), representing implicit or unconscious costs/gains that still drive behavior."
+            },
+            "Choreography": {
+                "definition": "The [coordinated] [movement] and [positioning] of <resources> or <actors> within a <system> over <time> and <space>.",
+                "broken_down": {
+                    "core_nouns": ["movement", "positioning"],
+                    "related_nouns": ["resources", "actors", "system", "time", "space"],
+                    "adjectives": ["coordinated"],
+                    "relations_to_other_terms": ["Economy", "Motion", "Flow", "Trade"]
+                },
+                "contextual_meaning": "The metaphor for 'economy', emphasizing that all economic activity is a 'dance' of 'resources' and 'actors', reflecting underlying 'patterns'."
+            },
+            "Regeneration": {
+                "definition": "The [process] of [reforming] or [renewing] a <pattern> or <system>, often after <collapse>.",
+                "broken_down": {
+                    "core_noun": "process",
+                    "morphisms": {
+                        "reforming": "to form again",
+                        "renewing": "to make new again, restore"
+                    },
+                    "related_nouns": ["pattern", "system", "collapse"],
+                    "prepositions": ["after"],
+                    "relations_to_other_terms": ["Pattern", "System", "Seed", "Truth (of a pattern)", "Renewal"]
+                },
+                "contextual_meaning": "A key property of true 'patterns', their capacity to 'regenerate without command' and reform even after 'system collapse', driven by 'seeds'."
+            },
+            "Replication": {
+                "definition": "The [process] by which a <pattern> [spreads] or [reproduces_itself] through <understanding> or <learning>.",
+                "broken_down": {
+                    "core_noun": "process",
+                    "morphisms": {
+                        "spreads": "to extend over an area",
+                        "reproduces_itself": "to create a copy of oneself"
+                    },
+                    "related_nouns": ["pattern", "understanding", "learning"],
+                    "relations_to_other_terms": ["Pattern", "Understanding", "Learning", "Seed", "Theft (is impossible)"]
+                },
+                "contextual_meaning": "Central to how 'patterns' endure; distinct from merely copying 'artifacts'. It occurs through 'learning' and 'understanding', making 'theft' impossible in pattern space."
+            },
+            "Distinction": {
+                "definition": "The [act] of [perceiving] or [marking] a <difference>, thereby creating an <identity>.",
+                "broken_down": {
+                    "core_noun": "act",
+                    "morphisms": {
+                        "perceiving": "to become aware of, to observe",
+                        "marking": "to indicate, to create a sign"
+                    },
+                    "related_nouns": ["difference", "identity"],
+                    "relations_to_other_terms": ["Boundary", "Circle", "Identity", "Us/Them"]
+                },
+                "contextual_meaning": "The foundational 'act of creation' for any 'system', leading directly to a 'boundary' and the establishment of 'identity' ('Us' and 'Them')."
+            },
+            "Identity": {
+                "definition": "The unique <qualities> that [define] an <entity> or <system>, often created by a <boundary>.",
+                "broken_down": {
+                    "core_noun": "qualities",
+                    "morphisms": {
+                        "define": "to establish the meaning or character of"
+                    },
+                    "related_nouns": ["entity", "system", "boundary"],
+                    "adjectives": ["unique"],
+                    "relations_to_other_terms": ["Entity", "System", "Boundary", "Circle", "Us/Them", "Name"]
+                },
+                "contextual_meaning": "Created by the 'boundary' of a 'circle' ('Us' vs 'Them'). Not singular, but 'contextual and multiple' (1.32)."
+            },
+            "Learning": {
+                "definition": "The [process] of [acquiring] <knowledge> or <skill>, enabling <patterns> to be [replicated].",
+                "broken_down": {
+                    "core_noun": "process",
+                    "morphisms": {
+                        "acquiring": "to gain, to obtain",
+                        "enabling": "to make possible",
+                        "replicated": "to reproduce, copy"
+                    },
+                    "related_nouns": ["knowledge", "skill", "patterns"],
+                    "relations_to_other_terms": ["Pattern", "Replication", "Understanding"]
+                },
+                "contextual_meaning": "The means by which 'patterns' spread and endure. 'Patterns' 'cannot be stolen; they can only be learned'."
+            }
+        };
+
+        const BASE_VOCABULARY = {
+            "Thing": "anything that [can_be] [distinguished] from other <things>.",
+            "Entity": "a <thing> [seen_as] a separate unit.",
+            "Actor": "an <entity> that [can] [choose] and [act].",
+            "System": "a {set} of <entities> [related_by] shared <patterns> and [treated_as] one <whole>.",
+            "World": "the total <field> of <entities> and <relations> around a <system>.",
+            "Boundary": "a <distinction> that [separates] <inside> from <outside>.",
+            "Inside": "the part of a <world> that [belongs_to] a given <system> or <circle>.",
+            "Outside": "the part of a <world> that [does_not] [belong_to] that <system> or <circle>.",
+            "Circle": "a <boundary> plus its <inside> and <outside>, [held_together] as one <unit_of_belonging>.",
+            "Us": "<entities> on the <inside> of a chosen <circle>, [identified_with] by an <actor>.",
+            "Them": "<entities> on the <outside> of that <circle>, [not_identified_with] by that <actor>.",
+            "Role": "a repeatable <pattern> of [action] an <actor> [takes] within a <circle>.",
+            "Strength": "degree to which a <system> or <circle> [keeps_functioning] under change.",
+            "Clarity": "how sharply a <boundary> or <pattern> [can_be] [perceived] and [understood].",
+            "Flow": "directed [movement] of <things>, <signals>, or <value> across a <relation> or <boundary>.",
+            "Trade": "a [pattern] of mutual [exchange] between <actors>.",
+            "Access": "the [ability] of an <actor> to [enter], [use], or [affect] a <circle> or <resource>.",
+            "Price": "what must be [given_up] to gain <access> or receive <something>.",
+            "Voice": "an <actor>'s recognized [capacity] to [express] <intent> within a <circle>.",
+            "Memory": "stored <traces> of past [events] that can [shape] present [choices].",
+            "Heart": "the focal <subsystem> of a <system> through which <life> [flows_to] the <whole>.",
+            "Choice": "a [selection] between possible <gestures> or <actions>.",
+            "Name": "a <symbol> that [picks_out] and [stabilizes] an <identity>.",
+            "Balance": "a state where opposing <flows> or <forces> [offset] each other.",
+            "Imbalance": "a state where opposing <flows> or <forces> [do_not] [offset] each other.",
+            "Motion": "continued [change] in <position>, <relation>, or <state>.",
+            "Value": "the felt or agreed <importance> of a <thing> or <pattern>.",
+            "Pattern": "a repeatable <relation> among <entities> that [can_be] [recognized] and [reused].",
+            "Economy": "the network of <trades> and <flows> in and between <circles>.",
+            "Life": "ongoing <process> of [self-maintenance] and [response] in a <system>.",
+            "Care": "a [pattern] of <actions> that [support] and [sustain] another <entity>.",
+            "Attention": "focused <awareness> an <actor> [directs] toward an <object>, <event>, or <pattern>.",
+            "Zero": "the state where a <system> [acknowledges] having no prior <claims> or <debts>.",
+            "Debt": "an <obligation> to [return] <value> previously [received].",
+            "Seed": "a compact <pattern> that can [generate] a new <system> when given <conditions>.",
+            "Building": "the [process] of [assembling] <entities> into a <system>.",
+            "Soil": "any <context> into which a <seed> can [enter] and [develop>.",
+            "Artifact": "a concrete <thing> produced by a <pattern_of_making>.",
+            "Gesture": "a single directed <act> an <actor> [performs] toward <others> or itself.",
+            "Risk": "exposure to possible <loss> or <harm>.",
+            "Renewal": "[restoration] or [refreshing] of <capacity> or <life>.",
+            "Safety": "condition of low <risk> of <harm>.",
+            "Stillness": "low or absent <motion>.",
+            "Rhythm": "repeated <pattern> of [alternating] <states> or <gestures>.",
+            "Truth": "degree to which a <pattern> [continues_to_work] across contexts.",
+            "Whole": "a <system> [seen_as] one <entity> rather than separate parts.",
+            "Folk_System": "a <system> built from lived <practice> rather than formal <design>.",
+            "Zero_Point": "the <position> where an <actor> or <system> [stands_at] <zero>.",
+            "Law": "an explicit <rule> meant to [govern] behavior in a <system>.",
+            "Understanding": "an <actor>'s internalized <pattern> that [lets] it [predict] and [participate>.",
+            "Unnamed_Element": "a not-yet-<named> part of <price> that still [shapes] the <exchange>."
+        };
+
+        const BASE_VOCABULARY_NOTES = "All [verbs] and [relations] in [] are treated as &lt;morphisms&gt; connecting &lt;entities&gt;.";
+
+        // Define which vocabulary terms are relevant for each axiom section
+        const AXIOM_VOCAB_MAP = {
+            circle: ["Thing", "Entity", "System", "World", "Boundary", "Inside", "Outside", "Circle", "Us", "Them", "Role", "Strength", "Clarity", "Flow", "Life", "Rhythm"],
+            trade: ["Thing", "Entity", "Actor", "System", "World", "Boundary", "Circle", "Flow", "Trade", "Access", "Price", "Voice", "Memory", "Heart", "Choice", "Name", "Balance", "Imbalance", "Motion", "Value", "Pattern", "Economy", "Life", "Choreography", "Artifact", "Understanding", "Unnamed_Element"],
+            heart: ["System", "Heart", "Life", "Whole", "Care", "Attention", "Boundary", "Actor", "Pattern"],
+            seed: ["System", "Zero", "Debt", "Seed", "Building", "Pattern", "Soil", "Artifact", "Understanding"],
+            choice: ["Actor", "Choice", "Gesture", "Risk", "Renewal", "Safety", "Stillness", "Rhythm", "Circle", "Life", "System"],
+            pattern: ["Entity", "System", "Circle", "Trade", "Heart", "Seed", "Pattern", "Actor", "Truth", "Whole", "Folk_System", "Life", "Understanding"],
+            zero: ["Actor", "System", "Zero", "Zero_Point", "Circle", "Trade", "Heart", "Pattern", "Law", "Understanding", "Life"]
+        };
+
+
+        function showCopyNotice(message) {
+            const notice = document.getElementById('copyNotice');
+            notice.textContent = message;
+            notice.classList.add('show');
+            setTimeout(() => {
+                notice.classList.remove('show');
+            }, 2500);
+        }
+
+        async function copyToClipboard(text) {
+            try {
+                await navigator.clipboard.writeText(text);
+                return true;
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                textArea.style.position = "fixed";
+                textArea.style.left = "-999999px";
+                document.body.prepend(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    return true;
+                } catch (execErr) {
+                    console.error('Fallback copy failed:', execErr);
+                    return false;
+                } finally {
+                    textArea.remove();
+                }
+            }
+        }
+
+        function closeAllInlineDefinitionBoxes() {
+            document.querySelectorAll('.inline-definition-box.open').forEach(box => {
+                box.classList.remove('open');
+                // Find the triggering span and deactivate it
+                const parentId = box.getAttribute('data-parent-id');
+                const triggerSpan = document.getElementById(parentId);
+                if (triggerSpan) {
+                    triggerSpan.classList.remove('active');
+                }
+            });
+        }
+
+        function scrollToSection(index) {
+            const sections = document.querySelectorAll('.axiom-grid > .axiom-section:not(#base-vocabulary-section)');
+            if (sections[index]) {
+                document.getElementById('base-vocabulary-section').style.display = 'none';
+                document.getElementById('main-axiom-grid').style.display = 'grid';
+                document.querySelectorAll('.axiom-section-vocabulary-display.show').forEach(el => {
+                    el.classList.remove('show');
+                    el.previousElementSibling.classList.remove('active');
+                });
+                
+                closeAllInlineDefinitionBoxes(); // Close all inline boxes on section navigation
+
+                sections[index].scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function toggleBaseVocabulary() {
+            const vocabSection = document.getElementById('base-vocabulary-section');
+            const mainAxiomGrid = document.getElementById('main-axiom-grid');
+
+            document.querySelectorAll('.axiom-section-vocabulary-display.show').forEach(el => {
+                el.classList.remove('show');
+                el.previousElementSibling.classList.remove('active');
+            });
+            
+            closeAllInlineDefinitionBoxes(); // Close all inline boxes when showing main vocab
+
+            if (vocabSection.style.display === 'block') {
+                vocabSection.style.display = 'none';
+                mainAxiomGrid.style.display = 'grid';
+            } else {
+                mainAxiomGrid.style.display = 'none';
+                vocabSection.style.display = 'block';
+                vocabSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        /**
+         * Processes a string (expected to be already HTML-escaped, like from nodeValue),
+         * highlighting known vocabulary terms within it.
+         * @param {string} textContent The string to process (e.g., from textNode.nodeValue).
+         * @param {string|null} [sourceTerm=null] An optional term to exclude from highlighting (e.g., for self-referential definitions).
+         * @returns {DocumentFragment} A fragment containing text nodes and highlighted <span> elements.
+         */
+        function getHighlightedFragment(textContent, sourceTerm = null) {
+            const fragment = document.createDocumentFragment();
+            let remainingText = textContent;
+
+            const sortedVocabTerms = Object.keys(BASE_VOCABULARY)
+                .sort((a, b) => b.length - a.length);
+
+            while (remainingText.length > 0) {
+                let bestMatch = null;
+                let bestMatchTerm = null;
+                let bestMatchStartIndex = -1;
+
+                for (const term of sortedVocabTerms) {
+                    if (sourceTerm && term === sourceTerm) continue;
+
+                    const escapedTermForRegex = term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                    
+                    // Regex to match:
+                    // 1. Plain word `Term` (e.g., "System")
+                    // 2. HTML-escaped tag `&lt;Term&gt;` (e.g., "&lt;System&gt;")
+                    const regex = new RegExp(
+                        `\\b(${escapedTermForRegex})\\b|(&lt;${escapedTermForRegex}&gt;)`,
+                        'i' // Case-insensitive for search
+                    );
+
+                    regex.lastIndex = 0; // Reset regex state for each term search on remainingText
+                    let match = regex.exec(remainingText);
+
+                    if (match) {
+                        // Crucial: Skip matches that are themselves already HTML entities (like `&amp;`)
+                        // This prevents highlighting `amp` inside `&amp;lt;` or similar
+                        if (match[0].includes('&amp;')) {
+                            continue; 
+                        }
+
+                        // If this is the first match, or an earlier match
+                        if (bestMatch === null || match.index < bestMatchStartIndex) {
+                            bestMatch = match;
+                            bestMatchTerm = term;
+                            bestMatchStartIndex = match.index;
+                        }
+                    }
+                }
+
+                if (bestMatch && bestMatchStartIndex !== -1) {
+                    // Add text before the match as a plain text node
+                    if (bestMatchStartIndex > 0) {
+                        fragment.appendChild(document.createTextNode(remainingText.substring(0, bestMatchStartIndex)));
+                    }
+
+                    // Create the highlighted span for the match
+                    const term = bestMatchTerm;
+                    const rawDefinition = BASE_VOCABULARY[term];
+                    const definitionHtmlSafe = escapeHtmlForAttributeOrContent(rawDefinition); // For data-attribute
+
+                    const span = document.createElement('span');
+                    span.classList.add('highlighted-vocab');
+                    span.id = `vocab-instance-${highlightedSpanIdCounter++}`;
+                    span.setAttribute('data-term', term);
+                    span.setAttribute('data-definition', definitionHtmlSafe);
+
+                    let contentForSpanTextNode; // This is the actual string to put inside the TextNode child of the span
+                    if (bestMatch[1]) { // Plain word match (e.g., "System")
+                        contentForSpanTextNode = bestMatch[1];
+                    } else if (bestMatch[2]) { // HTML-escaped tag match (e.g., "&lt;System&gt;")
+                        contentForSpanTextNode = bestMatch[2];
+                    } else {
+                        contentForSpanTextNode = bestMatch[0]; // Fallback (should be covered by above)
+                    }
+                    span.appendChild(document.createTextNode(contentForSpanTextNode)); // Append text directly
+
+                    fragment.appendChild(span);
+
+                    // Update remainingText to start after the current match
+                    remainingText = remainingText.substring(bestMatchStartIndex + bestMatch[0].length);
+                } else {
+                    // No more matches found, append the rest of the text as a plain text node
+                    if (remainingText.length > 0) {
+                        fragment.appendChild(document.createTextNode(remainingText));
+                    }
+                    remainingText = ""; // Done
+                }
+            }
+
+            return fragment;
+        }
+
+        /**
+         * Iterates through text nodes within a given DOM element and applies vocabulary highlighting.
+         * This function directly modifies the DOM using DocumentFragments.
+         * @param {HTMLElement} containerElement The DOM element to process.
+         */
+        function highlightVocabInDOMNodes(containerElement) {
+            // Use a TreeWalker to find all direct text nodes that need processing
+            // It filters out text nodes inside other `axiom-ref` or `highlighted-vocab` spans.
+            const textNodesToProcess = [];
+            const walker = document.createTreeWalker(
+                containerElement,
+                NodeFilter.SHOW_TEXT,
+                {
+                    acceptNode: function(node) {
+                        const parent = node.parentNode;
+                        if (parent.classList.contains('axiom-ref') || parent.closest('.highlighted-vocab')) {
+                            return NodeFilter.FILTER_REJECT;
+                        }
+                        if ((parent.classList.contains('axiom-zero') || parent.classList.contains('axiom-item') || parent.classList.contains('inline-definition-box-content')) && node.nodeValue.trim().length > 0) {
+                            return NodeFilter.FILTER_ACCEPT;
+                        }
+                        return NodeFilter.FILTER_SKIP;
+                    }
+                },
+                false
+            );
+
+            let node;
+            while ((node = walker.nextNode())) {
+                textNodesToProcess.push(node);
+            }
+
+            // Process text nodes in reverse order to avoid issues with DOM manipulation invalidating the walker
+            for (let i = textNodesToProcess.length - 1; i >= 0; i--) {
+                const textNode = textNodesToProcess[i];
+                // nodeValue is already HTML-escaped by the browser (e.g., '<' becomes '&lt;').
+                const originalTextValue = textNode.nodeValue; 
+
+                // Get a DocumentFragment with highlighted spans and plain text nodes
+                const highlightedFragment = getHighlightedFragment(originalTextValue, null); // No sourceTerm for initial highlighting
+
+                // Replace the original text node with the new fragment
+                if (highlightedFragment.hasChildNodes()) {
+                    textNode.parentNode.replaceChild(highlightedFragment, textNode);
+                } else {
+                    // If no highlighting happened and no other content, just keep the original text node
+                    // or replace with empty text node if original was just whitespace
+                    if (originalTextValue.trim().length === 0) {
+                        textNode.parentNode.replaceChild(document.createTextNode(''), textNode);
+                    }
+                }
+            }
+        }
+
+        function toggleInlineDefinition(clickedSpan) {
+            const term = clickedSpan.getAttribute('data-term');
+            const rawDefinition = BASE_VOCABULARY[term];
+            // The source term for nested highlighting is the term of the box we are creating
+            const sourceTermForNested = term;
+
+            if (!rawDefinition) return;
+
+            const existingDefBox = clickedSpan.nextElementSibling;
+            const expectedBoxId = `inline-def-box-for-${clickedSpan.id}`;
+
+            if (existingDefBox && existingDefBox.id === expectedBoxId) {
+                // Found existing box, toggle it
+                const isOpen = existingDefBox.classList.toggle('open');
+                clickedSpan.classList.toggle('active', isOpen);
+
+                if (!isOpen) {
+                    // If closing, recursively close all children inline definition boxes
+                    existingDefBox.querySelectorAll('.inline-definition-box.open').forEach(nestedBox => {
+                        nestedBox.classList.remove('open');
+                        const nestedTriggerId = nestedBox.getAttribute('data-parent-id');
+                        const nestedTriggerSpan = document.getElementById(nestedTriggerId);
+                        if (nestedTriggerSpan) {
+                            nestedTriggerSpan.classList.remove('active');
+                        }
+                    });
+                }
+            } else {
+                // Close any other inline boxes that are direct siblings of the clicked span
+                // This prevents multiple boxes opening at the same insertion point
+                const siblings = clickedSpan.parentNode.children;
+                let foundClicked = false;
+                for (let i = 0; i < siblings.length; i++) {
+                    if (siblings[i] === clickedSpan) {
+                        foundClicked = true;
+                        continue;
+                    }
+                    if (foundClicked && siblings[i].classList.contains('inline-definition-box') && siblings[i].classList.contains('open')) {
+                         siblings[i].classList.remove('open');
+                         const siblingTriggerId = siblings[i].getAttribute('data-parent-id');
+                         const siblingTriggerSpan = document.getElementById(siblingTriggerId);
+                         if(siblingTriggerSpan) siblingTriggerSpan.classList.remove('active');
+                    }
+                }
+
+
+                // Create new box
+                const newDefBox = document.createElement('div');
+                newDefBox.classList.add('inline-definition-box', 'open');
+                newDefBox.id = expectedBoxId;
+                newDefBox.setAttribute('data-parent-id', clickedSpan.id);
+
+                const header = document.createElement('div');
+                header.classList.add('inline-definition-box-header', 'active'); // Start active/open
+                header.innerHTML = `
+                    <span class="inline-definition-box-title">&lt;${escapeHtmlForAttributeOrContent(term)}&gt;</span>
+                    <span class="inline-definition-box-arrow">▼</span>
+                `;
+                newDefBox.appendChild(header);
+
+                const content = document.createElement('div');
+                content.classList.add('inline-definition-box-content', 'open'); // Start open
+                
+                // Get the highlighted fragment for the definition content
+                const definitionFragment = getHighlightedFragment(rawDefinition, sourceTermForNested);
+                const pElement = document.createElement('p');
+                pElement.appendChild(definitionFragment);
+                content.appendChild(pElement);
+                
+                newDefBox.appendChild(content);
+
+                clickedSpan.parentNode.insertBefore(newDefBox, clickedSpan.nextSibling);
+                clickedSpan.classList.add('active');
+
+                // Scroll the newly opened definition into view
+                newDefBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+
+                // Add event listener to the header of the new box to toggle its own content
+                header.addEventListener('click', (event) => {
+                    event.stopPropagation(); // Prevent this click from bubbling up and closing parents
+                    content.classList.toggle('open');
+                    header.classList.toggle('active');
+                    // If this box is closing, recursively close its children
+                    if (!content.classList.contains('open')) {
+                        newDefBox.querySelectorAll('.inline-definition-box.open').forEach(nestedBox => {
+                            nestedBox.classList.remove('open');
+                            const nestedTriggerId = nestedBox.getAttribute('data-parent-id');
+                            const nestedTriggerSpan = document.getElementById(nestedTriggerId);
+                            if (nestedTriggerSpan) {
+                                nestedTriggerSpan.classList.remove('active');
+                            }
+                        });
+                    }
+                });
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Populate main Base Vocabulary list
+            const baseVocabList = document.getElementById('base-vocabulary-list');
+            for (const [term, definition] of Object.entries(BASE_VOCABULARY)) {
+                const listItem = document.createElement('div');
+                listItem.classList.add('axiom-item');
+                // The term in axiom-ref needs to be escaped for correct display
+                // The definition itself should be processed for highlighting if it were clickable,
+                // but here it's just plain display. So, only attribute escaping for now.
+                listItem.innerHTML = `<span class="axiom-ref">&lt;${escapeHtmlForAttributeOrContent(term)}&gt;:</span> ${escapeHtmlForAttributeOrContent(definition)}`;
+                baseVocabList.appendChild(listItem);
+            }
+
+            // Apply initial highlighting to all axiom texts within the main grid
+            document.querySelectorAll('#main-axiom-grid .axiom-zero, #main-axiom-grid .axiom-item').forEach(element => {
+                highlightVocabInDOMNodes(element);
+            });
+
+            // Setup per-section vocabulary toggles and content
+            document.querySelectorAll('.axiom-section').forEach(section => {
+                const axiomType = section.getAttribute('data-axiom');
+                const vocabToggle = section.querySelector('.axiom-section-vocab-toggle');
+                const vocabDisplay = section.querySelector('.axiom-section-vocabulary-display');
+
+                if (vocabToggle && vocabDisplay && AXIOM_VOCAB_MAP[axiomType]) {
+                    let vocabContentHtml = '';
+                    AXIOM_VOCAB_MAP[axiomType].forEach(term => {
+                        if (BASE_VOCABULARY[term]) {
+                            // Populate with highlighted definitions for relevant vocab sections
+                            const tempDiv = document.createElement('div');
+                            tempDiv.appendChild(getHighlightedFragment(BASE_VOCABULARY[term], term));
+                            vocabContentHtml += `<div class="vocab-item"><span class="vocab-term">&lt;${escapeHtmlForAttributeOrContent(term)}&gt;:</span> ${tempDiv.innerHTML}</div>`;
+                        }
+                    });
+                    vocabDisplay.innerHTML = `<h4>Relevant Concepts:</h4>${vocabContentHtml}`;
+
+                    vocabToggle.addEventListener('click', function() {
+                        document.getElementById('base-vocabulary-section').style.display = 'none';
+                        document.getElementById('main-axiom-grid').style.display = 'grid';
+
+                        vocabDisplay.classList.toggle('show');
+                        vocabToggle.classList.toggle('active');
+
+                        closeAllInlineDefinitionBoxes(); // Close all inline boxes when toggling section vocab
+
+                        document.querySelectorAll('.axiom-section-vocabulary-display.show').forEach(otherDisplay => {
+                            if (otherDisplay !== vocabDisplay) {
+                                otherDisplay.classList.remove('show');
+                                otherDisplay.previousElementSibling.classList.remove('active');
+                            }
+                        });
+                    });
+                }
+            });
+
+            // Add functionality to "Operationalize" buttons
+            document.querySelectorAll('.operationalize-button').forEach(button => {
+                button.addEventListener('click', async function() {
+                    const axiomType = this.getAttribute('data-axiom-type');
+                    const pomlLens = POML_LENSES[axiomType];
+
+                    if (pomlLens) {
+                        const success = await copyToClipboard(pomlLens);
+                        if (success) {
+                            showCopyNotice(`POML LENS COPIED: ${AXIOM_NAMES[axiomType]}`);
+                        } else {
+                            showCopyNotice(`FAILED to copy POML Lens for ${AXIOM_NAMES[axiomType]}`);
+                        }
+                    } else {
+                        showCopyNotice(`No POML Lens found for ${axiomType}`);
+                    }
+                    closeAllInlineDefinitionBoxes(); // Close all inline boxes when operationalizing
+                });
+            });
+
+            // Set up click listener for all highlighted terms (delegated to body)
+            document.body.addEventListener('click', function(event) {
+                let target = event.target;
+                // Traverse up to find the closest .highlighted-vocab, in case a child element within it was clicked
+                let highlightedSpan = target.closest('.highlighted-vocab'); 
+
+                if (highlightedSpan) {
+                    event.stopPropagation(); // Stop propagation to prevent ancestor click handlers from firing
+                    toggleInlineDefinition(highlightedSpan);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

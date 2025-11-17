@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TRACTOR FOLKOLOGICUS · 007 Flux Field</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: #111;
+            color: #eee;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            padding: 10px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            background: #181818;
+            border-bottom: 1px solid #333;
+            font-size: 11px;
+        }
+
+        header .title {
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        header .subtitle {
+            opacity: 0.7;
+            letter-spacing: 0.12em;
+        }
+
+        main {
+            flex: 1;
+            position: relative;
+            background: radial-gradient(circle at 50% 0%, #222 0, #050505 60%);
+            overflow: hidden;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            cursor: crosshair;
+        }
+
+        footer {
+            padding: 8px 16px;
+            background: #181818;
+            border-top: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 10px;
+        }
+
+        .hint {
+            opacity: 0.75;
+        }
+
+        .stats {
+            opacity: 0.75;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="title">TRACTOR FOLKOLOGICUS · 007 FLUX FIELD</div>
+        <div class="subtitle">Orbs as a shared field · Shapes as operators</div>
+    </header>
+    <main>
+        <canvas id="flux-canvas"></canvas>
+    </main>
+    <footer>
+        <div class="hint">Click to toggle pause · Orbs (orange / blue) circulate through circle, trade, heart, pattern, seed, choice, zero.</div>
+        <div class="stats" id="stats">Initializing…</div>
+    </footer>
+
+    <script>
+        class FluxFieldApp {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.width = 0;
+                this.height = 0;
+
+                this.orbs = [];
+                this.shapes = [];
+                this.edges = [];
+
+                this.isRunning = true;
+                this._last = performance.now();
+
+                this.params = {
+                    flow: 1.0,
+                    drag: 0.96,
+                    orbCount: 420
+                };
+
+                this.resize();
+                window.addEventListener('resize', () => this.resize());
+
+                this.setupScene();
+                this.seedOrbs();
+
+                canvas.addEventListener('click', () => {
+                    this.isRunning = !this.isRunning;
+                    if (this.isRunning) {
+                        this._last = performance.now();
+                        this.loop();
+                    }
+                });
+
+                this.loop();
+            }
+
+            resize() {
+                const rect = this.canvas.getBoundingClientRect();
+                const dpr = window.devicePixelRatio || 1;
+                this.canvas.width = rect.width * dpr;
+                this.canvas.height = rect.height * dpr;
+                this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                this.width = rect.width;
+                this.height = rect.height;
+            }
+
+            setupScene() {
+                const cx = this.width * 0.5;
+                const cy = this.height * 0.5;
+
+                const circle = this.addShape('circle', cx - 140, cy, 70, { label: 'WORLD', heart: 0.8 });
+                const outerA = this.addShape('circle', cx + 110, cy - 80, 55, { label: 'A', heart: 0.45 });
+                const outerB = this.addShape('circle', cx + 110, cy + 80, 55, { label: 'B', heart: 0.55 });
+
+                const heart = this.addShape('heart', cx - 10, cy - 110, 60, { label: 'HEART' });
+                const pattern = this.addShape('pattern', cx + 40, cy, 70, { label: 'PATTERN' });
+                const seed = this.addShape('seed', cx - 60, cy + 120, 45, { label: 'SEED' });
+                const zero = this.addShape('zero', cx + 210, cy + 10, 55, { label: 'ZERO' });
+                const choice = this.addShape('choice', cx + 10, cy + 40, 40, { label: 'CHOICE' });
+
+                this.addEdge(circle, outerA);
+                this.addEdge(circle, outerB);
+                this.addEdge(outerA, pattern);
+                this.addEdge(pattern, outerB);
+            }
+
+            addShape(type, x, y, radius, data = {}) {
+                const shape = { type, x, y, radius, data };
+                this.shapes.push(shape);
+                return shape;
+            }
+
+            addEdge(a, b) {
+                this.edges.push({ a, b });
+            }
+
+            seedOrbs() {
+                this.orbs.length = 0;
+                for (let i = 0; i < this.params.orbCount; i++) {
+                    const spawnRegion = this.shapes[Math.floor(Math.random() * this.shapes.length)];
+                    const angle = Math.random() * Math.PI * 2;
+                    const r = spawnRegion.radius * (0.3 + 0.7 * Math.random());
+                    const x = spawnRegion.x + Math.cos(angle) * r;
+                    const y = spawnRegion.y + Math.sin(angle) * r;
+                    const isOrange = Math.random() < 0.55;
+                    this.orbs.push({
+                        x,
+                        y,
+                        vx: (Math.random() - 0.5) * 40,
+                        vy: (Math.random() - 0.5) * 40,
+                        energy: 0.4 + Math.random() * 0.5,
+                        type: isOrange ? 'orange' : 'blue'
+                    });
+                }
+            }
+
+            loop() {
+                const now = performance.now();
+                const dt = Math.max(0.005, Math.min(0.05, (now - this._last) / 1000));
+                this._last = now;
+
+                this.update(dt);
+                this.render();
+
+                if (this.isRunning) {
+                    requestAnimationFrame(() => this.loop());
+                }
+            }
+
+            update(dt) {
+                const flow = this.params.flow;
+                const drag = this.params.drag;
+
+                for (const orb of this.orbs) {
+                    orb.vx *= drag;
+                    orb.vy *= drag;
+
+                    for (const shape of this.shapes) {
+                        const dx = shape.x - orb.x;
+                        const dy = shape.y - orb.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy) + 0.0001;
+                        const ndx = dx / dist;
+                        const ndy = dy / dist;
+
+                        if (shape.type === 'circle') {
+                            const influenceR = shape.radius * 1.4;
+                            if (dist < influenceR) {
+                                const inner = shape.radius;
+                                const t = Math.min(1, dist / influenceR);
+                                const heart = shape.data.heart || 0.5;
+                                const strength = (1 - t) * heart * 40 * flow;
+                                orb.vx += ndx * strength * dt;
+                                orb.vy += ndy * strength * dt;
+
+                                if (dist < inner * 0.7) {
+                                    const tx = -ndy;
+                                    const ty = ndx;
+                                    const swirl = 25 * (0.4 + heart) * flow;
+                                    orb.vx += tx * swirl * dt;
+                                    orb.vy += ty * swirl * dt;
+                                }
+                            }
+                        } else if (shape.type === 'heart') {
+                            const r = shape.radius * 1.6;
+                            if (dist < r) {
+                                const t = 1 - dist / r;
+                                const k = 18 * t * flow;
+                                const targetEnergy = 0.55;
+                                const de = (targetEnergy - orb.energy) * k * dt;
+                                orb.energy += de;
+                            }
+                        } else if (shape.type === 'pattern') {
+                            const r = shape.radius;
+                            if (dist < r) {
+                                const t = 1 - dist / r;
+                                const tx = -ndy;
+                                const ty = ndx;
+                                const align = 35 * t * flow;
+                                orb.vx += tx * align * dt;
+                                orb.vy += ty * align * dt;
+                                orb.energy += 0.6 * t * dt;
+                                if (orb.type === 'blue' && Math.random() < 0.2 * t * dt * 60) {
+                                    orb.type = 'orange';
+                                }
+                            }
+                        } else if (shape.type === 'zero') {
+                            const r = shape.radius;
+                            if (dist < r) {
+                                const t = 1 - dist / r;
+                                const sink = 55 * t * flow;
+                                orb.vx -= ndx * sink * dt;
+                                orb.vy -= ndy * sink * dt;
+                                orb.energy -= 0.9 * t * dt;
+                                if (dist < r * 0.35) {
+                                    if (orb.energy < 0.3 || Math.random() < 0.5 * dt * 60) {
+                                        const spawnAt = this.shapes[Math.floor(Math.random() * this.shapes.length)];
+                                        orb.x = spawnAt.x + (Math.random() - 0.5) * spawnAt.radius;
+                                        orb.y = spawnAt.y + (Math.random() - 0.5) * spawnAt.radius;
+                                        orb.vx = (Math.random() - 0.5) * 20;
+                                        orb.vy = (Math.random() - 0.5) * 20;
+                                        orb.energy = 0.6;
+                                        orb.type = 'blue';
+                                    }
+                                }
+                            }
+                        } else if (shape.type === 'seed') {
+                            const r = shape.radius * 1.3;
+                            if (dist < r) {
+                                const t = 1 - dist / r;
+                                const tx = -ndy;
+                                const ty = ndx;
+                                const swirl = 22 * t * flow;
+                                orb.vx += tx * swirl * dt;
+                                orb.vy += ty * swirl * dt;
+                                orb.energy += 0.4 * t * dt;
+                                if (Math.random() < 0.15 * t * dt * 60) {
+                                    orb.type = 'orange';
+                                }
+                            }
+                        } else if (shape.type === 'choice') {
+                            const r = shape.radius * 1.7;
+                            if (dist < r) {
+                                const t = 1 - dist / r;
+                                const bias = 30 * t * flow;
+                                const biasSign = orb.type === 'orange' ? 1 : -1;
+                                const bx = biasSign * 0.7;
+                                const by = biasSign * -0.2;
+                                orb.vx += bx * bias * dt;
+                                orb.vy += by * bias * dt;
+                            }
+                        }
+                    }
+
+                    for (const edge of this.edges) {
+                        const ax = edge.a.x;
+                        const ay = edge.a.y;
+                        const bx = edge.b.x;
+                        const by = edge.b.y;
+                        const ex = bx - ax;
+                        const ey = by - ay;
+                        const elen2 = ex * ex + ey * ey + 0.0001;
+                        const t = ((orb.x - ax) * ex + (orb.y - ay) * ey) / elen2;
+                        const clampedT = Math.max(0, Math.min(1, t));
+                        const px = ax + ex * clampedT;
+                        const py = ay + ey * clampedT;
+                        const dx = orb.x - px;
+                        const dy = orb.y - py;
+                        const dist = Math.sqrt(dx * dx + dy * dy) + 0.0001;
+                        const channelRadius = Math.max(32, edge.a.radius * 0.3);
+                        if (dist < channelRadius) {
+                            const alongX = ex / Math.sqrt(elen2);
+                            const alongY = ey / Math.sqrt(elen2);
+                            const s = 45 * (1 - dist / channelRadius) * flow;
+                            const dir = orb.type === 'orange' ? 1 : -1;
+                            orb.vx += alongX * s * dir * dt;
+                            orb.vy += alongY * s * dir * dt;
+                        }
+                    }
+
+                    orb.x += orb.vx * dt;
+                    orb.y += orb.vy * dt;
+
+                    if (orb.x < -40 || orb.x > this.width + 40 || orb.y < -40 || orb.y > this.height + 40) {
+                        const pick = this.shapes[Math.floor(Math.random() * this.shapes.length)];
+                        orb.x = pick.x + (Math.random() - 0.5) * pick.radius;
+                        orb.y = pick.y + (Math.random() - 0.5) * pick.radius;
+                        orb.vx = (Math.random() - 0.5) * 20;
+                        orb.vy = (Math.random() - 0.5) * 20;
+                    }
+
+                    orb.energy = Math.max(0.15, Math.min(1.2, orb.energy));
+                }
+
+                const statsEl = document.getElementById('stats');
+                if (statsEl) {
+                    const oranges = this.orbs.filter(o => o.type === 'orange').length;
+                    const blues = this.orbs.length - oranges;
+                    statsEl.textContent = `Orbs: ${this.orbs.length} · Orange: ${oranges} · Blue: ${blues}`;
+                }
+            }
+
+            render() {
+                const ctx = this.ctx;
+                ctx.clearRect(0, 0, this.width, this.height);
+
+                ctx.save();
+                ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+                ctx.lineWidth = 1;
+                for (const edge of this.edges) {
+                    ctx.beginPath();
+                    ctx.moveTo(edge.a.x, edge.a.y);
+                    ctx.lineTo(edge.b.x, edge.b.y);
+                    ctx.stroke();
+                }
+                ctx.restore();
+
+                for (const shape of this.shapes) {
+                    ctx.save();
+                    if (shape.type === 'circle') {
+                        ctx.beginPath();
+                        ctx.arc(shape.x, shape.y, shape.radius, 0, Math.PI * 2);
+                        ctx.strokeStyle = 'rgba(255,255,255,0.5)';
+                        ctx.lineWidth = 1.2;
+                        ctx.stroke();
+                    } else if (shape.type === 'heart') {
+                        ctx.beginPath();
+                        ctx.arc(shape.x, shape.y, shape.radius, 0, Math.PI * 2);
+                        ctx.strokeStyle = 'rgba(255,171,145,0.5)';
+                        ctx.lineWidth = 1.1;
+                        ctx.stroke();
+                    } else if (shape.type === 'pattern') {
+                        ctx.beginPath();
+                        ctx.arc(shape.x, shape.y, shape.radius, 0, Math.PI * 2);
+                        ctx.strokeStyle = 'rgba(144,202,249,0.4)';
+                        ctx.setLineDash([4, 4]);
+                        ctx.stroke();
+                    } else if (shape.type === 'seed') {
+                        ctx.beginPath();
+                        ctx.arc(shape.x, shape.y, shape.radius * 0.4, 0, Math.PI * 2);
+                        ctx.strokeStyle = 'rgba(197,225,165,0.7)';
+                        ctx.stroke();
+                    } else if (shape.type === 'zero') {
+                        ctx.beginPath();
+                        ctx.arc(shape.x, shape.y, shape.radius * 0.15, 0, Math.PI * 2);
+                        ctx.fillStyle = 'rgba(255,204,128,0.9)';
+                        ctx.fill();
+                        ctx.beginPath();
+                        ctx.arc(shape.x, shape.y, shape.radius, 0, Math.PI * 2);
+                        ctx.strokeStyle = 'rgba(255,204,128,0.3)';
+                        ctx.stroke();
+                    } else if (shape.type === 'choice') {
+                        ctx.beginPath();
+                        ctx.arc(shape.x, shape.y, shape.radius, 0, Math.PI * 2);
+                        ctx.strokeStyle = 'rgba(179,157,219,0.7)';
+                        ctx.setLineDash([2, 3]);
+                        ctx.stroke();
+                    }
+
+                    if (shape.data.label) {
+                        ctx.font = '9px system-ui, sans-serif';
+                        ctx.fillStyle = 'rgba(255,255,255,0.8)';
+                        ctx.textAlign = 'center';
+                        ctx.fillText(shape.data.label, shape.x, shape.y - shape.radius - 6);
+                    }
+
+                    ctx.restore();
+                }
+
+                for (const orb of this.orbs) {
+                    const e = orb.energy;
+                    const r = 1.5 + e * 2.1;
+                    const alpha = 0.28 + e * 0.5;
+                    let col;
+                    if (orb.type === 'orange') {
+                        col = `rgba(255,171,145,${alpha.toFixed(3)})`;
+                    } else {
+                        col = `rgba(144,202,249,${alpha.toFixed(3)})`;
+                    }
+                    ctx.beginPath();
+                    ctx.arc(orb.x, orb.y, r, 0, Math.PI * 2);
+                    ctx.fillStyle = col;
+                    ctx.fill();
+                }
+            }
+        }
+
+        (function () {
+            const canvas = document.getElementById('flux-canvas');
+            if (!canvas) return;
+            new FluxFieldApp(canvas);
+        })();
+    </script>
+</body>
+</html>

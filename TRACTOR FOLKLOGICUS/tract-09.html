@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tractor Folkologicus · Minimal Suite</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #1a1a1a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            letter-spacing: 0.15em;
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: 300;
+            color: white;
+        }
+
+        .subtitle {
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            margin-bottom: 40px;
+            text-align: center;
+            font-weight: 300;
+            color: #999;
+        }
+
+        .module-container {
+            width: 600px;
+            height: 400px;
+            position: relative;
+            background-color: white;
+            cursor: pointer;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .module {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .module.active {
+            opacity: 1;
+        }
+
+        .module-title {
+            position: absolute;
+            bottom: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5rem;
+            letter-spacing: 0.3em;
+            font-weight: 300;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        /* Module 1: The Circle */
+        #module1 {
+            background-color: white;
+        }
+
+        .circle-svg {
+            width: 200px;
+            height: 200px;
+        }
+
+        /* Module 2: The Trade */
+        #module2 {
+            background-color: black;
+            color: white;
+        }
+
+        .trade-line {
+            width: 0;
+            height: 3px;
+            background-color: #d4a574;
+            position: absolute;
+        }
+
+        .trade-token {
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            position: absolute;
+            opacity: 0;
+        }
+
+        .trade-arrow {
+            width: 0;
+            height: 0;
+            border-left: 15px solid #e74c3c;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            position: absolute;
+            opacity: 0;
+        }
+
+        /* Module 3: The Heart */
+        #module3 {
+            background-color: white;
+        }
+
+        .heart-svg {
+            width: 200px;
+            height: 200px;
+        }
+
+        .gold-line {
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background-color: #d4a574;
+            opacity: 0;
+        }
+
+        /* Module 4: The Seed */
+        #module4 {
+            background-color: black;
+        }
+
+        .seed-svg {
+            width: 200px;
+            height: 200px;
+        }
+
+        .blue-point {
+            width: 4px;
+            height: 4px;
+            background-color: #3498db;
+            border-radius: 50%;
+            opacity: 0;
+            position: absolute;
+        }
+
+        /* Module 5: The Choice */
+        #module5 {
+            background-color: #6d6d6d;
+        }
+
+        .choice-svg {
+            width: 200px;
+            height: 300px;
+        }
+
+        /* Module 6: The Pattern */
+        #module6 {
+            background-color: #6d6d6d;
+        }
+
+        .pattern-svg {
+            width: 200px;
+            height: 200px;
+        }
+
+        /* Module 7: The Zero Point */
+        #module7 {
+            background-color: white;
+        }
+
+        .zero-point {
+            width: 8px;
+            height: 8px;
+            background-color: #d4a574;
+            border-radius: 50%;
+            position: absolute;
+            opacity: 0;
+        }
+
+        .ripple {
+            width: 8px;
+            height: 8px;
+            border: 2px solid #d4a574;
+            border-radius: 50%;
+            position: absolute;
+            opacity: 0;
+        }
+
+        .controls {
+            margin-top: 30px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        button {
+            background-color: white;
+            border: 2px solid #333;
+            padding: 12px 30px;
+            font-size: 1rem;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 300;
+        }
+
+        button:hover {
+            background-color: #333;
+            color: white;
+        }
+
+        .progress {
+            color: white;
+            font-size: 1rem;
+            letter-spacing: 0.1em;
+        }
+
+        @media (max-width: 768px) {
+            .module-container {
+                width: 90vw;
+                height: 60vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>TRACTOR FOLKOLOGICUS · MINIMAL SUITE</h1>
+    <div class="subtitle">7 Modules · 5 Seconds Each · 2 Colors Max · Single Gesture</div>
+    
+    <div class="module-container" id="container">
+        <!-- Module 1: The Circle -->
+        <div class="module" id="module1">
+            <svg class="circle-svg" viewBox="0 0 200 200">
+                <circle id="circleShape" cx="100" cy="100" r="80" fill="none" stroke="black" stroke-width="2"/>
+            </svg>
+            <div class="module-title" id="title1" style="color: black;">CIRCLE</div>
+        </div>
+
+        <!-- Module 2: The Trade -->
+        <div class="module" id="module2">
+            <div class="trade-line" id="tradeLine"></div>
+            <div class="trade-token" id="tradeToken"></div>
+            <div class="trade-arrow" id="tradeArrow"></div>
+            <div class="module-title" id="title2">TRADE</div>
+        </div>
+
+        <!-- Module 3: The Heart -->
+        <div class="module" id="module3">
+            <svg class="heart-svg" viewBox="0 0 200 200">
+                <path id="heartPath" d="M100,170 C100,170 30,120 30,80 C30,50 50,30 75,30 C85,30 95,35 100,45 C105,35 115,30 125,30 C150,30 170,50 170,80 C170,120 100,170 100,170 Z" 
+                      fill="none" stroke="#e74c3c" stroke-width="2"/>
+            </svg>
+            <div class="gold-line" id="goldLine"></div>
+            <div class="module-title" id="title3" style="color: black;">HEART</div>
+        </div>
+
+        <!-- Module 4: The Seed -->
+        <div class="module" id="module4">
+            <svg class="seed-svg" viewBox="0 0 200 200">
+                <circle id="seedCircle" cx="100" cy="100" r="40" fill="none" stroke="white" stroke-width="2"/>
+                <ellipse id="seedOval" cx="100" cy="100" rx="30" ry="50" fill="none" stroke="#27ae60" stroke-width="2" opacity="0"/>
+            </svg>
+            <div class="blue-point" id="bluePoint"></div>
+            <div class="module-title" id="title4">SEED</div>
+        </div>
+
+        <!-- Module 5: The Choice -->
+        <div class="module" id="module5">
+            <svg class="choice-svg" viewBox="0 0 200 300">
+                <line id="choiceLine" x1="100" y1="50" x2="100" y2="150" stroke="white" stroke-width="2"/>
+                <line id="choiceForkL" x1="100" y1="150" x2="70" y2="200" stroke="white" stroke-width="2" opacity="0"/>
+                <line id="choiceForkR" x1="100" y1="150" x2="130" y2="200" stroke="white" stroke-width="2" opacity="0"/>
+                <circle id="choiceCircle" cx="100" cy="50" r="12" fill="white"/>
+            </svg>
+            <div class="module-title" id="title5">CHOICE</div>
+        </div>
+
+        <!-- Module 6: The Pattern -->
+        <div class="module" id="module6">
+            <svg class="pattern-svg" viewBox="0 0 200 200">
+                <rect id="patternDiamond" x="96" y="96" width="8" height="8" fill="#c0c0c0" transform="rotate(45 100 100)" opacity="0"/>
+                <line id="patternLine1" x1="100" y1="100" x2="100" y2="60" stroke="#00bcd4" stroke-width="2" opacity="0"/>
+                <line id="patternLine2" x1="100" y1="100" x2="135" y2="130" stroke="#00bcd4" stroke-width="2" opacity="0"/>
+                <line id="patternLine3" x1="100" y1="100" x2="65" y2="130" stroke="#00bcd4" stroke-width="2" opacity="0"/>
+            </svg>
+            <div class="module-title" id="title6">PATTERN</div>
+        </div>
+
+        <!-- Module 7: The Zero Point -->
+        <div class="module" id="module7">
+            <div class="zero-point" id="zeroPoint"></div>
+            <div class="ripple" id="ripple"></div>
+            <div class="module-title" id="title7" style="color: black;">ZERO</div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button id="playBtn">PLAY</button>
+        <button id="resetBtn">RESET</button>
+        <div class="progress" id="progress">Module 1/7</div>
+    </div>
+
+    <script>
+        let currentModule = 0;
+        let isPlaying = false;
+        let animationTimeout;
+
+        const modules = [
+            { id: 1, duration: 5000, animate: animateCircle },
+            { id: 2, duration: 5000, animate: animateTrade },
+            { id: 3, duration: 5000, animate: animateHeart },
+            { id: 4, duration: 5000, animate: animateSeed },
+            { id: 5, duration: 5000, animate: animateChoice },
+            { id: 6, duration: 5000, animate: animatePattern },
+            { id: 7, duration: 5000, animate: animateZero }
+        ];
+
+        function showModule(index) {
+            document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
+            document.getElementById(`module${index + 1}`).classList.add('active');
+            document.getElementById('progress').textContent = `Module ${index + 1}/7`;
+        }
+
+        function animateCircle() {
+            const circle = document.getElementById('circleShape');
+            const title = document.getElementById('title1');
+            const circumference = 2 * Math.PI * 80;
+            
+            circle.style.strokeDasharray = circumference;
+            circle.style.strokeDashoffset = circumference;
+            circle.style.strokeWidth = '2';
+            circle.style.transition = 'none';
+            
+            setTimeout(() => {
+                circle.style.transition = 'stroke-dashoffset 1s linear';
+                circle.style.strokeDashoffset = '0';
+            }, 50);
+
+            setTimeout(() => {
+                title.style.opacity = '1';
+            }, 1000);
+
+            setTimeout(() => {
+                circle.style.transition = 'stroke-width 0.5s';
+                circle.style.strokeWidth = '4';
+                setTimeout(() => {
+                    circle.style.strokeWidth = '2';
+                }, 500);
+            }, 3000);
+
+            setTimeout(() => {
+                circle.style.transition = 'stroke-width 1s, opacity 1s';
+                circle.style.strokeWidth = '1';
+                title.style.opacity = '0';
+            }, 4000);
+        }
+
+        function animateTrade() {
+            const line = document.getElementById('tradeLine');
+            const token = document.getElementById('tradeToken');
+            const arrow = document.getElementById('tradeArrow');
+            const title = document.getElementById('title2');
+
+            line.style.width = '0';
+            line.style.left = '50%';
+            line.style.top = '50%';
+            line.style.transform = 'translate(-50%, -50%)';
+            
+            setTimeout(() => {
+                line.style.transition = 'width 1s';
+                line.style.width = '300px';
+            }, 50);
+
+            setTimeout(() => {
+                token.style.opacity = '1';
+                token.style.left = 'calc(50% - 150px)';
+                token.style.top = '50%';
+                token.style.transform = 'translate(-50%, -50%)';
+                
+                arrow.style.opacity = '1';
+                arrow.style.left = 'calc(50% - 130px)';
+                arrow.style.top = '50%';
+                arrow.style.transform = 'translateY(-50%)';
+
+                setTimeout(() => {
+                    token.style.transition = 'left 2s';
+                    arrow.style.transition = 'left 2s';
+                    token.style.left = 'calc(50% + 150px)';
+                    arrow.style.left = 'calc(50% + 130px)';
+                }, 100);
+            }, 1000);
+
+            setTimeout(() => {
+                title.style.opacity = '1';
+            }, 3000);
+
+            setTimeout(() => {
+                arrow.style.transition = 'opacity 1s';
+                arrow.style.opacity = '0';
+                token.style.transition = 'left 1s, opacity 1s';
+                token.style.left = '50%';
+                token.style.opacity = '0';
+                title.style.opacity = '0';
+            }, 4000);
+        }
+
+        function animateHeart() {
+            const heart = document.getElementById('heartPath');
+            const line = document.getElementById('goldLine');
+            const title = document.getElementById('title3');
+            
+            const length = heart.getTotalLength();
+            heart.style.strokeDasharray = length;
+            heart.style.strokeDashoffset = length;
+            
+            setTimeout(() => {
+                heart.style.transition = 'stroke-dashoffset 1s linear';
+                heart.style.strokeDashoffset = '0';
+            }, 50);
+
+            setTimeout(() => {
+                line.style.opacity = '1';
+                line.style.width = '0';
+                line.style.left = '50%';
+                line.style.top = '50%';
+                line.style.transform = 'translate(-50%, -50%)';
+                
+                setTimeout(() => {
+                    line.style.transition = 'width 1s';
+                    line.style.width = '100px';
+                }, 100);
+                
+                title.style.opacity = '1';
+            }, 1000);
+
+            setTimeout(() => {
+                heart.style.transition = 'transform 0.5s';
+                heart.style.transformOrigin = 'center';
+                heart.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    heart.style.transform = 'scale(1)';
+                }, 500);
+            }, 3000);
+
+            setTimeout(() => {
+                heart.style.transition = 'stroke-width 1s, opacity 1s';
+                heart.style.strokeWidth = '1';
+                line.style.opacity = '0';
+                title.style.opacity = '0';
+            }, 4000);
+        }
+
+        function animateSeed() {
+            const circle = document.getElementById('seedCircle');
+            const oval = document.getElementById('seedOval');
+            const point = document.getElementById('bluePoint');
+            const title = document.getElementById('title4');
+            
+            circle.style.opacity = '0';
+            oval.style.opacity = '0';
+            
+            setTimeout(() => {
+                circle.style.transition = 'opacity 1s';
+                circle.style.opacity = '1';
+            }, 50);
+
+            setTimeout(() => {
+                circle.style.transition = 'opacity 0.5s';
+                circle.style.opacity = '0';
+                oval.style.transition = 'opacity 0.5s';
+                oval.style.opacity = '1';
+                
+                title.style.opacity = '1';
+            }, 1000);
+
+            setTimeout(() => {
+                oval.style.transition = 'opacity 0.5s';
+                oval.style.opacity = '0';
+                point.style.opacity = '1';
+                point.style.left = '50%';
+                point.style.top = '50%';
+                point.style.transform = 'translate(-50%, -50%)';
+            }, 3000);
+
+            setTimeout(() => {
+                title.style.opacity = '0';
+            }, 4000);
+        }
+
+        function animateChoice() {
+            const line = document.getElementById('choiceLine');
+            const forkL = document.getElementById('choiceForkL');
+            const forkR = document.getElementById('choiceForkR');
+            const circle = document.getElementById('choiceCircle');
+            const title = document.getElementById('title5');
+            
+            line.style.strokeDasharray = '100';
+            line.style.strokeDashoffset = '100';
+            
+            setTimeout(() => {
+                line.style.transition = 'stroke-dashoffset 1s linear';
+                line.style.strokeDashoffset = '0';
+            }, 50);
+
+            setTimeout(() => {
+                forkL.style.transition = 'opacity 0.5s';
+                forkR.style.transition = 'opacity 0.5s';
+                forkL.style.opacity = '1';
+                forkR.style.opacity = '1';
+                
+                circle.style.transition = 'cy 2s';
+                circle.setAttribute('cy', '150');
+                
+                title.style.opacity = '1';
+            }, 1000);
+
+            setTimeout(() => {
+                circle.style.transition = 'cy 1s';
+                circle.setAttribute('cy', '175');
+            }, 3000);
+
+            setTimeout(() => {
+                title.style.opacity = '0';
+            }, 4000);
+        }
+
+        function animatePattern() {
+            const diamond = document.getElementById('patternDiamond');
+            const line1 = document.getElementById('patternLine1');
+            const line2 = document.getElementById('patternLine2');
+            const line3 = document.getElementById('patternLine3');
+            const title = document.getElementById('title6');
+            
+            setTimeout(() => {
+                diamond.style.transition = 'opacity 1s';
+                diamond.style.opacity = '1';
+                line1.style.transition = 'opacity 0.5s';
+                line2.style.transition = 'opacity 0.5s';
+                line3.style.transition = 'opacity 0.5s';
+                line1.style.opacity = '1';
+                line2.style.opacity = '1';
+                line3.style.opacity = '1';
+            }, 50);
+
+            setTimeout(() => {
+                line1.style.transition = 'opacity 1s';
+                line2.style.transition = 'opacity 1s';
+                line3.style.transition = 'opacity 1s';
+                line1.style.opacity = '0';
+                line2.style.opacity = '0';
+                line3.style.opacity = '0';
+                
+                title.style.opacity = '1';
+            }, 1000);
+
+            setTimeout(() => {
+                diamond.style.transition = 'transform 0.5s';
+                diamond.style.transform = 'rotate(45deg) scale(1.3)';
+                setTimeout(() => {
+                    diamond.style.transform = 'rotate(45deg) scale(1)';
+                }, 500);
+            }, 3000);
+
+            setTimeout(() => {
+                title.style.opacity = '0';
+            }, 4000);
+        }
+
+        function animateZero() {
+            const point = document.getElementById('zeroPoint');
+            const ripple = document.getElementById('ripple');
+            const title = document.getElementById('title7');
+            
+            setTimeout(() => {
+                point.style.transition = 'opacity 1s';
+                point.style.opacity = '1';
+                point.style.left = '50%';
+                point.style.top = '50%';
+                point.style.transform = 'translate(-50%, -50%)';
+            }, 50);
+
+            setTimeout(() => {
+                ripple.style.opacity = '1';
+                ripple.style.left = '50%';
+                ripple.style.top = '50%';
+                ripple.style.transform = 'translate(-50%, -50%)';
+                
+                setTimeout(() => {
+                    ripple.style.transition = 'width 2s, height 2s, opacity 2s';
+                    ripple.style.width = '150px';
+                    ripple.style.height = '150px';
+                    ripple.style.opacity = '0';
+                }, 100);
+                
+                title.style.opacity = '1';
+            }, 1000);
+
+            setTimeout(() => {
+                title.style.opacity = '0';
+            }, 4000);
+
+            setTimeout(() => {
+                point.style.transition = 'opacity 1s';
+                point.style.opacity = '0';
+                document.getElementById('module7').style.transition = 'background-color 1s';
+            }, 4500);
+        }
+
+        function playSequence() {
+            if (isPlaying) return;
+            isPlaying = true;
+            currentModule = 0;
+            
+            function playNext() {
+                if (currentModule >= modules.length) {
+                    isPlaying = false;
+                    return;
+                }
+                
+                showModule(currentModule);
+                modules[currentModule].animate();
+                
+                animationTimeout = setTimeout(() => {
+                    currentModule++;
+                    playNext();
+                }, modules[currentModule].duration);
+            }
+            
+            playNext();
+        }
+
+        function reset() {
+            isPlaying = false;
+            clearTimeout(animationTimeout);
+            currentModule = 0;
+            showModule(0);
+            
+            // Reset all elements
+            document.querySelectorAll('.module-title').forEach(t => t.style.opacity = '0');
+            document.getElementById('circleShape').style.strokeDashoffset = '628';
+            document.getElementById('tradeLine').style.width = '0';
+            document.getElementById('tradeToken').style.opacity = '0';
+            document.getElementById('tradeArrow').style.opacity = '0';
+            document.getElementById('heartPath').style.strokeDashoffset = '1000';
+            document.getElementById('goldLine').style.opacity = '0';
+            document.getElementById('seedCircle').style.opacity = '1';
+            document.getElementById('seedOval').style.opacity = '0';
+            document.getElementById('bluePoint').style.opacity = '0';
+            document.getElementById('choiceLine').style.strokeDashoffset = '100';
+            document.getElementById('choiceForkL').style.opacity = '0';
+            document.getElementById('choiceForkR').style.opacity = '0';
+            document.getElementById('choiceCircle').setAttribute('cy', '50');
+            document.getElementById('patternDiamond').style.opacity = '0';
+            document.getElementById('patternLine1').style.opacity = '0';
+            document.getElementById('patternLine2').style.opacity = '0';
+            document.getElementById('patternLine3').style.opacity = '0';
+            document.getElementById('zeroPoint').style.opacity = '0';
+            document.getElementById('ripple').style.opacity = '0';
+            document.getElementById('progress').textContent = 'Module 1/7';
+        }
+
+        document.getElementById('playBtn').addEventListener('click', playSequence);
+        document.getElementById('resetBtn').addEventListener('click', reset);
+        document.getElementById('container').addEventListener('click', playSequence);
+
+        // Initialize
+        showModule(0);
+    </script>
+</body>
+</html>
