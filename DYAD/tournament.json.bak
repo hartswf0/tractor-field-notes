@@ -1,0 +1,1218 @@
+{
+  "tournamentId": "ONYX-2025",
+  "version": "1.0.0",
+  "generatedAt": "2025-12-06T04:03:06.566Z",
+  "format": "single_elimination",
+  "totalRounds": 7,
+  "rounds": [
+    {
+      "round": 1,
+      "name": "Chapter Battles (Original)",
+      "status": "complete",
+      "matchups": [
+        {
+          "id": "M-12",
+          "entityA": {
+            "name": "THE BISHOP",
+            "alias": "Augustine",
+            "score": 35
+          },
+          "entityB": {
+            "name": "THE FOREMAN",
+            "alias": "The Builders",
+            "score": 92
+          },
+          "winner": "THE FOREMAN",
+          "winnerScore": 92
+        },
+        {
+          "id": "M-13",
+          "entityA": {
+            "name": "THE SCRIBE",
+            "alias": null,
+            "score": 40
+          },
+          "entityB": {
+            "name": "THE GOLEM",
+            "alias": "SHRDLU",
+            "score": 88
+          },
+          "winner": "THE GOLEM",
+          "winnerScore": 88
+        },
+        {
+          "id": "M-14",
+          "entityA": {
+            "name": "THE CARTOGRAPHER",
+            "alias": null,
+            "score": 50
+          },
+          "entityB": {
+            "name": "THE NAVIGATOR",
+            "alias": "PROGRAMMAR",
+            "score": 85
+          },
+          "winner": "THE NAVIGATOR",
+          "winnerScore": 85
+        },
+        {
+          "id": "M-15",
+          "entityA": {
+            "name": "THE ANATOMIST",
+            "alias": null,
+            "score": 30
+          },
+          "entityB": {
+            "name": "THE ARCHITECT",
+            "alias": "Geertz",
+            "score": 94
+          },
+          "winner": "THE ARCHITECT",
+          "winnerScore": 94
+        },
+        {
+          "id": "M-16",
+          "entityA": {
+            "name": "THE ARCHIVIST",
+            "alias": null,
+            "score": 45
+          },
+          "entityB": {
+            "name": "THE WIZARD",
+            "alias": "PLANNER",
+            "score": 92
+          },
+          "winner": "THE WIZARD",
+          "winnerScore": 92
+        },
+        {
+          "id": "M-17",
+          "entityA": {
+            "name": "THE BARD",
+            "alias": null,
+            "score": 40
+          },
+          "entityB": {
+            "name": "THE MECHANIC",
+            "alias": "Calvino",
+            "score": 95
+          },
+          "winner": "THE MECHANIC",
+          "winnerScore": 95
+        },
+        {
+          "id": "M-18",
+          "entityA": {
+            "name": "THE TAXONOMIST",
+            "alias": null,
+            "score": 45
+          },
+          "entityB": {
+            "name": "THE INTERPRETER",
+            "alias": "Procedural Semantics",
+            "score": 93
+          },
+          "winner": "THE INTERPRETER",
+          "winnerScore": 93
+        },
+        {
+          "id": "M-19",
+          "entityA": {
+            "name": "THE WEAVER",
+            "alias": null,
+            "score": 55
+          },
+          "entityB": {
+            "name": "THE HYBRID",
+            "alias": "Rational Meaning Construction",
+            "score": 92
+          },
+          "winner": "THE HYBRID",
+          "winnerScore": 92
+        },
+        {
+          "id": "M-20",
+          "entityA": {
+            "name": "THE SIMULATOR",
+            "alias": null,
+            "score": 60
+          },
+          "entityB": {
+            "name": "THE SIMULACRUM",
+            "alias": "Generative Agents",
+            "score": 94
+          },
+          "winner": "THE SIMULACRUM",
+          "winnerScore": 94
+        },
+        {
+          "id": "M-21",
+          "entityA": {
+            "name": "THE ORACLE",
+            "alias": null,
+            "score": 40
+          },
+          "entityB": {
+            "name": "THE CHILD",
+            "alias": "Winograd",
+            "score": 96
+          },
+          "winner": "THE CHILD",
+          "winnerScore": 96
+        },
+        {
+          "id": "M-22",
+          "entityA": {
+            "name": "THE SYMBOLIST",
+            "alias": null,
+            "score": 75
+          },
+          "entityB": {
+            "name": "THE VISUALIZER",
+            "alias": "Victor",
+            "score": 98
+          },
+          "winner": "THE VISUALIZER",
+          "winnerScore": 98
+        },
+        {
+          "id": "M-23",
+          "entityA": {
+            "name": "THE PLAIN MAN",
+            "alias": null,
+            "score": 45
+          },
+          "entityB": {
+            "name": "THE ANTHROPOLOGIST",
+            "alias": "Geertz",
+            "score": 95
+          },
+          "winner": "THE ANTHROPOLOGIST",
+          "winnerScore": 95
+        },
+        {
+          "id": "M-24",
+          "entityA": {
+            "name": "THE FUNCTIONALIST",
+            "alias": null,
+            "score": 55
+          },
+          "entityB": {
+            "name": "THE SYMBOLIST",
+            "alias": "Geertz",
+            "score": 97
+          },
+          "winner": "THE SYMBOLIST",
+          "winnerScore": 97
+        },
+        {
+          "id": "M-25",
+          "entityA": {
+            "name": "THE PLANNER",
+            "alias": null,
+            "score": 50
+          },
+          "entityB": {
+            "name": "THE DRIFTER",
+            "alias": "Stanley & Lehman",
+            "score": 96
+          },
+          "winner": "THE DRIFTER",
+          "winnerScore": 96
+        },
+        {
+          "id": "M-26",
+          "entityA": {
+            "name": "THE PROMOTER",
+            "alias": null,
+            "score": 40
+          },
+          "entityB": {
+            "name": "THE SEMIOLOGIST",
+            "alias": "Barthes",
+            "score": 98
+          },
+          "winner": "THE SEMIOLOGIST",
+          "winnerScore": 98
+        },
+        {
+          "id": "M-27",
+          "entityA": {
+            "name": "THE TRANSMITTER",
+            "alias": null,
+            "score": 65
+          },
+          "entityB": {
+            "name": "THE RITUALIST",
+            "alias": "Carey",
+            "score": 96
+          },
+          "winner": "THE RITUALIST",
+          "winnerScore": 96
+        },
+        {
+          "id": "M-28",
+          "entityA": {
+            "name": "THE CONNOISSEUR",
+            "alias": null,
+            "score": 60
+          },
+          "entityB": {
+            "name": "THE SURGEON",
+            "alias": "Benjamin",
+            "score": 98
+          },
+          "winner": "THE SURGEON",
+          "winnerScore": 98
+        },
+        {
+          "id": "M-29",
+          "entityA": {
+            "name": "THE CHRONICLER",
+            "alias": null,
+            "score": 30
+          },
+          "entityB": {
+            "name": "THE RAGPICKER",
+            "alias": "Benjamin",
+            "score": 99
+          },
+          "winner": "THE RAGPICKER",
+          "winnerScore": 99
+        },
+        {
+          "id": "M-30",
+          "entityA": {
+            "name": "THE TOURIST",
+            "alias": null,
+            "score": 50
+          },
+          "entityB": {
+            "name": "THE PHILOSOPHER",
+            "alias": "Sontag",
+            "score": 98
+          },
+          "winner": "THE PHILOSOPHER",
+          "winnerScore": 98
+        },
+        {
+          "id": "M-31",
+          "entityA": {
+            "name": "THE POPULIST",
+            "alias": null,
+            "score": 40
+          },
+          "entityB": {
+            "name": "THE THEORIST",
+            "alias": "Hall",
+            "score": 97
+          },
+          "winner": "THE THEORIST",
+          "winnerScore": 97
+        },
+        {
+          "id": "M-32",
+          "entityA": {
+            "name": "THE SCEPTIC",
+            "alias": null,
+            "score": 50
+          },
+          "entityB": {
+            "name": "THE CHILD-MACHINE",
+            "alias": "Turing",
+            "score": 99
+          },
+          "winner": "THE CHILD-MACHINE",
+          "winnerScore": 99
+        },
+        {
+          "id": "M-33",
+          "entityA": {
+            "name": "THE SINGULARITARIAN",
+            "alias": null,
+            "score": 40
+          },
+          "entityB": {
+            "name": "THE KIN-MAKER",
+            "alias": "Lewis et al.",
+            "score": 98
+          },
+          "winner": "THE KIN-MAKER",
+          "winnerScore": 98
+        },
+        {
+          "id": "M-34",
+          "entityA": {
+            "name": "THE ENGINEER",
+            "alias": null,
+            "score": 40
+          },
+          "entityB": {
+            "name": "THE WOODCUTTER",
+            "alias": "Heidegger",
+            "score": 98
+          },
+          "winner": "THE WOODCUTTER",
+          "winnerScore": 98
+        },
+        {
+          "id": "M-35",
+          "entityA": {
+            "name": "THE WARDEN",
+            "alias": null,
+            "score": 65
+          },
+          "entityB": {
+            "name": "THE SURFER",
+            "alias": "Deleuze",
+            "score": 99
+          },
+          "winner": "THE SURFER",
+          "winnerScore": 99
+        },
+        {
+          "id": "M-36",
+          "entityA": {
+            "name": "THE HUNTER",
+            "alias": null,
+            "score": 55
+          },
+          "entityB": {
+            "name": "THE FUNCTIONARY",
+            "alias": "Flusser",
+            "score": 97
+          },
+          "winner": "THE FUNCTIONARY",
+          "winnerScore": 97
+        },
+        {
+          "id": "M-37",
+          "entityA": {
+            "name": "THE HOST",
+            "alias": null,
+            "score": 50
+          },
+          "entityB": {
+            "name": "THE PARASITE",
+            "alias": "Serres",
+            "score": 98
+          },
+          "winner": "THE PARASITE",
+          "winnerScore": 98
+        },
+        {
+          "id": "M-38",
+          "entityA": {
+            "name": "THE PRODUCER",
+            "alias": null,
+            "score": 50
+          },
+          "entityB": {
+            "name": "THE PARASITE",
+            "alias": "Serres",
+            "score": 99
+          },
+          "winner": "THE PARASITE",
+          "winnerScore": 99
+        },
+        {
+          "id": "M-39",
+          "entityA": {
+            "name": "THE NAIVE VIEW",
+            "alias": null,
+            "score": 40
+          },
+          "entityB": {
+            "name": "THE MAN",
+            "alias": "Serres",
+            "score": 99
+          },
+          "winner": "THE MAN",
+          "winnerScore": 99
+        },
+        {
+          "id": "M-40",
+          "entityA": {
+            "name": "THE MONAD",
+            "alias": null,
+            "score": 40
+          },
+          "entityB": {
+            "name": "THE CACOPHONY",
+            "alias": "Serres",
+            "score": 98
+          },
+          "winner": "THE CACOPHONY",
+          "winnerScore": 98
+        },
+        {
+          "id": "M-41",
+          "entityA": {
+            "name": "THE BROTHER",
+            "alias": null,
+            "score": 50
+          },
+          "entityB": {
+            "name": "THE MONEY-CHANGER",
+            "alias": "Joseph/Judas/Serres",
+            "score": 99
+          },
+          "winner": "THE MONEY-CHANGER",
+          "winnerScore": 99
+        },
+        {
+          "id": "M-42",
+          "entityA": {
+            "name": "THE WARRIOR",
+            "alias": null,
+            "score": 50
+          },
+          "entityB": {
+            "name": "THE TROUBLEMAKER",
+            "alias": "Serres",
+            "score": 99
+          },
+          "winner": "THE TROUBLEMAKER",
+          "winnerScore": 99
+        },
+        {
+          "id": "M-43",
+          "entityA": {
+            "name": "THE SPECTATOR",
+            "alias": null,
+            "score": 45
+          },
+          "entityB": {
+            "name": "THE PARASITE",
+            "alias": "Serres",
+            "score": 98
+          },
+          "winner": "THE PARASITE",
+          "winnerScore": 98
+        },
+        {
+          "id": "M-44",
+          "entityA": {
+            "name": "THE VICTOR",
+            "alias": null,
+            "score": 50
+          },
+          "entityB": {
+            "name": "THE DEVIL",
+            "alias": "Serres",
+            "score": 99
+          },
+          "winner": "THE DEVIL",
+          "winnerScore": 99
+        },
+        {
+          "id": "M-45",
+          "entityA": {
+            "name": "THE FIVE STAGES",
+            "alias": null,
+            "score": 75
+          },
+          "entityB": {
+            "name": "THE ASTROBIOLOGIST",
+            "alias": "Bratton",
+            "score": 98
+          },
+          "winner": "THE ASTROBIOLOGIST",
+          "winnerScore": 98
+        },
+        {
+          "id": "M-46",
+          "entityA": {
+            "name": "THE PROPHET",
+            "alias": null,
+            "score": 99
+          },
+          "entityB": {
+            "name": "THE ENGINEER",
+            "alias": "von Neumann",
+            "score": 98
+          },
+          "winner": "TIE",
+          "winnerScore": 99
+        },
+        {
+          "id": "M-47",
+          "entityA": {
+            "name": "THE BUREAUCRAT",
+            "alias": null,
+            "score": 45
+          },
+          "entityB": {
+            "name": "THE CULTIVATOR",
+            "alias": "Scott",
+            "score": 99
+          },
+          "winner": "THE CULTIVATOR",
+          "winnerScore": 99
+        },
+        {
+          "id": "M-48",
+          "entityA": {
+            "name": "THE DREAMER",
+            "alias": "Ha & Schmidhuber",
+            "score": 96
+          },
+          "entityB": {},
+          "winner": "THE DREAMER",
+          "winnerScore": 96
+        },
+        {
+          "id": "M-49",
+          "entityA": {
+            "name": "THE PLANNER",
+            "alias": null,
+            "score": 50
+          },
+          "entityB": {
+            "name": "THE PILOT",
+            "alias": "Scott",
+            "score": 98
+          },
+          "winner": "THE PILOT",
+          "winnerScore": 98
+        },
+        {
+          "id": "M-51",
+          "entityA": {
+            "name": "THE IDEALIST",
+            "alias": null,
+            "score": 55
+          },
+          "entityB": {
+            "name": "THE SYSTEM-BUILDER",
+            "alias": "Tansley",
+            "score": 99
+          },
+          "winner": "THE SYSTEM-BUILDER",
+          "winnerScore": 99
+        },
+        {
+          "id": "M-53",
+          "entityA": {
+            "name": "THE KANTIAN",
+            "alias": null,
+            "score": 50
+          },
+          "entityB": {
+            "name": "THE BIOLOGIST",
+            "alias": "Lettvin et al.",
+            "score": 99
+          },
+          "winner": "THE BIOLOGIST",
+          "winnerScore": 99
+        },
+        {
+          "id": "M-63",
+          "entityA": {
+            "name": "THE ARTIST",
+            "alias": null,
+            "score": 50
+          },
+          "entityB": {
+            "name": "THE MACHINE",
+            "alias": "Youngblood",
+            "score": 96
+          },
+          "winner": "THE MACHINE",
+          "winnerScore": 96
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "name": "Clash of Frameworks",
+      "status": "pending",
+      "matchups": [
+        {
+          "id": "R2-01",
+          "entityA": {
+            "name": "THE RAGPICKER",
+            "alias": "Benjamin",
+            "sourceChapter": "M-29",
+            "philosophy": "The Storm from Paradise — embodied in THE RAGPICKER",
+            "avgScore": 99,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "entityB": {
+            "name": "THE NAVIGATOR",
+            "alias": "PROGRAMMAR",
+            "sourceChapter": "M-14",
+            "philosophy": "The Map of Grammar — embodied in THE NAVIGATOR",
+            "avgScore": 85,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "winner": null,
+          "narrative": null,
+          "generatedAt": null
+        },
+        {
+          "id": "R2-02",
+          "entityA": {
+            "name": "THE CHILD-MACHINE",
+            "alias": "Turing",
+            "sourceChapter": "M-32",
+            "philosophy": "The Imitation Game — embodied in THE CHILD-MACHINE",
+            "avgScore": 99,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "entityB": {
+            "name": "THE GOLEM",
+            "alias": "SHRDLU",
+            "sourceChapter": "M-13",
+            "philosophy": "The Procedural Turn — embodied in THE GOLEM",
+            "avgScore": 88,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "winner": null,
+          "narrative": null,
+          "generatedAt": null
+        },
+        {
+          "id": "R2-03",
+          "entityA": {
+            "name": "THE SURFER",
+            "alias": "Deleuze",
+            "sourceChapter": "M-35",
+            "philosophy": "The Serpent's Coil — embodied in THE SURFER",
+            "avgScore": 99,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "entityB": {
+            "name": "THE HYBRID",
+            "alias": "Rational Meaning Construction",
+            "sourceChapter": "M-19",
+            "philosophy": "The Architecture of Thought — embodied in THE HYBRID",
+            "avgScore": 92,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "winner": null,
+          "narrative": null,
+          "generatedAt": null
+        },
+        {
+          "id": "R2-04",
+          "entityA": {
+            "name": "THE MAN",
+            "alias": "Serres",
+            "sourceChapter": "M-39",
+            "philosophy": "The Machine of Relations — embodied in THE MAN",
+            "avgScore": 99,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "entityB": {
+            "name": "THE WIZARD",
+            "alias": "PLANNER",
+            "sourceChapter": "M-16",
+            "philosophy": "The Spell of Knowledge — embodied in THE WIZARD",
+            "avgScore": 92,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "winner": null,
+          "narrative": null,
+          "generatedAt": null
+        },
+        {
+          "id": "R2-05",
+          "entityA": {
+            "name": "THE MONEY-CHANGER",
+            "alias": "Joseph/Judas/Serres",
+            "sourceChapter": "M-41",
+            "philosophy": "The Theory of the Joker — embodied in THE MONEY-CHANGER",
+            "avgScore": 99,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "entityB": {
+            "name": "THE FOREMAN",
+            "alias": "The Builders",
+            "sourceChapter": "M-12",
+            "philosophy": "The Architecture of Meaning — embodied in THE FOREMAN",
+            "avgScore": 92,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "winner": null,
+          "narrative": null,
+          "generatedAt": null
+        },
+        {
+          "id": "R2-06",
+          "entityA": {
+            "name": "THE TROUBLEMAKER",
+            "alias": "Serres",
+            "sourceChapter": "M-42",
+            "philosophy": "The Differential Operator — embodied in THE TROUBLEMAKER",
+            "avgScore": 99,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "entityB": {
+            "name": "THE INTERPRETER",
+            "alias": "Procedural Semantics",
+            "sourceChapter": "M-18",
+            "philosophy": "The Meaning of Meaning — embodied in THE INTERPRETER",
+            "avgScore": 93,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "winner": null,
+          "narrative": null,
+          "generatedAt": null
+        },
+        {
+          "id": "R2-07",
+          "entityA": {
+            "name": "THE DEVIL",
+            "alias": "Serres",
+            "sourceChapter": "M-44",
+            "philosophy": "The End of the Odyssey — embodied in THE DEVIL",
+            "avgScore": 99,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "entityB": {
+            "name": "THE SIMULACRUM",
+            "alias": "Generative Agents",
+            "sourceChapter": "M-20",
+            "philosophy": "The Society of Ghosts — embodied in THE SIMULACRUM",
+            "avgScore": 94,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "winner": null,
+          "narrative": null,
+          "generatedAt": null
+        },
+        {
+          "id": "R2-08",
+          "entityA": {
+            "name": "TIE",
+            "alias": null,
+            "sourceChapter": "M-46",
+            "philosophy": "The Cathedral of Code — embodied in TIE",
+            "avgScore": 99,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "entityB": {
+            "name": "THE ARCHITECT",
+            "alias": "Geertz",
+            "sourceChapter": "M-15",
+            "philosophy": "The Design of the Self — embodied in THE ARCHITECT",
+            "avgScore": 94,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "winner": null,
+          "narrative": null,
+          "generatedAt": null
+        },
+        {
+          "id": "R2-09",
+          "entityA": {
+            "name": "THE CULTIVATOR",
+            "alias": "Scott",
+            "sourceChapter": "M-47",
+            "philosophy": "The Aesthetic of the Village — embodied in THE CULTIVATOR",
+            "avgScore": 99,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "entityB": {
+            "name": "THE ANTHROPOLOGIST",
+            "alias": "Geertz",
+            "sourceChapter": "M-23",
+            "philosophy": "The Wisdom of the Ant-Heap — embodied in THE ANTHROPOLOGIST",
+            "avgScore": 95,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "winner": null,
+          "narrative": null,
+          "generatedAt": null
+        },
+        {
+          "id": "R2-10",
+          "entityA": {
+            "name": "THE SYSTEM-BUILDER",
+            "alias": "Tansley",
+            "sourceChapter": "M-51",
+            "philosophy": "The Birth of the Ecosystem — embodied in THE SYSTEM-BUILDER",
+            "avgScore": 99,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "entityB": {
+            "name": "THE MECHANIC",
+            "alias": "Calvino",
+            "sourceChapter": "M-17",
+            "philosophy": "The Ghost in the Machine — embodied in THE MECHANIC",
+            "avgScore": 95,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "winner": null,
+          "narrative": null,
+          "generatedAt": null
+        },
+        {
+          "id": "R2-11",
+          "entityA": {
+            "name": "THE BIOLOGIST",
+            "alias": "Lettvin et al.",
+            "sourceChapter": "M-53",
+            "philosophy": "The Bug-Detector — embodied in THE BIOLOGIST",
+            "avgScore": 99,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "entityB": {
+            "name": "THE MACHINE",
+            "alias": "Youngblood",
+            "sourceChapter": "M-63",
+            "philosophy": "The Symbiosis — embodied in THE MACHINE",
+            "avgScore": 96,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "winner": null,
+          "narrative": null,
+          "generatedAt": null
+        },
+        {
+          "id": "R2-12",
+          "entityA": {
+            "name": "THE VISUALIZER",
+            "alias": "Victor",
+            "sourceChapter": "M-22",
+            "philosophy": "The Tools of Thought — embodied in THE VISUALIZER",
+            "avgScore": 98,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "entityB": {
+            "name": "THE DREAMER",
+            "alias": "Ha & Schmidhuber",
+            "sourceChapter": "M-48",
+            "philosophy": "The Hallucination of Reality — embodied in THE DREAMER",
+            "avgScore": 96,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "winner": null,
+          "narrative": null,
+          "generatedAt": null
+        },
+        {
+          "id": "R2-13",
+          "entityA": {
+            "name": "THE SEMIOLOGIST",
+            "alias": "Barthes",
+            "sourceChapter": "M-26",
+            "philosophy": "The Passion of the Meat — embodied in THE SEMIOLOGIST",
+            "avgScore": 98,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "entityB": {
+            "name": "THE RITUALIST",
+            "alias": "Carey",
+            "sourceChapter": "M-27",
+            "philosophy": "The Map of Reality — embodied in THE RITUALIST",
+            "avgScore": 96,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "winner": null,
+          "narrative": null,
+          "generatedAt": null
+        },
+        {
+          "id": "R2-14",
+          "entityA": {
+            "name": "THE SURGEON",
+            "alias": "Benjamin",
+            "sourceChapter": "M-28",
+            "philosophy": "The Decay of the Aura — embodied in THE SURGEON",
+            "avgScore": 98,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "entityB": {
+            "name": "THE DRIFTER",
+            "alias": "Stanley & Lehman",
+            "sourceChapter": "M-25",
+            "philosophy": "The Myth of the Objective — embodied in THE DRIFTER",
+            "avgScore": 96,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "winner": null,
+          "narrative": null,
+          "generatedAt": null
+        },
+        {
+          "id": "R2-15",
+          "entityA": {
+            "name": "THE PHILOSOPHER",
+            "alias": "Sontag",
+            "sourceChapter": "M-30",
+            "philosophy": "The Anthology of Images — embodied in THE PHILOSOPHER",
+            "avgScore": 98,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "entityB": {
+            "name": "THE CHILD",
+            "alias": "Winograd",
+            "sourceChapter": "M-21",
+            "philosophy": "The Nature of Intelligence — embodied in THE CHILD",
+            "avgScore": 96,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "winner": null,
+          "narrative": null,
+          "generatedAt": null
+        },
+        {
+          "id": "R2-16",
+          "entityA": {
+            "name": "THE KIN-MAKER",
+            "alias": "Lewis et al.",
+            "sourceChapter": "M-33",
+            "philosophy": "The Circle of Relations — embodied in THE KIN-MAKER",
+            "avgScore": 98,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "entityB": {
+            "name": "THE FUNCTIONARY",
+            "alias": "Flusser",
+            "sourceChapter": "M-36",
+            "philosophy": "The Black Box of Doubt — embodied in THE FUNCTIONARY",
+            "avgScore": 97,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "winner": null,
+          "narrative": null,
+          "generatedAt": null
+        },
+        {
+          "id": "R2-17",
+          "entityA": {
+            "name": "THE WOODCUTTER",
+            "alias": "Heidegger",
+            "sourceChapter": "M-34",
+            "philosophy": "The Standing-Reserve — embodied in THE WOODCUTTER",
+            "avgScore": 98,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "entityB": {
+            "name": "THE THEORIST",
+            "alias": "Hall",
+            "sourceChapter": "M-31",
+            "philosophy": "The Dialectic of the Streets — embodied in THE THEORIST",
+            "avgScore": 97,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "winner": null,
+          "narrative": null,
+          "generatedAt": null
+        },
+        {
+          "id": "R2-18",
+          "entityA": {
+            "name": "THE PARASITE",
+            "alias": "Serres",
+            "sourceChapter": "M-37",
+            "philosophy": "The Noise at the Table — embodied in THE PARASITE",
+            "avgScore": 98,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "entityB": {
+            "name": "THE SYMBOLIST",
+            "alias": "Geertz",
+            "sourceChapter": "M-24",
+            "philosophy": "The Tune of Reality — embodied in THE SYMBOLIST",
+            "avgScore": 97,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "winner": null,
+          "narrative": null,
+          "generatedAt": null
+        },
+        {
+          "id": "R2-19",
+          "entityA": {
+            "name": "THE CACOPHONY",
+            "alias": "Serres",
+            "sourceChapter": "M-40",
+            "philosophy": "The Birth of Naivete — embodied in THE CACOPHONY",
+            "avgScore": 98,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "entityB": {
+            "name": "THE PILOT",
+            "alias": "Scott",
+            "sourceChapter": "M-49",
+            "philosophy": "The Science of Muddling Through — embodied in THE PILOT",
+            "avgScore": 98,
+            "keyArguments": [
+              "[key argument 1]",
+              "[key argument 2]",
+              "[key argument 3]"
+            ]
+          },
+          "winner": null,
+          "narrative": null,
+          "generatedAt": null
+        },
+        {
+          "id": "R2-BYE",
+          "entityA": {
+            "name": "THE ASTROBIOLOGIST",
+            "alias": "Bratton",
+            "sourceChapter": "M-45",
+            "avgScore": 98
+          },
+          "entityB": null,
+          "winner": "THE ASTROBIOLOGIST",
+          "narrative": "BYE — advances automatically",
+          "isBye": true
+        }
+      ]
+    }
+  ],
+  "champion": null
+}

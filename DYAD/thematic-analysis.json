@@ -1,0 +1,2871 @@
+{
+  "chapters": [
+    {
+      "id": "M-12",
+      "title": "When THE BISHOP meets THE FOREMAN:",
+      "subtitle": "The Architecture of Meaning",
+      "winner": {
+        "name": "THE FOREMAN",
+        "alias": "The Builders",
+        "score": 92
+      },
+      "loser": {
+        "name": "THE BISHOP",
+        "alias": "Augustine",
+        "score": 35
+      },
+      "themes": {
+        "primary": "Pragmatism",
+        "secondary": [
+          "Semiotics",
+          "Hermeneutics"
+        ],
+        "thinker": "Wittgenstein",
+        "concepts": [
+          "meaning"
+        ]
+      },
+      "traditionScores": {
+        "Structuralism": 6,
+        "Phenomenology": 1,
+        "Pragmatism": 29,
+        "Semiotics": 28,
+        "Critical Theory": 5,
+        "Systems Theory": 1,
+        "Post-Structuralism": 3,
+        "Cybernetics": 2,
+        "Hermeneutics": 14,
+        "Media Theory": 3
+      }
+    },
+    {
+      "id": "M-13",
+      "title": "When THE SCRIBE meets THE GOLEM:",
+      "subtitle": "The Procedural Turn",
+      "winner": {
+        "name": "THE GOLEM",
+        "alias": "SHRDLU",
+        "score": 88
+      },
+      "loser": {
+        "name": "THE SCRIBE",
+        "alias": null,
+        "score": 40
+      },
+      "themes": {
+        "primary": "Critical Theory",
+        "secondary": [
+          "Structuralism",
+          "Semiotics",
+          "Hermeneutics"
+        ],
+        "thinker": "Hall",
+        "concepts": []
+      },
+      "traditionScores": {
+        "Structuralism": 21,
+        "Pragmatism": 8,
+        "Semiotics": 16,
+        "Critical Theory": 5,
+        "Systems Theory": 6,
+        "Cybernetics": 5,
+        "Hermeneutics": 15
+      }
+    },
+    {
+      "id": "M-14",
+      "title": "When THE NAVIGATOR meets THE CARTOGRAPHER:",
+      "subtitle": "The Map of Grammar",
+      "winner": {
+        "name": "THE NAVIGATOR",
+        "alias": "PROGRAMMAR",
+        "score": 85
+      },
+      "loser": {
+        "name": "THE CARTOGRAPHER",
+        "alias": null,
+        "score": 50
+      },
+      "themes": {
+        "primary": "Cybernetics",
+        "secondary": [
+          "Structuralism",
+          "Systems Theory",
+          "Semiotics"
+        ],
+        "thinker": "Turing",
+        "concepts": []
+      },
+      "traditionScores": {
+        "Structuralism": 49,
+        "Pragmatism": 10,
+        "Semiotics": 14,
+        "Critical Theory": 6,
+        "Systems Theory": 16,
+        "Post-Structuralism": 2,
+        "Cybernetics": 5,
+        "Hermeneutics": 13
+      }
+    },
+    {
+      "id": "M-15",
+      "title": "When THE ANATOMIST meets THE ARCHITECT:",
+      "subtitle": "The Design of the Self",
+      "winner": {
+        "name": "THE ARCHITECT",
+        "alias": "Geertz",
+        "score": 94
+      },
+      "loser": {
+        "name": "THE ANATOMIST",
+        "alias": null,
+        "score": 30
+      },
+      "themes": {
+        "primary": "Hermeneutics",
+        "secondary": [
+          "Critical Theory",
+          "Pragmatism",
+          "Structuralism"
+        ],
+        "thinker": "Geertz",
+        "concepts": []
+      },
+      "traditionScores": {
+        "Structuralism": 6,
+        "Phenomenology": 2,
+        "Pragmatism": 7,
+        "Semiotics": 5,
+        "Critical Theory": 11,
+        "Systems Theory": 5,
+        "Post-Structuralism": 2,
+        "Cybernetics": 6,
+        "Hermeneutics": 2
+      }
+    },
+    {
+      "id": "M-16",
+      "title": "When THE ARCHIVIST meets THE WIZARD:",
+      "subtitle": "The Spell of Knowledge",
+      "winner": {
+        "name": "THE WIZARD",
+        "alias": "PLANNER",
+        "score": 92
+      },
+      "loser": {
+        "name": "THE ARCHIVIST",
+        "alias": null,
+        "score": 45
+      },
+      "themes": {
+        "primary": "Cybernetics",
+        "secondary": [
+          "Structuralism",
+          "Pragmatism"
+        ],
+        "thinker": "Turing",
+        "concepts": [
+          "knowledge"
+        ]
+      },
+      "traditionScores": {
+        "Structuralism": 14,
+        "Pragmatism": 9,
+        "Semiotics": 4,
+        "Critical Theory": 5,
+        "Systems Theory": 6,
+        "Cybernetics": 8,
+        "Hermeneutics": 2
+      }
+    },
+    {
+      "id": "M-17",
+      "title": "When THE BARD meets THE MECHANIC:",
+      "subtitle": "The Ghost in the Machine",
+      "winner": {
+        "name": "THE MECHANIC",
+        "alias": "Calvino",
+        "score": 95
+      },
+      "loser": {
+        "name": "THE BARD",
+        "alias": null,
+        "score": 40
+      },
+      "themes": {
+        "primary": "Structuralism",
+        "secondary": [
+          "Cybernetics",
+          "Pragmatism"
+        ],
+        "thinker": "Calvino",
+        "concepts": [
+          "machine"
+        ]
+      },
+      "traditionScores": {
+        "Structuralism": 6,
+        "Phenomenology": 1,
+        "Pragmatism": 6,
+        "Semiotics": 3,
+        "Critical Theory": 6,
+        "Systems Theory": 1,
+        "Post-Structuralism": 4,
+        "Cybernetics": 26,
+        "Hermeneutics": 1
+      }
+    },
+    {
+      "id": "M-18",
+      "title": "When THE TAXONOMIST meets THE INTERPRETER:",
+      "subtitle": "The Meaning of Meaning",
+      "winner": {
+        "name": "THE INTERPRETER",
+        "alias": "Procedural Semantics",
+        "score": 93
+      },
+      "loser": {
+        "name": "THE TAXONOMIST",
+        "alias": null,
+        "score": 45
+      },
+      "themes": {
+        "primary": "Cybernetics",
+        "secondary": [
+          "Hermeneutics",
+          "Semiotics",
+          "Structuralism"
+        ],
+        "thinker": "Turing",
+        "concepts": [
+          "meaning"
+        ]
+      },
+      "traditionScores": {
+        "Structuralism": 15,
+        "Pragmatism": 7,
+        "Semiotics": 17,
+        "Critical Theory": 5,
+        "Systems Theory": 13,
+        "Cybernetics": 2,
+        "Hermeneutics": 26
+      }
+    },
+    {
+      "id": "M-19",
+      "title": "When THE WEAVER meets THE CONSTRUCTOR:",
+      "subtitle": "The Architecture of Thought",
+      "winner": {
+        "name": "THE HYBRID",
+        "alias": "Rational Meaning Construction",
+        "score": 92
+      },
+      "loser": {
+        "name": "THE WEAVER",
+        "alias": null,
+        "score": 55
+      },
+      "themes": {
+        "primary": "Cybernetics",
+        "secondary": [
+          "Structuralism",
+          "Semiotics",
+          "Hermeneutics"
+        ],
+        "thinker": "Turing",
+        "concepts": []
+      },
+      "traditionScores": {
+        "Structuralism": 24,
+        "Pragmatism": 7,
+        "Semiotics": 22,
+        "Critical Theory": 5,
+        "Systems Theory": 1,
+        "Post-Structuralism": 1,
+        "Cybernetics": 9,
+        "Hermeneutics": 12
+      }
+    },
+    {
+      "id": "M-20",
+      "title": "When THE SIMULATOR meets THE SIMULACRUM:",
+      "subtitle": "The Society of Ghosts",
+      "winner": {
+        "name": "THE SIMULACRUM",
+        "alias": "Generative Agents",
+        "score": 94
+      },
+      "loser": {
+        "name": "THE SIMULATOR",
+        "alias": null,
+        "score": 60
+      },
+      "themes": {
+        "primary": "Critical Theory",
+        "secondary": [
+          "Structuralism",
+          "Cybernetics"
+        ],
+        "thinker": "Hall",
+        "concepts": [
+          "society"
+        ]
+      },
+      "traditionScores": {
+        "Structuralism": 7,
+        "Pragmatism": 3,
+        "Critical Theory": 5,
+        "Systems Theory": 3,
+        "Cybernetics": 7,
+        "Hermeneutics": 3
+      }
+    },
+    {
+      "id": "M-21",
+      "title": "When THE ORACLE meets THE CHILD:",
+      "subtitle": "The Nature of Intelligence",
+      "winner": {
+        "name": "THE CHILD",
+        "alias": "Winograd",
+        "score": 96
+      },
+      "loser": {
+        "name": "THE ORACLE",
+        "alias": null,
+        "score": 40
+      },
+      "themes": {
+        "primary": "Cybernetics",
+        "secondary": [
+          "Structuralism",
+          "Systems Theory"
+        ],
+        "thinker": "Turing",
+        "concepts": []
+      },
+      "traditionScores": {
+        "Structuralism": 26,
+        "Pragmatism": 1,
+        "Semiotics": 8,
+        "Critical Theory": 5,
+        "Systems Theory": 11,
+        "Cybernetics": 9,
+        "Hermeneutics": 6
+      }
+    },
+    {
+      "id": "M-22",
+      "title": "When THE SYMBOLIST meets THE VISUALIZER:",
+      "subtitle": "The Tools of Thought",
+      "winner": {
+        "name": "THE VISUALIZER",
+        "alias": "Victor",
+        "score": 98
+      },
+      "loser": {
+        "name": "THE SYMBOLIST",
+        "alias": null,
+        "score": 75
+      },
+      "themes": {
+        "primary": "Critical Theory",
+        "secondary": [
+          "Semiotics",
+          "Structuralism",
+          "Pragmatism"
+        ],
+        "thinker": "Hall",
+        "concepts": []
+      },
+      "traditionScores": {
+        "Structuralism": 13,
+        "Pragmatism": 12,
+        "Semiotics": 35,
+        "Critical Theory": 12,
+        "Systems Theory": 8,
+        "Post-Structuralism": 1,
+        "Cybernetics": 3,
+        "Hermeneutics": 4,
+        "Media Theory": 4
+      }
+    },
+    {
+      "id": "M-23",
+      "title": "When THE PLAIN MAN meets THE ANTHROPOLOGIST:",
+      "subtitle": "The Wisdom of the Ant-Heap",
+      "winner": {
+        "name": "THE ANTHROPOLOGIST",
+        "alias": "Geertz",
+        "score": 95
+      },
+      "loser": {
+        "name": "THE PLAIN MAN",
+        "alias": null,
+        "score": 45
+      },
+      "themes": {
+        "primary": "Hermeneutics",
+        "secondary": [
+          "Critical Theory",
+          "Structuralism",
+          "Pragmatism"
+        ],
+        "thinker": "Geertz",
+        "concepts": []
+      },
+      "traditionScores": {
+        "Structuralism": 10,
+        "Phenomenology": 1,
+        "Pragmatism": 9,
+        "Semiotics": 3,
+        "Critical Theory": 15,
+        "Systems Theory": 7,
+        "Hermeneutics": 2
+      }
+    },
+    {
+      "id": "M-24",
+      "title": "When THE FUNCTIONALIST meets THE SYMBOLIST:",
+      "subtitle": "The Tune of Reality",
+      "winner": {
+        "name": "THE SYMBOLIST",
+        "alias": "Geertz",
+        "score": 97
+      },
+      "loser": {
+        "name": "THE FUNCTIONALIST",
+        "alias": null,
+        "score": 55
+      },
+      "themes": {
+        "primary": "Hermeneutics",
+        "secondary": [
+          "Semiotics",
+          "Pragmatism",
+          "Critical Theory"
+        ],
+        "thinker": "Geertz",
+        "concepts": []
+      },
+      "traditionScores": {
+        "Structuralism": 10,
+        "Pragmatism": 20,
+        "Semiotics": 45,
+        "Critical Theory": 12,
+        "Systems Theory": 5,
+        "Cybernetics": 1,
+        "Hermeneutics": 11,
+        "Media Theory": 3
+      }
+    },
+    {
+      "id": "M-25",
+      "title": "When THE PLANNER meets THE DRIFTER:",
+      "subtitle": "The Myth of the Objective",
+      "winner": {
+        "name": "THE DRIFTER",
+        "alias": "Stanley & Lehman",
+        "score": 96
+      },
+      "loser": {
+        "name": "THE PLANNER",
+        "alias": null,
+        "score": 50
+      },
+      "themes": {
+        "primary": "Structuralism",
+        "secondary": [
+          "Critical Theory",
+          "Pragmatism"
+        ],
+        "thinker": null,
+        "concepts": []
+      },
+      "traditionScores": {
+        "Structuralism": 5,
+        "Pragmatism": 4,
+        "Critical Theory": 5,
+        "Systems Theory": 1,
+        "Cybernetics": 3,
+        "Hermeneutics": 1
+      }
+    },
+    {
+      "id": "M-26",
+      "title": "When THE PROMOTER meets THE SEMIOLOGIST:",
+      "subtitle": "The Passion of the Meat",
+      "winner": {
+        "name": "THE SEMIOLOGIST",
+        "alias": "Barthes",
+        "score": 98
+      },
+      "loser": {
+        "name": "THE PROMOTER",
+        "alias": null,
+        "score": 40
+      },
+      "themes": {
+        "primary": "Semiotics",
+        "secondary": [
+          "Critical Theory",
+          "Structuralism"
+        ],
+        "thinker": "Barthes",
+        "concepts": []
+      },
+      "traditionScores": {
+        "Structuralism": 3,
+        "Pragmatism": 2,
+        "Semiotics": 9,
+        "Critical Theory": 6,
+        "Systems Theory": 1,
+        "Post-Structuralism": 1,
+        "Cybernetics": 1,
+        "Hermeneutics": 3,
+        "Media Theory": 1
+      }
+    },
+    {
+      "id": "M-27",
+      "title": "When THE TRANSMITTER meets THE RITUALIST:",
+      "subtitle": "The Map of Reality",
+      "winner": {
+        "name": "THE RITUALIST",
+        "alias": "Carey",
+        "score": 96
+      },
+      "loser": {
+        "name": "THE TRANSMITTER",
+        "alias": null,
+        "score": 65
+      },
+      "themes": {
+        "primary": "Hermeneutics",
+        "secondary": [
+          "Cybernetics",
+          "Pragmatism",
+          "Semiotics"
+        ],
+        "thinker": "Geertz",
+        "concepts": []
+      },
+      "traditionScores": {
+        "Structuralism": 4,
+        "Pragmatism": 11,
+        "Semiotics": 11,
+        "Critical Theory": 10,
+        "Cybernetics": 18,
+        "Hermeneutics": 1,
+        "Media Theory": 1
+      }
+    },
+    {
+      "id": "M-28",
+      "title": "When THE CONNOISSEUR meets THE SURGEON:",
+      "subtitle": "The Decay of the Aura",
+      "winner": {
+        "name": "THE SURGEON",
+        "alias": "Benjamin",
+        "score": 98
+      },
+      "loser": {
+        "name": "THE CONNOISSEUR",
+        "alias": null,
+        "score": 60
+      },
+      "themes": {
+        "primary": "Critical Theory",
+        "secondary": [
+          "Media Theory",
+          "Pragmatism"
+        ],
+        "thinker": "Benjamin",
+        "concepts": []
+      },
+      "traditionScores": {
+        "Structuralism": 4,
+        "Phenomenology": 3,
+        "Pragmatism": 5,
+        "Critical Theory": 7,
+        "Systems Theory": 3,
+        "Post-Structuralism": 2,
+        "Cybernetics": 2,
+        "Media Theory": 18
+      }
+    },
+    {
+      "id": "M-29",
+      "title": "When THE CHRONICLER meets THE RAGPICKER:",
+      "subtitle": "The Storm from Paradise",
+      "winner": {
+        "name": "THE RAGPICKER",
+        "alias": "Benjamin",
+        "score": 99
+      },
+      "loser": {
+        "name": "THE CHRONICLER",
+        "alias": null,
+        "score": 30
+      },
+      "themes": {
+        "primary": "Critical Theory",
+        "secondary": [
+          "Post-Structuralism",
+          "Structuralism"
+        ],
+        "thinker": "Benjamin",
+        "concepts": []
+      },
+      "traditionScores": {
+        "Structuralism": 2,
+        "Pragmatism": 2,
+        "Critical Theory": 8,
+        "Post-Structuralism": 5,
+        "Cybernetics": 1,
+        "Media Theory": 2
+      }
+    },
+    {
+      "id": "M-30",
+      "title": "When THE TOURIST meets THE PHILOSOPHER:",
+      "subtitle": "The Anthology of Images",
+      "winner": {
+        "name": "THE PHILOSOPHER",
+        "alias": "Sontag",
+        "score": 98
+      },
+      "loser": {
+        "name": "THE TOURIST",
+        "alias": null,
+        "score": 50
+      },
+      "themes": {
+        "primary": "Cybernetics",
+        "secondary": [
+          "Media Theory",
+          "Critical Theory",
+          "Phenomenology"
+        ],
+        "thinker": "Turing",
+        "concepts": []
+      },
+      "traditionScores": {
+        "Structuralism": 2,
+        "Phenomenology": 7,
+        "Pragmatism": 6,
+        "Semiotics": 1,
+        "Critical Theory": 9,
+        "Systems Theory": 1,
+        "Cybernetics": 4,
+        "Hermeneutics": 4,
+        "Media Theory": 11
+      }
+    },
+    {
+      "id": "M-31",
+      "title": "When THE POPULIST meets THE HEGEMON:",
+      "subtitle": "The Dialectic of the Streets",
+      "winner": {
+        "name": "THE THEORIST",
+        "alias": "Hall",
+        "score": 97
+      },
+      "loser": {
+        "name": "THE POPULIST",
+        "alias": null,
+        "score": 40
+      },
+      "themes": {
+        "primary": "Critical Theory",
+        "secondary": [
+          "Semiotics",
+          "Pragmatism"
+        ],
+        "thinker": "Hall",
+        "concepts": []
+      },
+      "traditionScores": {
+        "Structuralism": 2,
+        "Pragmatism": 5,
+        "Semiotics": 9,
+        "Critical Theory": 25,
+        "Systems Theory": 1,
+        "Cybernetics": 1,
+        "Hermeneutics": 5
+      }
+    },
+    {
+      "id": "M-32",
+      "title": "When THE SCEPTIC meets THE CHILD-MACHINE:",
+      "subtitle": "The Imitation Game",
+      "winner": {
+        "name": "THE CHILD-MACHINE",
+        "alias": "Turing",
+        "score": 99
+      },
+      "loser": {
+        "name": "THE SCEPTIC",
+        "alias": null,
+        "score": 50
+      },
+      "themes": {
+        "primary": "Cybernetics",
+        "secondary": [
+          "Phenomenology",
+          "Pragmatism"
+        ],
+        "thinker": "Turing",
+        "concepts": [
+          "machine"
+        ]
+      },
+      "traditionScores": {
+        "Structuralism": 4,
+        "Phenomenology": 5,
+        "Pragmatism": 5,
+        "Critical Theory": 5,
+        "Systems Theory": 1,
+        "Post-Structuralism": 2,
+        "Cybernetics": 48
+      }
+    },
+    {
+      "id": "M-33",
+      "title": "When THE SINGULARITARIAN meets THE KIN-MAKER:",
+      "subtitle": "The Circle of Relations",
+      "winner": {
+        "name": "THE KIN-MAKER",
+        "alias": "Lewis et al.",
+        "score": 98
+      },
+      "loser": {
+        "name": "THE SINGULARITARIAN",
+        "alias": null,
+        "score": 40
+      },
+      "themes": {
+        "primary": "Cybernetics",
+        "secondary": [
+          "Systems Theory",
+          "Structuralism"
+        ],
+        "thinker": null,
+        "concepts": []
+      },
+      "traditionScores": {
+        "Structuralism": 8,
+        "Phenomenology": 2,
+        "Pragmatism": 6,
+        "Semiotics": 1,
+        "Critical Theory": 8,
+        "Systems Theory": 13,
+        "Cybernetics": 32,
+        "Hermeneutics": 2
+      }
+    },
+    {
+      "id": "M-34",
+      "title": "When THE ENGINEER meets THE WOODCUTTER:",
+      "subtitle": "The Standing-Reserve",
+      "winner": {
+        "name": "THE WOODCUTTER",
+        "alias": "Heidegger",
+        "score": 98
+      },
+      "loser": {
+        "name": "THE ENGINEER",
+        "alias": null,
+        "score": 40
+      },
+      "themes": {
+        "primary": "Critical Theory",
+        "secondary": [
+          "Cybernetics",
+          "Pragmatism"
+        ],
+        "thinker": "Hall",
+        "concepts": []
+      },
+      "traditionScores": {
+        "Structuralism": 5,
+        "Phenomenology": 4,
+        "Pragmatism": 9,
+        "Semiotics": 2,
+        "Critical Theory": 12,
+        "Systems Theory": 1,
+        "Post-Structuralism": 2,
+        "Cybernetics": 13,
+        "Hermeneutics": 3
+      }
+    },
+    {
+      "id": "M-35",
+      "title": "When THE WARDEN meets THE SURFER:",
+      "subtitle": "The Serpent's Coil",
+      "winner": {
+        "name": "THE SURFER",
+        "alias": "Deleuze",
+        "score": 99
+      },
+      "loser": {
+        "name": "THE WARDEN",
+        "alias": null,
+        "score": 65
+      },
+      "themes": {
+        "primary": "Post-Structuralism",
+        "secondary": [
+          "Cybernetics",
+          "Critical Theory",
+          "Structuralism"
+        ],
+        "thinker": "Deleuze",
+        "concepts": []
+      },
+      "traditionScores": {
+        "Structuralism": 8,
+        "Phenomenology": 3,
+        "Pragmatism": 3,
+        "Semiotics": 2,
+        "Critical Theory": 10,
+        "Systems Theory": 3,
+        "Cybernetics": 17,
+        "Hermeneutics": 1
+      }
+    },
+    {
+      "id": "M-36",
+      "title": "When THE HUNTER meets THE FUNCTIONARY:",
+      "subtitle": "The Black Box of Doubt",
+      "winner": {
+        "name": "THE FUNCTIONARY",
+        "alias": "Flusser",
+        "score": 97
+      },
+      "loser": {
+        "name": "THE HUNTER",
+        "alias": null,
+        "score": 55
+      },
+      "themes": {
+        "primary": "Media Theory",
+        "secondary": [
+          "Pragmatism",
+          "Cybernetics"
+        ],
+        "thinker": "Flusser",
+        "concepts": []
+      },
+      "traditionScores": {
+        "Structuralism": 3,
+        "Phenomenology": 2,
+        "Pragmatism": 48,
+        "Semiotics": 10,
+        "Critical Theory": 8,
+        "Systems Theory": 2,
+        "Post-Structuralism": 9,
+        "Cybernetics": 15,
+        "Hermeneutics": 3,
+        "Media Theory": 17
+      }
+    },
+    {
+      "id": "M-37",
+      "title": "When THE HOST meets THE PARASITE:",
+      "subtitle": "The Noise at the Table",
+      "winner": {
+        "name": "THE PARASITE",
+        "alias": "Serres",
+        "score": 98
+      },
+      "loser": {
+        "name": "THE HOST",
+        "alias": null,
+        "score": 50
+      },
+      "themes": {
+        "primary": "Systems Theory",
+        "secondary": [
+          "Structuralism",
+          "Critical Theory"
+        ],
+        "thinker": "Serres",
+        "concepts": []
+      },
+      "traditionScores": {
+        "Structuralism": 16,
+        "Semiotics": 1,
+        "Critical Theory": 5,
+        "Systems Theory": 19,
+        "Post-Structuralism": 5,
+        "Cybernetics": 3
+      }
+    },
+    {
+      "id": "M-38",
+      "title": "When THE PRODUCER meets THE PARASITE:",
+      "subtitle": "The Diagonal of Power",
+      "winner": {
+        "name": "THE PARASITE",
+        "alias": "Serres",
+        "score": 99
+      },
+      "loser": {
+        "name": "THE PRODUCER",
+        "alias": null,
+        "score": 50
+      },
+      "themes": {
+        "primary": "Systems Theory",
+        "secondary": [
+          "Critical Theory",
+          "Cybernetics",
+          "Post-Structuralism"
+        ],
+        "thinker": "Serres",
+        "concepts": []
+      },
+      "traditionScores": {
+        "Structuralism": 2,
+        "Pragmatism": 2,
+        "Semiotics": 3,
+        "Critical Theory": 17,
+        "Systems Theory": 6,
+        "Post-Structuralism": 9,
+        "Cybernetics": 17
+      }
+    },
+    {
+      "id": "M-39",
+      "title": "When THE TORTOISE meets THE DUCK:",
+      "subtitle": "The Machine of Relations",
+      "winner": {
+        "name": "THE MAN",
+        "alias": "Serres",
+        "score": 99
+      },
+      "loser": {
+        "name": "THE NAIVE VIEW",
+        "alias": null,
+        "score": 40
+      },
+      "themes": {
+        "primary": "Systems Theory",
+        "secondary": [
+          "Cybernetics",
+          "Pragmatism"
+        ],
+        "thinker": "Serres",
+        "concepts": [
+          "machine"
+        ]
+      },
+      "traditionScores": {
+        "Structuralism": 7,
+        "Phenomenology": 1,
+        "Pragmatism": 16,
+        "Semiotics": 1,
+        "Critical Theory": 11,
+        "Systems Theory": 22,
+        "Cybernetics": 21
+      }
+    },
+    {
+      "id": "M-40",
+      "title": "When THE MONAD meets THE CACOPHONY:",
+      "subtitle": "The Birth of Naivete",
+      "winner": {
+        "name": "THE CACOPHONY",
+        "alias": "Serres",
+        "score": 98
+      },
+      "loser": {
+        "name": "THE MONAD",
+        "alias": null,
+        "score": 40
+      },
+      "themes": {
+        "primary": "Systems Theory",
+        "secondary": [
+          "Critical Theory",
+          "Structuralism"
+        ],
+        "thinker": "Serres",
+        "concepts": []
+      },
+      "traditionScores": {
+        "Structuralism": 5,
+        "Phenomenology": 1,
+        "Pragmatism": 1,
+        "Semiotics": 2,
+        "Critical Theory": 8,
+        "Systems Theory": 5,
+        "Post-Structuralism": 3,
+        "Cybernetics": 2,
+        "Hermeneutics": 1
+      }
+    },
+    {
+      "id": "M-41",
+      "title": "When THE BROTHER meets THE MONEY-CHANGER:",
+      "subtitle": "The Theory of the Joker",
+      "winner": {
+        "name": "THE MONEY-CHANGER",
+        "alias": "Joseph/Judas/Serres",
+        "score": 99
+      },
+      "loser": {
+        "name": "THE BROTHER",
+        "alias": null,
+        "score": 50
+      },
+      "themes": {
+        "primary": "Systems Theory",
+        "secondary": [
+          "Critical Theory",
+          "Structuralism",
+          "Pragmatism"
+        ],
+        "thinker": "Serres",
+        "concepts": []
+      },
+      "traditionScores": {
+        "Structuralism": 4,
+        "Pragmatism": 3,
+        "Semiotics": 3,
+        "Critical Theory": 6,
+        "Systems Theory": 2,
+        "Cybernetics": 1,
+        "Hermeneutics": 2
+      }
+    },
+    {
+      "id": "M-42",
+      "title": "When THE WARRIOR meets THE TROUBLEMAKER:",
+      "subtitle": "The Differential Operator",
+      "winner": {
+        "name": "THE TROUBLEMAKER",
+        "alias": "Serres",
+        "score": 99
+      },
+      "loser": {
+        "name": "THE WARRIOR",
+        "alias": null,
+        "score": 50
+      },
+      "themes": {
+        "primary": "Systems Theory",
+        "secondary": [
+          "Structuralism",
+          "Critical Theory"
+        ],
+        "thinker": "Serres",
+        "concepts": []
+      },
+      "traditionScores": {
+        "Structuralism": 11,
+        "Critical Theory": 9,
+        "Systems Theory": 10,
+        "Post-Structuralism": 1,
+        "Cybernetics": 5
+      }
+    },
+    {
+      "id": "M-43",
+      "title": "When THE SPECTATOR meets THE PARASITE:",
+      "subtitle": "The Midnight Supper",
+      "winner": {
+        "name": "THE PARASITE",
+        "alias": "Serres",
+        "score": 98
+      },
+      "loser": {
+        "name": "THE SPECTATOR",
+        "alias": null,
+        "score": 45
+      },
+      "themes": {
+        "primary": "Systems Theory",
+        "secondary": [
+          "Critical Theory",
+          "Structuralism"
+        ],
+        "thinker": "Serres",
+        "concepts": []
+      },
+      "traditionScores": {
+        "Structuralism": 6,
+        "Pragmatism": 1,
+        "Critical Theory": 10,
+        "Systems Theory": 6,
+        "Post-Structuralism": 3,
+        "Cybernetics": 2
+      }
+    },
+    {
+      "id": "M-44",
+      "title": "When THE VICTOR meets THE DEVIL:",
+      "subtitle": "The End of the Odyssey",
+      "winner": {
+        "name": "THE DEVIL",
+        "alias": "Serres",
+        "score": 99
+      },
+      "loser": {
+        "name": "THE VICTOR",
+        "alias": null,
+        "score": 50
+      },
+      "themes": {
+        "primary": "Systems Theory",
+        "secondary": [
+          "Critical Theory",
+          "Structuralism"
+        ],
+        "thinker": "Serres",
+        "concepts": []
+      },
+      "traditionScores": {
+        "Structuralism": 3,
+        "Pragmatism": 2,
+        "Semiotics": 3,
+        "Critical Theory": 5,
+        "Systems Theory": 6
+      }
+    },
+    {
+      "id": "M-45",
+      "title": "When THE GRIEVER meets THE ASTROBIOLOGIST:",
+      "subtitle": "The Copernican Trauma",
+      "winner": {
+        "name": "THE ASTROBIOLOGIST",
+        "alias": "Bratton",
+        "score": 98
+      },
+      "loser": {
+        "name": "THE FIVE STAGES",
+        "alias": null,
+        "score": 75
+      },
+      "themes": {
+        "primary": "Critical Theory",
+        "secondary": [
+          "Cybernetics",
+          "Pragmatism"
+        ],
+        "thinker": "Benjamin",
+        "concepts": []
+      },
+      "traditionScores": {
+        "Structuralism": 3,
+        "Phenomenology": 3,
+        "Pragmatism": 6,
+        "Semiotics": 2,
+        "Critical Theory": 6,
+        "Systems Theory": 1,
+        "Post-Structuralism": 1,
+        "Cybernetics": 20,
+        "Hermeneutics": 1,
+        "Media Theory": 1
+      }
+    },
+    {
+      "id": "M-46",
+      "title": "When THE PROPHET meets THE ENGINEER:",
+      "subtitle": "The Cathedral of Code",
+      "winner": {
+        "name": "TIE",
+        "alias": null,
+        "score": 0
+      },
+      "loser": {
+        "name": "THE PROPHET",
+        "alias": null,
+        "score": 99
+      },
+      "themes": {
+        "primary": "Cybernetics",
+        "secondary": [
+          "Structuralism",
+          "Critical Theory"
+        ],
+        "thinker": "Turing",
+        "concepts": [
+          "code"
+        ]
+      },
+      "traditionScores": {
+        "Structuralism": 13,
+        "Pragmatism": 3,
+        "Semiotics": 1,
+        "Critical Theory": 6,
+        "Systems Theory": 4,
+        "Cybernetics": 20,
+        "Media Theory": 2
+      }
+    },
+    {
+      "id": "M-47",
+      "title": "When THE BUREAUCRAT meets THE CULTIVATOR:",
+      "subtitle": "The Aesthetic of the Village",
+      "winner": {
+        "name": "THE CULTIVATOR",
+        "alias": "Scott",
+        "score": 99
+      },
+      "loser": {
+        "name": "THE BUREAUCRAT",
+        "alias": null,
+        "score": 45
+      },
+      "themes": {
+        "primary": "Critical Theory",
+        "secondary": [
+          "Pragmatism",
+          "Structuralism"
+        ],
+        "thinker": "Scott",
+        "concepts": []
+      },
+      "traditionScores": {
+        "Structuralism": 5,
+        "Pragmatism": 9,
+        "Critical Theory": 5,
+        "Systems Theory": 3,
+        "Cybernetics": 3
+      }
+    },
+    {
+      "id": "M-48",
+      "title": "When THE DREAMER meets THE CONTROLLER:",
+      "subtitle": "The Hallucination of Reality",
+      "winner": {
+        "name": "THE DREAMER",
+        "alias": "Ha & Schmidhuber",
+        "score": 96
+      },
+      "loser": {
+        "name": "Unknown",
+        "alias": null,
+        "score": 0
+      },
+      "themes": {
+        "primary": "Critical Theory",
+        "secondary": [
+          "Cybernetics",
+          "Structuralism",
+          "Systems Theory"
+        ],
+        "thinker": "Hall",
+        "concepts": []
+      },
+      "traditionScores": {
+        "Structuralism": 6,
+        "Critical Theory": 3,
+        "Systems Theory": 4,
+        "Post-Structuralism": 2,
+        "Cybernetics": 13,
+        "Hermeneutics": 1
+      }
+    },
+    {
+      "id": "M-49",
+      "title": "When THE PLANNER meets THE PILOT:",
+      "subtitle": "The Science of Muddling Through",
+      "winner": {
+        "name": "THE PILOT",
+        "alias": "Scott",
+        "score": 98
+      },
+      "loser": {
+        "name": "THE PLANNER",
+        "alias": null,
+        "score": 50
+      },
+      "themes": {
+        "primary": "Critical Theory",
+        "secondary": [
+          "Pragmatism",
+          "Structuralism"
+        ],
+        "thinker": "Scott",
+        "concepts": []
+      },
+      "traditionScores": {
+        "Structuralism": 5,
+        "Phenomenology": 1,
+        "Pragmatism": 11,
+        "Critical Theory": 5,
+        "Systems Theory": 3,
+        "Cybernetics": 3,
+        "Hermeneutics": 1
+      }
+    },
+    {
+      "id": "M-51",
+      "title": "When THE IDEALIST meets THE SYSTEM-BUILDER:",
+      "subtitle": "The Birth of the Ecosystem",
+      "winner": {
+        "name": "THE SYSTEM-BUILDER",
+        "alias": "Tansley",
+        "score": 99
+      },
+      "loser": {
+        "name": "THE IDEALIST",
+        "alias": null,
+        "score": 55
+      },
+      "themes": {
+        "primary": "Systems Theory",
+        "secondary": [
+          "Structuralism",
+          "Pragmatism"
+        ],
+        "thinker": null,
+        "concepts": [
+          "system"
+        ]
+      },
+      "traditionScores": {
+        "Structuralism": 36,
+        "Phenomenology": 2,
+        "Pragmatism": 18,
+        "Critical Theory": 6,
+        "Systems Theory": 38,
+        "Post-Structuralism": 3,
+        "Cybernetics": 4
+      }
+    },
+    {
+      "id": "M-53",
+      "title": "When THE KANTIAN meets THE BIOLOGIST:",
+      "subtitle": "The Bug-Detector",
+      "winner": {
+        "name": "THE BIOLOGIST",
+        "alias": "Lettvin et al.",
+        "score": 99
+      },
+      "loser": {
+        "name": "THE KANTIAN",
+        "alias": null,
+        "score": 50
+      },
+      "themes": {
+        "primary": "Structuralism",
+        "secondary": [
+          "Hermeneutics",
+          "Semiotics"
+        ],
+        "thinker": null,
+        "concepts": []
+      },
+      "traditionScores": {
+        "Structuralism": 9,
+        "Phenomenology": 4,
+        "Pragmatism": 5,
+        "Semiotics": 6,
+        "Critical Theory": 5,
+        "Systems Theory": 4,
+        "Post-Structuralism": 1,
+        "Cybernetics": 4,
+        "Hermeneutics": 7,
+        "Media Theory": 2
+      }
+    },
+    {
+      "id": "M-63",
+      "title": "When THE ARTIST meets THE MACHINE:",
+      "subtitle": "The Symbiosis",
+      "winner": {
+        "name": "THE MACHINE",
+        "alias": "Youngblood",
+        "score": 96
+      },
+      "loser": {
+        "name": "THE ARTIST",
+        "alias": null,
+        "score": 50
+      },
+      "themes": {
+        "primary": "Media Theory",
+        "secondary": [
+          "Cybernetics",
+          "Pragmatism",
+          "Critical Theory"
+        ],
+        "thinker": "Youngblood",
+        "concepts": [
+          "machine"
+        ]
+      },
+      "traditionScores": {
+        "Structuralism": 3,
+        "Phenomenology": 4,
+        "Pragmatism": 5,
+        "Semiotics": 4,
+        "Critical Theory": 5,
+        "Systems Theory": 1,
+        "Cybernetics": 23,
+        "Hermeneutics": 1,
+        "Media Theory": 3
+      }
+    }
+  ],
+  "clusters": [
+    {
+      "theme": "Critical Theory",
+      "members": [
+        {
+          "id": "M-13",
+          "title": "When THE SCRIBE meets THE GOLEM:",
+          "subtitle": "The Procedural Turn",
+          "winner": {
+            "name": "THE GOLEM",
+            "alias": "SHRDLU",
+            "score": 88
+          },
+          "loser": {
+            "name": "THE SCRIBE",
+            "alias": null,
+            "score": 40
+          },
+          "themes": {
+            "primary": "Critical Theory",
+            "secondary": [
+              "Structuralism",
+              "Semiotics",
+              "Hermeneutics"
+            ],
+            "thinker": "Hall",
+            "concepts": []
+          },
+          "traditionScores": {
+            "Structuralism": 21,
+            "Pragmatism": 8,
+            "Semiotics": 16,
+            "Critical Theory": 5,
+            "Systems Theory": 6,
+            "Cybernetics": 5,
+            "Hermeneutics": 15
+          }
+        },
+        {
+          "id": "M-20",
+          "title": "When THE SIMULATOR meets THE SIMULACRUM:",
+          "subtitle": "The Society of Ghosts",
+          "winner": {
+            "name": "THE SIMULACRUM",
+            "alias": "Generative Agents",
+            "score": 94
+          },
+          "loser": {
+            "name": "THE SIMULATOR",
+            "alias": null,
+            "score": 60
+          },
+          "themes": {
+            "primary": "Critical Theory",
+            "secondary": [
+              "Structuralism",
+              "Cybernetics"
+            ],
+            "thinker": "Hall",
+            "concepts": [
+              "society"
+            ]
+          },
+          "traditionScores": {
+            "Structuralism": 7,
+            "Pragmatism": 3,
+            "Critical Theory": 5,
+            "Systems Theory": 3,
+            "Cybernetics": 7,
+            "Hermeneutics": 3
+          }
+        },
+        {
+          "id": "M-22",
+          "title": "When THE SYMBOLIST meets THE VISUALIZER:",
+          "subtitle": "The Tools of Thought",
+          "winner": {
+            "name": "THE VISUALIZER",
+            "alias": "Victor",
+            "score": 98
+          },
+          "loser": {
+            "name": "THE SYMBOLIST",
+            "alias": null,
+            "score": 75
+          },
+          "themes": {
+            "primary": "Critical Theory",
+            "secondary": [
+              "Semiotics",
+              "Structuralism",
+              "Pragmatism"
+            ],
+            "thinker": "Hall",
+            "concepts": []
+          },
+          "traditionScores": {
+            "Structuralism": 13,
+            "Pragmatism": 12,
+            "Semiotics": 35,
+            "Critical Theory": 12,
+            "Systems Theory": 8,
+            "Post-Structuralism": 1,
+            "Cybernetics": 3,
+            "Hermeneutics": 4,
+            "Media Theory": 4
+          }
+        },
+        {
+          "id": "M-28",
+          "title": "When THE CONNOISSEUR meets THE SURGEON:",
+          "subtitle": "The Decay of the Aura",
+          "winner": {
+            "name": "THE SURGEON",
+            "alias": "Benjamin",
+            "score": 98
+          },
+          "loser": {
+            "name": "THE CONNOISSEUR",
+            "alias": null,
+            "score": 60
+          },
+          "themes": {
+            "primary": "Critical Theory",
+            "secondary": [
+              "Media Theory",
+              "Pragmatism"
+            ],
+            "thinker": "Benjamin",
+            "concepts": []
+          },
+          "traditionScores": {
+            "Structuralism": 4,
+            "Phenomenology": 3,
+            "Pragmatism": 5,
+            "Critical Theory": 7,
+            "Systems Theory": 3,
+            "Post-Structuralism": 2,
+            "Cybernetics": 2,
+            "Media Theory": 18
+          }
+        },
+        {
+          "id": "M-29",
+          "title": "When THE CHRONICLER meets THE RAGPICKER:",
+          "subtitle": "The Storm from Paradise",
+          "winner": {
+            "name": "THE RAGPICKER",
+            "alias": "Benjamin",
+            "score": 99
+          },
+          "loser": {
+            "name": "THE CHRONICLER",
+            "alias": null,
+            "score": 30
+          },
+          "themes": {
+            "primary": "Critical Theory",
+            "secondary": [
+              "Post-Structuralism",
+              "Structuralism"
+            ],
+            "thinker": "Benjamin",
+            "concepts": []
+          },
+          "traditionScores": {
+            "Structuralism": 2,
+            "Pragmatism": 2,
+            "Critical Theory": 8,
+            "Post-Structuralism": 5,
+            "Cybernetics": 1,
+            "Media Theory": 2
+          }
+        },
+        {
+          "id": "M-31",
+          "title": "When THE POPULIST meets THE HEGEMON:",
+          "subtitle": "The Dialectic of the Streets",
+          "winner": {
+            "name": "THE THEORIST",
+            "alias": "Hall",
+            "score": 97
+          },
+          "loser": {
+            "name": "THE POPULIST",
+            "alias": null,
+            "score": 40
+          },
+          "themes": {
+            "primary": "Critical Theory",
+            "secondary": [
+              "Semiotics",
+              "Pragmatism"
+            ],
+            "thinker": "Hall",
+            "concepts": []
+          },
+          "traditionScores": {
+            "Structuralism": 2,
+            "Pragmatism": 5,
+            "Semiotics": 9,
+            "Critical Theory": 25,
+            "Systems Theory": 1,
+            "Cybernetics": 1,
+            "Hermeneutics": 5
+          }
+        },
+        {
+          "id": "M-34",
+          "title": "When THE ENGINEER meets THE WOODCUTTER:",
+          "subtitle": "The Standing-Reserve",
+          "winner": {
+            "name": "THE WOODCUTTER",
+            "alias": "Heidegger",
+            "score": 98
+          },
+          "loser": {
+            "name": "THE ENGINEER",
+            "alias": null,
+            "score": 40
+          },
+          "themes": {
+            "primary": "Critical Theory",
+            "secondary": [
+              "Cybernetics",
+              "Pragmatism"
+            ],
+            "thinker": "Hall",
+            "concepts": []
+          },
+          "traditionScores": {
+            "Structuralism": 5,
+            "Phenomenology": 4,
+            "Pragmatism": 9,
+            "Semiotics": 2,
+            "Critical Theory": 12,
+            "Systems Theory": 1,
+            "Post-Structuralism": 2,
+            "Cybernetics": 13,
+            "Hermeneutics": 3
+          }
+        },
+        {
+          "id": "M-45",
+          "title": "When THE GRIEVER meets THE ASTROBIOLOGIST:",
+          "subtitle": "The Copernican Trauma",
+          "winner": {
+            "name": "THE ASTROBIOLOGIST",
+            "alias": "Bratton",
+            "score": 98
+          },
+          "loser": {
+            "name": "THE FIVE STAGES",
+            "alias": null,
+            "score": 75
+          },
+          "themes": {
+            "primary": "Critical Theory",
+            "secondary": [
+              "Cybernetics",
+              "Pragmatism"
+            ],
+            "thinker": "Benjamin",
+            "concepts": []
+          },
+          "traditionScores": {
+            "Structuralism": 3,
+            "Phenomenology": 3,
+            "Pragmatism": 6,
+            "Semiotics": 2,
+            "Critical Theory": 6,
+            "Systems Theory": 1,
+            "Post-Structuralism": 1,
+            "Cybernetics": 20,
+            "Hermeneutics": 1,
+            "Media Theory": 1
+          }
+        },
+        {
+          "id": "M-47",
+          "title": "When THE BUREAUCRAT meets THE CULTIVATOR:",
+          "subtitle": "The Aesthetic of the Village",
+          "winner": {
+            "name": "THE CULTIVATOR",
+            "alias": "Scott",
+            "score": 99
+          },
+          "loser": {
+            "name": "THE BUREAUCRAT",
+            "alias": null,
+            "score": 45
+          },
+          "themes": {
+            "primary": "Critical Theory",
+            "secondary": [
+              "Pragmatism",
+              "Structuralism"
+            ],
+            "thinker": "Scott",
+            "concepts": []
+          },
+          "traditionScores": {
+            "Structuralism": 5,
+            "Pragmatism": 9,
+            "Critical Theory": 5,
+            "Systems Theory": 3,
+            "Cybernetics": 3
+          }
+        },
+        {
+          "id": "M-48",
+          "title": "When THE DREAMER meets THE CONTROLLER:",
+          "subtitle": "The Hallucination of Reality",
+          "winner": {
+            "name": "THE DREAMER",
+            "alias": "Ha & Schmidhuber",
+            "score": 96
+          },
+          "loser": {
+            "name": "Unknown",
+            "alias": null,
+            "score": 0
+          },
+          "themes": {
+            "primary": "Critical Theory",
+            "secondary": [
+              "Cybernetics",
+              "Structuralism",
+              "Systems Theory"
+            ],
+            "thinker": "Hall",
+            "concepts": []
+          },
+          "traditionScores": {
+            "Structuralism": 6,
+            "Critical Theory": 3,
+            "Systems Theory": 4,
+            "Post-Structuralism": 2,
+            "Cybernetics": 13,
+            "Hermeneutics": 1
+          }
+        },
+        {
+          "id": "M-49",
+          "title": "When THE PLANNER meets THE PILOT:",
+          "subtitle": "The Science of Muddling Through",
+          "winner": {
+            "name": "THE PILOT",
+            "alias": "Scott",
+            "score": 98
+          },
+          "loser": {
+            "name": "THE PLANNER",
+            "alias": null,
+            "score": 50
+          },
+          "themes": {
+            "primary": "Critical Theory",
+            "secondary": [
+              "Pragmatism",
+              "Structuralism"
+            ],
+            "thinker": "Scott",
+            "concepts": []
+          },
+          "traditionScores": {
+            "Structuralism": 5,
+            "Phenomenology": 1,
+            "Pragmatism": 11,
+            "Critical Theory": 5,
+            "Systems Theory": 3,
+            "Cybernetics": 3,
+            "Hermeneutics": 1
+          }
+        }
+      ]
+    },
+    {
+      "theme": "Cybernetics",
+      "members": [
+        {
+          "id": "M-14",
+          "title": "When THE NAVIGATOR meets THE CARTOGRAPHER:",
+          "subtitle": "The Map of Grammar",
+          "winner": {
+            "name": "THE NAVIGATOR",
+            "alias": "PROGRAMMAR",
+            "score": 85
+          },
+          "loser": {
+            "name": "THE CARTOGRAPHER",
+            "alias": null,
+            "score": 50
+          },
+          "themes": {
+            "primary": "Cybernetics",
+            "secondary": [
+              "Structuralism",
+              "Systems Theory",
+              "Semiotics"
+            ],
+            "thinker": "Turing",
+            "concepts": []
+          },
+          "traditionScores": {
+            "Structuralism": 49,
+            "Pragmatism": 10,
+            "Semiotics": 14,
+            "Critical Theory": 6,
+            "Systems Theory": 16,
+            "Post-Structuralism": 2,
+            "Cybernetics": 5,
+            "Hermeneutics": 13
+          }
+        },
+        {
+          "id": "M-16",
+          "title": "When THE ARCHIVIST meets THE WIZARD:",
+          "subtitle": "The Spell of Knowledge",
+          "winner": {
+            "name": "THE WIZARD",
+            "alias": "PLANNER",
+            "score": 92
+          },
+          "loser": {
+            "name": "THE ARCHIVIST",
+            "alias": null,
+            "score": 45
+          },
+          "themes": {
+            "primary": "Cybernetics",
+            "secondary": [
+              "Structuralism",
+              "Pragmatism"
+            ],
+            "thinker": "Turing",
+            "concepts": [
+              "knowledge"
+            ]
+          },
+          "traditionScores": {
+            "Structuralism": 14,
+            "Pragmatism": 9,
+            "Semiotics": 4,
+            "Critical Theory": 5,
+            "Systems Theory": 6,
+            "Cybernetics": 8,
+            "Hermeneutics": 2
+          }
+        },
+        {
+          "id": "M-18",
+          "title": "When THE TAXONOMIST meets THE INTERPRETER:",
+          "subtitle": "The Meaning of Meaning",
+          "winner": {
+            "name": "THE INTERPRETER",
+            "alias": "Procedural Semantics",
+            "score": 93
+          },
+          "loser": {
+            "name": "THE TAXONOMIST",
+            "alias": null,
+            "score": 45
+          },
+          "themes": {
+            "primary": "Cybernetics",
+            "secondary": [
+              "Hermeneutics",
+              "Semiotics",
+              "Structuralism"
+            ],
+            "thinker": "Turing",
+            "concepts": [
+              "meaning"
+            ]
+          },
+          "traditionScores": {
+            "Structuralism": 15,
+            "Pragmatism": 7,
+            "Semiotics": 17,
+            "Critical Theory": 5,
+            "Systems Theory": 13,
+            "Cybernetics": 2,
+            "Hermeneutics": 26
+          }
+        },
+        {
+          "id": "M-19",
+          "title": "When THE WEAVER meets THE CONSTRUCTOR:",
+          "subtitle": "The Architecture of Thought",
+          "winner": {
+            "name": "THE HYBRID",
+            "alias": "Rational Meaning Construction",
+            "score": 92
+          },
+          "loser": {
+            "name": "THE WEAVER",
+            "alias": null,
+            "score": 55
+          },
+          "themes": {
+            "primary": "Cybernetics",
+            "secondary": [
+              "Structuralism",
+              "Semiotics",
+              "Hermeneutics"
+            ],
+            "thinker": "Turing",
+            "concepts": []
+          },
+          "traditionScores": {
+            "Structuralism": 24,
+            "Pragmatism": 7,
+            "Semiotics": 22,
+            "Critical Theory": 5,
+            "Systems Theory": 1,
+            "Post-Structuralism": 1,
+            "Cybernetics": 9,
+            "Hermeneutics": 12
+          }
+        },
+        {
+          "id": "M-21",
+          "title": "When THE ORACLE meets THE CHILD:",
+          "subtitle": "The Nature of Intelligence",
+          "winner": {
+            "name": "THE CHILD",
+            "alias": "Winograd",
+            "score": 96
+          },
+          "loser": {
+            "name": "THE ORACLE",
+            "alias": null,
+            "score": 40
+          },
+          "themes": {
+            "primary": "Cybernetics",
+            "secondary": [
+              "Structuralism",
+              "Systems Theory"
+            ],
+            "thinker": "Turing",
+            "concepts": []
+          },
+          "traditionScores": {
+            "Structuralism": 26,
+            "Pragmatism": 1,
+            "Semiotics": 8,
+            "Critical Theory": 5,
+            "Systems Theory": 11,
+            "Cybernetics": 9,
+            "Hermeneutics": 6
+          }
+        },
+        {
+          "id": "M-30",
+          "title": "When THE TOURIST meets THE PHILOSOPHER:",
+          "subtitle": "The Anthology of Images",
+          "winner": {
+            "name": "THE PHILOSOPHER",
+            "alias": "Sontag",
+            "score": 98
+          },
+          "loser": {
+            "name": "THE TOURIST",
+            "alias": null,
+            "score": 50
+          },
+          "themes": {
+            "primary": "Cybernetics",
+            "secondary": [
+              "Media Theory",
+              "Critical Theory",
+              "Phenomenology"
+            ],
+            "thinker": "Turing",
+            "concepts": []
+          },
+          "traditionScores": {
+            "Structuralism": 2,
+            "Phenomenology": 7,
+            "Pragmatism": 6,
+            "Semiotics": 1,
+            "Critical Theory": 9,
+            "Systems Theory": 1,
+            "Cybernetics": 4,
+            "Hermeneutics": 4,
+            "Media Theory": 11
+          }
+        },
+        {
+          "id": "M-32",
+          "title": "When THE SCEPTIC meets THE CHILD-MACHINE:",
+          "subtitle": "The Imitation Game",
+          "winner": {
+            "name": "THE CHILD-MACHINE",
+            "alias": "Turing",
+            "score": 99
+          },
+          "loser": {
+            "name": "THE SCEPTIC",
+            "alias": null,
+            "score": 50
+          },
+          "themes": {
+            "primary": "Cybernetics",
+            "secondary": [
+              "Phenomenology",
+              "Pragmatism"
+            ],
+            "thinker": "Turing",
+            "concepts": [
+              "machine"
+            ]
+          },
+          "traditionScores": {
+            "Structuralism": 4,
+            "Phenomenology": 5,
+            "Pragmatism": 5,
+            "Critical Theory": 5,
+            "Systems Theory": 1,
+            "Post-Structuralism": 2,
+            "Cybernetics": 48
+          }
+        },
+        {
+          "id": "M-33",
+          "title": "When THE SINGULARITARIAN meets THE KIN-MAKER:",
+          "subtitle": "The Circle of Relations",
+          "winner": {
+            "name": "THE KIN-MAKER",
+            "alias": "Lewis et al.",
+            "score": 98
+          },
+          "loser": {
+            "name": "THE SINGULARITARIAN",
+            "alias": null,
+            "score": 40
+          },
+          "themes": {
+            "primary": "Cybernetics",
+            "secondary": [
+              "Systems Theory",
+              "Structuralism"
+            ],
+            "thinker": null,
+            "concepts": []
+          },
+          "traditionScores": {
+            "Structuralism": 8,
+            "Phenomenology": 2,
+            "Pragmatism": 6,
+            "Semiotics": 1,
+            "Critical Theory": 8,
+            "Systems Theory": 13,
+            "Cybernetics": 32,
+            "Hermeneutics": 2
+          }
+        },
+        {
+          "id": "M-46",
+          "title": "When THE PROPHET meets THE ENGINEER:",
+          "subtitle": "The Cathedral of Code",
+          "winner": {
+            "name": "TIE",
+            "alias": null,
+            "score": 0
+          },
+          "loser": {
+            "name": "THE PROPHET",
+            "alias": null,
+            "score": 99
+          },
+          "themes": {
+            "primary": "Cybernetics",
+            "secondary": [
+              "Structuralism",
+              "Critical Theory"
+            ],
+            "thinker": "Turing",
+            "concepts": [
+              "code"
+            ]
+          },
+          "traditionScores": {
+            "Structuralism": 13,
+            "Pragmatism": 3,
+            "Semiotics": 1,
+            "Critical Theory": 6,
+            "Systems Theory": 4,
+            "Cybernetics": 20,
+            "Media Theory": 2
+          }
+        }
+      ]
+    },
+    {
+      "theme": "Systems Theory",
+      "members": [
+        {
+          "id": "M-37",
+          "title": "When THE HOST meets THE PARASITE:",
+          "subtitle": "The Noise at the Table",
+          "winner": {
+            "name": "THE PARASITE",
+            "alias": "Serres",
+            "score": 98
+          },
+          "loser": {
+            "name": "THE HOST",
+            "alias": null,
+            "score": 50
+          },
+          "themes": {
+            "primary": "Systems Theory",
+            "secondary": [
+              "Structuralism",
+              "Critical Theory"
+            ],
+            "thinker": "Serres",
+            "concepts": []
+          },
+          "traditionScores": {
+            "Structuralism": 16,
+            "Semiotics": 1,
+            "Critical Theory": 5,
+            "Systems Theory": 19,
+            "Post-Structuralism": 5,
+            "Cybernetics": 3
+          }
+        },
+        {
+          "id": "M-38",
+          "title": "When THE PRODUCER meets THE PARASITE:",
+          "subtitle": "The Diagonal of Power",
+          "winner": {
+            "name": "THE PARASITE",
+            "alias": "Serres",
+            "score": 99
+          },
+          "loser": {
+            "name": "THE PRODUCER",
+            "alias": null,
+            "score": 50
+          },
+          "themes": {
+            "primary": "Systems Theory",
+            "secondary": [
+              "Critical Theory",
+              "Cybernetics",
+              "Post-Structuralism"
+            ],
+            "thinker": "Serres",
+            "concepts": []
+          },
+          "traditionScores": {
+            "Structuralism": 2,
+            "Pragmatism": 2,
+            "Semiotics": 3,
+            "Critical Theory": 17,
+            "Systems Theory": 6,
+            "Post-Structuralism": 9,
+            "Cybernetics": 17
+          }
+        },
+        {
+          "id": "M-39",
+          "title": "When THE TORTOISE meets THE DUCK:",
+          "subtitle": "The Machine of Relations",
+          "winner": {
+            "name": "THE MAN",
+            "alias": "Serres",
+            "score": 99
+          },
+          "loser": {
+            "name": "THE NAIVE VIEW",
+            "alias": null,
+            "score": 40
+          },
+          "themes": {
+            "primary": "Systems Theory",
+            "secondary": [
+              "Cybernetics",
+              "Pragmatism"
+            ],
+            "thinker": "Serres",
+            "concepts": [
+              "machine"
+            ]
+          },
+          "traditionScores": {
+            "Structuralism": 7,
+            "Phenomenology": 1,
+            "Pragmatism": 16,
+            "Semiotics": 1,
+            "Critical Theory": 11,
+            "Systems Theory": 22,
+            "Cybernetics": 21
+          }
+        },
+        {
+          "id": "M-40",
+          "title": "When THE MONAD meets THE CACOPHONY:",
+          "subtitle": "The Birth of Naivete",
+          "winner": {
+            "name": "THE CACOPHONY",
+            "alias": "Serres",
+            "score": 98
+          },
+          "loser": {
+            "name": "THE MONAD",
+            "alias": null,
+            "score": 40
+          },
+          "themes": {
+            "primary": "Systems Theory",
+            "secondary": [
+              "Critical Theory",
+              "Structuralism"
+            ],
+            "thinker": "Serres",
+            "concepts": []
+          },
+          "traditionScores": {
+            "Structuralism": 5,
+            "Phenomenology": 1,
+            "Pragmatism": 1,
+            "Semiotics": 2,
+            "Critical Theory": 8,
+            "Systems Theory": 5,
+            "Post-Structuralism": 3,
+            "Cybernetics": 2,
+            "Hermeneutics": 1
+          }
+        },
+        {
+          "id": "M-41",
+          "title": "When THE BROTHER meets THE MONEY-CHANGER:",
+          "subtitle": "The Theory of the Joker",
+          "winner": {
+            "name": "THE MONEY-CHANGER",
+            "alias": "Joseph/Judas/Serres",
+            "score": 99
+          },
+          "loser": {
+            "name": "THE BROTHER",
+            "alias": null,
+            "score": 50
+          },
+          "themes": {
+            "primary": "Systems Theory",
+            "secondary": [
+              "Critical Theory",
+              "Structuralism",
+              "Pragmatism"
+            ],
+            "thinker": "Serres",
+            "concepts": []
+          },
+          "traditionScores": {
+            "Structuralism": 4,
+            "Pragmatism": 3,
+            "Semiotics": 3,
+            "Critical Theory": 6,
+            "Systems Theory": 2,
+            "Cybernetics": 1,
+            "Hermeneutics": 2
+          }
+        },
+        {
+          "id": "M-42",
+          "title": "When THE WARRIOR meets THE TROUBLEMAKER:",
+          "subtitle": "The Differential Operator",
+          "winner": {
+            "name": "THE TROUBLEMAKER",
+            "alias": "Serres",
+            "score": 99
+          },
+          "loser": {
+            "name": "THE WARRIOR",
+            "alias": null,
+            "score": 50
+          },
+          "themes": {
+            "primary": "Systems Theory",
+            "secondary": [
+              "Structuralism",
+              "Critical Theory"
+            ],
+            "thinker": "Serres",
+            "concepts": []
+          },
+          "traditionScores": {
+            "Structuralism": 11,
+            "Critical Theory": 9,
+            "Systems Theory": 10,
+            "Post-Structuralism": 1,
+            "Cybernetics": 5
+          }
+        },
+        {
+          "id": "M-43",
+          "title": "When THE SPECTATOR meets THE PARASITE:",
+          "subtitle": "The Midnight Supper",
+          "winner": {
+            "name": "THE PARASITE",
+            "alias": "Serres",
+            "score": 98
+          },
+          "loser": {
+            "name": "THE SPECTATOR",
+            "alias": null,
+            "score": 45
+          },
+          "themes": {
+            "primary": "Systems Theory",
+            "secondary": [
+              "Critical Theory",
+              "Structuralism"
+            ],
+            "thinker": "Serres",
+            "concepts": []
+          },
+          "traditionScores": {
+            "Structuralism": 6,
+            "Pragmatism": 1,
+            "Critical Theory": 10,
+            "Systems Theory": 6,
+            "Post-Structuralism": 3,
+            "Cybernetics": 2
+          }
+        },
+        {
+          "id": "M-44",
+          "title": "When THE VICTOR meets THE DEVIL:",
+          "subtitle": "The End of the Odyssey",
+          "winner": {
+            "name": "THE DEVIL",
+            "alias": "Serres",
+            "score": 99
+          },
+          "loser": {
+            "name": "THE VICTOR",
+            "alias": null,
+            "score": 50
+          },
+          "themes": {
+            "primary": "Systems Theory",
+            "secondary": [
+              "Critical Theory",
+              "Structuralism"
+            ],
+            "thinker": "Serres",
+            "concepts": []
+          },
+          "traditionScores": {
+            "Structuralism": 3,
+            "Pragmatism": 2,
+            "Semiotics": 3,
+            "Critical Theory": 5,
+            "Systems Theory": 6
+          }
+        },
+        {
+          "id": "M-51",
+          "title": "When THE IDEALIST meets THE SYSTEM-BUILDER:",
+          "subtitle": "The Birth of the Ecosystem",
+          "winner": {
+            "name": "THE SYSTEM-BUILDER",
+            "alias": "Tansley",
+            "score": 99
+          },
+          "loser": {
+            "name": "THE IDEALIST",
+            "alias": null,
+            "score": 55
+          },
+          "themes": {
+            "primary": "Systems Theory",
+            "secondary": [
+              "Structuralism",
+              "Pragmatism"
+            ],
+            "thinker": null,
+            "concepts": [
+              "system"
+            ]
+          },
+          "traditionScores": {
+            "Structuralism": 36,
+            "Phenomenology": 2,
+            "Pragmatism": 18,
+            "Critical Theory": 6,
+            "Systems Theory": 38,
+            "Post-Structuralism": 3,
+            "Cybernetics": 4
+          }
+        }
+      ]
+    },
+    {
+      "theme": "Hermeneutics",
+      "members": [
+        {
+          "id": "M-15",
+          "title": "When THE ANATOMIST meets THE ARCHITECT:",
+          "subtitle": "The Design of the Self",
+          "winner": {
+            "name": "THE ARCHITECT",
+            "alias": "Geertz",
+            "score": 94
+          },
+          "loser": {
+            "name": "THE ANATOMIST",
+            "alias": null,
+            "score": 30
+          },
+          "themes": {
+            "primary": "Hermeneutics",
+            "secondary": [
+              "Critical Theory",
+              "Pragmatism",
+              "Structuralism"
+            ],
+            "thinker": "Geertz",
+            "concepts": []
+          },
+          "traditionScores": {
+            "Structuralism": 6,
+            "Phenomenology": 2,
+            "Pragmatism": 7,
+            "Semiotics": 5,
+            "Critical Theory": 11,
+            "Systems Theory": 5,
+            "Post-Structuralism": 2,
+            "Cybernetics": 6,
+            "Hermeneutics": 2
+          }
+        },
+        {
+          "id": "M-23",
+          "title": "When THE PLAIN MAN meets THE ANTHROPOLOGIST:",
+          "subtitle": "The Wisdom of the Ant-Heap",
+          "winner": {
+            "name": "THE ANTHROPOLOGIST",
+            "alias": "Geertz",
+            "score": 95
+          },
+          "loser": {
+            "name": "THE PLAIN MAN",
+            "alias": null,
+            "score": 45
+          },
+          "themes": {
+            "primary": "Hermeneutics",
+            "secondary": [
+              "Critical Theory",
+              "Structuralism",
+              "Pragmatism"
+            ],
+            "thinker": "Geertz",
+            "concepts": []
+          },
+          "traditionScores": {
+            "Structuralism": 10,
+            "Phenomenology": 1,
+            "Pragmatism": 9,
+            "Semiotics": 3,
+            "Critical Theory": 15,
+            "Systems Theory": 7,
+            "Hermeneutics": 2
+          }
+        },
+        {
+          "id": "M-24",
+          "title": "When THE FUNCTIONALIST meets THE SYMBOLIST:",
+          "subtitle": "The Tune of Reality",
+          "winner": {
+            "name": "THE SYMBOLIST",
+            "alias": "Geertz",
+            "score": 97
+          },
+          "loser": {
+            "name": "THE FUNCTIONALIST",
+            "alias": null,
+            "score": 55
+          },
+          "themes": {
+            "primary": "Hermeneutics",
+            "secondary": [
+              "Semiotics",
+              "Pragmatism",
+              "Critical Theory"
+            ],
+            "thinker": "Geertz",
+            "concepts": []
+          },
+          "traditionScores": {
+            "Structuralism": 10,
+            "Pragmatism": 20,
+            "Semiotics": 45,
+            "Critical Theory": 12,
+            "Systems Theory": 5,
+            "Cybernetics": 1,
+            "Hermeneutics": 11,
+            "Media Theory": 3
+          }
+        },
+        {
+          "id": "M-27",
+          "title": "When THE TRANSMITTER meets THE RITUALIST:",
+          "subtitle": "The Map of Reality",
+          "winner": {
+            "name": "THE RITUALIST",
+            "alias": "Carey",
+            "score": 96
+          },
+          "loser": {
+            "name": "THE TRANSMITTER",
+            "alias": null,
+            "score": 65
+          },
+          "themes": {
+            "primary": "Hermeneutics",
+            "secondary": [
+              "Cybernetics",
+              "Pragmatism",
+              "Semiotics"
+            ],
+            "thinker": "Geertz",
+            "concepts": []
+          },
+          "traditionScores": {
+            "Structuralism": 4,
+            "Pragmatism": 11,
+            "Semiotics": 11,
+            "Critical Theory": 10,
+            "Cybernetics": 18,
+            "Hermeneutics": 1,
+            "Media Theory": 1
+          }
+        }
+      ]
+    },
+    {
+      "theme": "Structuralism",
+      "members": [
+        {
+          "id": "M-17",
+          "title": "When THE BARD meets THE MECHANIC:",
+          "subtitle": "The Ghost in the Machine",
+          "winner": {
+            "name": "THE MECHANIC",
+            "alias": "Calvino",
+            "score": 95
+          },
+          "loser": {
+            "name": "THE BARD",
+            "alias": null,
+            "score": 40
+          },
+          "themes": {
+            "primary": "Structuralism",
+            "secondary": [
+              "Cybernetics",
+              "Pragmatism"
+            ],
+            "thinker": "Calvino",
+            "concepts": [
+              "machine"
+            ]
+          },
+          "traditionScores": {
+            "Structuralism": 6,
+            "Phenomenology": 1,
+            "Pragmatism": 6,
+            "Semiotics": 3,
+            "Critical Theory": 6,
+            "Systems Theory": 1,
+            "Post-Structuralism": 4,
+            "Cybernetics": 26,
+            "Hermeneutics": 1
+          }
+        },
+        {
+          "id": "M-25",
+          "title": "When THE PLANNER meets THE DRIFTER:",
+          "subtitle": "The Myth of the Objective",
+          "winner": {
+            "name": "THE DRIFTER",
+            "alias": "Stanley & Lehman",
+            "score": 96
+          },
+          "loser": {
+            "name": "THE PLANNER",
+            "alias": null,
+            "score": 50
+          },
+          "themes": {
+            "primary": "Structuralism",
+            "secondary": [
+              "Critical Theory",
+              "Pragmatism"
+            ],
+            "thinker": null,
+            "concepts": []
+          },
+          "traditionScores": {
+            "Structuralism": 5,
+            "Pragmatism": 4,
+            "Critical Theory": 5,
+            "Systems Theory": 1,
+            "Cybernetics": 3,
+            "Hermeneutics": 1
+          }
+        },
+        {
+          "id": "M-53",
+          "title": "When THE KANTIAN meets THE BIOLOGIST:",
+          "subtitle": "The Bug-Detector",
+          "winner": {
+            "name": "THE BIOLOGIST",
+            "alias": "Lettvin et al.",
+            "score": 99
+          },
+          "loser": {
+            "name": "THE KANTIAN",
+            "alias": null,
+            "score": 50
+          },
+          "themes": {
+            "primary": "Structuralism",
+            "secondary": [
+              "Hermeneutics",
+              "Semiotics"
+            ],
+            "thinker": null,
+            "concepts": []
+          },
+          "traditionScores": {
+            "Structuralism": 9,
+            "Phenomenology": 4,
+            "Pragmatism": 5,
+            "Semiotics": 6,
+            "Critical Theory": 5,
+            "Systems Theory": 4,
+            "Post-Structuralism": 1,
+            "Cybernetics": 4,
+            "Hermeneutics": 7,
+            "Media Theory": 2
+          }
+        }
+      ]
+    },
+    {
+      "theme": "Media Theory",
+      "members": [
+        {
+          "id": "M-36",
+          "title": "When THE HUNTER meets THE FUNCTIONARY:",
+          "subtitle": "The Black Box of Doubt",
+          "winner": {
+            "name": "THE FUNCTIONARY",
+            "alias": "Flusser",
+            "score": 97
+          },
+          "loser": {
+            "name": "THE HUNTER",
+            "alias": null,
+            "score": 55
+          },
+          "themes": {
+            "primary": "Media Theory",
+            "secondary": [
+              "Pragmatism",
+              "Cybernetics"
+            ],
+            "thinker": "Flusser",
+            "concepts": []
+          },
+          "traditionScores": {
+            "Structuralism": 3,
+            "Phenomenology": 2,
+            "Pragmatism": 48,
+            "Semiotics": 10,
+            "Critical Theory": 8,
+            "Systems Theory": 2,
+            "Post-Structuralism": 9,
+            "Cybernetics": 15,
+            "Hermeneutics": 3,
+            "Media Theory": 17
+          }
+        },
+        {
+          "id": "M-63",
+          "title": "When THE ARTIST meets THE MACHINE:",
+          "subtitle": "The Symbiosis",
+          "winner": {
+            "name": "THE MACHINE",
+            "alias": "Youngblood",
+            "score": 96
+          },
+          "loser": {
+            "name": "THE ARTIST",
+            "alias": null,
+            "score": 50
+          },
+          "themes": {
+            "primary": "Media Theory",
+            "secondary": [
+              "Cybernetics",
+              "Pragmatism",
+              "Critical Theory"
+            ],
+            "thinker": "Youngblood",
+            "concepts": [
+              "machine"
+            ]
+          },
+          "traditionScores": {
+            "Structuralism": 3,
+            "Phenomenology": 4,
+            "Pragmatism": 5,
+            "Semiotics": 4,
+            "Critical Theory": 5,
+            "Systems Theory": 1,
+            "Cybernetics": 23,
+            "Hermeneutics": 1,
+            "Media Theory": 3
+          }
+        }
+      ]
+    },
+    {
+      "theme": "Pragmatism",
+      "members": [
+        {
+          "id": "M-12",
+          "title": "When THE BISHOP meets THE FOREMAN:",
+          "subtitle": "The Architecture of Meaning",
+          "winner": {
+            "name": "THE FOREMAN",
+            "alias": "The Builders",
+            "score": 92
+          },
+          "loser": {
+            "name": "THE BISHOP",
+            "alias": "Augustine",
+            "score": 35
+          },
+          "themes": {
+            "primary": "Pragmatism",
+            "secondary": [
+              "Semiotics",
+              "Hermeneutics"
+            ],
+            "thinker": "Wittgenstein",
+            "concepts": [
+              "meaning"
+            ]
+          },
+          "traditionScores": {
+            "Structuralism": 6,
+            "Phenomenology": 1,
+            "Pragmatism": 29,
+            "Semiotics": 28,
+            "Critical Theory": 5,
+            "Systems Theory": 1,
+            "Post-Structuralism": 3,
+            "Cybernetics": 2,
+            "Hermeneutics": 14,
+            "Media Theory": 3
+          }
+        }
+      ]
+    },
+    {
+      "theme": "Semiotics",
+      "members": [
+        {
+          "id": "M-26",
+          "title": "When THE PROMOTER meets THE SEMIOLOGIST:",
+          "subtitle": "The Passion of the Meat",
+          "winner": {
+            "name": "THE SEMIOLOGIST",
+            "alias": "Barthes",
+            "score": 98
+          },
+          "loser": {
+            "name": "THE PROMOTER",
+            "alias": null,
+            "score": 40
+          },
+          "themes": {
+            "primary": "Semiotics",
+            "secondary": [
+              "Critical Theory",
+              "Structuralism"
+            ],
+            "thinker": "Barthes",
+            "concepts": []
+          },
+          "traditionScores": {
+            "Structuralism": 3,
+            "Pragmatism": 2,
+            "Semiotics": 9,
+            "Critical Theory": 6,
+            "Systems Theory": 1,
+            "Post-Structuralism": 1,
+            "Cybernetics": 1,
+            "Hermeneutics": 3,
+            "Media Theory": 1
+          }
+        }
+      ]
+    },
+    {
+      "theme": "Post-Structuralism",
+      "members": [
+        {
+          "id": "M-35",
+          "title": "When THE WARDEN meets THE SURFER:",
+          "subtitle": "The Serpent's Coil",
+          "winner": {
+            "name": "THE SURFER",
+            "alias": "Deleuze",
+            "score": 99
+          },
+          "loser": {
+            "name": "THE WARDEN",
+            "alias": null,
+            "score": 65
+          },
+          "themes": {
+            "primary": "Post-Structuralism",
+            "secondary": [
+              "Cybernetics",
+              "Critical Theory",
+              "Structuralism"
+            ],
+            "thinker": "Deleuze",
+            "concepts": []
+          },
+          "traditionScores": {
+            "Structuralism": 8,
+            "Phenomenology": 3,
+            "Pragmatism": 3,
+            "Semiotics": 2,
+            "Critical Theory": 10,
+            "Systems Theory": 3,
+            "Cybernetics": 17,
+            "Hermeneutics": 1
+          }
+        }
+      ]
+    }
+  ]
+}

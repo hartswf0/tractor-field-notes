@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONYX Theme Mapping</title>
+    <meta name="description" content="Thematic analysis and matchup visualization">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #08080c;
+            --surface: #0f0f16;
+            --card: #16161f;
+            --border: rgba(255, 255, 255, 0.08);
+            --gold: #d4af37;
+            --purple: #8b5cf6;
+            --cyan: #06b6d4;
+            --green: #10b981;
+            --red: #ef4444;
+            --text: #f0f0f5;
+            --dim: #888;
+            --muted: #555;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: linear-gradient(180deg, var(--bg), rgba(8, 8, 12, 0.95));
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0.6rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo h1 {
+            font-size: 0.9rem;
+            background: linear-gradient(90deg, var(--gold), var(--text));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .nav-link {
+            padding: 0.4rem 0.75rem;
+            font-size: 0.7rem;
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--dim);
+            border-radius: 4px;
+            text-decoration: none;
+            transition: all 0.15s;
+        }
+
+        .nav-link:hover {
+            background: var(--surface);
+            color: var(--text);
+        }
+
+        .nav-link.active {
+            background: var(--gold);
+            color: var(--bg);
+            border-color: var(--gold);
+        }
+
+        /* Layout */
+        .container {
+            display: grid;
+            grid-template-columns: 300px 1fr 300px;
+            height: calc(100vh - 50px);
+        }
+
+        /* Sidebar: Theme Clusters */
+        .sidebar {
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        .sidebar-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            margin-bottom: 1rem;
+        }
+
+        .cluster {
+            margin-bottom: 1.5rem;
+        }
+
+        .cluster-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .cluster-color {
+            width: 10px;
+            height: 10px;
+            border-radius: 2px;
+        }
+
+        .cluster-name {
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .cluster-count {
+            font-size: 0.6rem;
+            color: var(--dim);
+            margin-left: auto;
+        }
+
+        .cluster-members {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.25rem;
+        }
+
+        .member-chip {
+            font-size: 0.55rem;
+            padding: 0.15rem 0.4rem;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .member-chip:hover {
+            border-color: var(--purple);
+            background: rgba(139, 92, 246, 0.1);
+        }
+
+        .member-chip.selected {
+            border-color: var(--gold);
+            background: rgba(212, 175, 55, 0.15);
+        }
+
+        /* Main: Network Visualization */
+        .main {
+            background: var(--bg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .network-canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Right Panel: Scratchpad */
+        .scratchpad {
+            background: var(--surface);
+            border-left: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .scratchpad-header {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .scratchpad-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+        }
+
+        .scratchpad-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            line-height: 1.6;
+            color: var(--dim);
+        }
+
+        .scratchpad-content h3 {
+            color: var(--cyan);
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin: 1rem 0 0.5rem;
+        }
+
+        .scratchpad-content h3:first-child {
+            margin-top: 0;
+        }
+
+        .comparison-item {
+            padding: 0.5rem;
+            background: var(--card);
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+            border-left: 2px solid var(--muted);
+        }
+
+        .comparison-item.highlighted {
+            border-left-color: var(--gold);
+            background: rgba(212, 175, 55, 0.05);
+        }
+
+        .comparison-entities {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 0.25rem;
+        }
+
+        .comparison-theme {
+            font-size: 0.55rem;
+            color: var(--purple);
+        }
+
+        .comparison-reasoning {
+            font-size: 0.6rem;
+            color: var(--dim);
+            margin-top: 0.4rem;
+            font-style: italic;
+        }
+
+        /* Color palette for clusters */
+        .cluster-critical {
+            background: #ef4444;
+        }
+
+        .cluster-cybernetics {
+            background: #06b6d4;
+        }
+
+        .cluster-systems {
+            background: #10b981;
+        }
+
+        .cluster-hermeneutics {
+            background: #f59e0b;
+        }
+
+        .cluster-structuralism {
+            background: #8b5cf6;
+        }
+
+        .cluster-media {
+            background: #ec4899;
+        }
+
+        .cluster-pragmatism {
+            background: #6366f1;
+        }
+
+        .cluster-semiotics {
+            background: #14b8a6;
+        }
+
+        .cluster-post {
+            background: #f97316;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar,
+            .scratchpad {
+                display: none;
+            }
+        }
+
+        /* Viz controls */
+        .viz-controls {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            z-index: 10;
+        }
+
+        .viz-btn {
+            padding: 0.4rem 0.6rem;
+            font-size: 0.65rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--dim);
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .viz-btn:hover {
+            background: var(--card);
+            color: var(--text);
+        }
+
+        .viz-btn.active {
+            background: var(--purple);
+            color: white;
+            border-color: var(--purple);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <h1>⚔ Theme Mapping</h1>
+        </div>
+        <div class="nav-links">
+            <a href="tournament.html" class="nav-link">Simple</a>
+            <a href="bracket.html" class="nav-link">Two-Sided</a>
+            <a href="mapping.html" class="nav-link active">Mapping</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Left: Clusters -->
+        <div class="sidebar" id="sidebar"></div>
+
+        <!-- Center: Network Viz -->
+        <div class="main">
+            <canvas class="network-canvas" id="canvas"></canvas>
+            <div class="viz-controls">
+                <button class="viz-btn active" onclick="setLayout('cluster')">Cluster</button>
+                <button class="viz-btn" onclick="setLayout('force')">Force</button>
+                <button class="viz-btn" onclick="setLayout('radial')">Radial</button>
+            </div>
+        </div>
+
+        <!-- Right: Scratchpad -->
+        <div class="scratchpad">
+            <div class="scratchpad-header">
+                <div class="scratchpad-title">Analysis Scratchpad</div>
+            </div>
+            <div class="scratchpad-content" id="scratchpad"></div>
+        </div>
+    </div>
+
+    <script>
+        let analysis = null;
+        let bracket = null;
+        let selected = new Set();
+        let layout = 'cluster';
+
+        const COLORS = {
+            'Critical Theory': '#ef4444',
+            'Cybernetics': '#06b6d4',
+            'Systems Theory': '#10b981',
+            'Hermeneutics': '#f59e0b',
+            'Structuralism': '#8b5cf6',
+            'Media Theory': '#ec4899',
+            'Pragmatism': '#6366f1',
+            'Semiotics': '#14b8a6',
+            'Post-Structuralism': '#f97316',
+            'General Philosophy': '#888888'
+        };
+
+        async function init() {
+            try {
+                const aRes = await fetch('./thematic-analysis.json');
+                analysis = await aRes.json();
+
+                const bRes = await fetch('./bracket-two-sided.json');
+                bracket = await bRes.json();
+
+                renderClusters();
+                renderScratchpad();
+                renderNetwork();
+            } catch (err) {
+                document.getElementById('sidebar').innerHTML = `<p style="color:red;padding:1rem;">Error: ${err.message}<br>Run: node analyze-themes.js</p>`;
+            }
+        }
+
+        function renderClusters() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.innerHTML = `<div class="sidebar-title">Theme Clusters</div>`;
+
+            analysis.clusters.forEach(c => {
+                const color = COLORS[c.theme] || '#888';
+                const html = `
+          <div class="cluster">
+            <div class="cluster-header">
+              <div class="cluster-color" style="background:${color}"></div>
+              <span class="cluster-name">${c.theme}</span>
+              <span class="cluster-count">${c.members.length}</span>
+            </div>
+            <div class="cluster-members">
+              ${c.members.map(m => `
+                <span class="member-chip ${selected.has(m.id) ? 'selected' : ''}" 
+                      onclick="toggleSelect('${m.id}')"
+                      title="${m.winner.name} (${m.winner.score})">
+                  ${m.id}
+                </span>
+              `).join('')}
+            </div>
+          </div>
+        `;
+                sidebar.innerHTML += html;
+            });
+        }
+
+        function toggleSelect(id) {
+            if (selected.has(id)) selected.delete(id);
+            else selected.add(id);
+            renderClusters();
+            renderNetwork();
+        }
+
+        function renderScratchpad() {
+            const pad = document.getElementById('scratchpad');
+            let html = '<h3>Key Observations</h3>';
+            html += `<p><strong>Total chapters:</strong> ${analysis.chapters.length}</p>`;
+            html += `<p><strong>Dominant traditions:</strong> ${analysis.clusters.slice(0, 3).map(c => c.theme).join(', ')}</p>`;
+
+            html += '<h3>Thematic Clashes</h3>';
+
+            // Combine left and right R2 matchups
+            const allR2 = [
+                ...bracket.left.rounds[1].matchups,
+                ...bracket.right.rounds[1].matchups
+            ].filter(m => !m.isBye);
+
+            allR2.slice(0, 10).forEach(m => {
+                const aTheme = m.entityA?.theme || '?';
+                const bTheme = m.entityB?.theme || '?';
+                const isInteresting = aTheme !== bTheme;
+
+                html += `
+          <div class="comparison-item ${isInteresting ? 'highlighted' : ''}">
+            <div class="comparison-entities">
+              <span>${m.entityA?.name || '?'}</span>
+              <span>vs</span>
+              <span>${m.entityB?.name || '?'}</span>
+            </div>
+            <div class="comparison-theme">${aTheme} ↔ ${bTheme}</div>
+            ${isInteresting ? `<div class="comparison-reasoning">Cross-tradition clash — productive tension</div>` : ''}
+          </div>
+        `;
+            });
+
+            html += '<h3>Matchup Logic</h3>';
+            html += `<p style="font-size:0.55rem;">Chapters paired to create philosophical tension:</p>`;
+            html += `<ul style="font-size:0.55rem;margin-left:1rem;margin-top:0.3rem;">
+        <li>Cybernetics ↔ Hermeneutics = machine/meaning</li>
+        <li>Critical Theory ↔ Pragmatism = ideology/action</li>
+        <li>Systems Theory ↔ Semiotics = relations/signs</li>
+      </ul>`;
+
+            pad.innerHTML = html;
+        }
+
+        function renderNetwork() {
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+
+            // Set canvas size
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+
+            ctx.fillStyle = '#08080c';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const chapters = analysis.chapters;
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+
+            // Position nodes based on layout
+            const nodes = chapters.map((ch, i) => {
+                let x, y;
+                const theme = ch.themes.primary;
+                const clusterIdx = analysis.clusters.findIndex(c => c.theme === theme);
+
+                if (layout === 'cluster') {
+                    // Cluster layout: group by theme
+                    const angle = (clusterIdx / analysis.clusters.length) * Math.PI * 2;
+                    const radius = 150 + (i % 5) * 30;
+                    x = centerX + Math.cos(angle) * radius + (Math.random() - 0.5) * 40;
+                    y = centerY + Math.sin(angle) * radius + (Math.random() - 0.5) * 40;
+                } else if (layout === 'radial') {
+                    // Radial: by score
+                    const angle = (i / chapters.length) * Math.PI * 2;
+                    const radius = 100 + (100 - ch.winner.score) * 2;
+                    x = centerX + Math.cos(angle) * radius;
+                    y = centerY + Math.sin(angle) * radius;
+                } else {
+                    // Force-directed (simplified random for now)
+                    x = centerX + (Math.random() - 0.5) * 400;
+                    y = centerY + (Math.random() - 0.5) * 300;
+                }
+
+                return { ...ch, x, y };
+            });
+
+            // Draw connections for matchups
+            ctx.strokeStyle = 'rgba(255,255,255,0.05)';
+            ctx.lineWidth = 1;
+
+            // Draw matchup lines from bracket
+            [...bracket.left.rounds[1].matchups, ...bracket.right.rounds[1].matchups].forEach(m => {
+                if (m.isBye) return;
+                const a = nodes.find(n => n.winner.name === m.entityA?.name);
+                const b = nodes.find(n => n.winner.name === m.entityB?.name);
+                if (a && b) {
+                    ctx.beginPath();
+                    ctx.moveTo(a.x, a.y);
+                    ctx.lineTo(b.x, b.y);
+                    ctx.stroke();
+                }
+            });
+
+            // Draw nodes
+            nodes.forEach(node => {
+                const color = COLORS[node.themes.primary] || '#888';
+                const isSelected = selected.has(node.id);
+                const radius = isSelected ? 10 : 6;
+
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, radius, 0, Math.PI * 2);
+                ctx.fillStyle = color;
+                ctx.fill();
+
+                if (isSelected) {
+                    ctx.strokeStyle = '#fff';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+
+                    // Draw label
+                    ctx.fillStyle = '#fff';
+                    ctx.font = '10px Inter';
+                    ctx.fillText(node.winner.name, node.x + 12, node.y + 4);
+                }
+            });
+
+            // Draw legend
+            let legendY = 20;
+            ctx.font = '10px Inter';
+            Object.entries(COLORS).slice(0, 9).forEach(([theme, color]) => {
+                ctx.fillStyle = color;
+                ctx.fillRect(canvas.width - 120, legendY, 8, 8);
+                ctx.fillStyle = '#888';
+                ctx.fillText(theme, canvas.width - 105, legendY + 8);
+                legendY += 14;
+            });
+        }
+
+        function setLayout(l) {
+            layout = l;
+            document.querySelectorAll('.viz-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderNetwork();
+        }
+
+        window.addEventListener('resize', () => renderNetwork());
+
+        init();
+    </script>
+</body>
+
+</html>

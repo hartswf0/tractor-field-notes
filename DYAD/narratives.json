@@ -1,0 +1,176 @@
+{
+  "L2-06": {
+    "narrative": "narratives/L2-06-parasite-vs-symbolist.md",
+    "assessment": "narratives/L2-06-assessment.md"
+  },
+  "L2-03": {
+    "narrative": "narratives/L2-03-troublemaker-vs-devil.md",
+    "assessment": "narratives/L2-03-assessment.md"
+  },
+  "L2-09": {
+    "narrative": "narratives/L2-09-anthropologist-vs-simulacrum.md",
+    "assessment": "narratives/L2-09-assessment.md"
+  },
+  "R2-09": {
+    "narrative": "narratives/R2-09-architect-vs-interpreter.md",
+    "assessment": "narratives/R2-09-assessment.md"
+  },
+  "R2-06": {
+    "narrative": "narratives/R2-06-dreamer-vs-functionary.md",
+    "assessment": "narratives/R2-06-assessment.md"
+  },
+  "L2-08": {
+    "narrative": "narratives/L2-08-kin-maker-vs-drifter.md",
+    "assessment": "narratives/L2-08-assessment.md"
+  },
+  "L2-04": {
+    "narrative": "narratives/L2-04-system-builder-vs-semiologist.md",
+    "assessment": "narratives/L2-04-assessment.md"
+  },
+  "R2-02": {
+    "narrative": "narratives/R2-02-cultivator-vs-visualizer.md",
+    "assessment": "narratives/R2-02-assessment.md"
+  },
+  "L2-07": {
+    "narrative": "narratives/L2-07-ritualist-vs-child-machine.md",
+    "assessment": "narratives/L2-07-assessment.md"
+  },
+  "R2-04": {
+    "narrative": "narratives/R2-04-astrobiologist-vs-foreman.md",
+    "assessment": "narratives/R2-04-assessment.md"
+  },
+  "L2-02": {
+    "narrative": "narratives/L2-02-man-vs-money-changer.md",
+    "assessment": "narratives/L2-02-assessment.md"
+  },
+  "R2-05": {
+    "narrative": "narratives/R2-05-pilot-vs-theorist.md",
+    "assessment": "narratives/R2-05-assessment.md"
+  },
+  "R2-01": {
+    "narrative": "narratives/R2-01-parasite-vs-biologist.md",
+    "assessment": "narratives/R2-01-assessment.md"
+  },
+  "R2-08": {
+    "narrative": "narratives/R2-08-child-vs-mechanic.md",
+    "assessment": "narratives/R2-08-assessment.md"
+  },
+  "R2-03": {
+    "narrative": "narratives/R2-03-surgeon-vs-woodcutter.md",
+    "assessment": "narratives/R2-03-assessment.md"
+  },
+  "L2-10": {
+    "narrative": "narratives/L2-10-wizard-vs-golem.md",
+    "assessment": "narratives/L2-10-assessment.md"
+  },
+  "R2-10": {
+    "narrative": "narratives/R2-10-hybrid-vs-navigator.md",
+    "assessment": "narratives/R2-10-assessment.md"
+  },
+  "R2-07": {
+    "narrative": "narratives/R2-07-machine-vs-philosopher.md",
+    "assessment": "narratives/R2-07-assessment.md"
+  },
+  "L2-05": {
+    "narrative": "narratives/L2-05-parasite-vs-cacophony.md",
+    "assessment": "narratives/L2-05-assessment.md"
+  },
+  "L2-01": {
+    "narrative": "narratives/L2-01-ragpicker-vs-surfer.md",
+    "assessment": "narratives/L2-01-assessment.md"
+  },
+  "L3-01": {
+    "narrative": "narratives/L3-01-ragpicker-vs-money-changer.md",
+    "assessment": "narratives/L3-01-assessment.md"
+  },
+  "L3-02": {
+    "narrative": "narratives/L3-02-troublemaker-vs-semiologist.md",
+    "assessment": "narratives/L3-02-assessment.md"
+  },
+  "L3-03": {
+    "narrative": "narratives/L3-03-parasite-vs-parasite.md",
+    "assessment": "narratives/L3-03-assessment.md"
+  },
+  "L3-04": {
+    "narrative": "narratives/L3-04-child-machine-vs-drifter.md",
+    "assessment": "narratives/L3-04-assessment.md"
+  },
+  "L3-05": {
+    "narrative": "narratives/L3-05-anthropologist-vs-wizard.md",
+    "assessment": "narratives/L3-05-assessment.md"
+  },
+  "R3-01": {
+    "narrative": "narratives/R3-01-parasite-vs-cultivator.md",
+    "assessment": "narratives/R3-01-assessment.md"
+  },
+  "R3-02": {
+    "narrative": "narratives/R3-02-surgeon-vs-astrobiologist.md",
+    "assessment": "narratives/R3-02-assessment.md"
+  },
+  "R3-03": {
+    "narrative": "narratives/R3-03-pilot-vs-functionary.md",
+    "assessment": "narratives/R3-03-assessment.md"
+  },
+  "R3-04": {
+    "narrative": "narratives/R3-04-philosopher-vs-child.md",
+    "assessment": "narratives/R3-04-assessment.md"
+  },
+  "R3-05": {
+    "narrative": "narratives/R3-05-architect-vs-hybrid.md",
+    "assessment": "narratives/R3-05-assessment.md"
+  },
+  "L4-01": {
+    "narrative": "narratives/L4-01-money-changer-vs-troublemaker.md",
+    "assessment": "narratives/L4-01-assessment.md"
+  },
+  "L4-02": {
+    "narrative": "narratives/L4-02-parasite-vs-drifter.md",
+    "assessment": "narratives/L4-02-assessment.md"
+  },
+  "L4-RR-1": {
+    "narrative": "narratives/L4-RR-1-money-changer-vs-anthropologist.md",
+    "assessment": "narratives/L4-RR-1-assessment.md"
+  },
+  "L4-RR-2": {
+    "narrative": "narratives/L4-RR-2-drifter-vs-anthropologist.md",
+    "assessment": "narratives/L4-RR-2-assessment.md"
+  },
+  "L4-RR-3": {
+    "narrative": "narratives/L4-RR-3-money-changer-vs-drifter.md",
+    "assessment": "narratives/L4-RR-3-assessment.md"
+  },
+  "R4-01": {
+    "narrative": "narratives/R4-01-parasite-vs-astrobiologist.md",
+    "assessment": "narratives/R4-01-assessment.md"
+  },
+  "R4-02": {
+    "narrative": "narratives/R4-02-functionary-vs-philosopher.md",
+    "assessment": "narratives/R4-02-assessment.md"
+  },
+  "R4-RR-1": {
+    "narrative": "narratives/R4-RR-1-astrobiologist-vs-architect.md",
+    "assessment": "narratives/R4-RR-1-assessment.md"
+  },
+  "R4-RR-2": {
+    "narrative": "narratives/R4-RR-2-functionary-vs-architect.md",
+    "assessment": "narratives/R4-RR-2-assessment.md"
+  },
+  "R4-RR-3": {
+    "narrative": "narratives/R4-RR-3-astrobiologist-vs-functionary.md",
+    "assessment": "narratives/R4-RR-3-assessment.md"
+  },
+  "L5-01": {
+    "narrative": "narratives/L5-01-anthropologist-vs-drifter.md",
+    "assessment": "narratives/L5-01-assessment.md"
+  },
+  "R5-01": {
+    "narrative": "narratives/R5-01-architect-vs-functionary.md",
+    "assessment": "narratives/R5-01-assessment.md"
+  },
+  "CHAMPIONSHIP": {
+    "narrative": "narratives/CHAMPIONSHIP-01-village.md",
+    "narrativeMatch2": "narratives/CHAMPIONSHIP-02-archive.md",
+    "narrativeMatch3": "narratives/CHAMPIONSHIP-03-ruins.md",
+    "assessment": "narratives/CHAMPIONSHIP-assessment.md"
+  }
+}

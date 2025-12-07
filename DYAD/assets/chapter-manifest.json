@@ -1,0 +1,1402 @@
+{
+  "version": "1.0.0",
+  "dataSource": "onyx-full-data-2025-12-06T01-45-19-862Z.json",
+  "generatedAt": "2025-12-06T03:42:48.794Z",
+  "totalChapters": 41,
+  "chapters": [
+    {
+      "id": "M-12",
+      "file": "ch12.md",
+      "title": "When THE BISHOP meets THE FOREMAN:",
+      "subtitle": "The Architecture of Meaning",
+      "entityA": {
+        "name": "THE BISHOP",
+        "alias": "Augustine",
+        "score": 35,
+        "scoreLabel": "Fail"
+      },
+      "entityB": {
+        "name": "THE FOREMAN",
+        "alias": "The Builders",
+        "score": 92,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE FOREMAN",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-12",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE BISHOP",
+          "THE FOREMAN"
+        ],
+        "conceptDiagrams": [
+          "The Augustinian (Referential) Model.",
+          "The Wittgensteinian (Pragmatic/Use) Model."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-13",
+      "file": "ch13.md",
+      "title": "When THE SCRIBE meets THE GOLEM:",
+      "subtitle": "The Procedural Turn",
+      "entityA": {
+        "name": "THE SCRIBE",
+        "alias": null,
+        "score": 40,
+        "scoreLabel": "Fail"
+      },
+      "entityB": {
+        "name": "THE GOLEM",
+        "alias": "SHRDLU",
+        "score": 88,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE GOLEM",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-13",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE SCRIBE",
+          "THE GOLEM"
+        ],
+        "conceptDiagrams": [
+          "The Generative/Syntactic Model (The Scribe).",
+          "The Procedural/Integrated Model (The Golem/SHRDLU)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-14",
+      "file": "ch14.md",
+      "title": "When THE NAVIGATOR meets THE CARTOGRAPHER:",
+      "subtitle": "The Map of Grammar",
+      "entityA": {
+        "name": "THE CARTOGRAPHER",
+        "alias": null,
+        "score": 50,
+        "scoreLabel": "Passable Theory, Poor Engineering"
+      },
+      "entityB": {
+        "name": "THE NAVIGATOR",
+        "alias": "PROGRAMMAR",
+        "score": 85,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE NAVIGATOR",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-14",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE CARTOGRAPHER",
+          "THE NAVIGATOR"
+        ],
+        "conceptDiagrams": [
+          "The Transformational/Generative Model (The Cartographer).",
+          "The Systemic/Procedural Model (The Navigator/PROGRAMMAR)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-15",
+      "file": "ch15.md",
+      "title": "When THE ANATOMIST meets THE ARCHITECT:",
+      "subtitle": "The Design of the Self",
+      "entityA": {
+        "name": "THE ANATOMIST",
+        "alias": null,
+        "score": 30,
+        "scoreLabel": "Fail"
+      },
+      "entityB": {
+        "name": "THE ARCHITECT",
+        "alias": "Geertz",
+        "score": 94,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE ARCHITECT",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-15",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE ANATOMIST",
+          "THE ARCHITECT"
+        ],
+        "conceptDiagrams": [
+          "The Stratigraphic/Enlightenment Model (The Anatomist).",
+          "The Synthetic/Control Mechanism Model (The Architect/Geertz)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-16",
+      "file": "ch16.md",
+      "title": "When THE ARCHIVIST meets THE WIZARD:",
+      "subtitle": "The Spell of Knowledge",
+      "entityA": {
+        "name": "THE ARCHIVIST",
+        "alias": null,
+        "score": 45,
+        "scoreLabel": "Fail"
+      },
+      "entityB": {
+        "name": "THE WIZARD",
+        "alias": "PLANNER",
+        "score": 92,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE WIZARD",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-16",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE ARCHIVIST",
+          "THE WIZARD"
+        ],
+        "conceptDiagrams": [
+          "The Declarative/Uniform Proof Model (The Archivist).",
+          "The Procedural/PLANNER Model (The Wizard)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-17",
+      "file": "ch17.md",
+      "title": "When THE BARD meets THE MECHANIC:",
+      "subtitle": "The Ghost in the Machine",
+      "entityA": {
+        "name": "THE BARD",
+        "alias": null,
+        "score": 40,
+        "scoreLabel": "Fail"
+      },
+      "entityB": {
+        "name": "THE MECHANIC",
+        "alias": "Calvino",
+        "score": 95,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE MECHANIC",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-17",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE BARD",
+          "THE MECHANIC"
+        ],
+        "conceptDiagrams": [
+          "The Romantic/Humanist Model (The Bard).",
+          "The Combinatorial/Structuralist Model (The Mechanic/Calvino)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-18",
+      "file": "ch18.md",
+      "title": "When THE TAXONOMIST meets THE INTERPRETER:",
+      "subtitle": "The Meaning of Meaning",
+      "entityA": {
+        "name": "THE TAXONOMIST",
+        "alias": null,
+        "score": 45,
+        "scoreLabel": "Fail"
+      },
+      "entityB": {
+        "name": "THE INTERPRETER",
+        "alias": "Procedural Semantics",
+        "score": 93,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE INTERPRETER",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-18",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE TAXONOMIST",
+          "THE INTERPRETER"
+        ],
+        "conceptDiagrams": [
+          "The Categorization/Association Model (The Taxonomist).",
+          "The Procedural/Integrated Model (The Interpreter/Winograd)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-19",
+      "file": "ch19.md",
+      "title": "When THE WEAVER meets THE CONSTRUCTOR:",
+      "subtitle": "The Architecture of Thought",
+      "entityA": {
+        "name": "THE WEAVER",
+        "alias": null,
+        "score": 55,
+        "scoreLabel": "Conditional Pass"
+      },
+      "entityB": {
+        "name": "THE HYBRID",
+        "alias": "Rational Meaning Construction",
+        "score": 92,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE HYBRID",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-19",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE WEAVER",
+          "THE HYBRID"
+        ],
+        "conceptDiagrams": [
+          "The Pure Statistical Model (The Weaver/LLMs).",
+          "The Rational Meaning Construction Model (The Hybrid/Wong et al.)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-20",
+      "file": "ch20.md",
+      "title": "When THE SIMULATOR meets THE SIMULACRUM:",
+      "subtitle": "The Society of Ghosts",
+      "entityA": {
+        "name": "THE SIMULATOR",
+        "alias": null,
+        "score": 60,
+        "scoreLabel": "Passable for Games, Fail for Life"
+      },
+      "entityB": {
+        "name": "THE SIMULACRUM",
+        "alias": "Generative Agents",
+        "score": 94,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE SIMULACRUM",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-20",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE SIMULATOR",
+          "THE SIMULACRUM"
+        ],
+        "conceptDiagrams": [
+          "The Scripted/Rule-Based Model (The Simulator).",
+          "The Generative/Memory-Stream Model (The Simulacrum/Park et al.)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-21",
+      "file": "ch21.md",
+      "title": "When THE ORACLE meets THE CHILD:",
+      "subtitle": "The Nature of Intelligence",
+      "entityA": {
+        "name": "THE ORACLE",
+        "alias": null,
+        "score": 40,
+        "scoreLabel": "Fail"
+      },
+      "entityB": {
+        "name": "THE CHILD",
+        "alias": "Winograd",
+        "score": 96,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE CHILD",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-21",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE ORACLE",
+          "THE CHILD"
+        ],
+        "conceptDiagrams": [
+          "The Fixed/Hard-Coded Model (The Oracle).",
+          "The Adaptive/Reflective Model (The Child/Winograd)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-22",
+      "file": "ch22.md",
+      "title": "When THE SYMBOLIST meets THE VISUALIZER:",
+      "subtitle": "The Tools of Thought",
+      "entityA": {
+        "name": "THE SYMBOLIST",
+        "alias": null,
+        "score": 75,
+        "scoreLabel": "Solid Foundation, Limited Scope"
+      },
+      "entityB": {
+        "name": "THE VISUALIZER",
+        "alias": "Victor",
+        "score": 98,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE VISUALIZER",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-22",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE SYMBOLIST",
+          "THE VISUALIZER"
+        ],
+        "conceptDiagrams": [
+          "The Symbolic/Algebraic Model (The Symbolist).",
+          "The Interactive/Visual Model (The Visualizer/Victor)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-23",
+      "file": "ch23.md",
+      "title": "When THE PLAIN MAN meets THE ANTHROPOLOGIST:",
+      "subtitle": "The Wisdom of the Ant-Heap",
+      "entityA": {
+        "name": "THE PLAIN MAN",
+        "alias": null,
+        "score": 45,
+        "scoreLabel": "Fail"
+      },
+      "entityB": {
+        "name": "THE ANTHROPOLOGIST",
+        "alias": "Geertz",
+        "score": 95,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE ANTHROPOLOGIST",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-23",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE PLAIN MAN",
+          "THE ANTHROPOLOGIST"
+        ],
+        "conceptDiagrams": [
+          "The Naive Realist Model (The Plain Man).",
+          "The Cultural System Model (The Anthropologist/Geertz)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-24",
+      "file": "ch24.md",
+      "title": "When THE FUNCTIONALIST meets THE SYMBOLIST:",
+      "subtitle": "The Tune of Reality",
+      "entityA": {
+        "name": "THE FUNCTIONALIST",
+        "alias": null,
+        "score": 55,
+        "scoreLabel": "Conditional Pass"
+      },
+      "entityB": {
+        "name": "THE SYMBOLIST",
+        "alias": "Geertz",
+        "score": 97,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE SYMBOLIST",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-24",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE FUNCTIONALIST",
+          "THE SYMBOLIST"
+        ],
+        "conceptDiagrams": [
+          "The Functionalist Model (The Functionalist).",
+          "The Symbolic/Cultural Model (The Symbolist/Geertz)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-25",
+      "file": "ch25.md",
+      "title": "When THE PLANNER meets THE DRIFTER:",
+      "subtitle": "The Myth of the Objective",
+      "entityA": {
+        "name": "THE PLANNER",
+        "alias": null,
+        "score": 50,
+        "scoreLabel": "Safe but Limited"
+      },
+      "entityB": {
+        "name": "THE DRIFTER",
+        "alias": "Stanley & Lehman",
+        "score": 96,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE DRIFTER",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-25",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE PLANNER",
+          "THE DRIFTER"
+        ],
+        "conceptDiagrams": [
+          "The Objective-Based Model (The Planner).",
+          "The Non-Objective Model (The Drifter/Stanley & Lehman)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-26",
+      "file": "ch26.md",
+      "title": "When THE PROMOTER meets THE SEMIOLOGIST:",
+      "subtitle": "The Passion of the Meat",
+      "entityA": {
+        "name": "THE PROMOTER",
+        "alias": null,
+        "score": 40,
+        "scoreLabel": "Fail"
+      },
+      "entityB": {
+        "name": "THE SEMIOLOGIST",
+        "alias": "Barthes",
+        "score": 98,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE SEMIOLOGIST",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-26",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE PROMOTER",
+          "THE SEMIOLOGIST"
+        ],
+        "conceptDiagrams": [
+          "The Commercial/Cynical Model (The Promoter).",
+          "The Semiological/Mythological Model (The Semiologist/Barthes)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-27",
+      "file": "ch27.md",
+      "title": "When THE TRANSMITTER meets THE RITUALIST:",
+      "subtitle": "The Map of Reality",
+      "entityA": {
+        "name": "THE TRANSMITTER",
+        "alias": null,
+        "score": 65,
+        "scoreLabel": "Competent but Limited"
+      },
+      "entityB": {
+        "name": "THE RITUALIST",
+        "alias": "Carey",
+        "score": 96,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE RITUALIST",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-27",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE TRANSMITTER",
+          "THE RITUALIST"
+        ],
+        "conceptDiagrams": [
+          "The Transmission Model (The Transmitter).",
+          "The Ritual Model (The Ritualist/Carey)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-28",
+      "file": "ch28.md",
+      "title": "When THE CONNOISSEUR meets THE SURGEON:",
+      "subtitle": "The Decay of the Aura",
+      "entityA": {
+        "name": "THE CONNOISSEUR",
+        "alias": null,
+        "score": 60,
+        "scoreLabel": "Obsolete"
+      },
+      "entityB": {
+        "name": "THE SURGEON",
+        "alias": "Benjamin",
+        "score": 98,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE SURGEON",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-28",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE CONNOISSEUR",
+          "THE SURGEON"
+        ],
+        "conceptDiagrams": [
+          "The Traditional/Auratic Model (The Connoisseur).",
+          "The Mechanical/Revolutionary Model (The Surgeon/Benjamin)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-29",
+      "file": "ch29.md",
+      "title": "When THE CHRONICLER meets THE RAGPICKER:",
+      "subtitle": "The Storm from Paradise",
+      "entityA": {
+        "name": "THE CHRONICLER",
+        "alias": null,
+        "score": 30,
+        "scoreLabel": "Dangerous"
+      },
+      "entityB": {
+        "name": "THE RAGPICKER",
+        "alias": "Benjamin",
+        "score": 99,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE RAGPICKER",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-29",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE CHRONICLER",
+          "THE RAGPICKER"
+        ],
+        "conceptDiagrams": [
+          "The Historicist Model (The Chronicler).",
+          "The Messianic Materialist Model (The Ragpicker/Benjamin)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-30",
+      "file": "ch30.md",
+      "title": "When THE TOURIST meets THE PHILOSOPHER:",
+      "subtitle": "The Anthology of Images",
+      "entityA": {
+        "name": "THE TOURIST",
+        "alias": null,
+        "score": 50,
+        "scoreLabel": "Common but Flawed"
+      },
+      "entityB": {
+        "name": "THE PHILOSOPHER",
+        "alias": "Sontag",
+        "score": 98,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE PHILOSOPHER",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-30",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE TOURIST",
+          "THE PHILOSOPHER"
+        ],
+        "conceptDiagrams": [
+          "The Consumptive/Documentary Model (The Tourist).",
+          "The Critical/Epistemic Model (The Philosopher/Sontag)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-31",
+      "file": "ch31.md",
+      "title": "When THE POPULIST meets THE HEGEMON:",
+      "subtitle": "The Dialectic of the Streets",
+      "entityA": {
+        "name": "THE POPULIST",
+        "alias": null,
+        "score": 40,
+        "scoreLabel": "Fail"
+      },
+      "entityB": {
+        "name": "THE THEORIST",
+        "alias": "Hall",
+        "score": 97,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE THEORIST",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-31",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE POPULIST",
+          "THE THEORIST"
+        ],
+        "conceptDiagrams": [
+          "The Market/Descriptive Model (The Populist).",
+          "The Hegemonic/Dialectical Model (The Theorist/Hall)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-32",
+      "file": "ch32.md",
+      "title": "When THE SCEPTIC meets THE CHILD-MACHINE:",
+      "subtitle": "The Imitation Game",
+      "entityA": {
+        "name": "THE SCEPTIC",
+        "alias": null,
+        "score": 50,
+        "scoreLabel": "Historical Curiosity"
+      },
+      "entityB": {
+        "name": "THE CHILD-MACHINE",
+        "alias": "Turing",
+        "score": 99,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE CHILD-MACHINE",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-32",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE SCEPTIC",
+          "THE CHILD-MACHINE"
+        ],
+        "conceptDiagrams": [
+          "The Essentialist/Sceptical Model (The Sceptic).",
+          "The Functionalist/Learning Model (The Child-Machine/Turing)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-33",
+      "file": "ch33.md",
+      "title": "When THE SINGULARITARIAN meets THE KIN-MAKER:",
+      "subtitle": "The Circle of Relations",
+      "entityA": {
+        "name": "THE SINGULARITARIAN",
+        "alias": null,
+        "score": 40,
+        "scoreLabel": "Ethically Dangerous"
+      },
+      "entityB": {
+        "name": "THE KIN-MAKER",
+        "alias": "Lewis et al.",
+        "score": 98,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE KIN-MAKER",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-33",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE SINGULARITARIAN",
+          "THE KIN-MAKER"
+        ],
+        "conceptDiagrams": [
+          "The Rationalist/Control Model (The Singularitarian).",
+          "The Indigenous/Relational Model (The Kin-Maker/Lewis et al.)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-34",
+      "file": "ch34.md",
+      "title": "When THE ENGINEER meets THE WOODCUTTER:",
+      "subtitle": "The Standing-Reserve",
+      "entityA": {
+        "name": "THE ENGINEER",
+        "alias": null,
+        "score": 40,
+        "scoreLabel": "Dangerously Naive"
+      },
+      "entityB": {
+        "name": "THE WOODCUTTER",
+        "alias": "Heidegger",
+        "score": 98,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE WOODCUTTER",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-34",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE ENGINEER",
+          "THE WOODCUTTER"
+        ],
+        "conceptDiagrams": [
+          "The Instrumental/Anthropological Model (The Engineer).",
+          "The Essentialist/Heideggerian Model (The Woodcutter)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-35",
+      "file": "ch35.md",
+      "title": "When THE WARDEN meets THE SURFER:",
+      "subtitle": "The Serpent's Coil",
+      "entityA": {
+        "name": "THE WARDEN",
+        "alias": null,
+        "score": 65,
+        "scoreLabel": "Historical Artifact"
+      },
+      "entityB": {
+        "name": "THE SURFER",
+        "alias": "Deleuze",
+        "score": 99,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE SURFER",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-35",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE WARDEN",
+          "THE SURFER"
+        ],
+        "conceptDiagrams": [
+          "The Disciplinary Model (The Warden/Foucault).",
+          "The Control Model (The Surfer/Deleuze)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-36",
+      "file": "ch36.md",
+      "title": "When THE HUNTER meets THE FUNCTIONARY:",
+      "subtitle": "The Black Box of Doubt",
+      "entityA": {
+        "name": "THE HUNTER",
+        "alias": null,
+        "score": 55,
+        "scoreLabel": "Historical Artifact"
+      },
+      "entityB": {
+        "name": "THE FUNCTIONARY",
+        "alias": "Flusser",
+        "score": 97,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE FUNCTIONARY",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-36",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE HUNTER",
+          "THE FUNCTIONARY"
+        ],
+        "conceptDiagrams": [
+          "The Tool/Industrial Model (The Hunter).",
+          "The Apparatus/Post-Industrial Model (The Functionary/Flusser)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-37",
+      "file": "ch37.md",
+      "title": "When THE HOST meets THE PARASITE:",
+      "subtitle": "The Noise at the Table",
+      "entityA": {
+        "name": "THE HOST",
+        "alias": null,
+        "score": 50,
+        "scoreLabel": "Static"
+      },
+      "entityB": {
+        "name": "THE PARASITE",
+        "alias": "Serres",
+        "score": 98,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE PARASITE",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-37",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE HOST",
+          "THE PARASITE"
+        ],
+        "conceptDiagrams": [
+          "The Host (The System/Exchange).",
+          "The Parasite (The Noise/Transformation)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-38",
+      "file": "ch38.md",
+      "title": "When THE PRODUCER meets THE PARASITE:",
+      "subtitle": "The Diagonal of Power",
+      "entityA": {
+        "name": "THE PRODUCER",
+        "alias": null,
+        "score": 50,
+        "scoreLabel": "Powerful but Blind"
+      },
+      "entityB": {
+        "name": "THE PARASITE",
+        "alias": "Serres",
+        "score": 99,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE PARASITE",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-38",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE PRODUCER",
+          "THE PARASITE"
+        ],
+        "conceptDiagrams": [
+          "The Productive Model (The Producer).",
+          "The Cybernetic/Parasitic Model (The Parasite/Serres)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-39",
+      "file": "ch39.md",
+      "title": "When THE TORTOISE meets THE DUCK:",
+      "subtitle": "The Machine of Relations",
+      "entityA": {
+        "name": "THE NAIVE VIEW",
+        "alias": null,
+        "score": 40,
+        "scoreLabel": "Obsolete"
+      },
+      "entityB": {
+        "name": "THE MAN",
+        "alias": "Serres",
+        "score": 99,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE MAN",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-39",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE NAIVE VIEW",
+          "THE MAN"
+        ],
+        "conceptDiagrams": [
+          "The Organ-Extension Model (The Naive View).",
+          "The Intersubjective/Parasitic Model (The Man/Serres)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-40",
+      "file": "ch40.md",
+      "title": "When THE MONAD meets THE CACOPHONY:",
+      "subtitle": "The Birth of Naivete",
+      "entityA": {
+        "name": "THE MONAD",
+        "alias": null,
+        "score": 40,
+        "scoreLabel": "Stagnant"
+      },
+      "entityB": {
+        "name": "THE CACOPHONY",
+        "alias": "Serres",
+        "score": 98,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE CACOPHONY",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-40",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE MONAD",
+          "THE CACOPHONY"
+        ],
+        "conceptDiagrams": [
+          "The Closed System (The Monad/Harmony).",
+          "The Open System (The Cacophony/Noise)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-41",
+      "file": "ch41.md",
+      "title": "When THE BROTHER meets THE MONEY-CHANGER:",
+      "subtitle": "The Theory of the Joker",
+      "entityA": {
+        "name": "THE BROTHER",
+        "alias": null,
+        "score": 50,
+        "scoreLabel": "Primitive"
+      },
+      "entityB": {
+        "name": "THE MONEY-CHANGER",
+        "alias": "Joseph/Judas/Serres",
+        "score": 99,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE MONEY-CHANGER",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-41",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE BROTHER",
+          "THE MONEY-CHANGER"
+        ],
+        "conceptDiagrams": [
+          "The Sacrificial Logic (The Brother/Blood).",
+          "The Exchange Logic (The Money-Changer/The Joker)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-42",
+      "file": "ch42.md",
+      "title": "When THE WARRIOR meets THE TROUBLEMAKER:",
+      "subtitle": "The Differential Operator",
+      "entityA": {
+        "name": "THE WARRIOR",
+        "alias": null,
+        "score": 50,
+        "scoreLabel": "Obsolete"
+      },
+      "entityB": {
+        "name": "THE TROUBLEMAKER",
+        "alias": "Serres",
+        "score": 99,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE TROUBLEMAKER",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-42",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE WARRIOR",
+          "THE TROUBLEMAKER"
+        ],
+        "conceptDiagrams": [
+          "The Conflict Model (The Warrior).",
+          "The Parasitic/Thermal Model (The Troublemaker/Serres)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-43",
+      "file": "ch43.md",
+      "title": "When THE SPECTATOR meets THE PARASITE:",
+      "subtitle": "The Midnight Supper",
+      "entityA": {
+        "name": "THE SPECTATOR",
+        "alias": null,
+        "score": 45,
+        "scoreLabel": "Theatrical"
+      },
+      "entityB": {
+        "name": "THE PARASITE",
+        "alias": "Serres",
+        "score": 98,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE PARASITE",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-43",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE SPECTATOR",
+          "THE PARASITE"
+        ],
+        "conceptDiagrams": [
+          "The Logic of Exclusion (The Spectator/Dialectics).",
+          "The Logic of Inclusion (The Parasite/Serres)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-44",
+      "file": "ch44.md",
+      "title": "When THE VICTOR meets THE DEVIL:",
+      "subtitle": "The End of the Odyssey",
+      "entityA": {
+        "name": "THE VICTOR",
+        "alias": null,
+        "score": 50,
+        "scoreLabel": "Tragic"
+      },
+      "entityB": {
+        "name": "THE DEVIL",
+        "alias": "Serres",
+        "score": 99,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE DEVIL",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-44",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE VICTOR",
+          "THE DEVIL"
+        ],
+        "conceptDiagrams": [
+          "The State of Victory (Ulysses/The Arrow).",
+          "The State of Evil/Expansion (The Devil/Serres)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-45",
+      "file": "ch45.md",
+      "title": "When THE GRIEVER meets THE ASTROBIOLOGIST:",
+      "subtitle": "The Copernican Trauma",
+      "entityA": {
+        "name": "THE FIVE STAGES",
+        "alias": null,
+        "score": 75,
+        "scoreLabel": "Diagnostic but Limited"
+      },
+      "entityB": {
+        "name": "THE ASTROBIOLOGIST",
+        "alias": "Bratton",
+        "score": 98,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE ASTROBIOLOGIST",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-45",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE FIVE STAGES",
+          "THE ASTROBIOLOGIST"
+        ],
+        "conceptDiagrams": [
+          "The Trauma/Grief Model (The Five Stages).",
+          "The Evolutionary/Non-Grief Model (The Astrobiologist/Bratton)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-46",
+      "file": "ch46.md",
+      "title": "When THE PROPHET meets THE ENGINEER:",
+      "subtitle": "The Cathedral of Code",
+      "entityA": {
+        "name": "THE PROPHET",
+        "alias": null,
+        "score": 99,
+        "scoreLabel": "Foundational"
+      },
+      "entityB": {
+        "name": "THE ENGINEER",
+        "alias": "von Neumann",
+        "score": 98,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "TIE",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-46",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE PROPHET",
+          "THE ENGINEER"
+        ],
+        "conceptDiagrams": [
+          "The Logical/Universal Model (The Prophet/Turing).",
+          "The Architectural/Physical Model (The Engineer/von Neumann)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-47",
+      "file": "ch47.md",
+      "title": "When THE BUREAUCRAT meets THE CULTIVATOR:",
+      "subtitle": "The Aesthetic of the Village",
+      "entityA": {
+        "name": "THE BUREAUCRAT",
+        "alias": null,
+        "score": 45,
+        "scoreLabel": "Disastrous"
+      },
+      "entityB": {
+        "name": "THE CULTIVATOR",
+        "alias": "Scott",
+        "score": 99,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE CULTIVATOR",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-47",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE BUREAUCRAT",
+          "THE CULTIVATOR"
+        ],
+        "conceptDiagrams": [
+          "The High Modernist/Bureaucratic Model (The Bureaucrat/Ujamaa).",
+          "The Local/Resilient Model (The Cultivator/Metis)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-48",
+      "file": "ch48.md",
+      "title": "When THE DREAMER meets THE CONTROLLER:",
+      "subtitle": "The Hallucination of Reality",
+      "entityA": {
+        "name": "THE DREAMER",
+        "alias": "Ha & Schmidhuber",
+        "score": 96,
+        "scoreLabel": "Distinction"
+      },
+      "entityB": {
+        "name": null,
+        "alias": null,
+        "score": null,
+        "scoreLabel": null
+      },
+      "winner": "THE DREAMER",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-48",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE DREAMER"
+        ],
+        "conceptDiagrams": [
+          "The Model-Free RL Model (Implied traditional approach).",
+          "The World Model/Dreamer Model (Ha & Schmidhuber)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-49",
+      "file": "ch49.md",
+      "title": "When THE PLANNER meets THE PILOT:",
+      "subtitle": "The Science of Muddling Through",
+      "entityA": {
+        "name": "THE PLANNER",
+        "alias": null,
+        "score": 50,
+        "scoreLabel": "Dangerous"
+      },
+      "entityB": {
+        "name": "THE PILOT",
+        "alias": "Scott",
+        "score": 98,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE PILOT",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-49",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE PLANNER",
+          "THE PILOT"
+        ],
+        "conceptDiagrams": [
+          "The High Modernist Model (The Planner/Techne).",
+          "The Practical/Local Model (The Pilot/Metis)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-51",
+      "file": "ch51.md",
+      "title": "When THE IDEALIST meets THE SYSTEM-BUILDER:",
+      "subtitle": "The Birth of the Ecosystem",
+      "entityA": {
+        "name": "THE IDEALIST",
+        "alias": null,
+        "score": 55,
+        "scoreLabel": "Poetic but Flawed"
+      },
+      "entityB": {
+        "name": "THE SYSTEM-BUILDER",
+        "alias": "Tansley",
+        "score": 99,
+        "scoreLabel": "Foundational"
+      },
+      "winner": "THE SYSTEM-BUILDER",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-51",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE IDEALIST",
+          "THE SYSTEM-BUILDER"
+        ],
+        "conceptDiagrams": [
+          "The Organismic Model (The Idealist/Clements).",
+          "The Ecosystem Model (The System-Builder/Tansley)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-53",
+      "file": "ch53.md",
+      "title": "When THE KANTIAN meets THE BIOLOGIST:",
+      "subtitle": "The Bug-Detector",
+      "entityA": {
+        "name": "THE KANTIAN",
+        "alias": null,
+        "score": 50,
+        "scoreLabel": "Outdated"
+      },
+      "entityB": {
+        "name": "THE BIOLOGIST",
+        "alias": "Lettvin et al.",
+        "score": 99,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE BIOLOGIST",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-53",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE KANTIAN",
+          "THE BIOLOGIST"
+        ],
+        "conceptDiagrams": [
+          "The Constructivist/Computational Model (The Kantian).",
+          "The Ecological/Operational Model (The Biologist/Lettvin et al.)."
+        ],
+        "verdictBadge": true
+      }
+    },
+    {
+      "id": "M-63",
+      "file": "ch63.md",
+      "title": "When THE ARTIST meets THE MACHINE:",
+      "subtitle": "The Symbiosis",
+      "entityA": {
+        "name": "THE ARTIST",
+        "alias": null,
+        "score": 50,
+        "scoreLabel": "Nostalgic"
+      },
+      "entityB": {
+        "name": "THE MACHINE",
+        "alias": "Youngblood",
+        "score": 96,
+        "scoreLabel": "Distinction"
+      },
+      "winner": "THE MACHINE",
+      "guardianRole": "Dark Matter Guardian Grader",
+      "assetPath": "./assets/chapters/M-63",
+      "images": [],
+      "hasVisuals": false,
+      "visualOpportunities": {
+        "portraits": [
+          "THE ARTIST",
+          "THE MACHINE"
+        ],
+        "conceptDiagrams": [
+          "The Romantic/Humanist Model (The Artist).",
+          "The Cybernetic/Symbiotic Model (The Machine/Youngblood)."
+        ],
+        "verdictBadge": true
+      }
+    }
+  ],
+  "lastScanned": "2025-12-06T03:48:54.804Z"
+}

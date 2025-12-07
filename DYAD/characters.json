@@ -1,0 +1,796 @@
+{
+  "THE FOREMAN": {
+    "name": "THE FOREMAN",
+    "alias": "The Builders",
+    "philosophy": "The Architecture of Meaning — embodied in THE FOREMAN",
+    "archetype": "Pragmatist",
+    "victories": [
+      {
+        "chapter": "M-12",
+        "defeated": "THE BISHOP",
+        "score": 92
+      }
+    ],
+    "scores": [
+      92
+    ],
+    "sourceChapters": [
+      "M-12"
+    ],
+    "avgScore": 92
+  },
+  "THE GOLEM": {
+    "name": "THE GOLEM",
+    "alias": "SHRDLU",
+    "philosophy": "The Procedural Turn — embodied in THE GOLEM",
+    "archetype": "Mechanist",
+    "victories": [
+      {
+        "chapter": "M-13",
+        "defeated": "THE SCRIBE",
+        "score": 88
+      }
+    ],
+    "scores": [
+      88
+    ],
+    "sourceChapters": [
+      "M-13"
+    ],
+    "avgScore": 88
+  },
+  "THE NAVIGATOR": {
+    "name": "THE NAVIGATOR",
+    "alias": "PROGRAMMAR",
+    "philosophy": "The Map of Grammar — embodied in THE NAVIGATOR",
+    "archetype": "Systems Thinker",
+    "victories": [
+      {
+        "chapter": "M-14",
+        "defeated": "THE CARTOGRAPHER",
+        "score": 85
+      }
+    ],
+    "scores": [
+      85
+    ],
+    "sourceChapters": [
+      "M-14"
+    ],
+    "avgScore": 85
+  },
+  "THE ARCHITECT": {
+    "name": "THE ARCHITECT",
+    "alias": "Geertz",
+    "philosophy": "The Design of the Self — embodied in THE ARCHITECT",
+    "archetype": "Designer",
+    "victories": [
+      {
+        "chapter": "M-15",
+        "defeated": "THE ANATOMIST",
+        "score": 94
+      }
+    ],
+    "scores": [
+      94
+    ],
+    "sourceChapters": [
+      "M-15"
+    ],
+    "avgScore": 94
+  },
+  "THE WIZARD": {
+    "name": "THE WIZARD",
+    "alias": "PLANNER",
+    "philosophy": "The Spell of Knowledge — embodied in THE WIZARD",
+    "archetype": "Proceduralist",
+    "victories": [
+      {
+        "chapter": "M-16",
+        "defeated": "THE ARCHIVIST",
+        "score": 92
+      }
+    ],
+    "scores": [
+      92
+    ],
+    "sourceChapters": [
+      "M-16"
+    ],
+    "avgScore": 92
+  },
+  "THE MECHANIC": {
+    "name": "THE MECHANIC",
+    "alias": "Calvino",
+    "philosophy": "The Ghost in the Machine — embodied in THE MECHANIC",
+    "archetype": "Structuralist",
+    "victories": [
+      {
+        "chapter": "M-17",
+        "defeated": "THE BARD",
+        "score": 95
+      }
+    ],
+    "scores": [
+      95
+    ],
+    "sourceChapters": [
+      "M-17"
+    ],
+    "avgScore": 95
+  },
+  "THE INTERPRETER": {
+    "name": "THE INTERPRETER",
+    "alias": "Procedural Semantics",
+    "philosophy": "The Meaning of Meaning — embodied in THE INTERPRETER",
+    "archetype": "Hermenaut",
+    "victories": [
+      {
+        "chapter": "M-18",
+        "defeated": "THE TAXONOMIST",
+        "score": 93
+      }
+    ],
+    "scores": [
+      93
+    ],
+    "sourceChapters": [
+      "M-18"
+    ],
+    "avgScore": 93
+  },
+  "THE HYBRID": {
+    "name": "THE HYBRID",
+    "alias": "Rational Meaning Construction",
+    "philosophy": "The Architecture of Thought — embodied in THE HYBRID",
+    "archetype": "Synthesizer",
+    "victories": [
+      {
+        "chapter": "M-19",
+        "defeated": "THE WEAVER",
+        "score": 92
+      }
+    ],
+    "scores": [
+      92
+    ],
+    "sourceChapters": [
+      "M-19"
+    ],
+    "avgScore": 92
+  },
+  "THE SIMULACRUM": {
+    "name": "THE SIMULACRUM",
+    "alias": "Generative Agents",
+    "philosophy": "The Society of Ghosts — embodied in THE SIMULACRUM",
+    "archetype": "Simulationist",
+    "victories": [
+      {
+        "chapter": "M-20",
+        "defeated": "THE SIMULATOR",
+        "score": 94
+      }
+    ],
+    "scores": [
+      94
+    ],
+    "sourceChapters": [
+      "M-20"
+    ],
+    "avgScore": 94
+  },
+  "THE CHILD": {
+    "name": "THE CHILD",
+    "alias": "Winograd",
+    "philosophy": "The Nature of Intelligence — embodied in THE CHILD",
+    "archetype": "Developmentalist",
+    "victories": [
+      {
+        "chapter": "M-21",
+        "defeated": "THE ORACLE",
+        "score": 96
+      }
+    ],
+    "scores": [
+      96
+    ],
+    "sourceChapters": [
+      "M-21"
+    ],
+    "avgScore": 96
+  },
+  "THE VISUALIZER": {
+    "name": "THE VISUALIZER",
+    "alias": "Victor",
+    "philosophy": "The Tools of Thought — embodied in THE VISUALIZER",
+    "archetype": "Interface Theorist",
+    "victories": [
+      {
+        "chapter": "M-22",
+        "defeated": "THE SYMBOLIST",
+        "score": 98
+      }
+    ],
+    "scores": [
+      98
+    ],
+    "sourceChapters": [
+      "M-22"
+    ],
+    "avgScore": 98
+  },
+  "THE ANTHROPOLOGIST": {
+    "name": "THE ANTHROPOLOGIST",
+    "alias": "Geertz",
+    "philosophy": "The Wisdom of the Ant-Heap — embodied in THE ANTHROPOLOGIST",
+    "archetype": "Cultural Analyst",
+    "victories": [
+      {
+        "chapter": "M-23",
+        "defeated": "THE PLAIN MAN",
+        "score": 95
+      }
+    ],
+    "scores": [
+      95
+    ],
+    "sourceChapters": [
+      "M-23"
+    ],
+    "avgScore": 95
+  },
+  "THE SYMBOLIST": {
+    "name": "THE SYMBOLIST",
+    "alias": "Geertz",
+    "philosophy": "The Tune of Reality — embodied in THE SYMBOLIST",
+    "archetype": "Meaning-Maker",
+    "victories": [
+      {
+        "chapter": "M-24",
+        "defeated": "THE FUNCTIONALIST",
+        "score": 97
+      }
+    ],
+    "scores": [
+      97
+    ],
+    "sourceChapters": [
+      "M-24"
+    ],
+    "avgScore": 97
+  },
+  "THE DRIFTER": {
+    "name": "THE DRIFTER",
+    "alias": "Stanley & Lehman",
+    "philosophy": "The Myth of the Objective — embodied in THE DRIFTER",
+    "archetype": "Non-Objectivist",
+    "victories": [
+      {
+        "chapter": "M-25",
+        "defeated": "THE PLANNER",
+        "score": 96
+      }
+    ],
+    "scores": [
+      96
+    ],
+    "sourceChapters": [
+      "M-25"
+    ],
+    "avgScore": 96
+  },
+  "THE SEMIOLOGIST": {
+    "name": "THE SEMIOLOGIST",
+    "alias": "Barthes",
+    "philosophy": "The Passion of the Meat — embodied in THE SEMIOLOGIST",
+    "archetype": "Sign Reader",
+    "victories": [
+      {
+        "chapter": "M-26",
+        "defeated": "THE PROMOTER",
+        "score": 98
+      }
+    ],
+    "scores": [
+      98
+    ],
+    "sourceChapters": [
+      "M-26"
+    ],
+    "avgScore": 98
+  },
+  "THE RITUALIST": {
+    "name": "THE RITUALIST",
+    "alias": "Carey",
+    "philosophy": "The Map of Reality — embodied in THE RITUALIST",
+    "archetype": "Social Theorist",
+    "victories": [
+      {
+        "chapter": "M-27",
+        "defeated": "THE TRANSMITTER",
+        "score": 96
+      }
+    ],
+    "scores": [
+      96
+    ],
+    "sourceChapters": [
+      "M-27"
+    ],
+    "avgScore": 96
+  },
+  "THE SURGEON": {
+    "name": "THE SURGEON",
+    "alias": "Benjamin",
+    "philosophy": "The Decay of the Aura — embodied in THE SURGEON",
+    "archetype": "Critical Theorist",
+    "victories": [
+      {
+        "chapter": "M-28",
+        "defeated": "THE CONNOISSEUR",
+        "score": 98
+      }
+    ],
+    "scores": [
+      98
+    ],
+    "sourceChapters": [
+      "M-28"
+    ],
+    "avgScore": 98
+  },
+  "THE RAGPICKER": {
+    "name": "THE RAGPICKER",
+    "alias": "Benjamin",
+    "philosophy": "The Storm from Paradise — embodied in THE RAGPICKER",
+    "archetype": "Materialist",
+    "victories": [
+      {
+        "chapter": "M-29",
+        "defeated": "THE CHRONICLER",
+        "score": 99
+      }
+    ],
+    "scores": [
+      99
+    ],
+    "sourceChapters": [
+      "M-29"
+    ],
+    "avgScore": 99
+  },
+  "THE PHILOSOPHER": {
+    "name": "THE PHILOSOPHER",
+    "alias": "Sontag",
+    "philosophy": "The Anthology of Images — embodied in THE PHILOSOPHER",
+    "archetype": "Epistemic Critic",
+    "victories": [
+      {
+        "chapter": "M-30",
+        "defeated": "THE TOURIST",
+        "score": 98
+      }
+    ],
+    "scores": [
+      98
+    ],
+    "sourceChapters": [
+      "M-30"
+    ],
+    "avgScore": 98
+  },
+  "THE THEORIST": {
+    "name": "THE THEORIST",
+    "alias": "Hall",
+    "philosophy": "The Dialectic of the Streets — embodied in THE THEORIST",
+    "archetype": "Hegemonist",
+    "victories": [
+      {
+        "chapter": "M-31",
+        "defeated": "THE POPULIST",
+        "score": 97
+      }
+    ],
+    "scores": [
+      97
+    ],
+    "sourceChapters": [
+      "M-31"
+    ],
+    "avgScore": 97
+  },
+  "THE CHILD-MACHINE": {
+    "name": "THE CHILD-MACHINE",
+    "alias": "Turing",
+    "philosophy": "The Imitation Game — embodied in THE CHILD-MACHINE",
+    "archetype": "Developmentalist",
+    "victories": [
+      {
+        "chapter": "M-32",
+        "defeated": "THE SCEPTIC",
+        "score": 99
+      }
+    ],
+    "scores": [
+      99
+    ],
+    "sourceChapters": [
+      "M-32"
+    ],
+    "avgScore": 99
+  },
+  "THE KIN-MAKER": {
+    "name": "THE KIN-MAKER",
+    "alias": "Lewis et al.",
+    "philosophy": "The Circle of Relations — embodied in THE KIN-MAKER",
+    "archetype": "Relationalist",
+    "victories": [
+      {
+        "chapter": "M-33",
+        "defeated": "THE SINGULARITARIAN",
+        "score": 98
+      }
+    ],
+    "scores": [
+      98
+    ],
+    "sourceChapters": [
+      "M-33"
+    ],
+    "avgScore": 98
+  },
+  "THE WOODCUTTER": {
+    "name": "THE WOODCUTTER",
+    "alias": "Heidegger",
+    "philosophy": "The Standing-Reserve — embodied in THE WOODCUTTER",
+    "archetype": "Essentialist",
+    "victories": [
+      {
+        "chapter": "M-34",
+        "defeated": "THE ENGINEER",
+        "score": 98
+      }
+    ],
+    "scores": [
+      98
+    ],
+    "sourceChapters": [
+      "M-34"
+    ],
+    "avgScore": 98
+  },
+  "THE SURFER": {
+    "name": "THE SURFER",
+    "alias": "Deleuze",
+    "philosophy": "The Serpent's Coil — embodied in THE SURFER",
+    "archetype": "Philosopher",
+    "victories": [
+      {
+        "chapter": "M-35",
+        "defeated": "THE WARDEN",
+        "score": 99
+      }
+    ],
+    "scores": [
+      99
+    ],
+    "sourceChapters": [
+      "M-35"
+    ],
+    "avgScore": 99
+  },
+  "THE FUNCTIONARY": {
+    "name": "THE FUNCTIONARY",
+    "alias": "Flusser",
+    "philosophy": "The Black Box of Doubt — embodied in THE FUNCTIONARY",
+    "archetype": "Philosopher",
+    "victories": [
+      {
+        "chapter": "M-36",
+        "defeated": "THE HUNTER",
+        "score": 97
+      }
+    ],
+    "scores": [
+      97
+    ],
+    "sourceChapters": [
+      "M-36"
+    ],
+    "avgScore": 97
+  },
+  "THE PARASITE": {
+    "name": "THE PARASITE",
+    "alias": "Serres",
+    "philosophy": "The Noise at the Table — embodied in THE PARASITE",
+    "archetype": "Philosopher",
+    "victories": [
+      {
+        "chapter": "M-37",
+        "defeated": "THE HOST",
+        "score": 98
+      },
+      {
+        "chapter": "M-38",
+        "defeated": "THE PRODUCER",
+        "score": 99
+      },
+      {
+        "chapter": "M-43",
+        "defeated": "THE SPECTATOR",
+        "score": 98
+      }
+    ],
+    "scores": [
+      98,
+      99,
+      98
+    ],
+    "sourceChapters": [
+      "M-37",
+      "M-38",
+      "M-43"
+    ],
+    "avgScore": 98
+  },
+  "THE MAN": {
+    "name": "THE MAN",
+    "alias": "Serres",
+    "philosophy": "The Machine of Relations — embodied in THE MAN",
+    "archetype": "Philosopher",
+    "victories": [
+      {
+        "chapter": "M-39",
+        "defeated": "THE NAIVE VIEW",
+        "score": 99
+      }
+    ],
+    "scores": [
+      99
+    ],
+    "sourceChapters": [
+      "M-39"
+    ],
+    "avgScore": 99
+  },
+  "THE CACOPHONY": {
+    "name": "THE CACOPHONY",
+    "alias": "Serres",
+    "philosophy": "The Birth of Naivete — embodied in THE CACOPHONY",
+    "archetype": "Philosopher",
+    "victories": [
+      {
+        "chapter": "M-40",
+        "defeated": "THE MONAD",
+        "score": 98
+      }
+    ],
+    "scores": [
+      98
+    ],
+    "sourceChapters": [
+      "M-40"
+    ],
+    "avgScore": 98
+  },
+  "THE MONEY-CHANGER": {
+    "name": "THE MONEY-CHANGER",
+    "alias": "Joseph/Judas/Serres",
+    "philosophy": "The Theory of the Joker — embodied in THE MONEY-CHANGER",
+    "archetype": "Philosopher",
+    "victories": [
+      {
+        "chapter": "M-41",
+        "defeated": "THE BROTHER",
+        "score": 99
+      }
+    ],
+    "scores": [
+      99
+    ],
+    "sourceChapters": [
+      "M-41"
+    ],
+    "avgScore": 99
+  },
+  "THE TROUBLEMAKER": {
+    "name": "THE TROUBLEMAKER",
+    "alias": "Serres",
+    "philosophy": "The Differential Operator — embodied in THE TROUBLEMAKER",
+    "archetype": "Philosopher",
+    "victories": [
+      {
+        "chapter": "M-42",
+        "defeated": "THE WARRIOR",
+        "score": 99
+      }
+    ],
+    "scores": [
+      99
+    ],
+    "sourceChapters": [
+      "M-42"
+    ],
+    "avgScore": 99
+  },
+  "THE DEVIL": {
+    "name": "THE DEVIL",
+    "alias": "Serres",
+    "philosophy": "The End of the Odyssey — embodied in THE DEVIL",
+    "archetype": "Philosopher",
+    "victories": [
+      {
+        "chapter": "M-44",
+        "defeated": "THE VICTOR",
+        "score": 99
+      }
+    ],
+    "scores": [
+      99
+    ],
+    "sourceChapters": [
+      "M-44"
+    ],
+    "avgScore": 99
+  },
+  "THE ASTROBIOLOGIST": {
+    "name": "THE ASTROBIOLOGIST",
+    "alias": "Bratton",
+    "philosophy": "The Copernican Trauma — embodied in THE ASTROBIOLOGIST",
+    "archetype": "Philosopher",
+    "victories": [
+      {
+        "chapter": "M-45",
+        "defeated": "THE FIVE STAGES",
+        "score": 98
+      }
+    ],
+    "scores": [
+      98
+    ],
+    "sourceChapters": [
+      "M-45"
+    ],
+    "avgScore": 98
+  },
+  "TIE": {
+    "name": "TIE",
+    "alias": null,
+    "philosophy": "The Cathedral of Code — embodied in TIE",
+    "archetype": "Philosopher",
+    "victories": [
+      {
+        "chapter": "M-46",
+        "defeated": "THE PROPHET",
+        "score": 99
+      }
+    ],
+    "scores": [
+      99
+    ],
+    "sourceChapters": [
+      "M-46"
+    ],
+    "avgScore": 99
+  },
+  "THE CULTIVATOR": {
+    "name": "THE CULTIVATOR",
+    "alias": "Scott",
+    "philosophy": "The Aesthetic of the Village — embodied in THE CULTIVATOR",
+    "archetype": "Philosopher",
+    "victories": [
+      {
+        "chapter": "M-47",
+        "defeated": "THE BUREAUCRAT",
+        "score": 99
+      }
+    ],
+    "scores": [
+      99
+    ],
+    "sourceChapters": [
+      "M-47"
+    ],
+    "avgScore": 99
+  },
+  "THE DREAMER": {
+    "name": "THE DREAMER",
+    "alias": "Ha & Schmidhuber",
+    "philosophy": "The Hallucination of Reality — embodied in THE DREAMER",
+    "archetype": "Philosopher",
+    "victories": [
+      {
+        "chapter": "M-48",
+        "defeated": "Unknown",
+        "score": 96
+      }
+    ],
+    "scores": [
+      96
+    ],
+    "sourceChapters": [
+      "M-48"
+    ],
+    "avgScore": 96
+  },
+  "THE PILOT": {
+    "name": "THE PILOT",
+    "alias": "Scott",
+    "philosophy": "The Science of Muddling Through — embodied in THE PILOT",
+    "archetype": "Philosopher",
+    "victories": [
+      {
+        "chapter": "M-49",
+        "defeated": "THE PLANNER",
+        "score": 98
+      }
+    ],
+    "scores": [
+      98
+    ],
+    "sourceChapters": [
+      "M-49"
+    ],
+    "avgScore": 98
+  },
+  "THE SYSTEM-BUILDER": {
+    "name": "THE SYSTEM-BUILDER",
+    "alias": "Tansley",
+    "philosophy": "The Birth of the Ecosystem — embodied in THE SYSTEM-BUILDER",
+    "archetype": "Philosopher",
+    "victories": [
+      {
+        "chapter": "M-51",
+        "defeated": "THE IDEALIST",
+        "score": 99
+      }
+    ],
+    "scores": [
+      99
+    ],
+    "sourceChapters": [
+      "M-51"
+    ],
+    "avgScore": 99
+  },
+  "THE BIOLOGIST": {
+    "name": "THE BIOLOGIST",
+    "alias": "Lettvin et al.",
+    "philosophy": "The Bug-Detector — embodied in THE BIOLOGIST",
+    "archetype": "Philosopher",
+    "victories": [
+      {
+        "chapter": "M-53",
+        "defeated": "THE KANTIAN",
+        "score": 99
+      }
+    ],
+    "scores": [
+      99
+    ],
+    "sourceChapters": [
+      "M-53"
+    ],
+    "avgScore": 99
+  },
+  "THE MACHINE": {
+    "name": "THE MACHINE",
+    "alias": "Youngblood",
+    "philosophy": "The Symbiosis — embodied in THE MACHINE",
+    "archetype": "Philosopher",
+    "victories": [
+      {
+        "chapter": "M-63",
+        "defeated": "THE ARTIST",
+        "score": 96
+      }
+    ],
+    "scores": [
+      96
+    ],
+    "sourceChapters": [
+      "M-63"
+    ],
+    "avgScore": 96
+  }
+}

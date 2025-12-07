@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Book of ONYX — Ontological Encounters</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #faf8f5;
+            --bg-darker: #f0ede8;
+            --text: #2c2822;
+            --text-dim: #6b635a;
+            --accent: #8b4513;
+            --gold: #b8860b;
+            --chapter-border: #d4c4a8;
+            --narrator: #2e5a3c;
+            --speaker-a: #5c4b8a;
+            --speaker-a-bg: rgba(92, 75, 138, 0.08);
+            --speaker-b: #8a4b5c;
+            --speaker-b-bg: rgba(138, 75, 92, 0.08);
+            --guardian: #1a4a6e;
+            --light: #2d7a32;
+            --twilight: #b8860b;
+            --shadow: #8b4513;
+            --void: #6a1a1a;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #1a1815;
+                --bg-darker: #0f0d0a;
+                --text: #e8e4df;
+                --text-dim: #8a8478;
+                --accent: #d4a574;
+                --gold: #d4af37;
+                --chapter-border: #3d3528;
+                --narrator: #6cb58a;
+                --speaker-a: #b8a0d9;
+                --speaker-a-bg: rgba(184, 160, 217, 0.12);
+                --speaker-b: #d9a0b8;
+                --speaker-b-bg: rgba(217, 160, 184, 0.12);
+                --guardian: #7ab8d4;
+                --light: #6cb58a;
+                --twilight: #d4af37;
+                --shadow: #d9a074;
+                --void: #d97474;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'EB Garamond', Georgia, serif;
+            background: var(--bg);
+            color: var(--text);
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        /* Navigation */
+        .nav-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-darker);
+            border-bottom: 1px solid var(--chapter-border);
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            flex-wrap: wrap;
+        }
+
+        .nav-title {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--accent);
+        }
+
+        .nav-select,
+        .search-box input {
+            padding: 5px 8px;
+            background: var(--bg);
+            border: 1px solid var(--chapter-border);
+            border-radius: 3px;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.8rem;
+        }
+
+        .search-box input {
+            width: 140px;
+        }
+
+        .nav-link {
+            padding: 5px 8px;
+            background: rgba(139, 69, 19, 0.1);
+            border: 1px solid var(--chapter-border);
+            border-radius: 3px;
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.75rem;
+            cursor: pointer;
+        }
+
+        .nav-link.active {
+            background: var(--guardian);
+            color: white;
+            border-color: var(--guardian);
+        }
+
+        /* Book with right margin space */
+        .book {
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 70px 220px 60px 60px;
+        }
+
+        /* Title Page */
+        .title-page {
+            text-align: center;
+            padding: 80px 0;
+            border-bottom: 2px solid var(--chapter-border);
+            margin-bottom: 50px;
+        }
+
+        .title-page h1 {
+            font-size: 2.5rem;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        .title-page .subtitle {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: var(--text-dim);
+        }
+
+        /* Chapter */
+        .chapter {
+            margin-bottom: 50px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid var(--chapter-border);
+            scroll-margin-top: 60px;
+        }
+
+        .chapter.hidden {
+            display: none;
+        }
+
+        .chapter-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--chapter-border);
+        }
+
+        .chapter-meta {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            margin-bottom: 10px;
+        }
+
+        .chapter-title {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 6px;
+        }
+
+        .chapter-subtitle {
+            font-size: 0.95rem;
+            font-style: italic;
+            color: var(--text-dim);
+        }
+
+        /* Calibration - collapsible */
+        .calibration-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 8px 12px;
+            background: rgba(26, 74, 110, 0.06);
+            border: 1px solid var(--guardian);
+            border-radius: 6px;
+            margin: 16px 0;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--guardian);
+        }
+
+        .calibration-toggle:hover {
+            background: rgba(26, 74, 110, 0.12);
+        }
+
+        .calibration-content {
+            display: none;
+            padding: 12px 14px;
+            background: rgba(26, 74, 110, 0.04);
+            border-left: 3px solid var(--guardian);
+            margin: -8px 0 16px 0;
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+
+        .calibration-content.open {
+            display: block;
+        }
+
+        .calib-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 6px;
+            flex-wrap: wrap;
+        }
+
+        .calib-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.6rem;
+            color: var(--text-dim);
+            min-width: 80px;
+        }
+
+        .calib-value {
+            color: var(--text);
+            flex: 1;
+        }
+
+        .calib-clash {
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        .calib-darkness {
+            color: var(--shadow);
+        }
+
+        /* Script Content */
+        .script-content {
+            position: relative;
+        }
+
+        .script-block {
+            margin-bottom: 1.2em;
+            position: relative;
+        }
+
+        .block-id {
+            position: absolute;
+            left: -55px;
+            top: 0;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.6rem;
+            color: var(--text-dim);
+            opacity: 0.5;
+            cursor: pointer;
+        }
+
+        .block-id:hover {
+            opacity: 1;
+            color: var(--accent);
+        }
+
+        /* Speaker Tags */
+        .tag {
+            display: block;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+
+        .tag-narrator {
+            color: var(--narrator);
+        }
+
+        .tag-speaker-a {
+            color: var(--speaker-a);
+        }
+
+        .tag-speaker-b {
+            color: var(--speaker-b);
+        }
+
+        .dialogue {
+            padding-left: 20px;
+            border-left: 2px solid var(--chapter-border);
+        }
+
+        .dialogue-a {
+            border-left-color: var(--speaker-a);
+        }
+
+        .dialogue-b {
+            border-left-color: var(--speaker-b);
+        }
+
+        .shift-block {
+            text-align: center;
+            font-style: italic;
+            color: var(--text-dim);
+            margin: 24px 0;
+        }
+
+        .char-name {
+            font-weight: 500;
+            font-variant: small-caps;
+        }
+
+        .char-a {
+            color: var(--speaker-a);
+        }
+
+        .char-b {
+            color: var(--speaker-b);
+        }
+
+        /* Annotation marker in text */
+        .annotation-ref {
+            border-bottom: 2px dotted;
+            cursor: pointer;
+        }
+
+        .annotation-ref.ref-a {
+            border-color: var(--speaker-a);
+            background: var(--speaker-a-bg);
+        }
+
+        .annotation-ref.ref-b {
+            border-color: var(--speaker-b);
+            background: var(--speaker-b-bg);
+        }
+
+        /* Side annotation point - collapsed state */
+        .side-point {
+            position: absolute;
+            right: -30px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6rem;
+            font-weight: bold;
+            transition: all 0.2s;
+            z-index: 10;
+        }
+
+        .side-point.point-a {
+            background: var(--speaker-a);
+            color: white;
+        }
+
+        .side-point.point-b {
+            background: var(--speaker-b);
+            color: white;
+        }
+
+        .side-point:hover {
+            transform: scale(1.2);
+        }
+
+        /* Connector line */
+        .side-point::before {
+            content: '';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            width: 10px;
+            height: 0;
+            border-top: 1px dashed;
+        }
+
+        .side-point.point-a::before {
+            border-color: var(--speaker-a);
+        }
+
+        .side-point.point-b::before {
+            border-color: var(--speaker-b);
+        }
+
+        /* Expanded annotation panel */
+        .side-panel {
+            position: absolute;
+            right: -200px;
+            width: 180px;
+            padding: 10px 12px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            line-height: 1.45;
+            display: none;
+            z-index: 20;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .side-panel.open {
+            display: block;
+        }
+
+        .side-panel.panel-a {
+            background: var(--speaker-a-bg);
+            border: 1px solid var(--speaker-a);
+        }
+
+        .side-panel.panel-b {
+            background: var(--speaker-b-bg);
+            border: 1px solid var(--speaker-b);
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--chapter-border);
+        }
+
+        .panel-criterion {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 0.03em;
+        }
+
+        .panel-a .panel-criterion {
+            color: var(--speaker-a);
+        }
+
+        .panel-b .panel-criterion {
+            color: var(--speaker-b);
+        }
+
+        .panel-verdict {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.5rem;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: 500;
+        }
+
+        .verdict-light {
+            background: rgba(45, 122, 50, 0.2);
+            color: var(--light);
+        }
+
+        .verdict-twilight {
+            background: rgba(184, 134, 11, 0.2);
+            color: var(--twilight);
+        }
+
+        .verdict-shadow {
+            background: rgba(139, 69, 19, 0.2);
+            color: var(--shadow);
+        }
+
+        .verdict-void {
+            background: rgba(106, 26, 26, 0.3);
+            color: var(--void);
+        }
+
+        .panel-field {
+            margin-bottom: 6px;
+        }
+
+        .panel-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.5rem;
+            color: var(--text-dim);
+            display: block;
+            margin-bottom: 2px;
+            text-transform: uppercase;
+        }
+
+        .panel-evidence {
+            font-style: italic;
+            color: var(--text);
+            font-size: 0.68rem;
+        }
+
+        .panel-critique {
+            color: var(--text-dim);
+            font-size: 0.68rem;
+        }
+
+        .panel-close {
+            position: absolute;
+            top: 4px;
+            right: 6px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        /* Verdict Panel */
+        .verdict-panel {
+            margin-top: 40px;
+            border: 2px solid var(--guardian);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .verdict-panel-header {
+            background: var(--guardian);
+            color: white;
+            padding: 12px 16px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            display: flex;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+
+        .verdict-panel-content {
+            padding: 20px;
+            background: rgba(26, 74, 110, 0.05);
+        }
+
+        .verdict-panel.collapsed .verdict-panel-content {
+            display: none;
+        }
+
+        .scores-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 16px;
+        }
+
+        .score-card {
+            flex: 1;
+            padding: 14px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .score-card.a {
+            background: var(--speaker-a-bg);
+            border: 2px solid var(--speaker-a);
+        }
+
+        .score-card.b {
+            background: var(--speaker-b-bg);
+            border: 2px solid var(--speaker-b);
+        }
+
+        .score-card .name {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.7rem;
+            margin-bottom: 4px;
+        }
+
+        .score-card.a .name {
+            color: var(--speaker-a);
+        }
+
+        .score-card.b .name {
+            color: var(--speaker-b);
+        }
+
+        .score-card .score {
+            font-size: 2rem;
+            font-weight: 500;
+            color: var(--gold);
+        }
+
+        .comparative-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr 1fr auto;
+            gap: 1px;
+            background: var(--chapter-border);
+            margin: 16px 0;
+            font-size: 0.75rem;
+        }
+
+        .comparative-grid>div {
+            padding: 8px 10px;
+            background: var(--bg);
+        }
+
+        .comparative-grid .header {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+        }
+
+        .comparative-grid .winner {
+            color: var(--gold);
+            font-weight: 500;
+        }
+
+        .winner-banner {
+            text-align: center;
+            padding: 16px;
+            background: linear-gradient(135deg, rgba(184, 134, 11, 0.15), rgba(212, 175, 55, 0.08));
+            border-radius: 6px;
+            margin-bottom: 16px;
+        }
+
+        .winner-banner .label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            letter-spacing: 0.15em;
+            margin-bottom: 4px;
+        }
+
+        .winner-banner .name {
+            font-size: 1.4rem;
+            color: var(--gold);
+            font-weight: 500;
+        }
+
+        .justification-box {
+            padding: 16px;
+            background: rgba(26, 74, 110, 0.08);
+            border-left: 4px solid var(--guardian);
+            border-radius: 0 6px 6px 0;
+            font-size: 0.92rem;
+            line-height: 1.65;
+        }
+
+        .justification-box::before {
+            content: '⚖️ GUARDIAN JUSTIFICATION';
+            display: block;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.6rem;
+            color: var(--guardian);
+            letter-spacing: 0.12em;
+            margin-bottom: 10px;
+        }
+
+        /* TOC */
+        .toc {
+            padding: 30px 0;
+            border-bottom: 2px solid var(--chapter-border);
+            margin-bottom: 50px;
+        }
+
+        .toc h2 {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .toc-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .toc-item:hover {
+            color: var(--accent);
+        }
+
+        .toc-section-title {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--text-dim);
+            margin: 16px 0 8px 0;
+        }
+
+        .highlight {
+            background: rgba(255, 215, 0, 0.4);
+            padding: 1px 3px;
+            border-radius: 2px;
+        }
+
+        /* Print & Mobile */
+        @media print {
+
+            .nav-bar,
+            .toc,
+            .side-point,
+            .side-panel,
+            .calibration-toggle {
+                display: none !important;
+            }
+
+            .calibration-content {
+                display: block !important;
+            }
+
+            body {
+                font-size: 10pt;
+                background: white !important;
+                color: black !important;
+            }
+
+            .book {
+                max-width: 100%;
+                padding: 0 !important;
+            }
+
+            .chapter {
+                page-break-before: always;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .book {
+                max-width: 100%;
+                padding: 70px 20px 60px 50px;
+            }
+
+            .side-point {
+                right: 5px;
+                width: 16px;
+                height: 16px;
+                font-size: 0.5rem;
+            }
+
+            .side-point::before {
+                display: none;
+            }
+
+            .side-panel {
+                right: 5px;
+                top: 25px;
+                width: 200px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .book {
+                padding: 60px 16px 40px 40px;
+            }
+
+            .block-id {
+                left: -35px;
+                font-size: 0.5rem;
+            }
+
+            .side-point {
+                display: none;
+            }
+
+            .scores-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="nav-bar">
+        <span class="nav-title">📖 ONYX</span>
+        <select class="nav-select" id="view-mode">
+            <option value="all">All</option>
+            <option value="round">By Round</option>
+            <option value="character">By Character</option>
+        </select>
+        <select class="nav-select" id="filter-select" style="display:none;"></select>
+        <select class="nav-select" id="chapter-select">
+            <option value="">Jump...</option>
+        </select>
+        <div class="search-box"><input type="text" id="search-input" placeholder="Search..."></div>
+        <a href="index.html" class="nav-link">Archive</a>
+        <a href="tournament.html" class="nav-link">Bracket</a>
+        <button class="nav-link" onclick="window.print()">🖨</button>
+    </nav>
+
+    <main class="book" id="book">
+        <div style="text-align:center;padding:60px;color:var(--text-dim);">Loading...</div>
+    </main>
+
+    <script>
+        let narrativesIndex = {}, tournament = {}, chapters = [], characters = {}, rounds = [];
+        let openPanel = null;
+
+        async function init() {
+            try {
+                const [nRes, tRes] = await Promise.all([fetch('./narratives.json'), fetch('./tournament.json')]);
+                narrativesIndex = await nRes.json();
+                tournament = await tRes.json();
+                await buildBook();
+                setupControls();
+            } catch (err) {
+                document.getElementById('book').innerHTML = `<p style="color:red;">Error: ${err.message}</p>`;
+            }
+        }
+
+        function parseAssessment(md) {
+            const data = { calibration: { coreTask: '', clashVector: '', darknessPrior: '' }, criteria: [], scores: { a: null, b: null }, comparative: [], winner: '', justification: '' };
+            const lines = md.split('\n');
+            let currentCandidate = null;
+
+            for (let i = 0; i < lines.length; i++) {
+                const line = lines[i];
+                if (line.includes('**Core Task**:')) data.calibration.coreTask = line.split('**Core Task**:')[1].trim();
+                if (line.includes('**Clash Vector**:')) data.calibration.clashVector = line.split('**Clash Vector**:')[1].trim();
+                if (line.includes('**Darkness Prior**:')) data.calibration.darknessPrior = line.split('**Darkness Prior**:')[1].trim();
+
+                if (line.includes('CANDIDATE A:') || (line.startsWith('### ') && line.includes('THE ') && !currentCandidate)) currentCandidate = 'A';
+                if (line.includes('CANDIDATE B:') || (line.startsWith('### ') && currentCandidate === 'A' && line.includes('THE '))) currentCandidate = 'B';
+
+                if (line.startsWith('#### Criterion')) {
+                    const criterion = line.replace('#### Criterion', '').replace(/[A-Z]:/g, '').trim();
+                    let evidence = '', critique = '', verdict = '';
+                    for (let j = i + 1; j < Math.min(i + 10, lines.length); j++) {
+                        if (lines[j].includes('**Evidence**:')) evidence = lines[j].replace(/.*\*\*Evidence\*\*:\s*/, '').replace(/"/g, '').trim();
+                        if (lines[j].includes('**Guardian Critique**:')) critique = lines[j].split('**Guardian Critique**:')[1]?.replace(/\*/g, '').trim() || '';
+                        if (lines[j].includes('*Verdict*:')) verdict = lines[j].match(/\*\*(\w+)\*\*/)?.[1] || 'Unknown';
+                    }
+                    if (criterion && (evidence || critique)) data.criteria.push({ candidate: currentCandidate, criterion, evidence, critique, verdict });
+                }
+
+                if (line.includes('**Overall Grade:') || line.includes('**Total Score:')) {
+                    const score = line.match(/(\d+)\/100/)?.[1];
+                    if (score) { if (currentCandidate === 'A') data.scores.a = score; else if (currentCandidate === 'B') data.scores.b = score; }
+                }
+
+                if (line.startsWith('|') && !line.includes('---') && !line.toLowerCase().includes('feature')) {
+                    const cells = line.split('|').map(c => c.trim()).filter(c => c);
+                    if (cells.length >= 3) data.comparative.push(cells);
+                }
+
+                if (line.includes('**Winner**:')) data.winner = line.replace('**Winner**:', '').replace(/\*/g, '').trim();
+                if (line.includes('Guardian Justification')) {
+                    let justText = '';
+                    for (let j = i + 1; j < Math.min(i + 10, lines.length); j++) {
+                        if (lines[j].trim() && !lines[j].startsWith('**') && !lines[j].startsWith('#')) justText += lines[j].trim() + ' ';
+                    }
+                    data.justification = justText.trim();
+                }
+            }
+            return data;
+        }
+
+        function parseScript(md, matchId, entityA, entityB, criteria = []) {
+            let lines = md.split('\n').filter(l => !l.startsWith('# Round') && !l.startsWith('## THE') && !l.startsWith('**Real') && !l.startsWith('**Word') && l.trim() !== '---');
+            let html = '';
+            let blockNum = 0;
+            let currentSpeaker = null;
+            let critCounter = 0;
+
+            for (let line of lines) {
+                line = line.trim();
+                if (!line || line.startsWith('## ')) continue;
+
+                if (line === '[NARRATOR]') { currentSpeaker = 'narrator'; continue; }
+                if (line.match(/\[SPEAKER_A:/)) {
+                    currentSpeaker = 'a';
+                    const name = line.match(/\[SPEAKER_A:\s*(.+)\]/)?.[1] || 'Speaker A';
+                    blockNum++;
+                    html += `<div class="script-block"><span class="block-id">${matchId}-${blockNum}</span><span class="tag tag-speaker-a">${name}</span></div>`;
+                    continue;
+                }
+                if (line.match(/\[SPEAKER_B:/)) {
+                    currentSpeaker = 'b';
+                    const name = line.match(/\[SPEAKER_B:\s*(.+)\]/)?.[1] || 'Speaker B';
+                    blockNum++;
+                    html += `<div class="script-block"><span class="block-id">${matchId}-${blockNum}</span><span class="tag tag-speaker-b">${name}</span></div>`;
+                    continue;
+                }
+                if (line === '[SHIFT]') {
+                    blockNum++;
+                    html += `<div class="script-block shift-block"><span class="block-id">${matchId}-${blockNum}</span>· · ·</div>`;
+                    continue;
+                }
+
+                blockNum++;
+                let content = line.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>').replace(/\*([^*]+)\*/g, '<em>$1</em>');
+
+                if (entityA) {
+                    const nameA = entityA.replace('THE ', '');
+                    content = content.replace(new RegExp(`(THE ${nameA}|the ${nameA})`, 'gi'), '<span class="char-name char-a">$1</span>');
+                }
+                if (entityB) {
+                    const nameB = entityB.replace('THE ', '');
+                    content = content.replace(new RegExp(`(THE ${nameB}|the ${nameB})`, 'gi'), '<span class="char-name char-b">$1</span>');
+                }
+
+                // Match criterion evidence
+                let sideAnnotation = '';
+                for (const crit of criteria) {
+                    if (!crit.evidence) continue;
+                    const evNorm = crit.evidence.toLowerCase().replace(/[^a-z0-9\s]/g, '').substring(0, 30);
+                    const lineNorm = line.toLowerCase().replace(/[^a-z0-9\s]/g, '');
+
+                    if (lineNorm.includes(evNorm) || evNorm.includes(lineNorm.substring(0, 20))) {
+                        critCounter++;
+                        const side = crit.candidate === 'A' ? 'a' : 'b';
+                        const verdictClass = `verdict-${crit.verdict.toLowerCase()}`;
+                        const panelId = `panel-${matchId}-${critCounter}`;
+
+                        // Mark text with dotted underline
+                        const escaped = crit.evidence.substring(0, 25).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                        content = content.replace(new RegExp(`(${escaped.substring(0, 15)})`, 'i'), `<span class="annotation-ref ref-${side}">$1</span>`);
+
+                        // Create collapsible side point + panel
+                        sideAnnotation = `
+                            <div class="side-point point-${side}" onclick="togglePanel('${panelId}')" title="${crit.criterion}">⚖</div>
+                            <div class="side-panel panel-${side}" id="${panelId}">
+                                <button class="panel-close" onclick="togglePanel('${panelId}')">×</button>
+                                <div class="panel-header">
+                                    <span class="panel-criterion">${crit.criterion}</span>
+                                    <span class="panel-verdict ${verdictClass}">${crit.verdict}</span>
+                                </div>
+                                <div class="panel-field"><span class="panel-label">Evidence</span><span class="panel-evidence">"${crit.evidence}"</span></div>
+                                <div class="panel-field"><span class="panel-label">Critique</span><span class="panel-critique">${crit.critique}</span></div>
+                            </div>`;
+                        break;
+                    }
+                }
+
+                let contentClass = currentSpeaker === 'a' ? 'dialogue dialogue-a' : currentSpeaker === 'b' ? 'dialogue dialogue-b' : '';
+                html += `<div class="script-block"><span class="block-id">${matchId}-${blockNum}</span><p class="${contentClass}">${content}</p>${sideAnnotation}</div>`;
+            }
+
+            return html;
+        }
+
+        function togglePanel(id) {
+            const panel = document.getElementById(id);
+            if (!panel) return;
+
+            if (openPanel && openPanel !== panel) {
+                openPanel.classList.remove('open');
+            }
+
+            panel.classList.toggle('open');
+            openPanel = panel.classList.contains('open') ? panel : null;
+        }
+
+        function renderCalibration(calib, matchId) {
+            if (!calib.coreTask) return '';
+            const contentId = `calib-${matchId}`;
+            return `
+                <div class="calibration-toggle" onclick="document.getElementById('${contentId}').classList.toggle('open')">
+                    ⚖️ CALIBRATION & RUBRIC <span style="margin-left:auto;">▼</span>
+                </div>
+                <div class="calibration-content" id="${contentId}">
+                    <div class="calib-row"><span class="calib-label">Core Task</span><span class="calib-value">${calib.coreTask}</span></div>
+                    <div class="calib-row"><span class="calib-label">Clash Vector</span><span class="calib-clash">${calib.clashVector}</span></div>
+                    ${calib.darknessPrior ? `<div class="calib-row"><span class="calib-label">Darkness</span><span class="calib-darkness">⚠️ ${calib.darknessPrior}</span></div>` : ''}
+                </div>`;
+        }
+
+        function renderVerdictPanel(assess, entityA, entityB) {
+            if (!assess.winner && !assess.scores.a) return '';
+            const compRows = assess.comparative.slice(0, 5).map(row => row.map((c, i) => `<div class="${i === row.length - 1 ? 'winner' : ''}">${c}</div>`).join('')).join('');
+
+            return `
+            <div class="verdict-panel">
+                <div class="verdict-panel-header" onclick="this.parentElement.classList.toggle('collapsed')">
+                    <span>⚖️ DARK MATTER GUARDIAN VERDICT</span><span>▼</span>
+                </div>
+                <div class="verdict-panel-content">
+                    <div class="scores-row">
+                        <div class="score-card a"><div class="name">${entityA?.replace('THE ', '') || 'A'}</div><div class="score">${assess.scores.a || '—'}</div></div>
+                        <div class="score-card b"><div class="name">${entityB?.replace('THE ', '') || 'B'}</div><div class="score">${assess.scores.b || '—'}</div></div>
+                    </div>
+                    ${assess.comparative.length ? `<div class="comparative-grid"><div class="header">Feature</div><div class="header">${entityA?.replace('THE ', '') || 'A'}</div><div class="header">${entityB?.replace('THE ', '') || 'B'}</div><div class="header">Guardian</div>${compRows}</div>` : ''}
+                    <div class="winner-banner"><div class="label">🏆 WINNER</div><div class="name">${assess.winner || 'TBD'}</div></div>
+                    ${assess.justification ? `<div class="justification-box">${assess.justification}</div>` : ''}
+                </div>
+            </div>`;
+        }
+
+        function extractTitle(md) {
+            const match = md.match(/^## ([^#\n]+)$/m);
+            return (match && !match[1].includes('meets') && !match[1].includes('THE ')) ? match[1].trim() : null;
+        }
+
+        async function buildBook() {
+            chapters = [];
+            const bookEl = document.getElementById('book');
+            let html = `<div class="title-page"><h1>THE BOOK OF ONYX</h1><div class="subtitle">Ontological Encounters</div></div>`;
+
+            const roundOrder = [
+                { bracket: 'left', round: 2, name: 'Round 2' }, { bracket: 'right', round: 2, name: 'Round 2' },
+                { bracket: 'left', round: 3, name: 'Sweet 16' }, { bracket: 'right', round: 3, name: 'Sweet 16' },
+                { bracket: 'left', round: 4, name: 'Elite 8' }, { bracket: 'right', round: 4, name: 'Elite 8' },
+                { bracket: 'left', round: 5, name: 'Final 4' }, { bracket: 'right', round: 5, name: 'Final 4' },
+                { bracket: 'finals', round: 0, name: 'Championship' }
+            ];
+
+            let chapterNum = 1;
+
+            for (const ro of roundOrder) {
+                if (ro.bracket === 'finals') {
+                    if (narrativesIndex['CHAMPIONSHIP']) {
+                        ['narrative', 'narrativeMatch2', 'narrativeMatch3'].forEach((key, idx) => {
+                            const file = narrativesIndex['CHAMPIONSHIP'][key];
+                            if (file) {
+                                chapters.push({
+                                    id: `CHAMP-${chapterNum}`, num: chapterNum++, round: 'Championship', matchId: 'CHAMP',
+                                    title: ['The Village', 'The Archive', 'The Ruins'][idx], aName: 'ANTHROPOLOGIST', bName: 'ARCHITECT',
+                                    subtitle: 'Geertz encounters Geertz', file,
+                                    assessmentFile: narrativesIndex['CHAMPIONSHIP'].assessment,
+                                    entityA: 'THE ANTHROPOLOGIST', entityB: 'THE ARCHITECT'
+                                });
+                            }
+                        });
+                    }
+                } else {
+                    const side = tournament[ro.bracket];
+                    if (!side?.rounds) continue;
+                    const roundData = side.rounds.find(r => r.round === ro.round);
+                    if (!roundData?.matchups) continue;
+
+                    for (const m of roundData.matchups) {
+                        const narr = narrativesIndex[m.id];
+                        if (narr) {
+                            chapters.push({
+                                id: m.id, num: chapterNum++, round: ro.name, matchId: m.id,
+                                aName: (m.entityA?.name || '?').replace('THE ', ''),
+                                bName: (m.entityB?.name || '?').replace('THE ', ''),
+                                title: null, subtitle: m.entityA?.alias && m.entityB?.alias ? `${m.entityA.alias} encounters ${m.entityB.alias}` : '',
+                                file: narr.narrative, assessmentFile: narr.assessment,
+                                entityA: m.entityA?.name, entityB: m.entityB?.name
+                            });
+                            [m.entityA?.name, m.entityB?.name].forEach(n => { if (n) { if (!characters[n]) characters[n] = []; characters[n].push(m.id); } });
+                        }
+                    }
+                }
+                if (!rounds.includes(ro.name)) rounds.push(ro.name);
+            }
+
+            html += `<div class="toc" id="toc"><h2>Contents</h2><div id="toc-content"></div></div>`;
+            bookEl.innerHTML = html;
+
+            let chaptersHtml = '';
+            for (const ch of chapters) {
+                try {
+                    const [narRes, assRes] = await Promise.all([
+                        fetch('./' + ch.file),
+                        ch.assessmentFile ? fetch('./' + ch.assessmentFile).catch(() => null) : Promise.resolve(null)
+                    ]);
+
+                    const md = await narRes.text();
+                    const assessmentMd = assRes ? await assRes.text() : '';
+                    if (!ch.title) ch.title = extractTitle(md) || 'Untitled';
+
+                    const assess = assessmentMd ? parseAssessment(assessmentMd) : { calibration: {}, criteria: [], scores: {}, comparative: [], winner: '', justification: '' };
+
+                    chaptersHtml += `
+                    <article class="chapter" id="chapter-${ch.id}" data-round="${ch.round}" data-entity-a="${ch.entityA || ''}" data-entity-b="${ch.entityB || ''}">
+                        <header class="chapter-header">
+                            <div class="chapter-meta">Chapter ${ch.num} · ${ch.round} · ${ch.matchId}</div>
+                            <h1 class="chapter-title">When the ${ch.aName} meets the ${ch.bName}</h1>
+                            <div class="chapter-subtitle">${ch.subtitle || ch.title}</div>
+                        </header>
+                        ${renderCalibration(assess.calibration, ch.matchId)}
+                        <div class="script-content">${parseScript(md, ch.matchId, ch.entityA, ch.entityB, assess.criteria)}</div>
+                        ${renderVerdictPanel(assess, ch.entityA, ch.entityB)}
+                    </article>`;
+                } catch (e) { console.warn(`Failed: ${ch.file}`, e); }
+            }
+
+            bookEl.innerHTML += chaptersHtml;
+            buildTOC();
+            document.querySelectorAll('.block-id').forEach(el => {
+                el.addEventListener('click', () => { navigator.clipboard.writeText(el.textContent); el.style.color = 'var(--gold)'; setTimeout(() => el.style.color = '', 500); });
+            });
+
+            // Close panels on outside click
+            document.addEventListener('click', e => {
+                if (openPanel && !e.target.closest('.side-panel') && !e.target.closest('.side-point')) {
+                    openPanel.classList.remove('open');
+                    openPanel = null;
+                }
+            });
+        }
+
+        function buildTOC() {
+            const tocContent = document.getElementById('toc-content');
+            const byRound = {};
+            chapters.forEach(ch => { if (!byRound[ch.round]) byRound[ch.round] = []; byRound[ch.round].push(ch); });
+            let tocHtml = '';
+            for (const [round, chs] of Object.entries(byRound)) {
+                tocHtml += `<div class="toc-section-title">${round}</div>`;
+                chs.forEach(ch => { tocHtml += `<div class="toc-item" onclick="scrollTo('${ch.id}')"><span>${ch.num}. When ${ch.aName} meets ${ch.bName}</span></div>`; });
+            }
+            tocContent.innerHTML = tocHtml;
+        }
+
+        function setupControls() {
+            const chapterSelect = document.getElementById('chapter-select');
+            chapterSelect.innerHTML = '<option value="">Jump...</option>' + chapters.map(c => `<option value="${c.id}">${c.num}. ${c.aName} / ${c.bName}</option>`).join('');
+            chapterSelect.onchange = e => { if (e.target.value) scrollTo(e.target.value); };
+
+            const viewMode = document.getElementById('view-mode');
+            const filterSelect = document.getElementById('filter-select');
+            viewMode.onchange = e => {
+                const mode = e.target.value;
+                filterSelect.style.display = mode === 'all' ? 'none' : 'inline';
+                if (mode === 'all') showAll();
+                else if (mode === 'round') filterSelect.innerHTML = '<option value="">Round...</option>' + rounds.map(r => `<option>${r}</option>`).join('');
+                else if (mode === 'character') {
+                    const sorted = Object.keys(characters).sort((a, b) => a.replace('THE ', '').localeCompare(b.replace('THE ', '')));
+                    filterSelect.innerHTML = '<option value="">Character...</option>' + sorted.map(c => `<option value="${c}">${c.replace('THE ', '')} (${characters[c].length})</option>`).join('');
+                }
+            };
+            filterSelect.onchange = e => {
+                const v = e.target.value;
+                if (!v) { showAll(); return; }
+                document.querySelectorAll('.chapter').forEach(ch => {
+                    const match = viewMode.value === 'round' ? ch.dataset.round === v : (ch.dataset.entityA === v || ch.dataset.entityB === v);
+                    ch.classList.toggle('hidden', !match);
+                });
+                document.getElementById('toc').style.display = 'none';
+                document.querySelector('.chapter:not(.hidden)')?.scrollIntoView({ behavior: 'smooth' });
+            };
+            document.getElementById('search-input').oninput = e => {
+                document.querySelectorAll('.highlight').forEach(el => el.outerHTML = el.textContent);
+                const q = e.target.value;
+                if (q.length < 3) return;
+                const regex = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+                document.querySelectorAll('.script-content p').forEach(p => {
+                    if (p.textContent.toLowerCase().includes(q.toLowerCase())) p.innerHTML = p.innerHTML.replace(regex, '<span class="highlight">$1</span>');
+                });
+                document.querySelector('.highlight')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            };
+        }
+
+        function scrollTo(id) { document.getElementById('chapter-' + id)?.scrollIntoView({ behavior: 'smooth' }); }
+        function showAll() { document.querySelectorAll('.chapter').forEach(ch => ch.classList.remove('hidden')); document.getElementById('toc').style.display = 'block'; }
+
+        init();
+    </script>
+</body>
+
+</html>

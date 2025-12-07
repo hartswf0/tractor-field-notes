@@ -1,0 +1,1156 @@
+{
+  "tournamentId": "ONYX-2025-THEMATIC",
+  "version": "2.0.0",
+  "generatedAt": "2025-12-06T04:25:08.746Z",
+  "format": "single_elimination_two_sided",
+  "thematicSeeding": true,
+  "clusters": [
+    {
+      "theme": "Critical Theory",
+      "count": 11,
+      "chapters": [
+        "M-13",
+        "M-20",
+        "M-22",
+        "M-28",
+        "M-29",
+        "M-31",
+        "M-34",
+        "M-45",
+        "M-47",
+        "M-48",
+        "M-49"
+      ]
+    },
+    {
+      "theme": "Cybernetics",
+      "count": 9,
+      "chapters": [
+        "M-14",
+        "M-16",
+        "M-18",
+        "M-19",
+        "M-21",
+        "M-30",
+        "M-32",
+        "M-33",
+        "M-46"
+      ]
+    },
+    {
+      "theme": "Systems Theory",
+      "count": 9,
+      "chapters": [
+        "M-37",
+        "M-38",
+        "M-39",
+        "M-40",
+        "M-41",
+        "M-42",
+        "M-43",
+        "M-44",
+        "M-51"
+      ]
+    },
+    {
+      "theme": "Hermeneutics",
+      "count": 4,
+      "chapters": [
+        "M-15",
+        "M-23",
+        "M-24",
+        "M-27"
+      ]
+    },
+    {
+      "theme": "Structuralism",
+      "count": 3,
+      "chapters": [
+        "M-17",
+        "M-25",
+        "M-53"
+      ]
+    },
+    {
+      "theme": "Media Theory",
+      "count": 2,
+      "chapters": [
+        "M-36",
+        "M-63"
+      ]
+    },
+    {
+      "theme": "Pragmatism",
+      "count": 1,
+      "chapters": [
+        "M-12"
+      ]
+    },
+    {
+      "theme": "Semiotics",
+      "count": 1,
+      "chapters": [
+        "M-26"
+      ]
+    },
+    {
+      "theme": "Post-Structuralism",
+      "count": 1,
+      "chapters": [
+        "M-35"
+      ]
+    }
+  ],
+  "left": {
+    "name": "Western Bracket",
+    "rounds": [
+      {
+        "round": 1,
+        "name": "First Round",
+        "status": "complete",
+        "matchups": [
+          {
+            "id": "M-29",
+            "entityA": {
+              "name": "THE CHRONICLER",
+              "alias": null,
+              "score": 30
+            },
+            "entityB": {
+              "name": "THE RAGPICKER",
+              "alias": "Benjamin",
+              "score": 99
+            },
+            "winner": "THE RAGPICKER",
+            "theme": "Critical Theory"
+          },
+          {
+            "id": "M-35",
+            "entityA": {
+              "name": "THE WARDEN",
+              "alias": null,
+              "score": 65
+            },
+            "entityB": {
+              "name": "THE SURFER",
+              "alias": "Deleuze",
+              "score": 99
+            },
+            "winner": "THE SURFER",
+            "theme": "Post-Structuralism"
+          },
+          {
+            "id": "M-39",
+            "entityA": {
+              "name": "THE NAIVE VIEW",
+              "alias": null,
+              "score": 40
+            },
+            "entityB": {
+              "name": "THE MAN",
+              "alias": "Serres",
+              "score": 99
+            },
+            "winner": "THE MAN",
+            "theme": "Systems Theory"
+          },
+          {
+            "id": "M-41",
+            "entityA": {
+              "name": "THE BROTHER",
+              "alias": null,
+              "score": 50
+            },
+            "entityB": {
+              "name": "THE MONEY-CHANGER",
+              "alias": "Joseph/Judas/Serres",
+              "score": 99
+            },
+            "winner": "THE MONEY-CHANGER",
+            "theme": "Systems Theory"
+          },
+          {
+            "id": "M-42",
+            "entityA": {
+              "name": "THE WARRIOR",
+              "alias": null,
+              "score": 50
+            },
+            "entityB": {
+              "name": "THE TROUBLEMAKER",
+              "alias": "Serres",
+              "score": 99
+            },
+            "winner": "THE TROUBLEMAKER",
+            "theme": "Systems Theory"
+          },
+          {
+            "id": "M-44",
+            "entityA": {
+              "name": "THE VICTOR",
+              "alias": null,
+              "score": 50
+            },
+            "entityB": {
+              "name": "THE DEVIL",
+              "alias": "Serres",
+              "score": 99
+            },
+            "winner": "THE DEVIL",
+            "theme": "Systems Theory"
+          },
+          {
+            "id": "M-51",
+            "entityA": {
+              "name": "THE IDEALIST",
+              "alias": null,
+              "score": 55
+            },
+            "entityB": {
+              "name": "THE SYSTEM-BUILDER",
+              "alias": "Tansley",
+              "score": 99
+            },
+            "winner": "THE SYSTEM-BUILDER",
+            "theme": "Systems Theory"
+          },
+          {
+            "id": "M-26",
+            "entityA": {
+              "name": "THE PROMOTER",
+              "alias": null,
+              "score": 40
+            },
+            "entityB": {
+              "name": "THE SEMIOLOGIST",
+              "alias": "Barthes",
+              "score": 98
+            },
+            "winner": "THE SEMIOLOGIST",
+            "theme": "Semiotics"
+          },
+          {
+            "id": "M-37",
+            "entityA": {
+              "name": "THE HOST",
+              "alias": null,
+              "score": 50
+            },
+            "entityB": {
+              "name": "THE PARASITE",
+              "alias": "Serres",
+              "score": 98
+            },
+            "winner": "THE PARASITE",
+            "theme": "Systems Theory"
+          },
+          {
+            "id": "M-40",
+            "entityA": {
+              "name": "THE MONAD",
+              "alias": null,
+              "score": 40
+            },
+            "entityB": {
+              "name": "THE CACOPHONY",
+              "alias": "Serres",
+              "score": 98
+            },
+            "winner": "THE CACOPHONY",
+            "theme": "Systems Theory"
+          },
+          {
+            "id": "M-43",
+            "entityA": {
+              "name": "THE SPECTATOR",
+              "alias": null,
+              "score": 45
+            },
+            "entityB": {
+              "name": "THE PARASITE",
+              "alias": "Serres",
+              "score": 98
+            },
+            "winner": "THE PARASITE",
+            "theme": "Systems Theory"
+          },
+          {
+            "id": "M-24",
+            "entityA": {
+              "name": "THE FUNCTIONALIST",
+              "alias": null,
+              "score": 55
+            },
+            "entityB": {
+              "name": "THE SYMBOLIST",
+              "alias": "Geertz",
+              "score": 97
+            },
+            "winner": "THE SYMBOLIST",
+            "theme": "Hermeneutics"
+          },
+          {
+            "id": "M-27",
+            "entityA": {
+              "name": "THE TRANSMITTER",
+              "alias": null,
+              "score": 65
+            },
+            "entityB": {
+              "name": "THE RITUALIST",
+              "alias": "Carey",
+              "score": 96
+            },
+            "winner": "THE RITUALIST",
+            "theme": "Hermeneutics"
+          },
+          {
+            "id": "M-32",
+            "entityA": {
+              "name": "THE SCEPTIC",
+              "alias": null,
+              "score": 50
+            },
+            "entityB": {
+              "name": "THE CHILD-MACHINE",
+              "alias": "Turing",
+              "score": 99
+            },
+            "winner": "THE CHILD-MACHINE",
+            "theme": "Cybernetics"
+          },
+          {
+            "id": "M-33",
+            "entityA": {
+              "name": "THE SINGULARITARIAN",
+              "alias": null,
+              "score": 40
+            },
+            "entityB": {
+              "name": "THE KIN-MAKER",
+              "alias": "Lewis et al.",
+              "score": 98
+            },
+            "winner": "THE KIN-MAKER",
+            "theme": "Cybernetics"
+          },
+          {
+            "id": "M-25",
+            "entityA": {
+              "name": "THE PLANNER",
+              "alias": null,
+              "score": 50
+            },
+            "entityB": {
+              "name": "THE DRIFTER",
+              "alias": "Stanley & Lehman",
+              "score": 96
+            },
+            "winner": "THE DRIFTER",
+            "theme": "Structuralism"
+          },
+          {
+            "id": "M-23",
+            "entityA": {
+              "name": "THE PLAIN MAN",
+              "alias": null,
+              "score": 45
+            },
+            "entityB": {
+              "name": "THE ANTHROPOLOGIST",
+              "alias": "Geertz",
+              "score": 95
+            },
+            "winner": "THE ANTHROPOLOGIST",
+            "theme": "Hermeneutics"
+          },
+          {
+            "id": "M-20",
+            "entityA": {
+              "name": "THE SIMULATOR",
+              "alias": null,
+              "score": 60
+            },
+            "entityB": {
+              "name": "THE SIMULACRUM",
+              "alias": "Generative Agents",
+              "score": 94
+            },
+            "winner": "THE SIMULACRUM",
+            "theme": "Critical Theory"
+          },
+          {
+            "id": "M-16",
+            "entityA": {
+              "name": "THE ARCHIVIST",
+              "alias": null,
+              "score": 45
+            },
+            "entityB": {
+              "name": "THE WIZARD",
+              "alias": "PLANNER",
+              "score": 92
+            },
+            "winner": "THE WIZARD",
+            "theme": "Cybernetics"
+          },
+          {
+            "id": "M-13",
+            "entityA": {
+              "name": "THE SCRIBE",
+              "alias": null,
+              "score": 40
+            },
+            "entityB": {
+              "name": "THE GOLEM",
+              "alias": "SHRDLU",
+              "score": 88
+            },
+            "winner": "THE GOLEM",
+            "theme": "Critical Theory"
+          },
+          {
+            "id": "M-46",
+            "entityA": {
+              "name": "THE PROPHET",
+              "alias": null,
+              "score": 99
+            },
+            "entityB": {
+              "name": "TIE",
+              "alias": null,
+              "score": 0
+            },
+            "winner": "TIE",
+            "theme": "Cybernetics"
+          }
+        ]
+      },
+      {
+        "round": 2,
+        "name": "Second Round",
+        "status": "pending",
+        "matchups": [
+          {
+            "id": "L2-01",
+            "entityA": {
+              "name": "THE RAGPICKER",
+              "alias": "Benjamin",
+              "sourceChapter": "M-29",
+              "theme": "Critical Theory",
+              "score": 98
+            },
+            "entityB": {
+              "name": "THE SURFER",
+              "alias": "Deleuze",
+              "sourceChapter": "M-35",
+              "theme": "Critical Theory",
+              "score": 96
+            },
+            "thematicClash": "Critical Theory vs Critical Theory",
+            "winner": "THE RAGPICKER"
+          },
+          {
+            "id": "L2-02",
+            "entityA": {
+              "name": "THE MAN",
+              "alias": "Serres",
+              "sourceChapter": "M-39",
+              "theme": "Systems Theory",
+              "score": 93
+            },
+            "entityB": {
+              "name": "THE MONEY-CHANGER",
+              "alias": "Serres",
+              "sourceChapter": "M-41",
+              "theme": "Systems Theory",
+              "score": 93
+            },
+            "thematicClash": "Systems Theory vs Systems Theory",
+            "winner": "THE MONEY-CHANGER"
+          },
+          {
+            "id": "L2-03",
+            "entityA": {
+              "name": "THE TROUBLEMAKER",
+              "alias": "Serres",
+              "sourceChapter": "M-42",
+              "theme": "Systems Theory",
+              "score": 95
+            },
+            "entityB": {
+              "name": "THE DEVIL",
+              "alias": "Serres",
+              "sourceChapter": "M-44",
+              "theme": "Systems Theory",
+              "score": 91
+            },
+            "thematicClash": "Systems Theory vs Systems Theory",
+            "winner": "THE TROUBLEMAKER"
+          },
+          {
+            "id": "L2-04",
+            "entityA": {
+              "name": "THE SYSTEM-BUILDER",
+              "alias": "Tansley",
+              "sourceChapter": "M-51",
+              "theme": "Systems Theory",
+              "score": 92
+            },
+            "entityB": {
+              "name": "THE SEMIOLOGIST",
+              "alias": "Barthes",
+              "sourceChapter": "M-26",
+              "theme": "Structuralism",
+              "score": 94
+            },
+            "thematicClash": "Systems Theory vs Structuralism",
+            "winner": "THE SEMIOLOGIST"
+          },
+          {
+            "id": "L2-05",
+            "entityA": {
+              "name": "THE PARASITE",
+              "alias": "Serres",
+              "sourceChapter": "M-37",
+              "theme": "Systems Theory",
+              "score": 97
+            },
+            "entityB": {
+              "name": "THE CACOPHONY",
+              "alias": "Serres",
+              "sourceChapter": "M-40",
+              "theme": "Systems Theory",
+              "score": 94
+            },
+            "thematicClash": "Systems Theory vs Systems Theory",
+            "winner": "THE PARASITE"
+          },
+          {
+            "id": "L2-06",
+            "entityA": {
+              "name": "THE PARASITE",
+              "alias": "Serres",
+              "sourceChapter": "M-43",
+              "theme": "Systems Theory",
+              "score": 97
+            },
+            "entityB": {
+              "name": "THE SYMBOLIST",
+              "alias": "Geertz",
+              "sourceChapter": "M-24",
+              "theme": "Anthropology",
+              "score": 96
+            },
+            "thematicClash": "Systems Theory vs Anthropology",
+            "winner": "THE PARASITE"
+          },
+          {
+            "id": "L2-07",
+            "entityA": {
+              "name": "THE RITUALIST",
+              "alias": "Carey",
+              "sourceChapter": "M-27",
+              "theme": "Media Theory",
+              "score": 96
+            },
+            "entityB": {
+              "name": "THE CHILD-MACHINE",
+              "alias": "Turing",
+              "sourceChapter": "M-32",
+              "theme": "Cybernetics",
+              "score": 99
+            },
+            "thematicClash": "Media Theory vs Cybernetics",
+            "winner": "THE CHILD-MACHINE"
+          },
+          {
+            "id": "L2-08",
+            "entityA": {
+              "name": "THE KIN-MAKER",
+              "alias": "Indigenous Epistemologies",
+              "sourceChapter": "M-33",
+              "theme": "Anthropology",
+              "score": 97
+            },
+            "entityB": {
+              "name": "THE DRIFTER",
+              "alias": "Stanley & Lehman",
+              "sourceChapter": "M-25",
+              "theme": "Cybernetics",
+              "score": 98
+            },
+            "thematicClash": "Anthropology vs Cybernetics",
+            "winner": "THE DRIFTER"
+          },
+          {
+            "id": "L2-09",
+            "entityA": {
+              "name": "THE ANTHROPOLOGIST",
+              "alias": "Geertz",
+              "sourceChapter": "M-23",
+              "theme": "Anthropology",
+              "score": 97
+            },
+            "entityB": {
+              "name": "THE SIMULACRUM",
+              "alias": "Generative Agents",
+              "sourceChapter": "M-20",
+              "theme": "AI",
+              "score": 95
+            },
+            "thematicClash": "Anthropology vs AI",
+            "winner": "THE ANTHROPOLOGIST"
+          },
+          {
+            "id": "L2-10",
+            "entityA": {
+              "name": "THE WIZARD",
+              "alias": "Winograd",
+              "sourceChapter": "M-16",
+              "theme": "Cybernetics",
+              "score": 92
+            },
+            "entityB": {
+              "name": "THE GOLEM",
+              "alias": "SHRDLU",
+              "sourceChapter": "M-13",
+              "theme": "Cybernetics",
+              "score": 88
+            },
+            "thematicClash": "Cybernetics vs Cybernetics",
+            "winner": "THE WIZARD"
+          },
+          {
+            "id": "L2-BYE",
+            "entityA": {
+              "name": "TIE",
+              "alias": null,
+              "sourceChapter": "M-46",
+              "theme": "Cybernetics",
+              "score": 0
+            },
+            "entityB": null,
+            "winner": "TIE",
+            "isBye": true
+          }
+        ]
+      }
+    ]
+  },
+  "right": {
+    "name": "Eastern Bracket",
+    "rounds": [
+      {
+        "round": 1,
+        "name": "First Round",
+        "status": "complete",
+        "matchups": [
+          {
+            "id": "M-38",
+            "entityA": {
+              "name": "THE PRODUCER",
+              "alias": null,
+              "score": 50
+            },
+            "entityB": {
+              "name": "THE PARASITE",
+              "alias": "Serres",
+              "score": 99
+            },
+            "winner": "THE PARASITE",
+            "theme": "Systems Theory"
+          },
+          {
+            "id": "M-53",
+            "entityA": {
+              "name": "THE KANTIAN",
+              "alias": null,
+              "score": 50
+            },
+            "entityB": {
+              "name": "THE BIOLOGIST",
+              "alias": "Lettvin et al.",
+              "score": 99
+            },
+            "winner": "THE BIOLOGIST",
+            "theme": "Structuralism"
+          },
+          {
+            "id": "M-47",
+            "entityA": {
+              "name": "THE BUREAUCRAT",
+              "alias": null,
+              "score": 45
+            },
+            "entityB": {
+              "name": "THE CULTIVATOR",
+              "alias": "Scott",
+              "score": 99
+            },
+            "winner": "THE CULTIVATOR",
+            "theme": "Critical Theory"
+          },
+          {
+            "id": "M-22",
+            "entityA": {
+              "name": "THE SYMBOLIST",
+              "alias": null,
+              "score": 75
+            },
+            "entityB": {
+              "name": "THE VISUALIZER",
+              "alias": "Victor",
+              "score": 98
+            },
+            "winner": "THE VISUALIZER",
+            "theme": "Critical Theory"
+          },
+          {
+            "id": "M-28",
+            "entityA": {
+              "name": "THE CONNOISSEUR",
+              "alias": null,
+              "score": 60
+            },
+            "entityB": {
+              "name": "THE SURGEON",
+              "alias": "Benjamin",
+              "score": 98
+            },
+            "winner": "THE SURGEON",
+            "theme": "Critical Theory"
+          },
+          {
+            "id": "M-34",
+            "entityA": {
+              "name": "THE ENGINEER",
+              "alias": null,
+              "score": 40
+            },
+            "entityB": {
+              "name": "THE WOODCUTTER",
+              "alias": "Heidegger",
+              "score": 98
+            },
+            "winner": "THE WOODCUTTER",
+            "theme": "Critical Theory"
+          },
+          {
+            "id": "M-45",
+            "entityA": {
+              "name": "THE FIVE STAGES",
+              "alias": null,
+              "score": 75
+            },
+            "entityB": {
+              "name": "THE ASTROBIOLOGIST",
+              "alias": "Bratton",
+              "score": 98
+            },
+            "winner": "THE ASTROBIOLOGIST",
+            "theme": "Critical Theory"
+          },
+          {
+            "id": "M-12",
+            "entityA": {
+              "name": "THE BISHOP",
+              "alias": "Augustine",
+              "score": 35
+            },
+            "entityB": {
+              "name": "THE FOREMAN",
+              "alias": "The Builders",
+              "score": 92
+            },
+            "winner": "THE FOREMAN",
+            "theme": "Pragmatism"
+          },
+          {
+            "id": "M-49",
+            "entityA": {
+              "name": "THE PLANNER",
+              "alias": null,
+              "score": 50
+            },
+            "entityB": {
+              "name": "THE PILOT",
+              "alias": "Scott",
+              "score": 98
+            },
+            "winner": "THE PILOT",
+            "theme": "Critical Theory"
+          },
+          {
+            "id": "M-31",
+            "entityA": {
+              "name": "THE POPULIST",
+              "alias": null,
+              "score": 40
+            },
+            "entityB": {
+              "name": "THE THEORIST",
+              "alias": "Hall",
+              "score": 97
+            },
+            "winner": "THE THEORIST",
+            "theme": "Critical Theory"
+          },
+          {
+            "id": "M-48",
+            "entityA": {
+              "name": "Unknown",
+              "alias": null,
+              "score": 0
+            },
+            "entityB": {
+              "name": "THE DREAMER",
+              "alias": "Ha & Schmidhuber",
+              "score": 96
+            },
+            "winner": "THE DREAMER",
+            "theme": "Critical Theory"
+          },
+          {
+            "id": "M-36",
+            "entityA": {
+              "name": "THE HUNTER",
+              "alias": null,
+              "score": 55
+            },
+            "entityB": {
+              "name": "THE FUNCTIONARY",
+              "alias": "Flusser",
+              "score": 97
+            },
+            "winner": "THE FUNCTIONARY",
+            "theme": "Media Theory"
+          },
+          {
+            "id": "M-63",
+            "entityA": {
+              "name": "THE ARTIST",
+              "alias": null,
+              "score": 50
+            },
+            "entityB": {
+              "name": "THE MACHINE",
+              "alias": "Youngblood",
+              "score": 96
+            },
+            "winner": "THE MACHINE",
+            "theme": "Media Theory"
+          },
+          {
+            "id": "M-30",
+            "entityA": {
+              "name": "THE TOURIST",
+              "alias": null,
+              "score": 50
+            },
+            "entityB": {
+              "name": "THE PHILOSOPHER",
+              "alias": "Sontag",
+              "score": 98
+            },
+            "winner": "THE PHILOSOPHER",
+            "theme": "Cybernetics"
+          },
+          {
+            "id": "M-21",
+            "entityA": {
+              "name": "THE ORACLE",
+              "alias": null,
+              "score": 40
+            },
+            "entityB": {
+              "name": "THE CHILD",
+              "alias": "Winograd",
+              "score": 96
+            },
+            "winner": "THE CHILD",
+            "theme": "Cybernetics"
+          },
+          {
+            "id": "M-17",
+            "entityA": {
+              "name": "THE BARD",
+              "alias": null,
+              "score": 40
+            },
+            "entityB": {
+              "name": "THE MECHANIC",
+              "alias": "Calvino",
+              "score": 95
+            },
+            "winner": "THE MECHANIC",
+            "theme": "Structuralism"
+          },
+          {
+            "id": "M-15",
+            "entityA": {
+              "name": "THE ANATOMIST",
+              "alias": null,
+              "score": 30
+            },
+            "entityB": {
+              "name": "THE ARCHITECT",
+              "alias": "Geertz",
+              "score": 94
+            },
+            "winner": "THE ARCHITECT",
+            "theme": "Hermeneutics"
+          },
+          {
+            "id": "M-18",
+            "entityA": {
+              "name": "THE TAXONOMIST",
+              "alias": null,
+              "score": 45
+            },
+            "entityB": {
+              "name": "THE INTERPRETER",
+              "alias": "Procedural Semantics",
+              "score": 93
+            },
+            "winner": "THE INTERPRETER",
+            "theme": "Cybernetics"
+          },
+          {
+            "id": "M-19",
+            "entityA": {
+              "name": "THE WEAVER",
+              "alias": null,
+              "score": 55
+            },
+            "entityB": {
+              "name": "THE HYBRID",
+              "alias": "Rational Meaning Construction",
+              "score": 92
+            },
+            "winner": "THE HYBRID",
+            "theme": "Cybernetics"
+          },
+          {
+            "id": "M-14",
+            "entityA": {
+              "name": "THE CARTOGRAPHER",
+              "alias": null,
+              "score": 50
+            },
+            "entityB": {
+              "name": "THE NAVIGATOR",
+              "alias": "PROGRAMMAR",
+              "score": 85
+            },
+            "winner": "THE NAVIGATOR",
+            "theme": "Cybernetics"
+          }
+        ]
+      },
+      {
+        "round": 2,
+        "name": "Second Round",
+        "status": "pending",
+        "matchups": [
+          {
+            "id": "R2-01",
+            "entityA": {
+              "name": "THE PARASITE",
+              "alias": "Serres",
+              "sourceChapter": "M-38",
+              "theme": "Systems Theory",
+              "score": 97
+            },
+            "entityB": {
+              "name": "THE BIOLOGIST",
+              "alias": "Lettvin et al.",
+              "sourceChapter": "M-53",
+              "theme": "Structuralism",
+              "score": 95
+            },
+            "thematicClash": "Systems Theory vs Structuralism",
+            "winner": "THE PARASITE"
+          },
+          {
+            "id": "R2-02",
+            "entityA": {
+              "name": "THE CULTIVATOR",
+              "alias": "Scott",
+              "sourceChapter": "M-47",
+              "theme": "Critical Theory",
+              "score": 98
+            },
+            "entityB": {
+              "name": "THE VISUALIZER",
+              "alias": "Victor",
+              "sourceChapter": "M-22",
+              "theme": "Critical Theory",
+              "score": 94
+            },
+            "thematicClash": "Critical Theory vs Critical Theory",
+            "winner": "THE CULTIVATOR"
+          },
+          {
+            "id": "R2-03",
+            "entityA": {
+              "name": "THE SURGEON",
+              "alias": "Benjamin",
+              "sourceChapter": "M-28",
+              "theme": "Critical Theory",
+              "score": 98
+            },
+            "entityB": {
+              "name": "THE WOODCUTTER",
+              "alias": "Heidegger",
+              "sourceChapter": "M-34",
+              "theme": "Critical Theory",
+              "score": 98
+            },
+            "thematicClash": "Critical Theory vs Critical Theory",
+            "winner": "THE SURGEON"
+          },
+          {
+            "id": "R2-04",
+            "entityA": {
+              "name": "THE ASTROBIOLOGIST",
+              "alias": "Bratton",
+              "sourceChapter": "M-45",
+              "theme": "Critical Theory",
+              "score": 97
+            },
+            "entityB": {
+              "name": "THE FOREMAN",
+              "alias": "The Builders",
+              "sourceChapter": "M-12",
+              "theme": "Pragmatism",
+              "score": 96
+            },
+            "thematicClash": "Critical Theory vs Pragmatism",
+            "winner": "THE ASTROBIOLOGIST"
+          },
+          {
+            "id": "R2-05",
+            "entityA": {
+              "name": "THE PILOT",
+              "alias": "Scott",
+              "sourceChapter": "M-49",
+              "theme": "Critical Theory",
+              "score": 98
+            },
+            "entityB": {
+              "name": "THE THEORIST",
+              "alias": "Hall",
+              "sourceChapter": "M-31",
+              "theme": "Critical Theory",
+              "score": 97
+            },
+            "thematicClash": "Critical Theory vs Critical Theory",
+            "winner": "THE PILOT"
+          },
+          {
+            "id": "R2-06",
+            "entityA": {
+              "name": "THE DREAMER",
+              "alias": "Ha & Schmidhuber",
+              "sourceChapter": "M-48",
+              "theme": "Critical Theory",
+              "score": 96
+            },
+            "entityB": {
+              "name": "THE FUNCTIONARY",
+              "alias": "Flusser",
+              "sourceChapter": "M-36",
+              "theme": "Media Theory",
+              "score": 97
+            },
+            "thematicClash": "Critical Theory vs Media Theory",
+            "winner": "THE FUNCTIONARY"
+          },
+          {
+            "id": "R2-07",
+            "entityA": {
+              "name": "THE MACHINE",
+              "alias": "Youngblood",
+              "sourceChapter": "M-63",
+              "theme": "Media Theory",
+              "score": 88
+            },
+            "entityB": {
+              "name": "THE PHILOSOPHER",
+              "alias": "Sontag",
+              "sourceChapter": "M-30",
+              "theme": "Media Theory",
+              "score": 98
+            },
+            "thematicClash": "Media Theory vs Cybernetics",
+            "winner": "THE PHILOSOPHER"
+          },
+          {
+            "id": "R2-08",
+            "entityA": {
+              "name": "THE CHILD",
+              "alias": "Winograd",
+              "sourceChapter": "M-21",
+              "theme": "AI",
+              "score": 96
+            },
+            "entityB": {
+              "name": "THE MECHANIC",
+              "alias": "Calvino",
+              "sourceChapter": "M-17",
+              "theme": "Literature",
+              "score": 95
+            },
+            "thematicClash": "AI vs Literature",
+            "winner": "THE CHILD"
+          },
+          {
+            "id": "R2-09",
+            "entityA": {
+              "name": "THE ARCHITECT",
+              "alias": "Geertz",
+              "sourceChapter": "M-15",
+              "theme": "Anthropology",
+              "score": 97
+            },
+            "entityB": {
+              "name": "THE INTERPRETER",
+              "alias": "Winograd",
+              "sourceChapter": "M-18",
+              "theme": "AI",
+              "score": 85
+            },
+            "thematicClash": "Anthropology vs AI",
+            "winner": "THE ARCHITECT"
+          },
+          {
+            "id": "R2-10",
+            "entityA": {
+              "name": "THE HYBRID",
+              "alias": "Rational Meaning Construction",
+              "sourceChapter": "M-19",
+              "theme": "Cybernetics",
+              "score": 96
+            },
+            "entityB": {
+              "name": "THE NAVIGATOR",
+              "alias": "PROGRAMMAR",
+              "sourceChapter": "M-14",
+              "theme": "Cybernetics",
+              "score": 85
+            },
+            "thematicClash": "Cybernetics vs Cybernetics",
+            "winner": "THE HYBRID"
+          }
+        ]
+      }
+    ]
+  },
+  "finals": {
+    "leftChampion": null,
+    "rightChampion": null,
+    "grandFinal": null,
+    "champion": null
+  }
+}

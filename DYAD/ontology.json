@@ -1,0 +1,1221 @@
+{
+  "generatedAt": "2025-12-06T04:52:38.416Z",
+  "chapters": [
+    {
+      "id": "M-12",
+      "file": "ch12.md",
+      "title": "When THE BISHOP meets THE FOREMAN:",
+      "subtitle": "The Architecture of Meaning",
+      "realAuthor": "Tim Ingold",
+      "combatants": {
+        "a": "THE BISHOP",
+        "b": "THE FOREMAN"
+      },
+      "winner": {
+        "archetype": "THE FOREMAN",
+        "score": 92,
+        "tradition": "Language-Games & Meaning as Use",
+        "verdict": "Twilight"
+      },
+      "loser": {
+        "archetype": "THE BISHOP",
+        "score": 35,
+        "tradition": "Referential Theory of Meaning (Nomenclature)"
+      }
+    },
+    {
+      "id": "M-13",
+      "file": "ch13.md",
+      "title": "When THE SCRIBE meets THE GOLEM:",
+      "subtitle": "The Procedural Turn",
+      "realAuthor": "Terry Winograd",
+      "combatants": {
+        "a": "THE SCRIBE",
+        "b": "THE GOLEM"
+      },
+      "winner": {
+        "archetype": "THE GOLEM",
+        "score": 88,
+        "tradition": "Procedural Semantics & Integrated Micro-Worlds",
+        "verdict": "Twilight"
+      },
+      "loser": {
+        "archetype": "THE SCRIBE",
+        "score": 40,
+        "tradition": "Modular Syntactic Parsing (Generative Grammar)"
+      }
+    },
+    {
+      "id": "M-14",
+      "file": "ch14.md",
+      "title": "When THE NAVIGATOR meets THE CARTOGRAPHER:",
+      "subtitle": "The Map of Grammar",
+      "realAuthor": "Terry Winograd",
+      "combatants": {
+        "a": "THE NAVIGATOR",
+        "b": "THE CARTOGRAPHER"
+      },
+      "winner": {
+        "archetype": "THE NAVIGATOR",
+        "score": 85,
+        "tradition": "Systemic Grammar & Procedural Parsing",
+        "verdict": "Twilight"
+      },
+      "loser": {
+        "archetype": "THE CARTOGRAPHER",
+        "score": 50,
+        "tradition": "Transformational Generative Grammar (Chomsky/Woods)"
+      }
+    },
+    {
+      "id": "M-15",
+      "file": "ch15.md",
+      "title": "When THE ANATOMIST meets THE ARCHITECT:",
+      "subtitle": "The Design of the Self",
+      "realAuthor": null,
+      "combatants": {
+        "a": "THE ANATOMIST",
+        "b": "THE ARCHITECT"
+      },
+      "winner": {
+        "archetype": "THE ARCHITECT",
+        "score": 94,
+        "tradition": "The Synthetic View (Culture as Control Mechanism)",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE ANATOMIST",
+        "score": 30,
+        "tradition": "The Enlightenment/Stratigraphic View (Consensus Gentium)"
+      }
+    },
+    {
+      "id": "M-16",
+      "file": "ch16.md",
+      "title": "When THE ARCHIVIST meets THE WIZARD:",
+      "subtitle": "The Spell of Knowledge",
+      "realAuthor": "Terry Winograd",
+      "combatants": {
+        "a": "THE ARCHIVIST",
+        "b": "THE WIZARD"
+      },
+      "winner": {
+        "archetype": "THE WIZARD",
+        "score": 92,
+        "tradition": "Procedural Knowledge Representation (Hewitt/Winograd)",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE ARCHIVIST",
+        "score": 45,
+        "tradition": "First-Order Predicate Calculus & Resolution Theorem Proving (QA3, Green)"
+      }
+    },
+    {
+      "id": "M-17",
+      "file": "ch17.md",
+      "title": "When THE BARD meets THE MECHANIC:",
+      "subtitle": "The Ghost in the Machine",
+      "realAuthor": "Italo Calvino",
+      "combatants": {
+        "a": "THE BARD",
+        "b": "THE MECHANIC"
+      },
+      "winner": {
+        "archetype": "THE MECHANIC",
+        "score": 95,
+        "tradition": "The Cybernetic/Combinatorial Theory (Oulipo/Structuralism)",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE BARD",
+        "score": 40,
+        "tradition": "The Romantic Theory of Authorship (Inspiration/Continuity)"
+      }
+    },
+    {
+      "id": "M-18",
+      "file": "ch18.md",
+      "title": "When THE TAXONOMIST meets THE INTERPRETER:",
+      "subtitle": "The Meaning of Meaning",
+      "realAuthor": "Terry Winograd",
+      "combatants": {
+        "a": "THE TAXONOMIST",
+        "b": "THE INTERPRETER"
+      },
+      "winner": {
+        "archetype": "THE INTERPRETER",
+        "score": 93,
+        "tradition": "Meaning as Procedure (Winograd/SHRDLU)",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE TAXONOMIST",
+        "score": 45,
+        "tradition": "Semantic Markers (Katz/Fodor) & Associative Networks (Quillian)"
+      }
+    },
+    {
+      "id": "M-19",
+      "file": "ch19.md",
+      "title": "When THE WEAVER meets THE CONSTRUCTOR:",
+      "subtitle": "The Architecture of Thought",
+      "realAuthor": null,
+      "combatants": {
+        "a": "THE WEAVER",
+        "b": "THE CONSTRUCTOR"
+      },
+      "winner": {
+        "archetype": "THE HYBRID",
+        "score": 92,
+        "tradition": "Neurosymbolic Integration (LLM as Translator $\\to$ PPL as Reasoner)",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE WEAVER",
+        "score": 55,
+        "tradition": "The Scaling Hypothesis (Language is Sufficient for Thought)"
+      }
+    },
+    {
+      "id": "M-20",
+      "file": "ch20.md",
+      "title": "When THE SIMULATOR meets THE SIMULACRUM:",
+      "subtitle": "The Society of Ghosts",
+      "realAuthor": null,
+      "combatants": {
+        "a": "THE SIMULATOR",
+        "b": "THE SIMULACRUM"
+      },
+      "winner": {
+        "archetype": "THE SIMULACRUM",
+        "score": 94,
+        "tradition": "Retrieval, Reflection, & Planning Architecture (Park et al.)",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE SIMULATOR",
+        "score": 60,
+        "tradition": "Behavior Trees and Finite State Machines (Classic Game AI)"
+      }
+    },
+    {
+      "id": "M-21",
+      "file": "ch21.md",
+      "title": "When THE ORACLE meets THE CHILD:",
+      "subtitle": "The Nature of Intelligence",
+      "realAuthor": "Terry Winograd",
+      "combatants": {
+        "a": "THE ORACLE",
+        "b": "THE CHILD"
+      },
+      "winner": {
+        "archetype": "THE CHILD",
+        "score": 96,
+        "tradition": "Procedural Learning & Reflective Intelligence",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE ORACLE",
+        "score": 40,
+        "tradition": "Static Knowledge Systems (Early AI)"
+      }
+    },
+    {
+      "id": "M-22",
+      "file": "ch22.md",
+      "title": "When THE SYMBOLIST meets THE VISUALIZER:",
+      "subtitle": "The Tools of Thought",
+      "realAuthor": "Bret Victor",
+      "combatants": {
+        "a": "THE SYMBOLIST",
+        "b": "THE VISUALIZER"
+      },
+      "winner": {
+        "archetype": "THE VISUALIZER",
+        "score": 98,
+        "tradition": "Interactive Dynamic Media / \"Kill Math\"",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE SYMBOLIST",
+        "score": 75,
+        "tradition": "Algebraic Notation & Symbolic Logic"
+      }
+    },
+    {
+      "id": "M-23",
+      "file": "ch23.md",
+      "title": "When THE PLAIN MAN meets THE ANTHROPOLOGIST:",
+      "subtitle": "The Wisdom of the Ant-Heap",
+      "realAuthor": "Clifford Geertz",
+      "combatants": {
+        "a": "THE PLAIN MAN",
+        "b": "THE ANTHROPOLOGIST"
+      },
+      "winner": {
+        "archetype": "THE ANTHROPOLOGIST",
+        "score": 95,
+        "tradition": "Common Sense as a Cultural System",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE PLAIN MAN",
+        "score": 45,
+        "tradition": "Naive Realism / Universal Common Sense"
+      }
+    },
+    {
+      "id": "M-24",
+      "file": "ch24.md",
+      "title": "When THE FUNCTIONALIST meets THE SYMBOLIST:",
+      "subtitle": "The Tune of Reality",
+      "realAuthor": "Clifford Geertz",
+      "combatants": {
+        "a": "THE FUNCTIONALIST",
+        "b": "THE SYMBOLIST"
+      },
+      "winner": {
+        "archetype": "THE SYMBOLIST",
+        "score": 97,
+        "tradition": "Religion as a Cultural System (Symbolic Anthropology)",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE FUNCTIONALIST",
+        "score": 55,
+        "tradition": "Structural-Functionalism (Durkheim/Malinowski)"
+      }
+    },
+    {
+      "id": "M-25",
+      "file": "ch25.md",
+      "title": "When THE PLANNER meets THE DRIFTER:",
+      "subtitle": "The Myth of the Objective",
+      "realAuthor": null,
+      "combatants": {
+        "a": "THE PLANNER",
+        "b": "THE DRIFTER"
+      },
+      "winner": {
+        "archetype": "THE DRIFTER",
+        "score": 96,
+        "tradition": "Novelty Search / Non-Objective Exploration",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE PLANNER",
+        "score": 50,
+        "tradition": "Objective-Driven Achievement (Benchmarks/Milestones)"
+      }
+    },
+    {
+      "id": "M-26",
+      "file": "ch26.md",
+      "title": "When THE PROMOTER meets THE SEMIOLOGIST:",
+      "subtitle": "The Passion of the Meat",
+      "realAuthor": "Roland Barthes",
+      "combatants": {
+        "a": "THE PROMOTER",
+        "b": "THE SEMIOLOGIST"
+      },
+      "winner": {
+        "archetype": "THE SEMIOLOGIST",
+        "score": 98,
+        "tradition": "Wrestling as a System of Signs (Spectacle of Excess)",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE PROMOTER",
+        "score": 40,
+        "tradition": "Wrestling as Fake Sport / Lowbrow Entertainment"
+      }
+    },
+    {
+      "id": "M-27",
+      "file": "ch27.md",
+      "title": "When THE TRANSMITTER meets THE RITUALIST:",
+      "subtitle": "The Map of Reality",
+      "realAuthor": "James Carey",
+      "combatants": {
+        "a": "THE TRANSMITTER",
+        "b": "THE RITUALIST"
+      },
+      "winner": {
+        "archetype": "THE RITUALIST",
+        "score": 96,
+        "tradition": "Ritual View (Communication as Culture/Community)",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE TRANSMITTER",
+        "score": 65,
+        "tradition": "Transmission View (Communication as Transportation/Control)"
+      }
+    },
+    {
+      "id": "M-28",
+      "file": "ch28.md",
+      "title": "When THE CONNOISSEUR meets THE SURGEON:",
+      "subtitle": "The Decay of the Aura",
+      "realAuthor": "Walter Benjamin",
+      "combatants": {
+        "a": "THE CONNOISSEUR",
+        "b": "THE SURGEON"
+      },
+      "winner": {
+        "archetype": "THE SURGEON",
+        "score": 98,
+        "tradition": "Exhibition Value / Politicized Art",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE CONNOISSEUR",
+        "score": 60,
+        "tradition": "Cult Value / L'art pour l'art"
+      }
+    },
+    {
+      "id": "M-29",
+      "file": "ch29.md",
+      "title": "When THE CHRONICLER meets THE RAGPICKER:",
+      "subtitle": "The Storm from Paradise",
+      "realAuthor": "Walter Benjamin",
+      "combatants": {
+        "a": "THE CHRONICLER",
+        "b": "THE RAGPICKER"
+      },
+      "winner": {
+        "archetype": "THE RAGPICKER",
+        "score": 99,
+        "tradition": "Historical Materialism + Messianic Theology",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE CHRONICLER",
+        "score": 30,
+        "tradition": "Historicism / Linear Progress"
+      }
+    },
+    {
+      "id": "M-30",
+      "file": "ch30.md",
+      "title": "When THE TOURIST meets THE PHILOSOPHER:",
+      "subtitle": "The Anthology of Images",
+      "realAuthor": "Susan Sontag",
+      "combatants": {
+        "a": "THE TOURIST",
+        "b": "THE PHILOSOPHER"
+      },
+      "winner": {
+        "archetype": "THE PHILOSOPHER",
+        "score": 98,
+        "tradition": "Photography as Appropriation / Surrealism / Anesthesia",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE TOURIST",
+        "score": 50,
+        "tradition": "Photography as Evidence / Memory / Experience"
+      }
+    },
+    {
+      "id": "M-31",
+      "file": "ch31.md",
+      "title": "When THE POPULIST meets THE HEGEMON:",
+      "subtitle": "The Dialectic of the Streets",
+      "realAuthor": "Stuart Hall",
+      "combatants": {
+        "a": "THE POPULIST",
+        "b": "THE HEGEMON"
+      },
+      "winner": {
+        "archetype": "THE THEORIST",
+        "score": 97,
+        "tradition": "Popular Culture as Site of Struggle (Dialectic of Containment/Resistance)",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE POPULIST",
+        "score": 40,
+        "tradition": "Popular Culture as \"What People Do\" / Market Consumption"
+      }
+    },
+    {
+      "id": "M-32",
+      "file": "ch32.md",
+      "title": "When THE SCEPTIC meets THE CHILD-MACHINE:",
+      "subtitle": "The Imitation Game",
+      "realAuthor": "Alan Turing",
+      "combatants": {
+        "a": "THE SCEPTIC",
+        "b": "THE CHILD-MACHINE"
+      },
+      "winner": {
+        "archetype": "THE CHILD-MACHINE",
+        "score": 99,
+        "tradition": "The Imitation Game & Learning Algorithms",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE SCEPTIC",
+        "score": 50,
+        "tradition": "Consciousness, Biology, and the Soul as Prerequisites for Thought"
+      }
+    },
+    {
+      "id": "M-33",
+      "file": "ch33.md",
+      "title": "When THE SINGULARITARIAN meets THE KIN-MAKER:",
+      "subtitle": "The Circle of Relations",
+      "realAuthor": null,
+      "combatants": {
+        "a": "THE SINGULARITARIAN",
+        "b": "THE KIN-MAKER"
+      },
+      "winner": {
+        "archetype": "THE KIN-MAKER",
+        "score": 98,
+        "tradition": "Indigenous Epistemologies (Kinship, Reciprocity, Non-Human Agency)",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE SINGULARITARIAN",
+        "score": 40,
+        "tradition": "AI Alignment / Human-Centric Utility"
+      }
+    },
+    {
+      "id": "M-34",
+      "file": "ch34.md",
+      "title": "When THE ENGINEER meets THE WOODCUTTER:",
+      "subtitle": "The Standing-Reserve",
+      "realAuthor": "Martin Heidegger",
+      "combatants": {
+        "a": "THE ENGINEER",
+        "b": "THE WOODCUTTER"
+      },
+      "winner": {
+        "archetype": "THE WOODCUTTER",
+        "score": 98,
+        "tradition": "Technology as a Mode of Revealing (Enframing)",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE ENGINEER",
+        "score": 40,
+        "tradition": "Technology as Instrument / Human Activity"
+      }
+    },
+    {
+      "id": "M-35",
+      "file": "ch35.md",
+      "title": "When THE WARDEN meets THE SURFER:",
+      "subtitle": "The Serpent's Coil",
+      "realAuthor": "Gilles Deleuze",
+      "combatants": {
+        "a": "THE WARDEN",
+        "b": "THE SURFER"
+      },
+      "winner": {
+        "archetype": "THE SURFER",
+        "score": 99,
+        "tradition": "Society of Control / Modulation",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE WARDEN",
+        "score": 65,
+        "tradition": "Disciplinary Society (Foucault) / Enclosure"
+      }
+    },
+    {
+      "id": "M-36",
+      "file": "ch36.md",
+      "title": "When THE HUNTER meets THE FUNCTIONARY:",
+      "subtitle": "The Black Box of Doubt",
+      "realAuthor": null,
+      "combatants": {
+        "a": "THE HUNTER",
+        "b": "THE FUNCTIONARY"
+      },
+      "winner": {
+        "archetype": "THE FUNCTIONARY",
+        "score": 97,
+        "tradition": "The Philosophy of the Apparatus / Homo Ludens",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE HUNTER",
+        "score": 55,
+        "tradition": "Traditional Tool Use / Homo Faber"
+      }
+    },
+    {
+      "id": "M-37",
+      "file": "ch37.md",
+      "title": "When THE HOST meets THE PARASITE:",
+      "subtitle": "The Noise at the Table",
+      "realAuthor": "Michel Serres",
+      "combatants": {
+        "a": "THE HOST",
+        "b": "THE PARASITE"
+      },
+      "winner": {
+        "archetype": "THE PARASITE",
+        "score": 98,
+        "tradition": "The Logic of the Included Third / Complexity from Noise",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE HOST",
+        "score": 50,
+        "tradition": "Reciprocity / Equilibrium / The Excluded Third"
+      }
+    },
+    {
+      "id": "M-38",
+      "file": "ch38.md",
+      "title": "When THE PRODUCER meets THE PARASITE:",
+      "subtitle": "The Diagonal of Power",
+      "realAuthor": "Michel Serres",
+      "combatants": {
+        "a": "THE PRODUCER",
+        "b": "THE PARASITE"
+      },
+      "winner": {
+        "archetype": "THE PARASITE",
+        "score": 99,
+        "tradition": "Cybernetics / Bureaucracy / Information Theory",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE PRODUCER",
+        "score": 50,
+        "tradition": "Materialism / Infrastructure / Labor"
+      }
+    },
+    {
+      "id": "M-39",
+      "file": "ch39.md",
+      "title": "When THE TORTOISE meets THE DUCK:",
+      "subtitle": "The Machine of Relations",
+      "realAuthor": "Michel Serres",
+      "combatants": {
+        "a": "THE TORTOISE",
+        "b": "THE DUCK"
+      },
+      "winner": {
+        "archetype": "THE MAN",
+        "score": 99,
+        "tradition": "Technology as Objectified Social Relations / The Excluded Third",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE NAIVE VIEW",
+        "score": 40,
+        "tradition": "Technology as Extension of the Body / Instrumentalism"
+      }
+    },
+    {
+      "id": "M-40",
+      "file": "ch40.md",
+      "title": "When THE MONAD meets THE CACOPHONY:",
+      "subtitle": "The Birth of Naivete",
+      "realAuthor": "Michel Serres",
+      "combatants": {
+        "a": "THE MONAD",
+        "b": "THE CACOPHONY"
+      },
+      "winner": {
+        "archetype": "THE CACOPHONY",
+        "score": 98,
+        "tradition": "Complexity from Noise / The Excluded Third",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE MONAD",
+        "score": 40,
+        "tradition": "Pre-established Harmony / Leibnizian Order"
+      }
+    },
+    {
+      "id": "M-41",
+      "file": "ch41.md",
+      "title": "When THE BROTHER meets THE MONEY-CHANGER:",
+      "subtitle": "The Theory of the Joker",
+      "realAuthor": "Michel Serres",
+      "combatants": {
+        "a": "THE BROTHER",
+        "b": "THE MONEY-CHANGER"
+      },
+      "winner": {
+        "archetype": "THE MONEY-CHANGER",
+        "score": 99,
+        "tradition": "The Joker / General Equivalent / Polyvalence",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE BROTHER",
+        "score": 50,
+        "tradition": "Sacrifice / Exclusion / Scapegoating"
+      }
+    },
+    {
+      "id": "M-42",
+      "file": "ch42.md",
+      "title": "When THE WARRIOR meets THE TROUBLEMAKER:",
+      "subtitle": "The Differential Operator",
+      "realAuthor": "Michel Serres",
+      "combatants": {
+        "a": "THE WARRIOR",
+        "b": "THE TROUBLEMAKER"
+      },
+      "winner": {
+        "archetype": "THE TROUBLEMAKER",
+        "score": 99,
+        "tradition": "Change via Inclination / Thermal Excitation",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE WARRIOR",
+        "score": 50,
+        "tradition": "Change via Conflict / Dialectics"
+      }
+    },
+    {
+      "id": "M-43",
+      "file": "ch43.md",
+      "title": "When THE SPECTATOR meets THE PARASITE:",
+      "subtitle": "The Midnight Supper",
+      "realAuthor": "Michel Serres",
+      "combatants": {
+        "a": "THE SPECTATOR",
+        "b": "THE PARASITE"
+      },
+      "winner": {
+        "archetype": "THE PARASITE",
+        "score": 98,
+        "tradition": "The Logic of the Included Third / The Joker",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE SPECTATOR",
+        "score": 45,
+        "tradition": "Moral Judgment / Dialectical Conflict"
+      }
+    },
+    {
+      "id": "M-44",
+      "file": "ch44.md",
+      "title": "When THE VICTOR meets THE DEVIL:",
+      "subtitle": "The End of the Odyssey",
+      "realAuthor": "Michel Serres",
+      "combatants": {
+        "a": "THE VICTOR",
+        "b": "THE DEVIL"
+      },
+      "winner": {
+        "archetype": "THE DEVIL",
+        "score": 99,
+        "tradition": "The Parasite as Expansion / The Noise of History",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE VICTOR",
+        "score": 50,
+        "tradition": "Irreversibility / Separation / Order"
+      }
+    },
+    {
+      "id": "M-45",
+      "file": "ch45.md",
+      "title": "When THE GRIEVER meets THE ASTROBIOLOGIST:",
+      "subtitle": "The Copernican Trauma",
+      "realAuthor": "Benjamin Bratton",
+      "combatants": {
+        "a": "THE GRIEVER",
+        "b": "THE ASTROBIOLOGIST"
+      },
+      "winner": {
+        "archetype": "THE ASTROBIOLOGIST",
+        "score": 98,
+        "tradition": "Non-Grief / Planetary Intelligence",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE FIVE STAGES",
+        "score": 75,
+        "tradition": "Psychological Coping Mechanisms for AI (Denial, Anger, Bargaining, Depression, Acceptance)"
+      }
+    },
+    {
+      "id": "M-46",
+      "file": "ch46.md",
+      "title": "When THE PROPHET meets THE ENGINEER:",
+      "subtitle": "The Cathedral of Code",
+      "realAuthor": "George Dyson",
+      "combatants": {
+        "a": "THE PROPHET",
+        "b": "THE ENGINEER"
+      },
+      "winner": {
+        "archetype": "TIE",
+        "score": null,
+        "tradition": null,
+        "verdict": null
+      },
+      "loser": {
+        "archetype": "THE PROPHET",
+        "score": 99,
+        "tradition": "The Universal Turing Machine / Computability"
+      }
+    },
+    {
+      "id": "M-47",
+      "file": "ch47.md",
+      "title": "When THE BUREAUCRAT meets THE CULTIVATOR:",
+      "subtitle": "The Aesthetic of the Village",
+      "realAuthor": null,
+      "combatants": {
+        "a": "THE BUREAUCRAT",
+        "b": "THE CULTIVATOR"
+      },
+      "winner": {
+        "archetype": "THE CULTIVATOR",
+        "score": 99,
+        "tradition": "Metis / Resilience / Resistance",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE BUREAUCRAT",
+        "score": 45,
+        "tradition": "High Modernist Development / Ujamaa Villagization"
+      }
+    },
+    {
+      "id": "M-48",
+      "file": "ch48.md",
+      "title": "When THE DREAMER meets THE CONTROLLER:",
+      "subtitle": "The Hallucination of Reality",
+      "realAuthor": null,
+      "combatants": {
+        "a": "THE DREAMER",
+        "b": "THE CONTROLLER"
+      },
+      "winner": {
+        "archetype": "THE DREAMER",
+        "score": 96,
+        "tradition": "World Models (VAE + MDN-RNN + Controller) / Training in Hallucination",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": null,
+        "score": null,
+        "tradition": null
+      }
+    },
+    {
+      "id": "M-49",
+      "file": "ch49.md",
+      "title": "When THE PLANNER meets THE PILOT:",
+      "subtitle": "The Science of Muddling Through",
+      "realAuthor": null,
+      "combatants": {
+        "a": "THE PLANNER",
+        "b": "THE PILOT"
+      },
+      "winner": {
+        "archetype": "THE PILOT",
+        "score": 98,
+        "tradition": "Metis / Practical Knowledge / Muddling Through",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE PLANNER",
+        "score": 50,
+        "tradition": "Episteme / Techne / Scientific Management"
+      }
+    },
+    {
+      "id": "M-51",
+      "file": "ch51.md",
+      "title": "When THE IDEALIST meets THE SYSTEM-BUILDER:",
+      "subtitle": "The Birth of the Ecosystem",
+      "realAuthor": null,
+      "combatants": {
+        "a": "THE IDEALIST",
+        "b": "THE SYSTEM-BUILDER"
+      },
+      "winner": {
+        "archetype": "THE SYSTEM-BUILDER",
+        "score": 99,
+        "tradition": "The Ecosystem Concept / Dynamic Equilibrium",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE IDEALIST",
+        "score": 55,
+        "tradition": "The Plant Community as \"Complex Organism\" (Clementsian Succession)"
+      }
+    },
+    {
+      "id": "M-53",
+      "file": "ch53.md",
+      "title": "When THE KANTIAN meets THE BIOLOGIST:",
+      "subtitle": "The Bug-Detector",
+      "realAuthor": null,
+      "combatants": {
+        "a": "THE KANTIAN",
+        "b": "THE BIOLOGIST"
+      },
+      "winner": {
+        "archetype": "THE BIOLOGIST",
+        "score": 99,
+        "tradition": "Feature Detection / Distributed Intelligence",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE KANTIAN",
+        "score": 50,
+        "tradition": "Perception as Construction from Raw Data (The Camera Eye)"
+      }
+    },
+    {
+      "id": "M-63",
+      "file": "ch63.md",
+      "title": "When THE ARTIST meets THE MACHINE:",
+      "subtitle": "The Symbiosis",
+      "realAuthor": "Gene Youngblood",
+      "combatants": {
+        "a": "THE ARTIST",
+        "b": "THE MACHINE"
+      },
+      "winner": {
+        "archetype": "THE MACHINE",
+        "score": 96,
+        "tradition": "Cybernetic Cinema / Man-Machine Symbiosis",
+        "verdict": "Light"
+      },
+      "loser": {
+        "archetype": "THE ARTIST",
+        "score": 50,
+        "tradition": "Art as Pure Intuition / Anti-Technology"
+      }
+    }
+  ],
+  "combatants": {
+    "THE FOREMAN": {
+      "archetype": "THE FOREMAN",
+      "realAuthor": "Tim Ingold",
+      "sourceChapter": "M-12",
+      "tradition": "Language-Games & Meaning as Use",
+      "score": 92,
+      "appearances": 1
+    },
+    "THE GOLEM": {
+      "archetype": "THE GOLEM",
+      "realAuthor": "Terry Winograd",
+      "sourceChapter": "M-13",
+      "tradition": "Procedural Semantics & Integrated Micro-Worlds",
+      "score": 88,
+      "appearances": 1
+    },
+    "THE NAVIGATOR": {
+      "archetype": "THE NAVIGATOR",
+      "realAuthor": "Terry Winograd",
+      "sourceChapter": "M-14",
+      "tradition": "Systemic Grammar & Procedural Parsing",
+      "score": 85,
+      "appearances": 1
+    },
+    "THE ARCHITECT": {
+      "archetype": "THE ARCHITECT",
+      "realAuthor": null,
+      "sourceChapter": "M-15",
+      "tradition": "The Synthetic View (Culture as Control Mechanism)",
+      "score": 94,
+      "appearances": 1
+    },
+    "THE WIZARD": {
+      "archetype": "THE WIZARD",
+      "realAuthor": "Terry Winograd",
+      "sourceChapter": "M-16",
+      "tradition": "Procedural Knowledge Representation (Hewitt/Winograd)",
+      "score": 92,
+      "appearances": 1
+    },
+    "THE MECHANIC": {
+      "archetype": "THE MECHANIC",
+      "realAuthor": "Italo Calvino",
+      "sourceChapter": "M-17",
+      "tradition": "The Cybernetic/Combinatorial Theory (Oulipo/Structuralism)",
+      "score": 95,
+      "appearances": 1
+    },
+    "THE INTERPRETER": {
+      "archetype": "THE INTERPRETER",
+      "realAuthor": "Terry Winograd",
+      "sourceChapter": "M-18",
+      "tradition": "Meaning as Procedure (Winograd/SHRDLU)",
+      "score": 93,
+      "appearances": 1
+    },
+    "THE HYBRID": {
+      "archetype": "THE HYBRID",
+      "realAuthor": null,
+      "sourceChapter": "M-19",
+      "tradition": "Neurosymbolic Integration (LLM as Translator $\\to$ PPL as Reasoner)",
+      "score": 92,
+      "appearances": 1
+    },
+    "THE SIMULACRUM": {
+      "archetype": "THE SIMULACRUM",
+      "realAuthor": null,
+      "sourceChapter": "M-20",
+      "tradition": "Retrieval, Reflection, & Planning Architecture (Park et al.)",
+      "score": 94,
+      "appearances": 1
+    },
+    "THE CHILD": {
+      "archetype": "THE CHILD",
+      "realAuthor": "Terry Winograd",
+      "sourceChapter": "M-21",
+      "tradition": "Procedural Learning & Reflective Intelligence",
+      "score": 96,
+      "appearances": 1
+    },
+    "THE VISUALIZER": {
+      "archetype": "THE VISUALIZER",
+      "realAuthor": "Bret Victor",
+      "sourceChapter": "M-22",
+      "tradition": "Interactive Dynamic Media / \"Kill Math\"",
+      "score": 98,
+      "appearances": 1
+    },
+    "THE ANTHROPOLOGIST": {
+      "archetype": "THE ANTHROPOLOGIST",
+      "realAuthor": "Clifford Geertz",
+      "sourceChapter": "M-23",
+      "tradition": "Common Sense as a Cultural System",
+      "score": 95,
+      "appearances": 1
+    },
+    "THE SYMBOLIST": {
+      "archetype": "THE SYMBOLIST",
+      "realAuthor": "Clifford Geertz",
+      "sourceChapter": "M-24",
+      "tradition": "Religion as a Cultural System (Symbolic Anthropology)",
+      "score": 97,
+      "appearances": 1
+    },
+    "THE DRIFTER": {
+      "archetype": "THE DRIFTER",
+      "realAuthor": null,
+      "sourceChapter": "M-25",
+      "tradition": "Novelty Search / Non-Objective Exploration",
+      "score": 96,
+      "appearances": 1
+    },
+    "THE SEMIOLOGIST": {
+      "archetype": "THE SEMIOLOGIST",
+      "realAuthor": "Roland Barthes",
+      "sourceChapter": "M-26",
+      "tradition": "Wrestling as a System of Signs (Spectacle of Excess)",
+      "score": 98,
+      "appearances": 1
+    },
+    "THE RITUALIST": {
+      "archetype": "THE RITUALIST",
+      "realAuthor": "James Carey",
+      "sourceChapter": "M-27",
+      "tradition": "Ritual View (Communication as Culture/Community)",
+      "score": 96,
+      "appearances": 1
+    },
+    "THE SURGEON": {
+      "archetype": "THE SURGEON",
+      "realAuthor": "Walter Benjamin",
+      "sourceChapter": "M-28",
+      "tradition": "Exhibition Value / Politicized Art",
+      "score": 98,
+      "appearances": 1
+    },
+    "THE RAGPICKER": {
+      "archetype": "THE RAGPICKER",
+      "realAuthor": "Walter Benjamin",
+      "sourceChapter": "M-29",
+      "tradition": "Historical Materialism + Messianic Theology",
+      "score": 99,
+      "appearances": 1
+    },
+    "THE PHILOSOPHER": {
+      "archetype": "THE PHILOSOPHER",
+      "realAuthor": "Susan Sontag",
+      "sourceChapter": "M-30",
+      "tradition": "Photography as Appropriation / Surrealism / Anesthesia",
+      "score": 98,
+      "appearances": 1
+    },
+    "THE THEORIST": {
+      "archetype": "THE THEORIST",
+      "realAuthor": "Stuart Hall",
+      "sourceChapter": "M-31",
+      "tradition": "Popular Culture as Site of Struggle (Dialectic of Containment/Resistance)",
+      "score": 97,
+      "appearances": 1
+    },
+    "THE CHILD-MACHINE": {
+      "archetype": "THE CHILD-MACHINE",
+      "realAuthor": "Alan Turing",
+      "sourceChapter": "M-32",
+      "tradition": "The Imitation Game & Learning Algorithms",
+      "score": 99,
+      "appearances": 1
+    },
+    "THE KIN-MAKER": {
+      "archetype": "THE KIN-MAKER",
+      "realAuthor": null,
+      "sourceChapter": "M-33",
+      "tradition": "Indigenous Epistemologies (Kinship, Reciprocity, Non-Human Agency)",
+      "score": 98,
+      "appearances": 1
+    },
+    "THE WOODCUTTER": {
+      "archetype": "THE WOODCUTTER",
+      "realAuthor": "Martin Heidegger",
+      "sourceChapter": "M-34",
+      "tradition": "Technology as a Mode of Revealing (Enframing)",
+      "score": 98,
+      "appearances": 1
+    },
+    "THE SURFER": {
+      "archetype": "THE SURFER",
+      "realAuthor": "Gilles Deleuze",
+      "sourceChapter": "M-35",
+      "tradition": "Society of Control / Modulation",
+      "score": 99,
+      "appearances": 1
+    },
+    "THE FUNCTIONARY": {
+      "archetype": "THE FUNCTIONARY",
+      "realAuthor": null,
+      "sourceChapter": "M-36",
+      "tradition": "The Philosophy of the Apparatus / Homo Ludens",
+      "score": 97,
+      "appearances": 1
+    },
+    "THE PARASITE": {
+      "archetype": "THE PARASITE",
+      "realAuthor": "Michel Serres",
+      "sourceChapter": "M-37",
+      "tradition": "The Logic of the Included Third / Complexity from Noise",
+      "score": 98,
+      "appearances": 3
+    },
+    "THE MAN": {
+      "archetype": "THE MAN",
+      "realAuthor": "Michel Serres",
+      "sourceChapter": "M-39",
+      "tradition": "Technology as Objectified Social Relations / The Excluded Third",
+      "score": 99,
+      "appearances": 1
+    },
+    "THE CACOPHONY": {
+      "archetype": "THE CACOPHONY",
+      "realAuthor": "Michel Serres",
+      "sourceChapter": "M-40",
+      "tradition": "Complexity from Noise / The Excluded Third",
+      "score": 98,
+      "appearances": 1
+    },
+    "THE MONEY-CHANGER": {
+      "archetype": "THE MONEY-CHANGER",
+      "realAuthor": "Michel Serres",
+      "sourceChapter": "M-41",
+      "tradition": "The Joker / General Equivalent / Polyvalence",
+      "score": 99,
+      "appearances": 1
+    },
+    "THE TROUBLEMAKER": {
+      "archetype": "THE TROUBLEMAKER",
+      "realAuthor": "Michel Serres",
+      "sourceChapter": "M-42",
+      "tradition": "Change via Inclination / Thermal Excitation",
+      "score": 99,
+      "appearances": 1
+    },
+    "THE DEVIL": {
+      "archetype": "THE DEVIL",
+      "realAuthor": "Michel Serres",
+      "sourceChapter": "M-44",
+      "tradition": "The Parasite as Expansion / The Noise of History",
+      "score": 99,
+      "appearances": 1
+    },
+    "THE ASTROBIOLOGIST": {
+      "archetype": "THE ASTROBIOLOGIST",
+      "realAuthor": "Benjamin Bratton",
+      "sourceChapter": "M-45",
+      "tradition": "Non-Grief / Planetary Intelligence",
+      "score": 98,
+      "appearances": 1
+    },
+    "TIE": {
+      "archetype": "TIE",
+      "realAuthor": "George Dyson",
+      "sourceChapter": "M-46",
+      "tradition": null,
+      "score": null,
+      "appearances": 1
+    },
+    "THE CULTIVATOR": {
+      "archetype": "THE CULTIVATOR",
+      "realAuthor": null,
+      "sourceChapter": "M-47",
+      "tradition": "Metis / Resilience / Resistance",
+      "score": 99,
+      "appearances": 1
+    },
+    "THE DREAMER": {
+      "archetype": "THE DREAMER",
+      "realAuthor": null,
+      "sourceChapter": "M-48",
+      "tradition": "World Models (VAE + MDN-RNN + Controller) / Training in Hallucination",
+      "score": 96,
+      "appearances": 1
+    },
+    "THE PILOT": {
+      "archetype": "THE PILOT",
+      "realAuthor": null,
+      "sourceChapter": "M-49",
+      "tradition": "Metis / Practical Knowledge / Muddling Through",
+      "score": 98,
+      "appearances": 1
+    },
+    "THE SYSTEM-BUILDER": {
+      "archetype": "THE SYSTEM-BUILDER",
+      "realAuthor": null,
+      "sourceChapter": "M-51",
+      "tradition": "The Ecosystem Concept / Dynamic Equilibrium",
+      "score": 99,
+      "appearances": 1
+    },
+    "THE BIOLOGIST": {
+      "archetype": "THE BIOLOGIST",
+      "realAuthor": null,
+      "sourceChapter": "M-53",
+      "tradition": "Feature Detection / Distributed Intelligence",
+      "score": 99,
+      "appearances": 1
+    },
+    "THE MACHINE": {
+      "archetype": "THE MACHINE",
+      "realAuthor": "Gene Youngblood",
+      "sourceChapter": "M-63",
+      "tradition": "Cybernetic Cinema / Man-Machine Symbiosis",
+      "score": 96,
+      "appearances": 1
+    }
+  }
+}
