@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operative Ekphrasis: WAG Protocols for Semantic-to-Spatial Compilation</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 10pt;
+            line-height: 1.4;
+            color: #000;
+            max-width: 620px;
+            margin: 0 auto;
+            padding: 35px 30px;
+            background: white;
+        }
+
+        h1 {
+            font-size: 13pt;
+            text-align: center;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        .author {
+            text-align: center;
+            font-size: 10pt;
+            margin-bottom: 4px;
+        }
+
+        .affiliation {
+            text-align: center;
+            font-size: 9pt;
+            color: #444;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 10pt;
+            font-weight: bold;
+            margin-top: 1.3rem;
+            margin-bottom: 0.3rem;
+        }
+
+        p {
+            text-align: justify;
+            margin-bottom: 0.65rem;
+        }
+
+        .abstract {
+            margin: 1rem 0;
+            font-size: 9pt;
+        }
+
+        .abstract-title {
+            font-weight: bold;
+        }
+
+        .figure {
+            font-family: 'Courier New', monospace;
+            font-size: 8pt;
+            background: #f5f5f5;
+            padding: 6px 8px;
+            margin: 0.6rem 0;
+            text-align: center;
+            border: 1px solid #ccc;
+        }
+
+        .references {
+            margin-top: 1.2rem;
+            font-size: 8pt;
+        }
+
+        .references p {
+            margin-bottom: 0.25rem;
+        }
+
+        strong {
+            font-weight: bold;
+        }
+
+        em {
+            font-style: italic;
+        }
+
+        a {
+            color: #0d47a1;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Operative Ekphrasis: WAG Protocols for Semantic-to-Spatial Compilation</h1>
+    <p class="author">Watson Hartsoe</p>
+    <p class="affiliation">Georgia Institute of Technology, PhD Candidate, Digital Media<br>December 2024</p>
+
+    <div class="abstract">
+        <p><span class="abstract-title">Abstract.</span> Spatial world-building remains bottlenecked by engine fluency
+            (scene graphs, transforms, scripting), which functions as an implicit permission structure selecting for
+            tooling literacy over domain expertise. This paper presents <strong>Words Assemble Geometry (WAG)</strong>,
+            a pipeline treating natural language as executable spatial specification. Extending operative ekphrasis from
+            text-to-image to text-to-world, WAG routes prompts through planning, compilation into inspectable world
+            files, and browser rendering. The central challenge is <em>semantic fidelity</em>, preserving meaning
+            through compilation, not geometric fidelity. Findings from participatory work with co-designers show that
+            constraints and legible representations enable rapid iteration without semantic collapse.</p>
+    </div>
+
+    <h2>1. Introduction: Language as Leverage Point</h2>
+
+    <p>Dominant 3D toolchains require fluency in engineering abstractions rather than domain concepts. This creates a
+        mismatch: people most qualified to author meaningful spaces lack translation infrastructure, not vision. WAG
+        reframes this as a problem of <em>permission</em>, asking who can author spatial worlds in durable, revisable
+        ways.</p>
+
+    <p>The intervention is linguistic. Language becomes a leverage point: by treating prompts as executable
+        specifications rather than descriptive hints, authorship shifts from manipulating engine primitives to
+        expressing cultural, narrative, and spatial intent. Meaning becomes input; compilation becomes infrastructure.
+    </p>
+
+    <h2>2. Thick Prompting and Operative Ekphrasis</h2>
+
+    <p>Operative ekphrasis describes text that produces images through computation. WAG extends this to
+        three-dimensional space: prompts become constraints compiled into navigable artifacts. But effective prompts are
+        not simple text strings. A single prompt does not permit control and tends to produce results at the average
+        default style of the generator.</p>
+
+    <p>Prompts must be <em>thick</em>: densely layered, context-rich instructions carrying embedded cultural weight. The
+        term deliberately recalls Geertz's "thick description." Cultural practices cannot be reduced to simple formulae,
+        and neither can spatial intent. Thick prompts transform human-AI collaboration from mechanical query-response
+        into genuine creative dialogue.</p>
+
+    <p>In practice, prompts are multimodal and heterogeneous: combinations of natural language, structured tags, markup
+        languages like <a href="https://hartswf0.github.io/with-in/">POML</a> (Portable Object Markup Language), and
+        JSON. They may look code-like but function as texts for operative ekphrasis, not code to be executed, but
+        specifications to be compiled into geometry.</p>
+
+    <h2>3. The WAG Pipeline</h2>
+
+    <div class="figure">
+        Intent → Planning (constraints) → Compilation (world file) → Render → Iterate
+    </div>
+
+    <p>WAG is built on the <a href="https://hartswf0.github.io/LEGOS/">LEGOS ontology</a>, routing prompts through a
+        geometric language called LDraw, a thirty-year-old plain-text format for LEGO geometry. Scenes are described in
+        human-readable coordinates: brick positions, orientations, colors. This representation is compiled into a 3D
+        viewport, then fed into image generators (DALL-E, MidJourney), iterated, and optionally synthesized into video
+        (Luma Labs Ray3).</p>
+
+    <p>The short film <a href="https://youtu.be/hdTEJSyZahs"><em>Carrot Uprising</em></a>, "bureaucracy transformed into
+        garden through collective joy," demonstrates this workflow: geometry seeds the image, image seeds the video. The
+        prompting process is a performative dialogue across multiple models. At each stage, the author revises meaning
+        ("make the threshold quieter") rather than geometry directly.</p>
+
+    <h2>4. Inspectable Representations</h2>
+
+    <p>Infrastructure becomes visible upon breakdown. WAG designs for visibility <em>before</em> failure: world files
+        are diffable, auditable, shareable. The LDraw precedent demonstrates the value of human-readable spatial scripts
+        and versionable artifacts. A world is a file and a history, not just a viewport. When compilation is legible,
+        breakdowns can be diagnosed, making prompting craft rather than luck.</p>
+
+    <h2>5. Findings</h2>
+
+    <p>Participatory work with co-designers, Jordan Caldwell (Afrofuturist world-building) and Terhi Marttila (digital
+        literature), yielded three patterns:</p>
+
+    <p><strong>F1: Permission becomes iterative capability.</strong> Fast prompt-to-world loops convert authorship from
+        rare events to ongoing practice.</p>
+
+    <p><strong>F2: Semantic fidelity dominates geometric fidelity.</strong> Failures were about meaning-loss, cultural
+        protocols becoming tropes, poetic structure becoming literal dressing, not polygon quality.</p>
+
+    <p><strong>F3: Constraints enable wildness.</strong> Layout rules, affordances, and narrative sequence bound the
+        design space so compilation can guess freely within meaningful limits.</p>
+
+    <h2>6. Conclusion</h2>
+
+    <p>WAG supports a pluriversal stance: many authored worlds with different constraints and practices, not convergence
+        into a single platform ontology. The key move is infrastructural. Make compilation legible, constrain failure
+        space, keep representations durable. Language, treated as leverage point, opens spatial authorship to those
+        whose expertise is cultural, narrative, or poetic rather than technical.</p>
+
+    <div class="references">
+        <h2>References</h2>
+        <p>Bajohr, H. (2022). Operative Ekphrasis. <em>Grey Room</em>, 88.</p>
+        <p>Escobar, A. (2018). <em>Designs for the Pluriverse</em>. Duke University Press.</p>
+        <p>Geertz, C. (1973). <em>The Interpretation of Cultures</em>. Basic Books.</p>
+        <p>Jessiman, J. (1995). LDraw File Format Specification.</p>
+        <p>Star, S. L., & Ruhleder, K. (1996). Steps toward an ecology of infrastructure. <em>ISR</em>.</p>
+        <p>Suchman, L. (1987). <em>Plans and Situated Actions</em>. Cambridge University Press.</p>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethics Infrastructure</title>
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23FFD700'/%3E%3Crect x='6' y='6' width='8' height='8' rx='2' fill='%23000'/%3E%3Crect x='18' y='6' width='8' height='8' rx='2' fill='%23000'/%3E%3Crect x='6' y='18' width='8' height='8' rx='2' fill='%23000'/%3E%3Crect x='18' y='18' width='8' height='8' rx='2' fill='%23000'/%3E%3C/svg%3E">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f8f8f8;
+            color: #1a1a1a;
+            line-height: 1.4;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        header {
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #1a1a1a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .header-left h1 {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .subtitle {
+            font-size: 13px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .top-links {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .top-link-btn {
+            background: white;
+            border: 1px solid #d0d0d0;
+            border-radius: 4px;
+            color: #666;
+            padding: 6px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+            text-transform: uppercase;
+        }
+
+        .top-link-btn:hover {
+            border-color: #1a1a1a;
+            color: #1a1a1a;
+            background: #f0f0f0;
+        }
+
+        /* About Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .about-modal {
+            background: white;
+            padding: 32px;
+            max-width: 600px;
+            width: 90%;
+            border-radius: 8px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .about-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .about-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 16px;
+            padding-right: 24px;
+        }
+
+        .about-text {
+            font-size: 14px;
+            color: #444;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .citation-box {
+            background: #f4f4f4;
+            padding: 16px;
+            border-left: 4px solid #1a1a1a;
+            font-family: monospace;
+            font-size: 11px;
+            line-height: 1.5;
+            color: #555;
+            margin-top: 24px;
+        }
+
+        /* Viewer Mode */
+        .viewer-mode {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .viewer-nav {
+            background: white;
+            border: 1px solid #d0d0d0;
+            padding: 12px;
+            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nav-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .nav-label {
+            font-size: 11px;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            min-width: 80px;
+            font-weight: 600;
+        }
+
+        .nav-btn {
+            padding: 8px 12px;
+            background: white;
+            border: 1px solid #d0d0d0;
+            cursor: pointer;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background: #f0f0f0;
+            border-color: #1a1a1a;
+        }
+
+        .nav-btn.active {
+            background: #1a1a1a;
+            color: white;
+            border-color: #1a1a1a;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            background: #f8f8f8;
+            border-color: #eee;
+        }
+
+        .iframe-container {
+            flex: 1;
+            background: white;
+            border: 1px solid #d0d0d0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .no-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #999;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            gap: 12px;
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 12px;
+            }
+
+            .header-left h1 {
+                font-size: 20px;
+            }
+
+            .top-links {
+                display: none;
+                /* Hide top links on mobile to save space */
+            }
+
+            .nav-label {
+                min-width: 60px;
+                font-size: 10px;
+            }
+
+            .nav-btn {
+                font-size: 11px;
+                padding: 6px 10px;
+                flex: 1;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="header-left">
+                <h1>
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                        <path
+                            d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z" />
+                    </svg>
+                    Ethics Infrastructure
+                </h1>
+                <div class="subtitle">System Viewer</div>
+            </div>
+            <div class="top-links">
+                <button onclick="toggleAbout()" class="top-link-btn">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+                    </svg>
+                    ABOUT
+                </button>
+                <a href="paper.html" target="_blank" class="top-link-btn">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                        <path
+                            d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z" />
+                    </svg>
+                    PAPER
+                </a>
+                <a href="https://hartswf0.github.io/tractor-dce-gyo/" target="_blank" class="top-link-btn">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                        <path
+                            d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
+                    </svg>
+                    PLANNING
+                </a>
+                <a href="https://hartswf0.github.io/tractor-dce-gyo/wag-work.html" target="_blank" class="top-link-btn">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                        <path
+                            d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z" />
+                    </svg>
+                    WAG WORK
+                </a>
+                <a href="https://www.youtube.com/watch?v=cT1u5GVV0wA&list=PLS8aWNtVagEi_DyLjVjppU2wyCcpL8V8S"
+                    target="_blank" class="top-link-btn">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                        <path
+                            d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8 12.5v-9l6 4.5-6 4.5z" />
+                    </svg>
+                    PLAYLIST
+                </a>
+            </div>
+        </header>
+
+        <div id="viewerMode" class="viewer-mode">
+            <div class="viewer-nav">
+                <div class="nav-row">
+                    <div class="nav-label">PROJECT</div>
+                    <button class="nav-btn active" onclick="selectProject(0)">ATG 3.0</button>
+                    <button class="nav-btn" onclick="selectProject(1)">REL DECK</button>
+                    <button class="nav-btn" onclick="selectProject(2)">TRACTOR</button>
+                    <button class="nav-btn" onclick="selectProject(3)">CORE-AGE</button>
+                </div>
+                <div class="nav-row">
+                    <div class="nav-label">RESOURCE</div>
+                    <button class="nav-btn active" onclick="selectResource('map')">MAP</button>
+                    <button class="nav-btn" onclick="selectResource('glossary')">GLOSS</button>
+                    <button class="nav-btn" onclick="selectResource('genome')">GENOME</button>
+                    <button class="nav-btn" onclick="selectResource('home')">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor">
+                            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+                        </svg>
+                        INDEX
+                    </button>
+                    <button class="nav-btn" onclick="selectResource('repo')">
+                        <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor">
+                            <path
+                                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
+                        </svg>
+                        REPO
+                    </button>
+                </div>
+            </div>
+            <div class="iframe-container" id="iframeContainer">
+                <div class="no-content">
+                    <svg viewBox="0 0 24 24" width="48" height="48" fill="#ddd">
+                        <path
+                            d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 14H7v-2h4v2zm0-4H7v-2h4v2zm0-4H7V7h4v2zm6 8h-4v-2h4v2zm0-4h-4v-2h4v2zm0-4h-4V7h4v2z" />
+                    </svg>
+                    <div style="margin-top: 16px;">Select a resource to view</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div class="modal-overlay" id="aboutModal" onclick="toggleAbout(event)">
+        <div class="about-modal">
+            <button class="about-close" onclick="toggleAbout()">×</button>
+            <div class="about-title">Ethics Infrastructure</div>
+            <div style="font-size: 11px; color: #666; margin-bottom: 12px;">Watson Hartsoe, PhD Candidate, Digital
+                Media, Georgia Tech</div>
+            <div class="about-text">
+                <p>This project explores <strong>language as leverage point</strong> for spatial computing. Prompts
+                    become executable specifications; authorship shifts from engine primitives to cultural, narrative,
+                    and spatial intent.</p>
+                <p style="margin-top:12px;"><strong>Four Hubs:</strong></p>
+                <ul style="margin: 4px 0 12px 20px; font-size: 12px; line-height: 1.5;">
+                    <li><strong>TRACTOR</strong> : The workhorse. Field notes, trails, and patterns.</li>
+                    <li><strong>CORE-AGE</strong> : The engine. Semantic-to-spatial compilation.</li>
+                    <li><strong>ATG 3.0</strong> : Associative Terrain Graphs.</li>
+                    <li><strong>Role Deck</strong> : Early prompting experiments.</li>
+                </ul>
+                <p><strong>Navigation:</strong> Each hub has a <em>Map</em>, <em>Gloss</em>, <em>Genome</em>,
+                    <em>Index</em>, and <em>Repo</em>. Top links: <em>Paper</em>, <em>Planning</em>, <em>WAG Work</em>,
+                    <em>Playlist</em>.
+                </p>
+            </div>
+            <div class="citation-box">
+                Wong, R. Y. (2025). Towards Creating Infrastructures for Values and Ethics Work. <em>AAR 2025</em>.<br>
+                <a href="https://doi.org/10.48550/arXiv.2507.11490" target="_blank"
+                    style="color:#0066cc;">doi.org/10.48550/arXiv.2507.11490</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const projects = [
+            {
+                name: 'ATG 3.0',
+                resources: {
+                    home: 'https://hartswf0.github.io/atg-3/',
+                    map: 'https://hartswf0.github.io/atg-3/courage-trail-olog.html',
+                    glossary: 'https://hartswf0.github.io/atg-3/pattern-glossary.html',
+                    genome: 'https://hartswf0.github.io/atg-3/project-genome.html',
+                    repo: 'https://github.com/hartswf0/atg-3'
+                }
+            },
+            {
+                name: 'Role Deck',
+                resources: {
+                    home: 'https://hartswf0.github.io/role-deck/HUB.html',
+                    map: 'https://hartswf0.github.io/role-deck/courage-trail-olog.html',
+                    glossary: 'https://hartswf0.github.io/role-deck/pattern-glossary.html',
+                    genome: 'https://hartswf0.github.io/role-deck/role-deck-genome.html',
+                    repo: 'https://github.com/hartswf0/role-deck'
+                }
+            },
+            {
+                name: 'Tractor DCE-GYO',
+                resources: {
+                    home: 'https://hartswf0.github.io/tractor-dce-gyo/',
+                    map: 'https://hartswf0.github.io/tractor-dce-gyo/sitemap-manifold-03.html',
+                    glossary: 'https://hartswf0.github.io/tractor-dce-gyo/pattern-glossary.html',
+                    genome: 'https://hartswf0.github.io/tractor-dce-gyo/project-genome-dce-gyo.html',
+                    tool: 'file:///Users/gaia/COURAGE/wag-workshop.html',
+                    repo: 'https://github.com/hartswf0/tractor-dce-gyo'
+                }
+            },
+            {
+                name: 'Core-Age',
+                resources: {
+                    home: 'https://hartswf0.github.io/core-age/',
+                    map: 'https://hartswf0.github.io/core-age/courage-trail-olog.html',
+                    glossary: 'https://hartswf0.github.io/core-age/pattern-glossary.html',
+                    genome: 'https://hartswf0.github.io/core-age/courage-genome.html',
+                    repo: 'https://github.com/hartswf0/core-age'
+                }
+            }
+        ];
+
+        let currentProject = 0;
+        let currentResource = 'map';
+
+        function selectProject(index) {
+            currentProject = index;
+            // Update project buttons
+            const btns = document.querySelectorAll('.nav-row:first-child .nav-btn');
+            btns.forEach((btn, i) => {
+                btn.classList.toggle('active', i === index);
+            });
+            updateResourceButtons();
+
+            // Check if current resource exists for new project, if not switch to map or home
+            const project = projects[currentProject];
+            if (!project.resources[currentResource]) {
+                if (project.resources.map) {
+                    selectResource('map');
+                } else if (project.resources.home) {
+                    selectResource('home');
+                }
+            } else {
+                updateViewer();
+            }
+        }
+
+        function selectResource(type) {
+            currentResource = type;
+            const btns = document.querySelectorAll('.nav-row:last-child .nav-btn');
+
+            btns.forEach(btn => {
+                const btnType = btn.getAttribute('onclick').match(/'(.*?)'/)[1];
+                btn.classList.toggle('active', btnType === type);
+            });
+            updateViewer();
+        }
+
+        function toggleAbout(e) {
+            // Close if clicking overlay or if manually called
+            if (!e || e.target.id === 'aboutModal' || !e.target.closest('.about-modal')) {
+                const modal = document.getElementById('aboutModal');
+                if (modal.style.display === 'flex') {
+                    modal.style.display = 'none';
+                } else {
+                    modal.style.display = 'flex';
+                }
+            }
+        }
+
+        function updateResourceButtons() {
+            const btns = document.querySelectorAll('.nav-row:last-child .nav-btn');
+            const project = projects[currentProject];
+
+            btns.forEach(btn => {
+                const btnType = btn.getAttribute('onclick').match(/'(.*?)'/)[1];
+                btn.disabled = !project.resources[btnType];
+            });
+        }
+
+        function updateViewer() {
+            const container = document.getElementById('iframeContainer');
+            const project = projects[currentProject];
+            const url = project.resources[currentResource];
+
+            if (url) {
+                container.innerHTML = `<iframe src="${url}"></iframe>`;
+            } else {
+                container.innerHTML = `
+                    <div class="no-content">
+                        <svg viewBox="0 0 24 24" width="48" height="48" fill="#ddd"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 14H7v-2h4v2zm0-4H7v-2h4v2zm0-4H7V7h4v2zm6 8h-4v-2h4v2zm0-4h-4v-2h4v2zm0-4h-4V7h4v2z"/></svg>
+                        <div style="margin-top: 16px;">Select a resource to view</div>
+                    </div>`;
+            }
+        }
+
+        // Initialize
+        updateResourceButtons();
+        updateViewer();
+    </script>
+</body>
+
+</html>

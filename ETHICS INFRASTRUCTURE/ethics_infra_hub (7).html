@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethics Infrastructure Library</title>
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23FFD700'/%3E%3C/svg%3E">
+    <style>
+        :root {
+            --lego-yellow: #FFD700;
+            --lego-yellow-glow: rgba(255, 215, 0, 0.4);
+            --lego-red: #FF4444;
+            --lego-blue: #4444FF;
+            --lego-green: #00FF88;
+            --lego-purple: #9D4EDD;
+            --lego-cyan: #4ECDC4;
+            --lego-orange: #FF6B35;
+            --lego-pink: #EF476F;
+            --border: 3px solid #333;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #000;
+            color: #ddd;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-brick {
+            background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
+            border-bottom: var(--border);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+        }
+
+        .header-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--lego-yellow);
+            text-shadow: 0 0 10px var(--lego-yellow-glow);
+            letter-spacing: 2px;
+        }
+
+        .step-counter {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: var(--lego-yellow);
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: bold;
+            box-shadow: 0 0 20px var(--lego-yellow-glow);
+            position: relative;
+        }
+
+        .step-counter::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 14px;
+            border-radius: 8px 8px 0 0;
+            background: #FFA500;
+            border: 3px solid #CC8400;
+            border-bottom: none;
+        }
+
+        .library-container {
+            flex: 1;
+            padding: 40px 20px;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .library-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .library-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            border: 3px solid #333;
+            border-radius: 16px;
+            padding: 24px;
+            position: relative;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            cursor: pointer;
+            height: 100%;
+        }
+
+        .library-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--card-color);
+            box-shadow: 0 8px 24px var(--card-glow);
+        }
+
+        .card-icon {
+            font-size: 48px;
+            margin-bottom: 8px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--card-color);
+            letter-spacing: 1px;
+        }
+
+        .card-desc {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #888;
+            flex-grow: 1;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #333;
+        }
+
+        .card-tag {
+            font-size: 10px;
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: #222;
+            color: #aaa;
+            text-transform: uppercase;
+        }
+
+        .card-arrow {
+            color: var(--card-color);
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .stud-decoration {
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            width: 40px;
+            height: 12px;
+            background: #333;
+            border-radius: 4px 4px 0 0;
+            border: 2px solid #444;
+            border-bottom: none;
+        }
+
+        .library-card:hover .stud-decoration {
+            background: var(--card-color);
+            border-color: var(--card-color);
+        }
+
+        .resource-links {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .resource-btn {
+            padding: 6px 12px;
+            background: #0a0a0a;
+            border: 2px solid #444;
+            border-radius: 6px;
+            color: #888;
+            font-family: inherit;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+        }
+
+        .resource-btn:hover {
+            border-color: var(--card-color);
+            color: var(--card-color);
+        }
+
+        .resource-btn.inactive {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.on {
+            display: flex;
+        }
+
+        .modal-brick {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            border: 4px solid #333;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 1400px;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+            position: relative;
+        }
+
+        .modal-header {
+            background: #1a1a1a;
+            padding: 16px 20px;
+            border-bottom: 3px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .modal-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--lego-yellow);
+            letter-spacing: 2px;
+        }
+
+        .modal-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .modal-btn {
+            background: #0a0a0a;
+            border: 2px solid #555;
+            border-radius: 6px;
+            color: #888;
+            padding: 6px 12px;
+            font-family: inherit;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+        }
+
+        .modal-btn:hover {
+            border-color: var(--lego-yellow);
+            color: var(--lego-yellow);
+        }
+
+        .modal-btn.expand {
+            border-color: var(--lego-cyan);
+            color: var(--lego-cyan);
+        }
+
+        .modal-btn.expand:hover {
+            background: var(--lego-cyan);
+            color: #000;
+        }
+
+        .modal-btn.close {
+            border-color: #ff4444;
+            color: #ff4444;
+        }
+
+        .modal-btn.close:hover {
+            background: #ff4444;
+            color: #000;
+        }
+
+        .modal-frame {
+            flex: 1;
+            position: relative;
+            background: #000;
+            border-radius: 0 0 12px 12px;
+            overflow: hidden;
+        }
+
+        .modal-frame iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #000;
+        }
+
+        @media (max-width: 768px) {
+            .header-brick {
+                flex-direction: column;
+                gap: 16px;
+                padding: 16px;
+            }
+
+            .header-title {
+                font-size: 18px;
+            }
+
+            .library-container {
+                padding: 20px 16px;
+            }
+
+            .library-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header-brick">
+        <div class="header-title">🧱 ETHICS INFRASTRUCTURE</div>
+        <div class="step-counter">4</div>
+    </div>
+
+    <div class="library-container">
+        <div class="library-grid" id="libraryGrid"></div>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-brick">
+            <div class="modal-header">
+                <div class="modal-title" id="modalTitle"></div>
+                <div class="modal-controls">
+                    <button class="modal-btn expand" onclick="expandToTab()">↗ NEW TAB</button>
+                    <button class="modal-btn close" onclick="closeFocus()">✕ CLOSE</button>
+                </div>
+            </div>
+            <div class="modal-frame">
+                <iframe id="modalFrame" src=""></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const projects = [
+            {
+                name: 'ATG 3.0',
+                icon: '🎯',
+                color: 'var(--lego-yellow)',
+                glow: 'var(--lego-yellow-glow)',
+                tag: 'Core System',
+                desc: 'Advanced Truth Geometry framework. Navigate courage trails, explore pattern definitions, and study the complete system genome for ethical infrastructure.',
+                map: 'https://hartswf0.github.io/atg-3/courage-trail-olog.html',
+                glossary: 'https://hartswf0.github.io/atg-3/pattern-glossary.html',
+                genome: 'https://hartswf0.github.io/atg-3/project-genome.html'
+            },
+            {
+                name: 'ROLE DECK',
+                icon: '🎭',
+                color: 'var(--lego-cyan)',
+                glow: 'rgba(78, 205, 196, 0.4)',
+                tag: 'Character System',
+                desc: 'Complete role-based architecture for character construction. Map role relationships, define behavioral patterns, and explore the role genome structure.',
+                map: 'https://hartswf0.github.io/role-deck/courage-trail-olog.html',
+                glossary: 'https://hartswf0.github.io/role-deck/pattern-glossary.html',
+                genome: 'https://hartswf0.github.io/role-deck/role-deck-genome.html'
+            },
+            {
+                name: 'TRACTOR DCE-GYO',
+                icon: '🚜',
+                color: 'var(--lego-green)',
+                glow: 'rgba(0, 255, 136, 0.4)',
+                tag: 'Development',
+                desc: 'Decision-Context-Execution framework for ethical operations. Tractor system architecture for pulling and organizing complex decision chains.',
+                map: 'https://hartswf0.github.io/tractor-dce-gyo/sitemap-manifold-04.html',
+                glossary: 'https://hartswf0.github.io/tractor-dce-gyo/pattern-glossary.html',
+                genome: 'https://hartswf0.github.io/tractor-dce-gyo/project-genome-dce-gyo.html'
+            },
+            {
+                name: 'CORE-AGE',
+                icon: '⚡',
+                color: 'var(--lego-orange)',
+                glow: 'rgba(255, 107, 53, 0.4)',
+                tag: 'Foundation',
+                desc: 'Core aging and temporal evolution system. Track courage development over time, understand pattern maturation, and explore foundational structures.',
+                map: 'https://hartswf0.github.io/core-age/courage-trail-olog.html',
+                glossary: 'https://hartswf0.github.io/core-age/pattern-glossary.html',
+                genome: 'https://hartswf0.github.io/core-age/courage-genome.html'
+            }
+        ];
+
+        let currentFocusUrl = '';
+
+        function init() {
+            const grid = document.getElementById('libraryGrid');
+
+            projects.forEach(project => {
+                const card = document.createElement('div');
+                card.className = 'library-card';
+                card.style.setProperty('--card-color', project.color);
+                card.style.setProperty('--card-glow', project.glow);
+
+                card.innerHTML = `
+                    <div class="stud-decoration"></div>
+                    <div class="card-icon">${project.icon}</div>
+                    <div class="card-title">${project.name}</div>
+                    <div class="card-desc">${project.desc}</div>
+                    <div class="resource-links">
+                        <button class="resource-btn ${project.map ? '' : 'inactive'}" 
+                                onclick="openResource(event, '${project.name}', 'MAP', '${project.map}')"
+                                ${!project.map ? 'disabled' : ''}>
+                            🗺️ MAP
+                        </button>
+                        <button class="resource-btn ${project.glossary ? '' : 'inactive'}" 
+                                onclick="openResource(event, '${project.name}', 'GLOSSARY', '${project.glossary}')"
+                                ${!project.glossary ? 'disabled' : ''}>
+                            📖 GLOSSARY
+                        </button>
+                        <button class="resource-btn ${project.genome ? '' : 'inactive'}" 
+                                onclick="openResource(event, '${project.name}', 'GENOME', '${project.genome}')"
+                                ${!project.genome ? 'disabled' : ''}>
+                            🧬 GENOME
+                        </button>
+                    </div>
+                    <div class="card-footer">
+                        <span class="card-tag">${project.tag}</span>
+                        <span class="card-arrow">EXPLORE →</span>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        function openResource(event, projectName, type, url) {
+            event.stopPropagation();
+            if (!url || url === 'null') return;
+
+            document.getElementById('modalTitle').textContent = `${projectName} - ${type}`;
+            document.getElementById('modalFrame').src = url;
+            document.getElementById('modalOverlay').classList.add('on');
+            currentFocusUrl = url;
+        }
+
+        function closeFocus() {
+            document.getElementById('modalOverlay').classList.remove('on');
+            document.getElementById('modalFrame').src = '';
+            currentFocusUrl = '';
+        }
+
+        function expandToTab() {
+            if (currentFocusUrl) {
+                window.open(currentFocusUrl, '_blank');
+            }
+        }
+
+        document.getElementById('modalOverlay').addEventListener('click', (e) => {
+            if (e.target.id === 'modalOverlay') {
+                closeFocus();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && document.getElementById('modalOverlay').classList.contains('on')) {
+                closeFocus();
+            }
+        });
+
+        init();
+    </script>
+</body>
+
+</html>

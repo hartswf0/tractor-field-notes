@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infrastructure</title>
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23FFD700'/%3E%3Crect x='6' y='6' width='8' height='8' rx='2' fill='%23000'/%3E%3Crect x='18' y='6' width='8' height='8' rx='2' fill='%23000'/%3E%3Crect x='6' y='18' width='8' height='8' rx='2' fill='%23000'/%3E%3Crect x='18' y='18' width='8' height='8' rx='2' fill='%23000'/%3E%3C/svg%3E">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            line-height: 1;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .bar {
+            background: #1a1a1a;
+            border-bottom: 1px solid #333;
+            padding: 8px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sys-name {
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: #888;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1px;
+            background: #333;
+        }
+
+        .tab {
+            background: #1a1a1a;
+            border: none;
+            color: #888;
+            padding: 4px 12px;
+            font-family: inherit;
+            font-size: 10px;
+            cursor: pointer;
+            letter-spacing: 1px;
+        }
+
+        .tab:hover {
+            color: #e0e0e0;
+        }
+
+        .tab.on {
+            background: #333;
+            color: #e0e0e0;
+        }
+
+        .view {
+            flex: 1;
+            display: none;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1px;
+            background: #1a1a1a;
+            padding: 1px;
+            overflow: auto;
+        }
+
+        .view.on {
+            display: grid;
+        }
+
+        .unit {
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            display: flex;
+            flex-direction: column;
+            min-height: 400px;
+        }
+
+        .unit-name {
+            background: #1a1a1a;
+            padding: 8px;
+            border-bottom: 1px solid #333;
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: #888;
+        }
+
+        .unit-frame {
+            flex: 1;
+            position: relative;
+        }
+
+        .unit-frame iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #0a0a0a;
+        }
+
+        .empty {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #333;
+            font-size: 10px;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 768px) {
+            .view {
+                grid-template-columns: 1fr;
+            }
+
+            .unit {
+                min-height: 350px;
+            }
+
+            .tab {
+                font-size: 9px;
+                padding: 4px 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bar">
+        <div class="sys-name">INFRASTRUCTURE</div>
+        <div class="tabs">
+            <button class="tab on" onclick="setTab('map')">MAPS</button>
+            <button class="tab" onclick="setTab('glossary')">GLOSSARIES</button>
+            <button class="tab" onclick="setTab('genome')">GENOMES</button>
+        </div>
+    </div>
+
+    <div id="mapView" class="view on"></div>
+    <div id="glossaryView" class="view"></div>
+    <div id="genomeView" class="view"></div>
+
+    <script>
+        const data = [
+            {
+                name: 'ATG 3.0',
+                map: 'https://hartswf0.github.io/atg-3/courage-trail-olog.html',
+                glossary: 'https://hartswf0.github.io/atg-3/pattern-glossary.html',
+                genome: 'https://hartswf0.github.io/atg-3/project-genome.html'
+            },
+            {
+                name: 'ROLE DECK',
+                map: 'https://hartswf0.github.io/role-deck/courage-trail-olog.html',
+                glossary: 'https://hartswf0.github.io/role-deck/pattern-glossary.html',
+                genome: 'https://hartswf0.github.io/role-deck/role-deck-genome.html'
+            },
+            {
+                name: 'TRACTOR',
+                map: 'https://hartswf0.github.io/tractor-dce-gyo/sitemap-manifold-04.html',
+                glossary: 'https://hartswf0.github.io/tractor-dce-gyo/pattern-glossary.html',
+                genome: 'https://hartswf0.github.io/tractor-dce-gyo/project-genome-dce-gyo.html'
+            },
+            {
+                name: 'CORE-AGE',
+                map: 'https://hartswf0.github.io/core-age/courage-trail-olog.html',
+                glossary: 'https://hartswf0.github.io/core-age/pattern-glossary.html',
+                genome: 'https://hartswf0.github.io/core-age/courage-genome.html'
+            }
+        ];
+
+        function init() {
+            ['map', 'glossary', 'genome'].forEach(type => {
+                const view = document.getElementById(`${type}View`);
+
+                data.forEach(d => {
+                    const unit = document.createElement('div');
+                    unit.className = 'unit';
+
+                    const name = document.createElement('div');
+                    name.className = 'unit-name';
+                    name.textContent = d.name;
+                    unit.appendChild(name);
+
+                    const frame = document.createElement('div');
+                    frame.className = 'unit-frame';
+
+                    if (d[type]) {
+                        frame.innerHTML = `<iframe src="${d[type]}"></iframe>`;
+                    } else {
+                        frame.innerHTML = '<div class="empty">---</div>';
+                    }
+
+                    unit.appendChild(frame);
+                    view.appendChild(unit);
+                });
+            });
+        }
+
+        function setTab(type) {
+            document.querySelectorAll('.view').forEach(v => {
+                v.classList.remove('on');
+            });
+            document.getElementById(`${type}View`).classList.add('on');
+
+            document.querySelectorAll('.tab').forEach((t, i) => {
+                const types = ['map', 'glossary', 'genome'];
+                t.classList.toggle('on', types[i] === type);
+            });
+        }
+
+        init();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethics Infrastructure</title>
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23FFD700'/%3E%3Crect x='6' y='6' width='8' height='8' rx='2' fill='%23000'/%3E%3Crect x='18' y='6' width='8' height='8' rx='2' fill='%23000'/%3E%3Crect x='6' y='18' width='8' height='8' rx='2' fill='%23000'/%3E%3Crect x='18' y='18' width='8' height='8' rx='2' fill='%23000'/%3E%3C/svg%3E">
+    <style>
+        :root {
+            --primary: #FFD700;
+            --primary-glow: rgba(255, 215, 0, 0.4);
+            --secondary: #4ECDC4;
+            --tertiary: #9D4EDD;
+            --border: 3px solid #333;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #000;
+            color: #ddd;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-brick {
+            background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
+            border-bottom: var(--border);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+        }
+
+        .header-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary-glow);
+            letter-spacing: 2px;
+        }
+
+        .tabs-brick {
+            display: flex;
+            gap: 4px;
+            background: #333;
+            padding: 2px;
+            border-radius: 6px;
+        }
+
+        .tab {
+            padding: 8px 16px;
+            background: #1a1a1a;
+            border: 2px solid transparent;
+            color: #888;
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            letter-spacing: 1px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+
+        .tab:hover {
+            color: #ddd;
+            border-color: #555;
+        }
+
+        .tab.on {
+            background: var(--primary);
+            color: #000;
+            border-color: var(--primary);
+            box-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .view-container {
+            flex: 1;
+            padding: 24px;
+            overflow: auto;
+        }
+
+        .view {
+            display: none;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .view.on {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .project-brick {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            border: 4px solid #333;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            position: relative;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-header {
+            background: #1a1a1a;
+            padding: 16px 20px;
+            border-bottom: 3px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .project-name {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--primary);
+            letter-spacing: 2px;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #333;
+            border: 2px solid #555;
+        }
+
+        .status-dot.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 8px var(--primary-glow);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .project-frame {
+            flex: 1;
+            position: relative;
+            background: #000;
+        }
+
+        .project-frame iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #000;
+        }
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #555;
+            gap: 12px;
+        }
+
+        .empty-icon {
+            font-size: 48px;
+            opacity: 0.3;
+        }
+
+        .empty-text {
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .legend-brick {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.95);
+            border: 3px solid #333;
+            border-radius: 12px;
+            padding: 16px 24px;
+            display: flex;
+            gap: 32px;
+            box-shadow: var(--shadow);
+            z-index: 100;
+        }
+
+        .legend-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .legend-key {
+            font-weight: bold;
+            font-size: 11px;
+            letter-spacing: 1px;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .legend-item:nth-child(1) .legend-key {
+            background: rgba(255, 215, 0, 0.2);
+            color: var(--primary);
+        }
+
+        .legend-item:nth-child(2) .legend-key {
+            background: rgba(78, 205, 196, 0.2);
+            color: var(--secondary);
+        }
+
+        .legend-item:nth-child(3) .legend-key {
+            background: rgba(157, 78, 221, 0.2);
+            color: var(--tertiary);
+        }
+
+        .legend-desc {
+            font-size: 9px;
+            color: #888;
+        }
+
+        .focus-btn {
+            background: transparent;
+            border: 1px solid #555;
+            border-radius: 4px;
+            color: #888;
+            padding: 4px 8px;
+            font-family: inherit;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: auto;
+        }
+
+        .focus-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .focus-btn svg {
+            width: 14px;
+            height: 14px;
+            fill: currentColor;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.on {
+            display: flex;
+        }
+
+        .modal-brick {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            border: 4px solid #333;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 1400px;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8);
+            position: relative;
+        }
+
+        .modal-header {
+            background: #1a1a1a;
+            padding: 16px 20px;
+            border-bottom: 3px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .modal-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--primary);
+            letter-spacing: 2px;
+        }
+
+        .modal-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .modal-btn {
+            background: #0a0a0a;
+            border: 2px solid #555;
+            border-radius: 6px;
+            color: #888;
+            padding: 6px 12px;
+            font-family: inherit;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.2s;
+        }
+
+        .modal-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .modal-btn.expand {
+            border-color: var(--secondary);
+            color: var(--secondary);
+        }
+
+        .modal-btn.expand:hover {
+            background: var(--secondary);
+            color: #000;
+        }
+
+        .modal-btn.close {
+            border-color: #ff4444;
+            color: #ff4444;
+        }
+
+        .modal-btn.close:hover {
+            background: #ff4444;
+            color: #000;
+        }
+
+        .modal-frame {
+            flex: 1;
+            position: relative;
+            background: #000;
+            border-radius: 0 0 12px 12px;
+            overflow: hidden;
+        }
+
+        .modal-frame iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #000;
+        }
+
+        @media (max-width: 1200px) {
+            .view.on {
+                grid-template-columns: 1fr;
+            }
+
+            .project-brick {
+                min-height: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-brick {
+                flex-direction: column;
+                gap: 16px;
+                padding: 16px;
+            }
+
+            .header-title {
+                font-size: 18px;
+            }
+
+            .tabs-brick {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .tab {
+                flex: 1;
+                padding: 8px 12px;
+                font-size: 10px;
+            }
+
+            .view-container {
+                padding: 16px;
+            }
+
+            .project-brick {
+                min-height: 350px;
+            }
+
+            .legend-brick {
+                flex-direction: column;
+                gap: 12px;
+                padding: 12px 16px;
+                bottom: 16px;
+            }
+
+            .legend-item {
+                flex-direction: row;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header-brick">
+        <div class="header-title">🧱 ETHICS INFRASTRUCTURE</div>
+        <div class="tabs-brick">
+            <button class="tab on" onclick="setTab('map')">MAPS</button>
+            <button class="tab" onclick="setTab('glossary')">GLOSSARIES</button>
+            <button class="tab" onclick="setTab('genome')">GENOMES</button>
+        </div>
+    </div>
+
+    <div class="view-container">
+        <div id="mapView" class="view on"></div>
+        <div id="glossaryView" class="view"></div>
+        <div id="genomeView" class="view"></div>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-brick">
+            <div class="modal-header">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <button class="modal-btn back-btn" onclick="goBack()" title="Go back in iframe">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+                        </svg>
+                        BACK
+                    </button>
+                    <button class="modal-btn" onclick="goForward()" title="Go forward in iframe">
+                        FWD
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+                            <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z" />
+                        </svg>
+                    </button>
+                    <button class="modal-btn" onclick="reloadFrame()" title="Reload">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                            <path
+                                d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="modal-title" id="modalTitle"></div>
+                <div class="modal-controls">
+                    <button class="modal-btn expand" onclick="expandToTab()">↗ OPEN IN TAB</button>
+                    <button class="modal-btn close" onclick="closeFocus()">✕ CLOSE</button>
+                </div>
+            </div>
+            <!-- Hub Navigation -->
+            <div class="nav-row hub-row">
+                <span class="nav-label">HUB:</span>
+                <button class="hub-nav-btn" data-hub="0" onclick="switchHub(0)">ATG 3.0</button>
+                <button class="hub-nav-btn" data-hub="1" onclick="switchHub(1)">ROLE DECK</button>
+                <button class="hub-nav-btn" data-hub="2" onclick="switchHub(2)">TRACTOR</button>
+                <button class="hub-nav-btn" data-hub="3" onclick="switchHub(3)">CORE-AGE</button>
+            </div>
+            <!-- Resource Type Navigation -->
+            <div class="nav-row res-row">
+                <span class="nav-label">VIEW:</span>
+                <button class="res-nav-btn" data-type="home" onclick="switchResource('home')">🏠 HOME</button>
+                <button class="res-nav-btn" data-type="map" onclick="switchResource('map')">MAP</button>
+                <button class="res-nav-btn" data-type="glossary" onclick="switchResource('glossary')">GLOSSARY</button>
+                <button class="res-nav-btn" data-type="genome" onclick="switchResource('genome')">GENOME</button>
+                <button class="res-nav-btn" data-type="tool" onclick="switchResource('tool')">🛠 TOOL</button>
+                <button class="res-nav-btn" data-type="repo" onclick="switchResource('repo')">📦 REPO</button>
+                <span style="margin-left: auto; display: flex; gap: 8px;">
+                    <button class="modal-btn" onclick="prevResource()" style="padding: 6px 12px;">← PREV</button>
+                    <button class="modal-btn" onclick="nextResource()" style="padding: 6px 12px;">NEXT →</button>
+                </span>
+            </div>
+            <div class="modal-frame">
+                <iframe id="modalFrame" src=""></iframe>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .nav-row {
+            background: #111;
+            border-bottom: 2px solid #333;
+            padding: 12px 20px;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .nav-row.res-row {
+            background: #0d0d0d;
+        }
+
+        .nav-label {
+            font-size: 10px;
+            color: #666;
+            letter-spacing: 1px;
+            margin-right: 8px;
+            font-weight: bold;
+        }
+
+        .hub-nav-btn,
+        .res-nav-btn {
+            padding: 10px 16px;
+            background: #1a1a1a;
+            border: 2px solid #333;
+            border-radius: 6px;
+            color: #888;
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            letter-spacing: 1px;
+            transition: all 0.25s ease;
+        }
+
+        .hub-nav-btn:hover,
+        .res-nav-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .hub-nav-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #000;
+            box-shadow: 0 0 16px var(--primary-glow);
+            transform: scale(1.05);
+        }
+
+        .res-nav-btn.active {
+            background: var(--secondary);
+            border-color: var(--secondary);
+            color: #000;
+            box-shadow: 0 0 12px rgba(78, 205, 196, 0.5);
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .loading-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 20px 40px;
+            border-radius: 8px;
+            color: var(--primary);
+            font-size: 14px;
+            letter-spacing: 2px;
+            z-index: 10;
+            animation: pulse 1s infinite;
+            transition: opacity 0.3s ease;
+        }
+
+        .loading-indicator.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .modal-frame {
+            position: relative;
+        }
+
+        .modal-frame iframe {
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .modal-overlay.on {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-brick {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            transform: scale(0.95);
+            opacity: 0;
+        }
+
+        .modal-overlay.on .modal-brick {
+            transform: scale(1);
+            opacity: 1;
+        }
+    </style>
+
+    <script>
+        const data = [
+            {
+                name: 'ATG 3.0',
+                home: 'https://hartswf0.github.io/atg-3/',
+                map: 'https://hartswf0.github.io/atg-3/courage-trail-olog.html',
+                glossary: 'https://hartswf0.github.io/atg-3/pattern-glossary.html',
+                genome: 'https://hartswf0.github.io/atg-3/project-genome.html',
+                repo: 'https://github.com/hartswf0/atg-3'
+            },
+            {
+                name: 'ROLE DECK',
+                home: 'https://hartswf0.github.io/role-deck/',
+                map: 'https://hartswf0.github.io/role-deck/courage-trail-olog.html',
+                glossary: 'https://hartswf0.github.io/role-deck/pattern-glossary.html',
+                genome: 'https://hartswf0.github.io/role-deck/role-deck-genome.html',
+                repo: 'https://github.com/hartswf0/role-deck'
+            },
+            {
+                name: 'TRACTOR DCE-GYO',
+                home: 'https://hartswf0.github.io/tractor-dce-gyo/',
+                map: 'https://hartswf0.github.io/tractor-dce-gyo/sitemap-manifold-03.html',
+                glossary: 'https://hartswf0.github.io/tractor-dce-gyo/pattern-glossary.html',
+                genome: 'https://hartswf0.github.io/tractor-dce-gyo/project-genome-dce-gyo.html',
+                tool: 'file:///Users/gaia/COURAGE/wag-workshop.html',
+                repo: 'https://github.com/hartswf0/tractor-dce-gyo'
+            },
+            {
+                name: 'CORE-AGE',
+                home: 'https://hartswf0.github.io/core-age/',
+                map: 'https://hartswf0.github.io/core-age/courage-trail-olog.html',
+                glossary: 'https://hartswf0.github.io/core-age/pattern-glossary.html',
+                genome: 'https://hartswf0.github.io/core-age/courage-genome.html',
+                repo: 'https://github.com/hartswf0/core-age'
+            }
+        ];
+
+        function init() {
+            ['map', 'glossary', 'genome'].forEach(type => {
+                const view = document.getElementById(`${type}View`);
+
+                data.forEach(d => {
+                    const brick = document.createElement('div');
+                    brick.className = 'project-brick';
+
+                    const header = document.createElement('div');
+                    header.className = 'project-header';
+
+                    const name = document.createElement('div');
+                    name.className = 'project-name';
+                    name.textContent = d.name;
+                    header.appendChild(name);
+
+                    if (d[type]) {
+                        const focusBtn = document.createElement('button');
+                        focusBtn.className = 'focus-btn';
+                        focusBtn.onclick = () => openFocus(d.name, type, d[type]);
+                        focusBtn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7zm-4 18v-2H6.41l9.83-9.83-1.41-1.41L5 17.59V14H3v7h7z"/></svg> FOCUS`;
+                        header.appendChild(focusBtn);
+                    }
+
+                    const dot = document.createElement('div');
+                    dot.className = 'status-dot';
+                    if (d[type]) dot.classList.add('active');
+                    header.appendChild(dot);
+
+                    brick.appendChild(header);
+
+                    const frame = document.createElement('div');
+                    frame.className = 'project-frame';
+
+                    if (d[type]) {
+                        frame.innerHTML = `<iframe src="${d[type]}"></iframe>`;
+                    } else {
+                        frame.innerHTML = `
+                            <div class="empty-state">
+                                <div class="empty-icon">🧱</div>
+                                <div class="empty-text">PENDING</div>
+                            </div>
+                        `;
+                    }
+
+                    brick.appendChild(frame);
+                    view.appendChild(brick);
+                });
+            });
+        }
+
+        function setTab(type) {
+            document.querySelectorAll('.view').forEach(v => {
+                v.classList.remove('on');
+            });
+            document.getElementById(`${type}View`).classList.add('on');
+
+            document.querySelectorAll('.tab').forEach((t, i) => {
+                const types = ['map', 'glossary', 'genome'];
+                t.classList.toggle('on', types[i] === type);
+            });
+        }
+
+        init();
+
+        let currentFocusUrl = '';
+        let currentHubIndex = 0;
+        let currentResourceType = 'map';
+        const resourceTypes = ['home', 'map', 'glossary', 'genome', 'tool', 'repo'];
+
+        function openFocus(projectName, type, url) {
+            // Find hub index
+            currentHubIndex = data.findIndex(d => d.name === projectName);
+            currentResourceType = type;
+
+            updateModalView();
+            document.getElementById('modalOverlay').classList.add('on');
+        }
+
+        function updateModalView() {
+            const hub = data[currentHubIndex];
+            const url = hub[currentResourceType];
+            const typeName = currentResourceType === 'genome' ? 'GENOME' : currentResourceType.toUpperCase();
+
+            document.getElementById('modalTitle').textContent = `${hub.name} - ${typeName}`;
+            document.getElementById('modalFrame').src = url || '';
+            currentFocusUrl = url || '';
+
+            // Update hub buttons
+            document.querySelectorAll('.hub-nav-btn').forEach(btn => {
+                btn.classList.toggle('active', parseInt(btn.dataset.hub) === currentHubIndex);
+            });
+
+            // Update resource buttons
+            document.querySelectorAll('.res-nav-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.type === currentResourceType);
+            });
+        }
+
+        function switchHub(index) {
+            currentHubIndex = index;
+            updateModalView();
+        }
+
+        function switchResource(type) {
+            currentResourceType = type;
+            updateModalView();
+        }
+
+        function prevResource() {
+            const currentIdx = resourceTypes.indexOf(currentResourceType);
+            currentResourceType = resourceTypes[(currentIdx - 1 + 3) % 3];
+            updateModalView();
+        }
+
+        function nextResource() {
+            const currentIdx = resourceTypes.indexOf(currentResourceType);
+            currentResourceType = resourceTypes[(currentIdx + 1) % 3];
+            updateModalView();
+        }
+
+        function closeFocus() {
+            document.getElementById('modalOverlay').classList.remove('on');
+            document.getElementById('modalFrame').src = '';
+            currentFocusUrl = '';
+        }
+
+        function expandToTab() {
+            if (currentFocusUrl) {
+                window.open(currentFocusUrl, '_blank');
+            }
+        }
+
+        // Iframe navigation
+        function goBack() {
+            try {
+                const frame = document.getElementById('modalFrame');
+                if (frame.contentWindow) {
+                    frame.contentWindow.history.back();
+                }
+            } catch (e) {
+                console.log('Cannot navigate back - cross-origin restriction');
+            }
+        }
+
+        function goForward() {
+            try {
+                const frame = document.getElementById('modalFrame');
+                if (frame.contentWindow) {
+                    frame.contentWindow.history.forward();
+                }
+            } catch (e) {
+                console.log('Cannot navigate forward - cross-origin restriction');
+            }
+        }
+
+        function reloadFrame() {
+            const frame = document.getElementById('modalFrame');
+            showLoading();
+            frame.src = frame.src;
+        }
+
+        function showLoading() {
+            document.getElementById('loadingIndicator').classList.remove('hidden');
+            // Fallback: hide after 3 seconds in case onload doesn't fire (cross-origin)
+            setTimeout(hideLoading, 3000);
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingIndicator').classList.add('hidden');
+        }
+
+        // Close modal on overlay click
+        document.getElementById('modalOverlay').addEventListener('click', (e) => {
+            if (e.target.id === 'modalOverlay') {
+                closeFocus();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && document.getElementById('modalOverlay').classList.contains('on')) {
+                closeFocus();
+                return;
+            }
+
+            // Keyboard navigation
+            const types = ['map', 'glossary', 'genome'];
+            const current = types.findIndex(t => document.getElementById(`${t}View`).classList.contains('on'));
+
+            if (e.key === 'ArrowRight') {
+                setTab(types[(current + 1) % 3]);
+            } else if (e.key === 'ArrowLeft') {
+                setTab(types[(current - 1 + 3) % 3]);
+            }
+        });
+    </script>
+</body>
+
+</html>

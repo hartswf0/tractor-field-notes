@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethics Infrastructure</title>
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23FFD700'/%3E%3Crect x='6' y='6' width='8' height='8' rx='2' fill='%23000'/%3E%3Crect x='18' y='6' width='8' height='8' rx='2' fill='%23000'/%3E%3Crect x='6' y='18' width='8' height='8' rx='2' fill='%23000'/%3E%3Crect x='18' y='18' width='8' height='8' rx='2' fill='%23000'/%3E%3C/svg%3E">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #000;
+            color: #ddd;
+            min-height: 100vh;
+        }
+
+        /* SPLASH SCREEN */
+        .splash {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: opacity 0.5s, visibility 0.5s;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .splash.hide {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .splash-icon {
+            font-size: 64px;
+            margin-bottom: 24px;
+        }
+
+        .splash-title {
+            font-size: clamp(24px, 6vw, 40px);
+            font-weight: bold;
+            color: #FFD700;
+            letter-spacing: 3px;
+            margin-bottom: 12px;
+        }
+
+        .splash-sub {
+            font-size: 14px;
+            color: #666;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+        }
+
+        .splash-enter {
+            padding: 16px 48px;
+            background: #FFD700;
+            border: none;
+            border-radius: 8px;
+            color: #000;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .splash-enter:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+        }
+
+        /* MAIN CONTENT */
+        .main {
+            display: none;
+        }
+
+        .main.show {
+            display: block;
+        }
+
+        .header {
+            background: #111;
+            border-bottom: 3px solid #333;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #FFD700;
+            letter-spacing: 2px;
+        }
+
+        .header-links {
+            display: flex;
+            gap: 8px;
+        }
+
+        .header-btn {
+            padding: 8px 12px;
+            background: transparent;
+            border: 1px solid #444;
+            border-radius: 4px;
+            color: #888;
+            font-family: inherit;
+            font-size: 11px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .header-btn:hover {
+            border-color: #FFD700;
+            color: #FFD700;
+        }
+
+        .container {
+            padding: 24px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* ABOUT SECTION */
+        .about {
+            background: #111;
+            border: 2px solid #222;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+
+        .about-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #FFD700;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .about-text {
+            font-size: 13px;
+            line-height: 1.7;
+            color: #999;
+        }
+
+        /* HUBS SECTION */
+        .section-title {
+            font-size: 12px;
+            font-weight: bold;
+            color: #666;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+
+        .hub-list {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .hub-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 20px;
+            background: #111;
+            border: 2px solid #222;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .hub-item:hover {
+            border-color: var(--hub-color, #FFD700);
+            transform: translateX(4px);
+        }
+
+        .hub-icon {
+            font-size: 28px;
+        }
+
+        .hub-info {
+            flex: 1;
+        }
+
+        .hub-name {
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--hub-color, #FFD700);
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .hub-desc {
+            font-size: 11px;
+            color: #666;
+        }
+
+        .hub-links {
+            display: flex;
+            gap: 8px;
+        }
+
+        .hub-link {
+            padding: 6px 10px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 4px;
+            color: #888;
+            font-size: 10px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .hub-link:hover {
+            border-color: #FFD700;
+            color: #FFD700;
+        }
+
+        /* VIEWER STYLES */
+        .styles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .style-card {
+            padding: 16px;
+            background: #111;
+            border: 2px solid #222;
+            border-radius: 10px;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .style-card:hover {
+            border-color: #4ECDC4;
+            transform: translateY(-4px);
+        }
+
+        .style-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .style-name {
+            font-size: 11px;
+            font-weight: bold;
+            color: #ddd;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 600px) {
+            .hub-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hub-links {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            .header {
+                justify-content: center;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- SPLASH SCREEN -->
+    <div class="splash" id="splash">
+        <div class="splash-icon">🧱</div>
+        <div class="splash-title">ETHICS INFRASTRUCTURE</div>
+        <div class="splash-sub">4 HUBS • 12 RESOURCES</div>
+        <button class="splash-enter" onclick="enterApp()">ENTER</button>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main" id="main">
+        <div class="header">
+            <div class="header-title">🧱 ETHICS INFRA</div>
+            <div class="header-links">
+                <a href="#about" class="header-btn">ABOUT</a>
+                <a href="#hubs" class="header-btn">HUBS</a>
+                <a href="#styles" class="header-btn">VIEWERS</a>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- ABOUT -->
+            <div class="about" id="about">
+                <div class="about-title">ABOUT THIS PROJECT</div>
+                <div class="about-text">
+                    Ethics Infrastructure is a modular system of interconnected resources for exploring ethical
+                    decision-making frameworks. Each hub contains a Map (navigation), Glossary (definitions), and Genome
+                    (structure documentation). Choose a hub to explore, or pick a viewer style that suits your workflow.
+                </div>
+            </div>
+
+            <!-- HUBS -->
+            <div class="section-title" id="hubs">HUBS</div>
+            <div class="hub-list">
+                <div class="hub-item" style="--hub-color: #FFD700;">
+                    <div class="hub-icon">🎯</div>
+                    <div class="hub-info">
+                        <div class="hub-name">ATG 3.0</div>
+                        <div class="hub-desc">Advanced Truth Geometry</div>
+                    </div>
+                    <div class="hub-links">
+                        <a href="https://hartswf0.github.io/atg-3/" class="hub-link" target="_blank">HOME</a>
+                        <a href="https://hartswf0.github.io/atg-3/courage-trail-olog.html" class="hub-link"
+                            target="_blank">MAP</a>
+                        <a href="https://hartswf0.github.io/atg-3/pattern-glossary.html" class="hub-link"
+                            target="_blank">GLOSS</a>
+                        <a href="https://hartswf0.github.io/atg-3/project-genome.html" class="hub-link"
+                            target="_blank">GENOME</a>
+                        <a href="https://github.com/hartswf0/atg-3" class="hub-link" target="_blank">REPO</a>
+                    </div>
+                </div>
+                <div class="hub-item" style="--hub-color: #4ECDC4;">
+                    <div class="hub-icon">🎭</div>
+                    <div class="hub-info">
+                        <div class="hub-name">ROLE DECK</div>
+                        <div class="hub-desc">Character Architecture</div>
+                    </div>
+                    <div class="hub-links">
+                        <a href="https://hartswf0.github.io/role-deck/" class="hub-link" target="_blank">HOME</a>
+                        <a href="https://hartswf0.github.io/role-deck/courage-trail-olog.html" class="hub-link"
+                            target="_blank">MAP</a>
+                        <a href="https://hartswf0.github.io/role-deck/pattern-glossary.html" class="hub-link"
+                            target="_blank">GLOSS</a>
+                        <a href="https://hartswf0.github.io/role-deck/role-deck-genome.html" class="hub-link"
+                            target="_blank">GENOME</a>
+                        <a href="https://github.com/hartswf0/role-deck" class="hub-link" target="_blank">REPO</a>
+                    </div>
+                </div>
+                <div class="hub-item" style="--hub-color: #00FF88;">
+                    <div class="hub-icon">🚜</div>
+                    <div class="hub-info">
+                        <div class="hub-name">TRACTOR DCE-GYO</div>
+                        <div class="hub-desc">Decision-Context-Execution</div>
+                    </div>
+                    <div class="hub-links">
+                        <a href="https://hartswf0.github.io/tractor-dce-gyo/" class="hub-link" target="_blank">HOME</a>
+                        <a href="https://hartswf0.github.io/tractor-dce-gyo/sitemap-manifold-03.html" class="hub-link"
+                            target="_blank">MAP</a>
+                        <a href="file:///Users/gaia/COURAGE/wag-workshop.html" class="hub-link" target="_blank">TOOL</a>
+                        <a href="https://hartswf0.github.io/tractor-dce-gyo/pattern-glossary.html" class="hub-link"
+                            target="_blank">GLOSS</a>
+                        <a href="https://hartswf0.github.io/tractor-dce-gyo/project-genome-dce-gyo.html"
+                            class="hub-link" target="_blank">GENOME</a>
+                        <a href="https://github.com/hartswf0/tractor-dce-gyo" class="hub-link" target="_blank">REPO</a>
+                    </div>
+                </div>
+                <div class="hub-item" style="--hub-color: #FF6B35;">
+                    <div class="hub-icon">⚡</div>
+                    <div class="hub-info">
+                        <div class="hub-name">CORE-AGE</div>
+                        <div class="hub-desc">Temporal Evolution</div>
+                    </div>
+                    <div class="hub-links">
+                        <a href="https://hartswf0.github.io/core-age/" class="hub-link" target="_blank">HOME</a>
+                        <a href="https://hartswf0.github.io/core-age/courage-trail-olog.html" class="hub-link"
+                            target="_blank">MAP</a>
+                        <a href="https://hartswf0.github.io/core-age/pattern-glossary.html" class="hub-link"
+                            target="_blank">GLOSS</a>
+                        <a href="https://hartswf0.github.io/core-age/courage-genome.html" class="hub-link"
+                            target="_blank">GENOME</a>
+                        <a href="https://github.com/hartswf0/core-age" class="hub-link" target="_blank">REPO</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEWER STYLES -->
+            <div class="section-title" id="styles">VIEWER STYLES</div>
+            <div class="styles-grid">
+                <a href="ethics_infra_hub.html" class="style-card">
+                    <div class="style-icon">🏠</div>
+                    <div class="style-name">GRID VIEW</div>
+                </a>
+                <a href="ethics_infra_hub (5).html" class="style-card">
+                    <div class="style-icon">🔍</div>
+                    <div class="style-name">FOCUS MODE</div>
+                </a>
+                <a href="ethics_infra_hub (7).html" class="style-card">
+                    <div class="style-icon">📚</div>
+                    <div class="style-name">LIBRARY</div>
+                </a>
+                <a href="ethics_infra_hub (4).html" class="style-card">
+                    <div class="style-icon">🧱</div>
+                    <div class="style-name">BRICK STYLE</div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function enterApp() {
+            document.getElementById('splash').classList.add('hide');
+            document.getElementById('main').classList.add('show');
+            localStorage.setItem('ethics-visited', 'true');
+        }
+
+        // Skip splash if already visited
+        if (localStorage.getItem('ethics-visited')) {
+            document.getElementById('splash').classList.add('hide');
+            document.getElementById('main').classList.add('show');
+        }
+    </script>
+</body>
+
+</html>

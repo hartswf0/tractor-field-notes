@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infrastructure</title>
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23FFD700'/%3E%3Crect x='6' y='6' width='8' height='8' rx='2' fill='%23000'/%3E%3Crect x='18' y='6' width='8' height='8' rx='2' fill='%23000'/%3E%3Crect x='6' y='18' width='8' height='8' rx='2' fill='%23000'/%3E%3Crect x='18' y='18' width='8' height='8' rx='2' fill='%23000'/%3E%3C/svg%3E">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            line-height: 1;
+            overflow-x: hidden;
+        }
+
+        .bar {
+            background: #1a1a1a;
+            border-bottom: 1px solid #333;
+            padding: 8px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .sys-name {
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: #888;
+        }
+
+        .view-mode {
+            display: flex;
+            gap: 1px;
+            background: #333;
+        }
+
+        .vm-btn {
+            background: #1a1a1a;
+            border: none;
+            color: #888;
+            padding: 4px 10px;
+            font-family: inherit;
+            font-size: 10px;
+            cursor: pointer;
+            letter-spacing: 1px;
+        }
+
+        .vm-btn:hover {
+            color: #e0e0e0;
+        }
+
+        .vm-btn.on {
+            background: #333;
+            color: #e0e0e0;
+        }
+
+        /* Grid View */
+        .grid-view {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1px;
+            background: #1a1a1a;
+            padding: 1px;
+        }
+
+        .project {
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-name {
+            background: #1a1a1a;
+            padding: 8px;
+            border-bottom: 1px solid #333;
+            font-size: 11px;
+            letter-spacing: 2px;
+            color: #888;
+        }
+
+        .frames {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: #1a1a1a;
+            flex: 1;
+        }
+
+        .frame {
+            background: #0a0a0a;
+            position: relative;
+            min-height: 350px;
+        }
+
+        .frame-label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #1a1a1a;
+            border-bottom: 1px solid #333;
+            padding: 4px 8px;
+            font-size: 9px;
+            letter-spacing: 1px;
+            color: #666;
+            z-index: 10;
+        }
+
+        .frame-body {
+            position: absolute;
+            top: 24px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        .frame-body iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #0a0a0a;
+        }
+
+        .empty {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #333;
+            font-size: 10px;
+            letter-spacing: 1px;
+        }
+
+        /* Scroll View */
+        .scroll-view {
+            display: none;
+        }
+
+        .scroll-view.on {
+            display: block;
+        }
+
+        .scroll-nav {
+            background: #1a1a1a;
+            display: flex;
+            overflow-x: auto;
+            gap: 1px;
+            padding: 1px;
+            border-bottom: 1px solid #333;
+            scrollbar-width: thin;
+            scrollbar-color: #333 #1a1a1a;
+        }
+
+        .scroll-nav::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .scroll-nav::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        .scroll-nav::-webkit-scrollbar-thumb {
+            background: #333;
+        }
+
+        .sn-btn {
+            background: #0a0a0a;
+            border: none;
+            color: #666;
+            padding: 10px 16px;
+            font-family: inherit;
+            font-size: 10px;
+            cursor: pointer;
+            letter-spacing: 1px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .sn-btn:hover {
+            color: #888;
+        }
+
+        .sn-btn.on {
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+
+        .scroll-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            height: calc(100vh - 88px);
+            scrollbar-width: none;
+        }
+
+        .scroll-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scroll-frame {
+            flex: 0 0 100%;
+            scroll-snap-align: start;
+            position: relative;
+            background: #0a0a0a;
+        }
+
+        .scroll-frame .frame-label {
+            position: sticky;
+            top: 0;
+        }
+
+        .scroll-frame .frame-body {
+            position: absolute;
+            top: 24px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        .scroll-indicators {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            background: rgba(26, 26, 26, 0.9);
+            padding: 8px 12px;
+            border: 1px solid #333;
+            z-index: 50;
+        }
+
+        .indicator {
+            width: 24px;
+            height: 3px;
+            background: #333;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .indicator.on {
+            background: #888;
+        }
+
+        @media (max-width: 1024px) {
+            .grid-view {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .frames {
+                grid-template-columns: 1fr;
+            }
+
+            .frame {
+                min-height: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bar">
+        <div class="sys-name">INFRASTRUCTURE</div>
+        <div class="view-mode">
+            <button class="vm-btn on" onclick="setView('grid')">GRID</button>
+            <button class="vm-btn" onclick="setView('scroll')">SCROLL</button>
+        </div>
+    </div>
+
+    <div id="gridView" class="grid-view"></div>
+
+    <div id="scrollView" class="scroll-view">
+        <div class="scroll-nav" id="scrollNav"></div>
+        <div class="scroll-container" id="scrollContainer">
+            <div class="scroll-frame" data-type="map">
+                <div class="frame-label">MAP</div>
+                <div class="frame-body" id="mapFrame">
+                    <div class="empty">SELECT PROJECT</div>
+                </div>
+            </div>
+            <div class="scroll-frame" data-type="glossary">
+                <div class="frame-label">GLOSSARY</div>
+                <div class="frame-body" id="glossaryFrame">
+                    <div class="empty">SELECT PROJECT</div>
+                </div>
+            </div>
+            <div class="scroll-frame" data-type="genome">
+                <div class="frame-label">GENOME</div>
+                <div class="frame-body" id="genomeFrame">
+                    <div class="empty">SELECT PROJECT</div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicators">
+            <div class="indicator on" onclick="scrollToFrame(0)"></div>
+            <div class="indicator" onclick="scrollToFrame(1)"></div>
+            <div class="indicator" onclick="scrollToFrame(2)"></div>
+        </div>
+    </div>
+
+    <script>
+        const data = [
+            {
+                name: 'ATG 3.0',
+                map: 'https://hartswf0.github.io/atg-3/courage-trail-olog.html',
+                glossary: 'https://hartswf0.github.io/atg-3/pattern-glossary.html',
+                genome: 'https://hartswf0.github.io/atg-3/project-genome.html'
+            },
+            {
+                name: 'ROLE DECK',
+                map: 'https://hartswf0.github.io/role-deck/courage-trail-olog.html',
+                glossary: 'https://hartswf0.github.io/role-deck/pattern-glossary.html',
+                genome: 'https://hartswf0.github.io/role-deck/role-deck-genome.html'
+            },
+            {
+                name: 'TRACTOR',
+                map: 'https://hartswf0.github.io/tractor-dce-gyo/sitemap-manifold-04.html',
+                glossary: 'https://hartswf0.github.io/tractor-dce-gyo/pattern-glossary.html',
+                genome: 'https://hartswf0.github.io/tractor-dce-gyo/project-genome-dce-gyo.html'
+            },
+            {
+                name: 'CORE-AGE',
+                map: 'https://hartswf0.github.io/core-age/courage-trail-olog.html',
+                glossary: 'https://hartswf0.github.io/core-age/pattern-glossary.html',
+                genome: 'https://hartswf0.github.io/core-age/courage-genome.html'
+            }
+        ];
+
+        let currentProj = 0;
+
+        function init() {
+            buildGrid();
+            buildScrollNav();
+            trackScroll();
+        }
+
+        function buildGrid() {
+            const grid = document.getElementById('gridView');
+
+            data.forEach(d => {
+                const proj = document.createElement('div');
+                proj.className = 'project';
+
+                const name = document.createElement('div');
+                name.className = 'project-name';
+                name.textContent = d.name;
+                proj.appendChild(name);
+
+                const frames = document.createElement('div');
+                frames.className = 'frames';
+
+                ['map', 'glossary', 'genome'].forEach(t => {
+                    const frame = document.createElement('div');
+                    frame.className = 'frame';
+
+                    const label = document.createElement('div');
+                    label.className = 'frame-label';
+                    label.textContent = t.toUpperCase();
+                    frame.appendChild(label);
+
+                    const body = document.createElement('div');
+                    body.className = 'frame-body';
+
+                    if (d[t]) {
+                        body.innerHTML = `<iframe src="${d[t]}"></iframe>`;
+                    } else {
+                        body.innerHTML = '<div class="empty">---</div>';
+                    }
+
+                    frame.appendChild(body);
+                    frames.appendChild(frame);
+                });
+
+                proj.appendChild(frames);
+                grid.appendChild(proj);
+            });
+        }
+
+        function buildScrollNav() {
+            const nav = document.getElementById('scrollNav');
+            data.forEach((d, i) => {
+                const btn = document.createElement('button');
+                btn.className = 'sn-btn';
+                if (i === 0) btn.classList.add('on');
+                btn.textContent = d.name;
+                btn.onclick = () => loadProject(i);
+                nav.appendChild(btn);
+            });
+        }
+
+        function setView(v) {
+            document.getElementById('gridView').style.display = v === 'grid' ? 'grid' : 'none';
+            document.getElementById('scrollView').classList.toggle('on', v === 'scroll');
+
+            document.querySelectorAll('.vm-btn').forEach((btn, i) => {
+                btn.classList.toggle('on', (i === 0 && v === 'grid') || (i === 1 && v === 'scroll'));
+            });
+
+            if (v === 'scroll') {
+                loadProject(currentProj);
+            }
+        }
+
+        function loadProject(i) {
+            currentProj = i;
+            const d = data[i];
+
+            document.querySelectorAll('.sn-btn').forEach((btn, idx) => {
+                btn.classList.toggle('on', idx === i);
+            });
+
+            ['map', 'glossary', 'genome'].forEach(t => {
+                const frame = document.getElementById(`${t}Frame`);
+                if (d[t]) {
+                    frame.innerHTML = `<iframe src="${d[t]}"></iframe>`;
+                } else {
+                    frame.innerHTML = '<div class="empty">NO DATA</div>';
+                }
+            });
+
+            scrollToFrame(0);
+        }
+
+        function scrollToFrame(index) {
+            const container = document.getElementById('scrollContainer');
+            const width = container.offsetWidth;
+            container.scrollTo({
+                left: width * index,
+                behavior: 'smooth'
+            });
+        }
+
+        function trackScroll() {
+            const container = document.getElementById('scrollContainer');
+            const indicators = document.querySelectorAll('.indicator');
+
+            container.addEventListener('scroll', () => {
+                const width = container.offsetWidth;
+                const scroll = container.scrollLeft;
+                const index = Math.round(scroll / width);
+
+                indicators.forEach((ind, i) => {
+                    ind.classList.toggle('on', i === index);
+                });
+            });
+        }
+
+        init();
+    </script>
+</body>
+
+</html>
