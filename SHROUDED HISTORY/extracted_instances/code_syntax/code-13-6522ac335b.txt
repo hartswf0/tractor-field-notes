@@ -1,0 +1,46 @@
+<Hallucinated_Reasoning_Verification_Failure>
+├── <test_case>
+│   ├── [conducted_by] <godofprompt>
+│   ├── [query] <"Cases_supporting_piercing_corporate_veil_in_Delaware">
+│
+├── <AI_output>
+│   ├── [cites] <Pauley_Petroleum_v._Continental_Oil>
+│   │   ├── [status] <real_case>
+│   │   └── [jurisdiction] <Delaware>
+│   └── [asserts] <fabricated_holding>
+│       └── <"Delaware_courts_apply_10_factor_test_for_veil_piercing">
+│
+├── <verification_step>
+│   ├── <database_check>
+│   │   ├── [confirms] <case_exists>
+│   │   └── [passes] <existence_verification>
+│   └── [fails_to_detect] <holding_fabrication>
+│
+├── <court_reality>
+│   ├── [determines] <holding_is_fabricated>
+│   ├── [rejects] <asserted_legal_principle>
+│   └── [invalidates] <argument>
+│
+├── <failure_mechanism>
+│   ├── <real_case> + <fake_rule>
+│   ├── [creates] <plausible_but_false_reasoning>
+│   └── [evades] <database_level_checks>
+│
+├── <core_distinction>
+│   ├── <existence_verification>
+│   └── <accuracy_verification>
+│
+└── <systemic_conclusion>
+    ├── [demonstrates] <database_verifies_existence_not_accuracy>
+    ├── [exposes] <undetectable_AI_hallucination_path>
+    └── [results_in] <court_failure_despite_formal_compliance>
+
+
+If you want to push this further, the next clean extension is a general failure schema:
+
+
+<Real_Source> ∧ <Fabricated_Mapping> ∧ <Existence_Check>
+→ <False_Confidence> → <Litigation_Failure>
+
+
+which formally captures why this class of error survives every current safeguard.

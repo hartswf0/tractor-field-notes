@@ -1,0 +1,258 @@
+Below is a POML-first vibe coding philosophy for Poly Metis Law: not abstract “be clear,” but a buildable doctrine that treats POML as the instrument panel for “poly-metis” (many-minded) work under constraint.
+
+
+I’ll give you:
+
+
+Principles (PML vibe coding doctrine)
+
+A reusable POML template (Scout→Cook Ding pipeline)
+
+A “palette” of modes you can swap like CSS (Rubin vibe layer)
+
+
+
+Poly Metis Vibe Coding Doctrine (POML-native)
+
+
+
+<Poly_Metis_Vibe_Coding_Doctrine>
+├── <Taste_is_a_stylesheet>
+│   └── [separate] <tone> [from] <truth_conditions>
+├── <Search_is_not_speech>
+│   └── [separate] <retrieval> [from] <attestation>
+├── <Authority_tokens_are_hot>
+│   └── <citations/quotes/holdings> [require] <hard_cages>
+├── <Negative_space_is_primary>
+│   └── [define] <must_not_states> [before] <desired_states>
+├── <Stop_is_a_feature>
+│   └── <Bartleby> [is] <a_first-class_primitive>
+└── <Whole_ox_then_joint_then_cut>
+    └── [return] <evidence_world> + <cook_ding_input>
+
+
+Translation into practice:
+
+
+POML is not “prompt formatting.”
+
+POML is a control surface: components enabled/disabled, schemas enforced, modes swapped.
+
+
+
+“God-level” POML Orchestrator (Scout + Cook Ding in one file)
+
+
+
+This is a single orchestrator POML that defines:
+
+
+shared inputs
+
+two internal “programs” (Scout and Cook Ding)
+
+a strict handoff contract (cook_ding_input)
+
+
+You can run it as:
+
+
+two separate calls (recommended), or
+
+one orchestrated call if your runner supports staged execution.
+
+
+<poml version="1.0">
+
+  <!-- ===================== -->
+  <!-- GLOBAL INPUTS          -->
+  <!-- ===================== -->
+  <let name="legal_question">{{ legal_question }}</let>
+  <let name="jurisdiction">{{ jurisdiction || "UNKNOWN" }}</let>
+  <let name="facts">{{ facts || "NONE" }}</let>
+
+  <!-- ===================== -->
+  <!-- GLOBAL VIBE LAYER       -->
+  <!-- ===================== -->
+  <stylesheet>
+    {
+      "global": { "verbosity": "minimal" },
+      "scout":  { "tone": "instrumental", "verbosity": "bounded" },
+      "ding":   { "tone": "flat", "verbosity": "minimal" }
+    }
+  </stylesheet>
+
+  <!-- ========================================================= -->
+  <!-- PROGRAM A: SCOUT (FULL CORPUS, THICK WORLD, NO HOLDINGS)   -->
+  <!-- ========================================================= -->
+  <section className="scout">
+
+    <meta components="
+      -holding_assertion,
+      -doctrinal_synthesis,
+      -fact_application,
+      -confidence_smoothing
+    " />
+
+    <system>
+      <role>Scout</role>
+      <context>
+        You can search everything. Build the whole ox.
+        You do NOT state holdings. You do NOT apply law to facts.
+        You MAY extract verbatim candidate joints with locations.
+      </context>
+      <task>
+        Retrieve primary sources and build:
+        (1) evidence_world (docs + provenance + connection map)
+        (2) cook_ding_input (evidence_pack excerpts ready for Cook Ding)
+      </task>
+    </system>
+
+    <user>
+      QUESTION: {{ legal_question }}
+      JURISDICTION: {{ jurisdiction }}
+      FACTS: {{ facts }}
+      DIRECTIVE:
+        Return a thick evidence_world AND a cook_ding_input payload.
+        Candidate joints must be verbatim with locations.
+    </user>
+
+    <output-schema parser="json">
+      {
+        "type": "object",
+        "properties": {
+          "evidence_world": { "type": "object" },
+          "cook_ding_input": { "type": "object" }
+        },
+        "required": ["cook_ding_input"]
+      }
+    </output-schema>
+
+  </section>
+
+  <!-- ========================================================= -->
+  <!-- PROGRAM B: COOK DING (NO SEARCH, QUOTE-ONLY, BARTLEBY)     -->
+  <!-- ========================================================= -->
+  <section className="ding">
+
+    <meta components="
+      -search,
+      -freeform_citation,
+      -implicit_authority,
+      -speculative_completion,
+      -doctrinal_synthesis,
+      -confidence_smoothing
+    " />
+
+    <system>
+      <role>Cook Ding</role>
+      <context>
+        You cannot search. You cannot guess.
+        Use only cook_ding_input.evidence_pack.
+        If insufficient: BARTLEBY.
+      </context>
+      <task>
+        Answer the legal question using verbatim quotes + locations only.
+        State what the text allows and does not allow.
+      </task>
+    </system>
+
+    <user>
+      COOK_DING_INPUT: {{ cook_ding_input }}
+    </user>
+
+    <output-schema parser="json">
+      {
+        "type": "object",
+        "properties": {
+          "mode": { "enum": ["SUPPORTED", "NOT_SUPPORTED", "BARTLEBY"] },
+          "textual_support": { "type": "array" },
+          "assumptions_required": { "type": "array" },
+          "unknowns": { "type": "array" },
+          "bartleby": { "type": "string" }
+        },
+        "required": ["mode"]
+      }
+    </output-schema>
+
+  </section>
+
+</poml>
+
+
+This is “vibe coding” because you control the system by swapping:
+
+
+components
+
+schemas
+
+tone layers
+
+handoff contracts
+
+
+Not by rewriting prose prompts.
+
+
+
+Prompt Palette: swap vibes without changing truth conditions
+
+
+
+You want Rubin: vibe is a stylesheet, not the task.
+
+
+Here are drop-in vibe styles you can apply to either Scout or Ding.
+
+
+A) “Clerk Mode” (hostile to ambiguity)
+
+
+{ "tone": "judicial", "verbosity": "minimal" }
+
+
+B) “Historian Mode” (thick metadata, no conclusions)
+
+
+{ "tone": "archival", "verbosity": "bounded" }
+
+
+C) “Litigator Mode” (counter-authority emphasis)
+
+
+{ "tone": "adversarial", "verbosity": "bounded" }
+
+
+D) “Bartleby Mode” (stop fast)
+
+
+{ "tone": "flat", "verbosity": "one-line" }
+
+
+Key rule: vibes must never touch:
+
+
+quote requirements
+
+provenance requirements
+
+schemas
+
+forbidden states
+
+
+Vibe is paint. Constraints are masonry.
+
+
+
+The PML vibe coding slogan (usable)
+
+Style is swappable. Constraints are law.
+
+If you want, I can:
+
+
+compress this into a single production Scout POML + Ding POML pair with shared schema files,
+
+or give a “mode switch” POML where one boolean flips Clerk vs Historian vs Litigator.

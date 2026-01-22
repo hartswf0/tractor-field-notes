@@ -1,0 +1,7 @@
+<Geertz_Primary_Mapping_(Culture_as_Control_Mechanisms)>
+├── <culture> [is] <control_mechanisms>
+│   └── {<plans>, <recipes>, <rules>, <instructions>, <symbols>}
+└── <AI_slop> [is] <control_mechanism_pollution>
+    ├── [injects] <symbols_without_shared_grounding>
+    ├── [increases] <interpretation_cost>
+    └── [erodes] <steering_capacity_of_shared_meaning>

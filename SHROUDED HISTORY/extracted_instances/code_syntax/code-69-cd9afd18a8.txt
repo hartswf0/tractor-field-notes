@@ -1,0 +1,103 @@
+<Taoist_Vibe_Coder_x_Legal_Case_(Mata)_x_McLuhan_x_Geertz>
+├── <Scene_Setting>
+│   ├── <studio>
+│   │   └── <vibe_coder> [practices] <wu_wei>
+│   │       ├── [speaks] <intent>
+│   │       ├── [trusts] <flow>
+│   │       └── [lets] <AI> [carry] <syntax_labor>
+│   └── <courtroom>
+│       └── <judge> [demands] <hot_medium_proof>
+│           ├── <record>
+│           ├── <citation>
+│           └── <auditability>
+│
+├── <The_Case_Hook_(Mata_v_Avianca)>
+│   ├── <workflow_event>
+│   │   ├── <lawyer> [used] <AI_for_legal_research>
+│   │   ├── <AI_output> [included] <bogus_cases_and_quotes>
+│   │   └── <court> [imposed] <sanctions>
+│   └── <why_it_is_the_koan>
+│       ├── [because] <the_text_looked_like_law>
+│       └── [but] <the_record_was_empty>
+│
+├── <Taoist_Reading_(Wu_Wei_and_Naming)>
+│   ├── <wu_wei>
+│   │   └── [means] <action_without_forcing>
+│   │       ├── [works_when] <the_system_can_absorb_error>
+│   │       └── [fails_when] <error_is_irreversible>
+│   ├── <names>
+│   │   ├── <citation> [is] <a_name>
+│   │   └── <holding> [is] <a_name_of_truth>
+│   └── <Taoist_verdict_on_Mata>
+│       └── <the_name_without_root>
+│           ├── <citation_form> [without] <case_truth>
+│           └── <holding_claim> [without] <textual_ground>
+│           └── [becomes] <emptiness_that_is_not_use>
+│
+├── <McLuhan_Reading_(Medium_Temperature)>
+│   ├── <AI_interface> [is] <cool_medium>
+│   │   ├── <low_definition_input> (intent talk)
+│   │   └── <high_completion_pressure> (model fills gaps)
+│   ├── <court_record> [is] <hot_medium>
+│   │   ├── <high_definition>
+│   │   └── <low_tolerance_for_ambiguity>
+│   └── <McLuhan_verdict_on_Mata>
+│       └── <temperature_mismatch>
+│           ├── <cool_text_produced_at_scale>
+│           └── [submitted_into] <hot_audit_regime>
+│           └── [reveals] <the_medium_is_the_message>
+│               └── <message> := <plausibility_at_scale_without_native_audit>
+│
+├── <Geertz_Reading_(Culture_as_Control_Mechanisms)>
+│   ├── <law> [is] <a_symbolic_control_system>
+│   │   ├── <citations> [are] <authority_tokens>
+│   │   ├── <quotations> [are] <evidence_tokens>
+│   │   └── <holdings> [are] <control_instructions>
+│   ├── <AI_output>
+│   │   └── [mimics] <tokens>
+│   │       └── [without] <the_control_system_that_gives_them_force>
+│   └── <Geertz_verdict_on_Mata>
+│       └── <ritual_forms_without_substance>
+│           ├── <symbolic_web> [spun] <too_fast>
+│           └── <web> [detaches_from] <shared_verification_practices>
+│
+├── <The_Legal_AI_Disclosure_Koan>
+│   ├── <rule> [requires] <disclosure>
+│   ├── <but> [does_not_supply] <verification_infrastructure>
+│   └── <therefore>
+│       ├── <lawyer> [must] <confess_the_medium>
+│       └── <lawyer> [cannot] <prove_the_flow_was_true>
+│
+├── <The_Wu_Wei_Boundary_Principle_(Doctrine)>
+│   ├── <allow_flow_in>
+│   │   ├── <brainstorming>
+│   │   ├── <outlines>
+│   │   ├── <plain_language_explanations>
+│   │   └── <hypothesis_generation>
+│   ├── <forbid_flow_in>
+│   │   ├── <citations>
+│   │   ├── <quotes>
+│   │   ├── <holdings>
+│   │   └── <applications_to_facts>
+│   └── <maxim>
+│       └── <wu_wei_is_safe_where_error_is_reversible>
+│
+└── <Final_Argument_(Elegant)>
+    ├── <Tao> [warns] <names_without_roots>
+    ├── <McLuhan> [predicts] <temperature_mismatch_costs>
+    ├── <Geertz> [explains] <token_mimicry_without_control_mechanisms>
+    └── <Mata> [demonstrates] <the_collision_in_one_filing>
+        └── [therefore] <the_way_of_code_in_law> :=
+            <flow_in_creation>
+            ∧ <heat_in_attestation>
+            ∧ <never_let_the_river_sign_the_affidavit>
+
+
+If you want, I can turn this into:
+
+
+a short Tao-style court koan (10–20 lines),
+
+or a judge-facing argument (“temperature mismatch” as doctrine),
+
+or a studio manifesto (“wu wei with boundaries”).

@@ -1,0 +1,54 @@
+<Final_Verdict_AI_Legal_Malpractice>
+├── <judicial_environment>
+│   ├── [requires] <AI_disclosure>
+│   ├── [does_not_provide] <verification_tools>
+│   └── [shifts] <verification_burden_to_attorneys>
+│
+├── <empirical_reality>
+│   ├── <hallucination_rate>
+│   │   └── [measured_at] <19_percent_of_legal_AI_citations>
+│   ├── <error_character>
+│   │   ├── <real_courts>
+│   │   ├── <real_judges>
+│   │   └── <fabricated_cases_or_holdings>
+│
+├── <verification_landscape>
+│   ├── [contains] <methods>
+│   │   ├── <database_lookup>
+│   │   ├── <manual_opinion_review>
+│   │   ├── <cross_tool_comparison>
+│   │   └── <shepardizing>
+│   ├── [fails_property] <reliable_and_scalable>
+│   └── [concludes] <no_effective_verification_protocol>
+│
+├── <insurance_response>
+│   ├── [introduces] <AI_generated_work_exclusions>
+│   ├── [raises] <premiums>
+│   └── [denies] <coverage_in_some_cases>
+│
+├── <professional_guidance>
+│   ├── <bar_associations>
+│   │   ├── [issue] <general_duties>
+│   │   ├── [lack] <specific_protocols>
+│   │   └── [lack] <safe_harbors>
+│   └── [characterized_as] <platitudes_not_infrastructure>
+│
+├── <liability_outcomes>
+│   ├── <malpractice_exposure>
+│   │   ├── [includes] <sanctions>
+│   │   │   └── [documented_at] <$5,000_plus>
+│   │   └── [includes] <uninsured_risk>
+│   └── [creates] <new_category_of_legal_malpractice>
+│
+├── <system_state>
+│   ├── <courts_require_disclosure>
+│   ├── <insurance_excludes_coverage>
+│   ├── <guidance_is_vague>
+│   ├── <verification_is_unreliable>
+│   └── <hallucination_rate_is_nontrivial>
+│
+└── <terminal_conclusion>
+    ├── [states] <no_method_is_both_reliable_and_scalable>
+    ├── [states] <perfect_verification_method_does_not_exist>
+    ├── [labels_state_as] <NO_SOLUTION>
+    └── [observes] <nobody_knows_how_to_prevent_this_yet>

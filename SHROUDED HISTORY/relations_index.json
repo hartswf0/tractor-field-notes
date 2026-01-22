@@ -1,0 +1,3363 @@
+{
+  "stats": {
+    "total_trees": 63,
+    "unique_entities": 1766,
+    "unique_relations": 438,
+    "definitions": 85,
+    "sources_processed": 30
+  },
+  "relations": [
+    {
+      "relation": "[is]",
+      "count": 110,
+      "trees": [
+        "tree-59-1-8ec429a819",
+        "tree-61-1-3b8afa918a",
+        "tree-79-6-99b2a1e327",
+        "tree-79-8-c997b0f22f",
+        "tree-37-4-2a6c77eef5",
+        "tree-35-1-21923feae3",
+        "tree-37-2-52100dc28c",
+        "tree-67-3-af339cbc28",
+        "tree-5-1-2f70b31ec8",
+        "tree-41-1-ce6363ad36",
+        "tree-71-1-06ae92e407",
+        "tree-67-2-0209428605",
+        "tree-79-4-50144e1d15",
+        "tree-59-4-4d7a1fc7e4",
+        "tree-45-1-d7c5a31e2d",
+        "tree-133-1-4a2d3bee4d",
+        "tree-25-1-31338dc648",
+        "tree-67-5-f27b2c9f04",
+        "tree-65-1-a60dc4441e",
+        "tree-73-1-9cd318b1a7",
+        "tree-69-1-2439835c59",
+        "tree-39-1-aea40f429f",
+        "tree-37-3-20f5f69428",
+        "tree-43-1-66cedc3c7d",
+        "tree-11-1-22caabf831"
+      ]
+    },
+    {
+      "relation": "[as]",
+      "count": 29,
+      "trees": [
+        "tree-61-1-3b8afa918a",
+        "tree-71-1-06ae92e407",
+        "tree-65-1-a60dc4441e",
+        "tree-73-1-9cd318b1a7",
+        "tree-67-4-6f881926ab"
+      ]
+    },
+    {
+      "relation": "[requires]",
+      "count": 21,
+      "trees": [
+        "tree-1-1-15b69a4493",
+        "tree-1-6-0deb479f78",
+        "tree-21-1-86d3a0ad99",
+        "tree-63-5-f0bf59f3e8",
+        "tree-15-1-21175c1c42",
+        "tree-7-1-c36ae109c8",
+        "tree-23-1-78a66df910",
+        "tree-35-1-21923feae3",
+        "tree-45-1-d7c5a31e2d",
+        "tree-73-1-9cd318b1a7",
+        "tree-69-1-2439835c59",
+        "tree-39-1-aea40f429f",
+        "tree-43-1-66cedc3c7d"
+      ]
+    },
+    {
+      "relation": "[are]",
+      "count": 17,
+      "trees": [
+        "tree-37-4-2a6c77eef5",
+        "tree-35-1-21923feae3",
+        "tree-41-1-ce6363ad36",
+        "tree-71-1-06ae92e407",
+        "tree-45-1-d7c5a31e2d",
+        "tree-65-1-a60dc4441e",
+        "tree-73-1-9cd318b1a7",
+        "tree-69-1-2439835c59",
+        "tree-39-1-aea40f429f"
+      ]
+    },
+    {
+      "relation": "[therefore]",
+      "count": 15,
+      "trees": [
+        "tree-61-1-3b8afa918a",
+        "tree-35-1-21923feae3",
+        "tree-37-2-52100dc28c",
+        "tree-37-1-a5214b4265",
+        "tree-41-1-ce6363ad36",
+        "tree-25-1-31338dc648",
+        "tree-73-1-9cd318b1a7",
+        "tree-69-1-2439835c59"
+      ]
+    },
+    {
+      "relation": "[becomes]",
+      "count": 15,
+      "trees": [
+        "tree-61-1-3b8afa918a",
+        "tree-35-1-21923feae3",
+        "tree-37-2-52100dc28c",
+        "tree-41-1-ce6363ad36",
+        "tree-71-1-06ae92e407",
+        "tree-79-1-51dbd4ff1b",
+        "tree-63-4-aae5907eb7",
+        "tree-65-1-a60dc4441e",
+        "tree-73-1-9cd318b1a7",
+        "tree-69-1-2439835c59",
+        "tree-37-3-20f5f69428"
+      ]
+    },
+    {
+      "relation": "[means]",
+      "count": 13,
+      "trees": [
+        "tree-61-1-3b8afa918a",
+        "tree-35-1-21923feae3",
+        "tree-37-2-52100dc28c",
+        "tree-25-1-31338dc648",
+        "tree-73-1-9cd318b1a7",
+        "tree-69-1-2439835c59",
+        "tree-39-1-aea40f429f",
+        "tree-43-1-66cedc3c7d"
+      ]
+    },
+    {
+      "relation": "[ask]",
+      "count": 13,
+      "trees": [
+        "tree-35-1-21923feae3",
+        "tree-71-1-06ae92e407",
+        "tree-59-3-2d530d6c2c"
+      ]
+    },
+    {
+      "relation": "[creates]",
+      "count": 12,
+      "trees": [
+        "tree-1-6-0deb479f78",
+        "tree-21-1-86d3a0ad99",
+        "tree-7-1-c36ae109c8",
+        "tree-37-4-2a6c77eef5",
+        "tree-23-1-78a66df910",
+        "tree-9-1-276ef2d9bc",
+        "tree-13-1-6d0bea2abf",
+        "tree-41-1-ce6363ad36",
+        "tree-17-1-c610362c56",
+        "tree-73-1-9cd318b1a7",
+        "tree-11-1-22caabf831"
+      ]
+    },
+    {
+      "relation": "[shows]",
+      "count": 12,
+      "trees": [
+        "tree-15-1-21175c1c42",
+        "tree-9-1-276ef2d9bc",
+        "tree-37-1-a5214b4265",
+        "tree-45-1-d7c5a31e2d",
+        "tree-17-1-c610362c56",
+        "tree-65-1-a60dc4441e",
+        "tree-39-1-aea40f429f",
+        "tree-11-1-22caabf831"
+      ]
+    },
+    {
+      "relation": "[because]",
+      "count": 10,
+      "trees": [
+        "tree-37-4-2a6c77eef5",
+        "tree-35-1-21923feae3",
+        "tree-41-1-ce6363ad36",
+        "tree-45-1-d7c5a31e2d",
+        "tree-73-1-9cd318b1a7",
+        "tree-69-1-2439835c59"
+      ]
+    },
+    {
+      "relation": "[treats]",
+      "count": 10,
+      "trees": [
+        "tree-71-1-06ae92e407",
+        "tree-65-1-a60dc4441e",
+        "tree-73-1-9cd318b1a7",
+        "tree-67-4-6f881926ab"
+      ]
+    },
+    {
+      "relation": "[lacks]",
+      "count": 9,
+      "trees": [
+        "tree-1-6-0deb479f78",
+        "tree-19-1-f012743939",
+        "tree-7-1-c36ae109c8",
+        "tree-17-1-c610362c56"
+      ]
+    },
+    {
+      "relation": "[produces]",
+      "count": 9,
+      "trees": [
+        "tree-1-6-0deb479f78",
+        "tree-35-1-21923feae3",
+        "tree-71-1-06ae92e407",
+        "tree-67-2-0209428605",
+        "tree-73-1-9cd318b1a7",
+        "tree-37-3-20f5f69428",
+        "tree-43-1-66cedc3c7d",
+        "tree-11-1-22caabf831"
+      ]
+    },
+    {
+      "relation": "[but]",
+      "count": 9,
+      "trees": [
+        "tree-61-1-3b8afa918a",
+        "tree-45-1-d7c5a31e2d",
+        "tree-25-1-31338dc648",
+        "tree-69-1-2439835c59"
+      ]
+    },
+    {
+      "relation": "[is_not]",
+      "count": 9,
+      "trees": [
+        "tree-79-6-99b2a1e327",
+        "tree-35-1-21923feae3",
+        "tree-41-1-ce6363ad36",
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[assume]",
+      "count": 9,
+      "trees": [
+        "tree-71-1-06ae92e407",
+        "tree-25-1-31338dc648",
+        "tree-43-1-66cedc3c7d"
+      ]
+    },
+    {
+      "relation": "[states]",
+      "count": 8,
+      "trees": [
+        "tree-21-1-86d3a0ad99",
+        "tree-15-1-21175c1c42",
+        "tree-19-1-f012743939",
+        "tree-23-1-78a66df910",
+        "tree-37-1-a5214b4265"
+      ]
+    },
+    {
+      "relation": "[so]",
+      "count": 8,
+      "trees": [
+        "tree-37-4-2a6c77eef5",
+        "tree-41-1-ce6363ad36",
+        "tree-63-1-674ed59681",
+        "tree-25-1-31338dc648",
+        "tree-65-1-a60dc4441e",
+        "tree-73-1-9cd318b1a7",
+        "tree-79-5-7c2799ed4b"
+      ]
+    },
+    {
+      "relation": "[demands]",
+      "count": 7,
+      "trees": [
+        "tree-1-1-15b69a4493",
+        "tree-71-1-06ae92e407",
+        "tree-45-1-d7c5a31e2d",
+        "tree-69-1-2439835c59",
+        "tree-43-1-66cedc3c7d"
+      ]
+    },
+    {
+      "relation": "[define]",
+      "count": 7,
+      "trees": [
+        "tree-35-1-21923feae3",
+        "tree-133-1-4a2d3bee4d",
+        "tree-73-1-9cd318b1a7",
+        "tree-79-5-7c2799ed4b",
+        "tree-43-1-66cedc3c7d"
+      ]
+    },
+    {
+      "relation": "[increases]",
+      "count": 6,
+      "trees": [
+        "tree-1-1-15b69a4493",
+        "tree-15-1-21175c1c42",
+        "tree-67-3-af339cbc28",
+        "tree-59-2-191883c61f",
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[shifts]",
+      "count": 6,
+      "trees": [
+        "tree-1-6-0deb479f78",
+        "tree-23-1-78a66df910",
+        "tree-35-1-21923feae3",
+        "tree-67-2-0209428605"
+      ]
+    },
+    {
+      "relation": "[changes]",
+      "count": 6,
+      "trees": [
+        "tree-61-1-3b8afa918a",
+        "tree-35-1-21923feae3",
+        "tree-41-1-ce6363ad36",
+        "tree-67-4-6f881926ab"
+      ]
+    },
+    {
+      "relation": "[to]",
+      "count": 6,
+      "trees": [
+        "tree-61-1-3b8afa918a",
+        "tree-41-1-ce6363ad36",
+        "tree-73-1-9cd318b1a7",
+        "tree-79-5-7c2799ed4b"
+      ]
+    },
+    {
+      "relation": "[without]",
+      "count": 6,
+      "trees": [
+        "tree-71-1-06ae92e407",
+        "tree-69-1-2439835c59",
+        "tree-39-1-aea40f429f"
+      ]
+    },
+    {
+      "relation": "[verifies]",
+      "count": 5,
+      "trees": [
+        "tree-1-1-15b69a4493",
+        "tree-21-1-86d3a0ad99",
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[oaicite:0]",
+      "count": 5,
+      "trees": [
+        "tree-61-1-3b8afa918a",
+        "tree-37-1-a5214b4265",
+        "tree-67-1-7b9f398266",
+        "tree-65-1-a60dc4441e",
+        "tree-73-1-9cd318b1a7"
+      ]
+    },
+    {
+      "relation": "[oaicite:1]",
+      "count": 5,
+      "trees": [
+        "tree-61-1-3b8afa918a",
+        "tree-37-1-a5214b4265",
+        "tree-67-1-7b9f398266",
+        "tree-65-1-a60dc4441e",
+        "tree-73-1-9cd318b1a7"
+      ]
+    },
+    {
+      "relation": "[reveals]",
+      "count": 5,
+      "trees": [
+        "tree-61-1-3b8afa918a",
+        "tree-21-1-86d3a0ad99",
+        "tree-69-1-2439835c59",
+        "tree-39-1-aea40f429f",
+        "tree-11-1-22caabf831"
+      ]
+    },
+    {
+      "relation": "[become]",
+      "count": 5,
+      "trees": [
+        "tree-61-1-3b8afa918a",
+        "tree-41-1-ce6363ad36",
+        "tree-73-1-9cd318b1a7"
+      ]
+    },
+    {
+      "relation": "[raises]",
+      "count": 5,
+      "trees": [
+        "tree-61-1-3b8afa918a",
+        "tree-63-3-b91f3ffd87",
+        "tree-23-1-78a66df910"
+      ]
+    },
+    {
+      "relation": "[and]",
+      "count": 5,
+      "trees": [
+        "tree-61-1-3b8afa918a",
+        "tree-79-1-51dbd4ff1b",
+        "tree-25-1-31338dc648",
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[asks]",
+      "count": 5,
+      "trees": [
+        "tree-21-1-86d3a0ad99",
+        "tree-65-1-a60dc4441e",
+        "tree-73-1-9cd318b1a7"
+      ]
+    },
+    {
+      "relation": "[function]",
+      "count": 5,
+      "trees": [
+        "tree-21-1-86d3a0ad99",
+        "tree-73-1-9cd318b1a7"
+      ]
+    },
+    {
+      "relation": "[asserts]",
+      "count": 5,
+      "trees": [
+        "tree-19-1-f012743939",
+        "tree-35-1-21923feae3",
+        "tree-9-1-276ef2d9bc",
+        "tree-13-1-6d0bea2abf",
+        "tree-11-1-22caabf831"
+      ]
+    },
+    {
+      "relation": "[separate]",
+      "count": 5,
+      "trees": [
+        "tree-35-1-21923feae3",
+        "tree-133-1-4a2d3bee4d",
+        "tree-79-5-7c2799ed4b",
+        "tree-43-1-66cedc3c7d"
+      ]
+    },
+    {
+      "relation": "[passes]",
+      "count": 5,
+      "trees": [
+        "tree-13-1-6d0bea2abf",
+        "tree-71-1-06ae92e407",
+        "tree-39-1-aea40f429f",
+        "tree-37-3-20f5f69428",
+        "tree-11-1-22caabf831"
+      ]
+    },
+    {
+      "relation": "[exposes]",
+      "count": 5,
+      "trees": [
+        "tree-13-1-6d0bea2abf",
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[is_part_of]",
+      "count": 4,
+      "trees": [
+        "tree-61-1-3b8afa918a",
+        "tree-63-1-674ed59681",
+        "tree-67-5-f27b2c9f04",
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[selects_for]",
+      "count": 4,
+      "trees": [
+        "tree-61-1-3b8afa918a",
+        "tree-63-3-b91f3ffd87",
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[effectiveness]",
+      "count": 4,
+      "trees": [
+        "tree-21-1-86d3a0ad99"
+      ]
+    },
+    {
+      "relation": "[time_cost]",
+      "count": 4,
+      "trees": [
+        "tree-21-1-86d3a0ad99"
+      ]
+    },
+    {
+      "relation": "[results_in]",
+      "count": 4,
+      "trees": [
+        "tree-19-1-f012743939",
+        "tree-13-1-6d0bea2abf",
+        "tree-17-1-c610362c56"
+      ]
+    },
+    {
+      "relation": "[retains]",
+      "count": 4,
+      "trees": [
+        "tree-7-1-c36ae109c8",
+        "tree-71-1-06ae92e407",
+        "tree-25-1-31338dc648",
+        "tree-39-1-aea40f429f"
+      ]
+    },
+    {
+      "relation": "[oaicite:3]",
+      "count": 4,
+      "trees": [
+        "tree-37-4-2a6c77eef5",
+        "tree-67-1-7b9f398266",
+        "tree-65-1-a60dc4441e",
+        "tree-73-1-9cd318b1a7"
+      ]
+    },
+    {
+      "relation": "[extends]",
+      "count": 4,
+      "trees": [
+        "tree-35-1-21923feae3",
+        "tree-41-1-ce6363ad36"
+      ]
+    },
+    {
+      "relation": "[included]",
+      "count": 4,
+      "trees": [
+        "tree-5-1-2f70b31ec8",
+        "tree-69-1-2439835c59"
+      ]
+    },
+    {
+      "relation": "[hallucinated_at_rate]",
+      "count": 4,
+      "trees": [
+        "tree-9-1-276ef2d9bc"
+      ]
+    },
+    {
+      "relation": "[from]",
+      "count": 4,
+      "trees": [
+        "tree-41-1-ce6363ad36",
+        "tree-133-1-4a2d3bee4d",
+        "tree-79-5-7c2799ed4b"
+      ]
+    },
+    {
+      "relation": "[has]",
+      "count": 4,
+      "trees": [
+        "tree-41-1-ce6363ad36",
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[sees]",
+      "count": 4,
+      "trees": [
+        "tree-83-1-2f69f674f4",
+        "tree-79-3-42c29fac35"
+      ]
+    },
+    {
+      "relation": "[require]",
+      "count": 4,
+      "trees": [
+        "tree-133-1-4a2d3bee4d",
+        "tree-37-5-8055a454a1",
+        "tree-25-1-31338dc648",
+        "tree-43-1-66cedc3c7d"
+      ]
+    },
+    {
+      "relation": "[not_by]",
+      "count": 4,
+      "trees": [
+        "tree-79-1-51dbd4ff1b",
+        "tree-73-1-9cd318b1a7"
+      ]
+    },
+    {
+      "relation": "[thus]",
+      "count": 4,
+      "trees": [
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[do_not]",
+      "count": 4,
+      "trees": [
+        "tree-73-1-9cd318b1a7"
+      ]
+    },
+    {
+      "relation": "[triggers]",
+      "count": 3,
+      "trees": [
+        "tree-1-1-15b69a4493",
+        "tree-39-1-aea40f429f",
+        "tree-43-1-66cedc3c7d"
+      ]
+    },
+    {
+      "relation": "[reduces]",
+      "count": 3,
+      "trees": [
+        "tree-1-1-15b69a4493",
+        "tree-15-1-21175c1c42",
+        "tree-59-2-191883c61f"
+      ]
+    },
+    {
+      "relation": "[optimized_for]",
+      "count": 3,
+      "trees": [
+        "tree-59-1-8ec429a819",
+        "tree-61-1-3b8afa918a"
+      ]
+    },
+    {
+      "relation": "[leads_to]",
+      "count": 3,
+      "trees": [
+        "tree-21-1-86d3a0ad99",
+        "tree-15-1-21175c1c42",
+        "tree-17-1-c610362c56"
+      ]
+    },
+    {
+      "relation": "[costs]",
+      "count": 3,
+      "trees": [
+        "tree-15-1-21175c1c42",
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[then]",
+      "count": 3,
+      "trees": [
+        "tree-15-1-21175c1c42",
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[summarized_as]",
+      "count": 3,
+      "trees": [
+        "tree-19-1-f012743939",
+        "tree-7-1-c36ae109c8",
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[says]",
+      "count": 3,
+      "trees": [
+        "tree-67-6-b7cc3572c3",
+        "tree-67-4-6f881926ab"
+      ]
+    },
+    {
+      "relation": "[rejects]",
+      "count": 3,
+      "trees": [
+        "tree-1-5-feacd37d29",
+        "tree-35-1-21923feae3",
+        "tree-13-1-6d0bea2abf"
+      ]
+    },
+    {
+      "relation": "[contains]",
+      "count": 3,
+      "trees": [
+        "tree-23-1-78a66df910",
+        "tree-35-1-21923feae3",
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[lack]",
+      "count": 3,
+      "trees": [
+        "tree-23-1-78a66df910",
+        "tree-43-1-66cedc3c7d"
+      ]
+    },
+    {
+      "relation": "[includes]",
+      "count": 3,
+      "trees": [
+        "tree-23-1-78a66df910",
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[show]",
+      "count": 3,
+      "trees": [
+        "tree-35-1-21923feae3",
+        "tree-71-1-06ae92e407",
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[claims]",
+      "count": 3,
+      "trees": [
+        "tree-35-1-21923feae3",
+        "tree-5-1-2f70b31ec8"
+      ]
+    },
+    {
+      "relation": "[acts_as]",
+      "count": 3,
+      "trees": [
+        "tree-35-1-21923feae3"
+      ]
+    },
+    {
+      "relation": "[function_as]",
+      "count": 3,
+      "trees": [
+        "tree-37-2-52100dc28c"
+      ]
+    },
+    {
+      "relation": "[risk]",
+      "count": 3,
+      "trees": [
+        "tree-37-2-52100dc28c",
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[erodes]",
+      "count": 3,
+      "trees": [
+        "tree-67-3-af339cbc28",
+        "tree-59-2-191883c61f",
+        "tree-37-3-20f5f69428"
+      ]
+    },
+    {
+      "relation": "[invented]",
+      "count": 3,
+      "trees": [
+        "tree-5-1-2f70b31ec8"
+      ]
+    },
+    {
+      "relation": "[has_property]",
+      "count": 3,
+      "trees": [
+        "tree-5-1-2f70b31ec8"
+      ]
+    },
+    {
+      "relation": "[imposed]",
+      "count": 3,
+      "trees": [
+        "tree-37-1-a5214b4265",
+        "tree-69-1-2439835c59",
+        "tree-39-1-aea40f429f"
+      ]
+    },
+    {
+      "relation": "[hallucinates]",
+      "count": 3,
+      "trees": [
+        "tree-37-1-a5214b4265",
+        "tree-11-1-22caabf831"
+      ]
+    },
+    {
+      "relation": "[stabilize]",
+      "count": 3,
+      "trees": [
+        "tree-41-1-ce6363ad36",
+        "tree-67-5-f27b2c9f04",
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[privileges]",
+      "count": 3,
+      "trees": [
+        "tree-71-1-06ae92e407",
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[fails]",
+      "count": 3,
+      "trees": [
+        "tree-71-1-06ae92e407",
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[punishes]",
+      "count": 3,
+      "trees": [
+        "tree-71-1-06ae92e407",
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[before]",
+      "count": 3,
+      "trees": [
+        "tree-79-4-50144e1d15",
+        "tree-133-1-4a2d3bee4d",
+        "tree-79-5-7c2799ed4b"
+      ]
+    },
+    {
+      "relation": "[about]",
+      "count": 3,
+      "trees": [
+        "tree-67-1-7b9f398266"
+      ]
+    },
+    {
+      "relation": "[oaicite:2]",
+      "count": 3,
+      "trees": [
+        "tree-67-1-7b9f398266",
+        "tree-65-1-a60dc4441e",
+        "tree-73-1-9cd318b1a7"
+      ]
+    },
+    {
+      "relation": "[vs]",
+      "count": 3,
+      "trees": [
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[claim]",
+      "count": 3,
+      "trees": [
+        "tree-73-1-9cd318b1a7",
+        "tree-39-1-aea40f429f"
+      ]
+    },
+    {
+      "relation": "[denies]",
+      "count": 2,
+      "trees": [
+        "tree-1-1-15b69a4493",
+        "tree-23-1-78a66df910"
+      ]
+    },
+    {
+      "relation": "[risks]",
+      "count": 2,
+      "trees": [
+        "tree-1-1-15b69a4493",
+        "tree-17-1-c610362c56"
+      ]
+    },
+    {
+      "relation": "[cites]",
+      "count": 2,
+      "trees": [
+        "tree-1-3-e0a080e2be",
+        "tree-13-1-6d0bea2abf"
+      ]
+    },
+    {
+      "relation": "[was]",
+      "count": 2,
+      "trees": [
+        "tree-61-1-3b8afa918a",
+        "tree-37-2-52100dc28c"
+      ]
+    },
+    {
+      "relation": "[argued]",
+      "count": 2,
+      "trees": [
+        "tree-61-1-3b8afa918a"
+      ]
+    },
+    {
+      "relation": "[treat]",
+      "count": 2,
+      "trees": [
+        "tree-61-1-3b8afa918a",
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[not]",
+      "count": 2,
+      "trees": [
+        "tree-61-1-3b8afa918a",
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[incentivizes]",
+      "count": 2,
+      "trees": [
+        "tree-61-1-3b8afa918a",
+        "tree-63-3-b91f3ffd87"
+      ]
+    },
+    {
+      "relation": "[that]",
+      "count": 2,
+      "trees": [
+        "tree-61-1-3b8afa918a",
+        "tree-63-4-aae5907eb7"
+      ]
+    },
+    {
+      "relation": "[while]",
+      "count": 2,
+      "trees": [
+        "tree-61-1-3b8afa918a",
+        "tree-41-1-ce6363ad36"
+      ]
+    },
+    {
+      "relation": "[detects]",
+      "count": 2,
+      "trees": [
+        "tree-21-1-86d3a0ad99"
+      ]
+    },
+    {
+      "relation": "[fails_to_detect]",
+      "count": 2,
+      "trees": [
+        "tree-21-1-86d3a0ad99",
+        "tree-13-1-6d0bea2abf"
+      ]
+    },
+    {
+      "relation": "[observes]",
+      "count": 2,
+      "trees": [
+        "tree-21-1-86d3a0ad99",
+        "tree-23-1-78a66df910"
+      ]
+    },
+    {
+      "relation": "[appears_when]",
+      "count": 2,
+      "trees": [
+        "tree-79-6-99b2a1e327",
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[does_not_provide]",
+      "count": 2,
+      "trees": [
+        "tree-7-1-c36ae109c8",
+        "tree-23-1-78a66df910"
+      ]
+    },
+    {
+      "relation": "[confirms]",
+      "count": 2,
+      "trees": [
+        "tree-1-4-e2624f396b",
+        "tree-13-1-6d0bea2abf"
+      ]
+    },
+    {
+      "relation": "[govern]",
+      "count": 2,
+      "trees": [
+        "tree-35-1-21923feae3",
+        "tree-41-1-ce6363ad36"
+      ]
+    },
+    {
+      "relation": "[develops_within]",
+      "count": 2,
+      "trees": [
+        "tree-35-1-21923feae3",
+        "tree-41-1-ce6363ad36"
+      ]
+    },
+    {
+      "relation": "[reconfigures]",
+      "count": 2,
+      "trees": [
+        "tree-35-1-21923feae3"
+      ]
+    },
+    {
+      "relation": "[with]",
+      "count": 2,
+      "trees": [
+        "tree-35-1-21923feae3",
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[amplifies]",
+      "count": 2,
+      "trees": [
+        "tree-35-1-21923feae3",
+        "tree-59-2-191883c61f"
+      ]
+    },
+    {
+      "relation": "[increase]",
+      "count": 2,
+      "trees": [
+        "tree-35-1-21923feae3",
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[force]",
+      "count": 2,
+      "trees": [
+        "tree-35-1-21923feae3",
+        "tree-43-1-66cedc3c7d"
+      ]
+    },
+    {
+      "relation": "[used]",
+      "count": 2,
+      "trees": [
+        "tree-5-1-2f70b31ec8",
+        "tree-69-1-2439835c59"
+      ]
+    },
+    {
+      "relation": "[for]",
+      "count": 2,
+      "trees": [
+        "tree-5-1-2f70b31ec8",
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[resulted_in]",
+      "count": 2,
+      "trees": [
+        "tree-5-1-2f70b31ec8"
+      ]
+    },
+    {
+      "relation": "[conducted_by]",
+      "count": 2,
+      "trees": [
+        "tree-9-1-276ef2d9bc",
+        "tree-13-1-6d0bea2abf"
+      ]
+    },
+    {
+      "relation": "[cite]",
+      "count": 2,
+      "trees": [
+        "tree-9-1-276ef2d9bc"
+      ]
+    },
+    {
+      "relation": "[demonstrates]",
+      "count": 2,
+      "trees": [
+        "tree-13-1-6d0bea2abf",
+        "tree-69-1-2439835c59"
+      ]
+    },
+    {
+      "relation": "[contained]",
+      "count": 2,
+      "trees": [
+        "tree-37-1-a5214b4265",
+        "tree-39-1-aea40f429f"
+      ]
+    },
+    {
+      "relation": "[turns]",
+      "count": 2,
+      "trees": [
+        "tree-37-1-a5214b4265",
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[argue]",
+      "count": 2,
+      "trees": [
+        "tree-37-1-a5214b4265"
+      ]
+    },
+    {
+      "relation": "[functions_as]",
+      "count": 2,
+      "trees": [
+        "tree-41-1-ce6363ad36",
+        "tree-67-1-7b9f398266"
+      ]
+    },
+    {
+      "relation": "[into]",
+      "count": 2,
+      "trees": [
+        "tree-41-1-ce6363ad36",
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[enhances]",
+      "count": 2,
+      "trees": [
+        "tree-41-1-ce6363ad36"
+      ]
+    },
+    {
+      "relation": "[obsolesces]",
+      "count": 2,
+      "trees": [
+        "tree-41-1-ce6363ad36"
+      ]
+    },
+    {
+      "relation": "[retrieves]",
+      "count": 2,
+      "trees": [
+        "tree-41-1-ce6363ad36"
+      ]
+    },
+    {
+      "relation": "[reverses_into]",
+      "count": 2,
+      "trees": [
+        "tree-41-1-ce6363ad36"
+      ]
+    },
+    {
+      "relation": "[shifts_from]",
+      "count": 2,
+      "trees": [
+        "tree-41-1-ce6363ad36"
+      ]
+    },
+    {
+      "relation": "[frames]",
+      "count": 2,
+      "trees": [
+        "tree-71-1-06ae92e407"
+      ]
+    },
+    {
+      "relation": "[optimize_for]",
+      "count": 2,
+      "trees": [
+        "tree-71-1-06ae92e407"
+      ]
+    },
+    {
+      "relation": "[shape]",
+      "count": 2,
+      "trees": [
+        "tree-71-1-06ae92e407"
+      ]
+    },
+    {
+      "relation": "[protect]",
+      "count": 2,
+      "trees": [
+        "tree-71-1-06ae92e407"
+      ]
+    },
+    {
+      "relation": "[allows]",
+      "count": 2,
+      "trees": [
+        "tree-83-1-2f69f674f4",
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[meets]",
+      "count": 2,
+      "trees": [
+        "tree-45-1-d7c5a31e2d",
+        "tree-43-1-66cedc3c7d"
+      ]
+    },
+    {
+      "relation": "[sets]",
+      "count": 2,
+      "trees": [
+        "tree-45-1-d7c5a31e2d",
+        "tree-43-1-66cedc3c7d"
+      ]
+    },
+    {
+      "relation": "[moves]",
+      "count": 2,
+      "trees": [
+        "tree-45-1-d7c5a31e2d",
+        "tree-79-3-42c29fac35"
+      ]
+    },
+    {
+      "relation": "[when]",
+      "count": 2,
+      "trees": [
+        "tree-45-1-d7c5a31e2d",
+        "tree-37-5-8055a454a1"
+      ]
+    },
+    {
+      "relation": "[speaks]",
+      "count": 2,
+      "trees": [
+        "tree-45-1-d7c5a31e2d",
+        "tree-69-1-2439835c59"
+      ]
+    },
+    {
+      "relation": "[of]",
+      "count": 2,
+      "trees": [
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[seeks]",
+      "count": 2,
+      "trees": [
+        "tree-45-1-d7c5a31e2d",
+        "tree-73-1-9cd318b1a7"
+      ]
+    },
+    {
+      "relation": "[arise_from]",
+      "count": 2,
+      "trees": [
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[acts_with]",
+      "count": 2,
+      "trees": [
+        "tree-45-1-d7c5a31e2d",
+        "tree-43-1-66cedc3c7d"
+      ]
+    },
+    {
+      "relation": "[decreases]",
+      "count": 2,
+      "trees": [
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[pressure]",
+      "count": 2,
+      "trees": [
+        "tree-67-5-f27b2c9f04",
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[in]",
+      "count": 2,
+      "trees": [
+        "tree-73-1-9cd318b1a7"
+      ]
+    },
+    {
+      "relation": "[trusts]",
+      "count": 2,
+      "trees": [
+        "tree-69-1-2439835c59",
+        "tree-43-1-66cedc3c7d"
+      ]
+    },
+    {
+      "relation": "[generates]",
+      "count": 2,
+      "trees": [
+        "tree-39-1-aea40f429f",
+        "tree-43-1-66cedc3c7d"
+      ]
+    },
+    {
+      "relation": "[causes]",
+      "count": 2,
+      "trees": [
+        "tree-39-1-aea40f429f"
+      ]
+    },
+    {
+      "relation": "[verify]",
+      "count": 2,
+      "trees": [
+        "tree-39-1-aea40f429f",
+        "tree-37-3-20f5f69428"
+      ]
+    },
+    {
+      "relation": "[can_use]",
+      "count": 2,
+      "trees": [
+        "tree-37-3-20f5f69428"
+      ]
+    },
+    {
+      "relation": "[writes]",
+      "count": 2,
+      "trees": [
+        "tree-79-3-42c29fac35"
+      ]
+    },
+    {
+      "relation": "[fabricates]",
+      "count": 1,
+      "trees": [
+        "tree-1-1-15b69a4493"
+      ]
+    },
+    {
+      "relation": "[misstates]",
+      "count": 1,
+      "trees": [
+        "tree-1-1-15b69a4493"
+      ]
+    },
+    {
+      "relation": "[connects]",
+      "count": 1,
+      "trees": [
+        "tree-1-1-15b69a4493"
+      ]
+    },
+    {
+      "relation": "[diverges]",
+      "count": 1,
+      "trees": [
+        "tree-1-1-15b69a4493"
+      ]
+    },
+    {
+      "relation": "[defeats]",
+      "count": 1,
+      "trees": [
+        "tree-1-1-15b69a4493"
+      ]
+    },
+    {
+      "relation": "[omits]",
+      "count": 1,
+      "trees": [
+        "tree-1-1-15b69a4493"
+      ]
+    },
+    {
+      "relation": "[excludes]",
+      "count": 1,
+      "trees": [
+        "tree-1-1-15b69a4493"
+      ]
+    },
+    {
+      "relation": "[loses]",
+      "count": 1,
+      "trees": [
+        "tree-1-1-15b69a4493"
+      ]
+    },
+    {
+      "relation": "[invents]",
+      "count": 1,
+      "trees": [
+        "tree-1-3-e0a080e2be"
+      ]
+    },
+    {
+      "relation": "[indifferent_to]",
+      "count": 1,
+      "trees": [
+        "tree-59-1-8ec429a819"
+      ]
+    },
+    {
+      "relation": "[overwhelms]",
+      "count": 1,
+      "trees": [
+        "tree-59-1-8ec429a819"
+      ]
+    },
+    {
+      "relation": "[reframe]",
+      "count": 1,
+      "trees": [
+        "tree-61-1-3b8afa918a"
+      ]
+    },
+    {
+      "relation": "[using]",
+      "count": 1,
+      "trees": [
+        "tree-61-1-3b8afa918a"
+      ]
+    },
+    {
+      "relation": "[reads]",
+      "count": 1,
+      "trees": [
+        "tree-61-1-3b8afa918a"
+      ]
+    },
+    {
+      "relation": "[not_as]",
+      "count": 1,
+      "trees": [
+        "tree-61-1-3b8afa918a"
+      ]
+    },
+    {
+      "relation": "[but_as]",
+      "count": 1,
+      "trees": [
+        "tree-61-1-3b8afa918a"
+      ]
+    },
+    {
+      "relation": "[weakly_coupled_to]",
+      "count": 1,
+      "trees": [
+        "tree-61-1-3b8afa918a"
+      ]
+    },
+    {
+      "relation": "[is_not_only]",
+      "count": 1,
+      "trees": [
+        "tree-61-1-3b8afa918a"
+      ]
+    },
+    {
+      "relation": "[it_is]",
+      "count": 1,
+      "trees": [
+        "tree-61-1-3b8afa918a"
+      ]
+    },
+    {
+      "relation": "[in_which]",
+      "count": 1,
+      "trees": [
+        "tree-61-1-3b8afa918a"
+      ]
+    },
+    {
+      "relation": "[migrates]",
+      "count": 1,
+      "trees": [
+        "tree-61-1-3b8afa918a"
+      ]
+    },
+    {
+      "relation": "[overloads]",
+      "count": 1,
+      "trees": [
+        "tree-61-1-3b8afa918a"
+      ]
+    },
+    {
+      "relation": "[crowd_out]",
+      "count": 1,
+      "trees": [
+        "tree-61-1-3b8afa918a"
+      ]
+    },
+    {
+      "relation": "[rewards]",
+      "count": 1,
+      "trees": [
+        "tree-61-1-3b8afa918a"
+      ]
+    },
+    {
+      "relation": "[provokes]",
+      "count": 1,
+      "trees": [
+        "tree-61-1-3b8afa918a"
+      ]
+    },
+    {
+      "relation": "[drives]",
+      "count": 1,
+      "trees": [
+        "tree-61-1-3b8afa918a"
+      ]
+    },
+    {
+      "relation": "[displaces]",
+      "count": 1,
+      "trees": [
+        "tree-61-1-3b8afa918a"
+      ]
+    },
+    {
+      "relation": "[focuses_on]",
+      "count": 1,
+      "trees": [
+        "tree-21-1-86d3a0ad99"
+      ]
+    },
+    {
+      "relation": "[negates]",
+      "count": 1,
+      "trees": [
+        "tree-21-1-86d3a0ad99"
+      ]
+    },
+    {
+      "relation": "[failure_mode]",
+      "count": 1,
+      "trees": [
+        "tree-21-1-86d3a0ad99"
+      ]
+    },
+    {
+      "relation": "[does_not_verify]",
+      "count": 1,
+      "trees": [
+        "tree-21-1-86d3a0ad99"
+      ]
+    },
+    {
+      "relation": "[denies_existence_of]",
+      "count": 1,
+      "trees": [
+        "tree-21-1-86d3a0ad99"
+      ]
+    },
+    {
+      "relation": "[choose]",
+      "count": 1,
+      "trees": [
+        "tree-15-1-21175c1c42"
+      ]
+    },
+    {
+      "relation": "[induces]",
+      "count": 1,
+      "trees": [
+        "tree-15-1-21175c1c42"
+      ]
+    },
+    {
+      "relation": "[challenges]",
+      "count": 1,
+      "trees": [
+        "tree-15-1-21175c1c42"
+      ]
+    },
+    {
+      "relation": "[forces]",
+      "count": 1,
+      "trees": [
+        "tree-15-1-21175c1c42"
+      ]
+    },
+    {
+      "relation": "[must_verify]",
+      "count": 1,
+      "trees": [
+        "tree-15-1-21175c1c42"
+      ]
+    },
+    {
+      "relation": "[if]",
+      "count": 1,
+      "trees": [
+        "tree-15-1-21175c1c42"
+      ]
+    },
+    {
+      "relation": "[work]",
+      "count": 1,
+      "trees": [
+        "tree-15-1-21175c1c42"
+      ]
+    },
+    {
+      "relation": "[frames_as]",
+      "count": 1,
+      "trees": [
+        "tree-15-1-21175c1c42"
+      ]
+    },
+    {
+      "relation": "[caused_by]",
+      "count": 1,
+      "trees": [
+        "tree-15-1-21175c1c42"
+      ]
+    },
+    {
+      "relation": "[classified_as]",
+      "count": 1,
+      "trees": [
+        "tree-19-1-f012743939"
+      ]
+    },
+    {
+      "relation": "[rules_exist_without]",
+      "count": 1,
+      "trees": [
+        "tree-19-1-f012743939"
+      ]
+    },
+    {
+      "relation": "[standards_without]",
+      "count": 1,
+      "trees": [
+        "tree-19-1-f012743939"
+      ]
+    },
+    {
+      "relation": "[duties_without]",
+      "count": 1,
+      "trees": [
+        "tree-19-1-f012743939"
+      ]
+    },
+    {
+      "relation": "[shifts_liability_to]",
+      "count": 1,
+      "trees": [
+        "tree-19-1-f012743939"
+      ]
+    },
+    {
+      "relation": "[increased_use_of]",
+      "count": 1,
+      "trees": [
+        "tree-7-1-c36ae109c8"
+      ]
+    },
+    {
+      "relation": "[imposes]",
+      "count": 1,
+      "trees": [
+        "tree-7-1-c36ae109c8"
+      ]
+    },
+    {
+      "relation": "[must_admit]",
+      "count": 1,
+      "trees": [
+        "tree-7-1-c36ae109c8"
+      ]
+    },
+    {
+      "relation": "[cannot_prove]",
+      "count": 1,
+      "trees": [
+        "tree-7-1-c36ae109c8"
+      ]
+    },
+    {
+      "relation": "[characterized_by]",
+      "count": 1,
+      "trees": [
+        "tree-7-1-c36ae109c8"
+      ]
+    },
+    {
+      "relation": "[marked_by]",
+      "count": 1,
+      "trees": [
+        "tree-7-1-c36ae109c8"
+      ]
+    },
+    {
+      "relation": "[remove]",
+      "count": 1,
+      "trees": [
+        "tree-83-4-d7091e16e4"
+      ]
+    },
+    {
+      "relation": "[gets]",
+      "count": 1,
+      "trees": [
+        "tree-63-3-b91f3ffd87"
+      ]
+    },
+    {
+      "relation": "[generate]",
+      "count": 1,
+      "trees": [
+        "tree-63-3-b91f3ffd87"
+      ]
+    },
+    {
+      "relation": "[considered]",
+      "count": 1,
+      "trees": [
+        "tree-3-2-2a4680087c"
+      ]
+    },
+    {
+      "relation": "[declined_to_adopt]",
+      "count": 1,
+      "trees": [
+        "tree-3-2-2a4680087c"
+      ]
+    },
+    {
+      "relation": "[proves]",
+      "count": 1,
+      "trees": [
+        "tree-37-4-2a6c77eef5"
+      ]
+    },
+    {
+      "relation": "[measured_at]",
+      "count": 1,
+      "trees": [
+        "tree-23-1-78a66df910"
+      ]
+    },
+    {
+      "relation": "[fails_property]",
+      "count": 1,
+      "trees": [
+        "tree-23-1-78a66df910"
+      ]
+    },
+    {
+      "relation": "[concludes]",
+      "count": 1,
+      "trees": [
+        "tree-23-1-78a66df910"
+      ]
+    },
+    {
+      "relation": "[introduces]",
+      "count": 1,
+      "trees": [
+        "tree-23-1-78a66df910"
+      ]
+    },
+    {
+      "relation": "[issue]",
+      "count": 1,
+      "trees": [
+        "tree-23-1-78a66df910"
+      ]
+    },
+    {
+      "relation": "[characterized_as]",
+      "count": 1,
+      "trees": [
+        "tree-23-1-78a66df910"
+      ]
+    },
+    {
+      "relation": "[documented_at]",
+      "count": 1,
+      "trees": [
+        "tree-23-1-78a66df910"
+      ]
+    },
+    {
+      "relation": "[labels_state_as]",
+      "count": 1,
+      "trees": [
+        "tree-23-1-78a66df910"
+      ]
+    },
+    {
+      "relation": "[implies]",
+      "count": 1,
+      "trees": [
+        "tree-35-1-21923feae3"
+      ]
+    },
+    {
+      "relation": "[include]",
+      "count": 1,
+      "trees": [
+        "tree-35-1-21923feae3"
+      ]
+    },
+    {
+      "relation": "[dominates_over]",
+      "count": 1,
+      "trees": [
+        "tree-35-1-21923feae3"
+      ]
+    },
+    {
+      "relation": "[rebalances]",
+      "count": 1,
+      "trees": [
+        "tree-35-1-21923feae3"
+      ]
+    },
+    {
+      "relation": "[operates_as]",
+      "count": 1,
+      "trees": [
+        "tree-35-1-21923feae3"
+      ]
+    },
+    {
+      "relation": "[depends_on]",
+      "count": 1,
+      "trees": [
+        "tree-35-1-21923feae3"
+      ]
+    },
+    {
+      "relation": "[emerges_through]",
+      "count": 1,
+      "trees": [
+        "tree-35-1-21923feae3"
+      ]
+    },
+    {
+      "relation": "[optimizes_for]",
+      "count": 1,
+      "trees": [
+        "tree-35-1-21923feae3"
+      ]
+    },
+    {
+      "relation": "[punish]",
+      "count": 1,
+      "trees": [
+        "tree-35-1-21923feae3"
+      ]
+    },
+    {
+      "relation": "[invites]",
+      "count": 1,
+      "trees": [
+        "tree-35-1-21923feae3"
+      ]
+    },
+    {
+      "relation": "[may_diverge_from]",
+      "count": 1,
+      "trees": [
+        "tree-35-1-21923feae3"
+      ]
+    },
+    {
+      "relation": "[reshapes]",
+      "count": 1,
+      "trees": [
+        "tree-35-1-21923feae3"
+      ]
+    },
+    {
+      "relation": "[guides]",
+      "count": 1,
+      "trees": [
+        "tree-35-1-21923feae3"
+      ]
+    },
+    {
+      "relation": "[propagates_through]",
+      "count": 1,
+      "trees": [
+        "tree-35-1-21923feae3"
+      ]
+    },
+    {
+      "relation": "[design]",
+      "count": 1,
+      "trees": [
+        "tree-35-1-21923feae3"
+      ]
+    },
+    {
+      "relation": "[install]",
+      "count": 1,
+      "trees": [
+        "tree-35-1-21923feae3"
+      ]
+    },
+    {
+      "relation": "[mimicked]",
+      "count": 1,
+      "trees": [
+        "tree-37-2-52100dc28c"
+      ]
+    },
+    {
+      "relation": "[treated]",
+      "count": 1,
+      "trees": [
+        "tree-37-2-52100dc28c"
+      ]
+    },
+    {
+      "relation": "[looked_like]",
+      "count": 1,
+      "trees": [
+        "tree-37-2-52100dc28c"
+      ]
+    },
+    {
+      "relation": "[were]",
+      "count": 1,
+      "trees": [
+        "tree-37-2-52100dc28c"
+      ]
+    },
+    {
+      "relation": "[injects]",
+      "count": 1,
+      "trees": [
+        "tree-67-3-af339cbc28"
+      ]
+    },
+    {
+      "relation": "[involves]",
+      "count": 1,
+      "trees": [
+        "tree-5-1-2f70b31ec8"
+      ]
+    },
+    {
+      "relation": "[produced]",
+      "count": 1,
+      "trees": [
+        "tree-5-1-2f70b31ec8"
+      ]
+    },
+    {
+      "relation": "[stated]",
+      "count": 1,
+      "trees": [
+        "tree-5-1-2f70b31ec8"
+      ]
+    },
+    {
+      "relation": "[labels_as]",
+      "count": 1,
+      "trees": [
+        "tree-5-1-2f70b31ec8"
+      ]
+    },
+    {
+      "relation": "[positions_as]",
+      "count": 1,
+      "trees": [
+        "tree-5-1-2f70b31ec8"
+      ]
+    },
+    {
+      "relation": "[ran]",
+      "count": 1,
+      "trees": [
+        "tree-9-1-276ef2d9bc"
+      ]
+    },
+    {
+      "relation": "[across]",
+      "count": 1,
+      "trees": [
+        "tree-9-1-276ef2d9bc"
+      ]
+    },
+    {
+      "relation": "[fabricate]",
+      "count": 1,
+      "trees": [
+        "tree-9-1-276ef2d9bc"
+      ]
+    },
+    {
+      "relation": "[establishes_range]",
+      "count": 1,
+      "trees": [
+        "tree-9-1-276ef2d9bc"
+      ]
+    },
+    {
+      "relation": "[undermines]",
+      "count": 1,
+      "trees": [
+        "tree-9-1-276ef2d9bc"
+      ]
+    },
+    {
+      "relation": "[query]",
+      "count": 1,
+      "trees": [
+        "tree-13-1-6d0bea2abf"
+      ]
+    },
+    {
+      "relation": "[status]",
+      "count": 1,
+      "trees": [
+        "tree-13-1-6d0bea2abf"
+      ]
+    },
+    {
+      "relation": "[jurisdiction]",
+      "count": 1,
+      "trees": [
+        "tree-13-1-6d0bea2abf"
+      ]
+    },
+    {
+      "relation": "[determines]",
+      "count": 1,
+      "trees": [
+        "tree-13-1-6d0bea2abf"
+      ]
+    },
+    {
+      "relation": "[invalidates]",
+      "count": 1,
+      "trees": [
+        "tree-13-1-6d0bea2abf"
+      ]
+    },
+    {
+      "relation": "[evades]",
+      "count": 1,
+      "trees": [
+        "tree-13-1-6d0bea2abf"
+      ]
+    },
+    {
+      "relation": "[outrun]",
+      "count": 1,
+      "trees": [
+        "tree-59-2-191883c61f"
+      ]
+    },
+    {
+      "relation": "[favor]",
+      "count": 1,
+      "trees": [
+        "tree-59-2-191883c61f"
+      ]
+    },
+    {
+      "relation": "[defined_as]",
+      "count": 1,
+      "trees": [
+        "tree-59-2-191883c61f"
+      ]
+    },
+    {
+      "relation": "[found]",
+      "count": 1,
+      "trees": [
+        "tree-37-1-a5214b4265"
+      ]
+    },
+    {
+      "relation": "[derive]",
+      "count": 1,
+      "trees": [
+        "tree-41-1-ce6363ad36"
+      ]
+    },
+    {
+      "relation": "[through]",
+      "count": 1,
+      "trees": [
+        "tree-41-1-ce6363ad36"
+      ]
+    },
+    {
+      "relation": "[made_of]",
+      "count": 1,
+      "trees": [
+        "tree-41-1-ce6363ad36"
+      ]
+    },
+    {
+      "relation": "[forming]",
+      "count": 1,
+      "trees": [
+        "tree-41-1-ce6363ad36"
+      ]
+    },
+    {
+      "relation": "[by_which]",
+      "count": 1,
+      "trees": [
+        "tree-41-1-ce6363ad36"
+      ]
+    },
+    {
+      "relation": "[restructures]",
+      "count": 1,
+      "trees": [
+        "tree-41-1-ce6363ad36"
+      ]
+    },
+    {
+      "relation": "[programs]",
+      "count": 1,
+      "trees": [
+        "tree-41-1-ce6363ad36"
+      ]
+    },
+    {
+      "relation": "[rewrite]",
+      "count": 1,
+      "trees": [
+        "tree-41-1-ce6363ad36"
+      ]
+    },
+    {
+      "relation": "[reprograms]",
+      "count": 1,
+      "trees": [
+        "tree-41-1-ce6363ad36"
+      ]
+    },
+    {
+      "relation": "[redefines]",
+      "count": 1,
+      "trees": [
+        "tree-41-1-ce6363ad36"
+      ]
+    },
+    {
+      "relation": "[is_made_by]",
+      "count": 1,
+      "trees": [
+        "tree-41-1-ce6363ad36"
+      ]
+    },
+    {
+      "relation": "[create]",
+      "count": 1,
+      "trees": [
+        "tree-41-1-ce6363ad36"
+      ]
+    },
+    {
+      "relation": "[externalizes]",
+      "count": 1,
+      "trees": [
+        "tree-41-1-ce6363ad36"
+      ]
+    },
+    {
+      "relation": "[updates_as]",
+      "count": 1,
+      "trees": [
+        "tree-41-1-ce6363ad36"
+      ]
+    },
+    {
+      "relation": "[therefore_becomes]",
+      "count": 1,
+      "trees": [
+        "tree-41-1-ce6363ad36"
+      ]
+    },
+    {
+      "relation": "[reappears_in]",
+      "count": 1,
+      "trees": [
+        "tree-71-1-06ae92e407"
+      ]
+    },
+    {
+      "relation": "[embedded_in]",
+      "count": 1,
+      "trees": [
+        "tree-71-1-06ae92e407"
+      ]
+    },
+    {
+      "relation": "[enforced_by]",
+      "count": 1,
+      "trees": [
+        "tree-71-1-06ae92e407"
+      ]
+    },
+    {
+      "relation": "[carrying]",
+      "count": 1,
+      "trees": [
+        "tree-71-1-06ae92e407"
+      ]
+    },
+    {
+      "relation": "[iterate]",
+      "count": 1,
+      "trees": [
+        "tree-71-1-06ae92e407"
+      ]
+    },
+    {
+      "relation": "[accept]",
+      "count": 1,
+      "trees": [
+        "tree-71-1-06ae92e407"
+      ]
+    },
+    {
+      "relation": "[trust]",
+      "count": 1,
+      "trees": [
+        "tree-71-1-06ae92e407"
+      ]
+    },
+    {
+      "relation": "[reproduces]",
+      "count": 1,
+      "trees": [
+        "tree-71-1-06ae92e407"
+      ]
+    },
+    {
+      "relation": "[detaches]",
+      "count": 1,
+      "trees": [
+        "tree-71-1-06ae92e407"
+      ]
+    },
+    {
+      "relation": "[is_about]",
+      "count": 1,
+      "trees": [
+        "tree-71-1-06ae92e407"
+      ]
+    },
+    {
+      "relation": "[outruns]",
+      "count": 1,
+      "trees": [
+        "tree-67-2-0209428605"
+      ]
+    },
+    {
+      "relation": "[so_that]",
+      "count": 1,
+      "trees": [
+        "tree-79-4-50144e1d15"
+      ]
+    },
+    {
+      "relation": "[tell_it_where_not_to_cut]",
+      "count": 1,
+      "trees": [
+        "tree-79-4-50144e1d15"
+      ]
+    },
+    {
+      "relation": "[separates]",
+      "count": 1,
+      "trees": [
+        "tree-83-2-b453ba9044"
+      ]
+    },
+    {
+      "relation": "[and_finds]",
+      "count": 1,
+      "trees": [
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[must_be]",
+      "count": 1,
+      "trees": [
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[gives]",
+      "count": 1,
+      "trees": [
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[that_sound_like]",
+      "count": 1,
+      "trees": [
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[that_feel_like]",
+      "count": 1,
+      "trees": [
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[but_are]",
+      "count": 1,
+      "trees": [
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[overcomes]",
+      "count": 1,
+      "trees": [
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[shapes]",
+      "count": 1,
+      "trees": [
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[tries_to]",
+      "count": 1,
+      "trees": [
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[and_the_wind]",
+      "count": 1,
+      "trees": [
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[slips_between]",
+      "count": 1,
+      "trees": [
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[takes]",
+      "count": 1,
+      "trees": [
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[wins]",
+      "count": 1,
+      "trees": [
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[fills]",
+      "count": 1,
+      "trees": [
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[flows_around]",
+      "count": 1,
+      "trees": [
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[must_hold]",
+      "count": 1,
+      "trees": [
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[some_true]",
+      "count": 1,
+      "trees": [
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[some_false]",
+      "count": 1,
+      "trees": [
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[all_coherent]",
+      "count": 1,
+      "trees": [
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[accepts_only]",
+      "count": 1,
+      "trees": [
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[thrives_under]",
+      "count": 1,
+      "trees": [
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[let_flow]",
+      "count": 1,
+      "trees": [
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[add_ritual]",
+      "count": 1,
+      "trees": [
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[do_not_confuse]",
+      "count": 1,
+      "trees": [
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[do_not_expect]",
+      "count": 1,
+      "trees": [
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[to_sign]",
+      "count": 1,
+      "trees": [
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[and_the_weight_is_not_the_words]",
+      "count": 1,
+      "trees": [
+        "tree-45-1-d7c5a31e2d"
+      ]
+    },
+    {
+      "relation": "[return]",
+      "count": 1,
+      "trees": [
+        "tree-133-1-4a2d3bee4d"
+      ]
+    },
+    {
+      "relation": "[carves]",
+      "count": 1,
+      "trees": [
+        "tree-79-1-51dbd4ff1b"
+      ]
+    },
+    {
+      "relation": "[without_force]",
+      "count": 1,
+      "trees": [
+        "tree-79-1-51dbd4ff1b"
+      ]
+    },
+    {
+      "relation": "[but_by]",
+      "count": 1,
+      "trees": [
+        "tree-79-1-51dbd4ff1b"
+      ]
+    },
+    {
+      "relation": "[matures_into]",
+      "count": 1,
+      "trees": [
+        "tree-79-1-51dbd4ff1b"
+      ]
+    },
+    {
+      "relation": "[feed_back_into]",
+      "count": 1,
+      "trees": [
+        "tree-63-1-674ed59681"
+      ]
+    },
+    {
+      "relation": "[described_as]",
+      "count": 1,
+      "trees": [
+        "tree-17-1-c610362c56"
+      ]
+    },
+    {
+      "relation": "[removes]",
+      "count": 1,
+      "trees": [
+        "tree-17-1-c610362c56"
+      ]
+    },
+    {
+      "relation": "[triggered_by]",
+      "count": 1,
+      "trees": [
+        "tree-17-1-c610362c56"
+      ]
+    },
+    {
+      "relation": "[increases_by]",
+      "count": 1,
+      "trees": [
+        "tree-17-1-c610362c56"
+      ]
+    },
+    {
+      "relation": "[applied_by]",
+      "count": 1,
+      "trees": [
+        "tree-17-1-c610362c56"
+      ]
+    },
+    {
+      "relation": "[offers]",
+      "count": 1,
+      "trees": [
+        "tree-17-1-c610362c56"
+      ]
+    },
+    {
+      "relation": "[fails_to_provide]",
+      "count": 1,
+      "trees": [
+        "tree-17-1-c610362c56"
+      ]
+    },
+    {
+      "relation": "[faces]",
+      "count": 1,
+      "trees": [
+        "tree-17-1-c610362c56"
+      ]
+    },
+    {
+      "relation": "[combined_with]",
+      "count": 1,
+      "trees": [
+        "tree-17-1-c610362c56"
+      ]
+    },
+    {
+      "relation": "[how_define]",
+      "count": 1,
+      "trees": [
+        "tree-37-5-8055a454a1"
+      ]
+    },
+    {
+      "relation": "[what_counts_as]",
+      "count": 1,
+      "trees": [
+        "tree-37-5-8055a454a1"
+      ]
+    },
+    {
+      "relation": "[how_force]",
+      "count": 1,
+      "trees": [
+        "tree-37-5-8055a454a1"
+      ]
+    },
+    {
+      "relation": "[when_should]",
+      "count": 1,
+      "trees": [
+        "tree-37-5-8055a454a1"
+      ]
+    },
+    {
+      "relation": "[how_audit]",
+      "count": 1,
+      "trees": [
+        "tree-37-5-8055a454a1"
+      ]
+    },
+    {
+      "relation": "[prove]",
+      "count": 1,
+      "trees": [
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[instantiated_as]",
+      "count": 1,
+      "trees": [
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[can_verify]",
+      "count": 1,
+      "trees": [
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[cannot_verify]",
+      "count": 1,
+      "trees": [
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[hallucinate]",
+      "count": 1,
+      "trees": [
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[checks]",
+      "count": 1,
+      "trees": [
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[not_providing]",
+      "count": 1,
+      "trees": [
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[follow]",
+      "count": 1,
+      "trees": [
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[respond_with]",
+      "count": 1,
+      "trees": [
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[cannot_imply]",
+      "count": 1,
+      "trees": [
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[diverges_on]",
+      "count": 1,
+      "trees": [
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[does_not_check]",
+      "count": 1,
+      "trees": [
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[does_not_exist_in_practice]",
+      "count": 1,
+      "trees": [
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[tends_to_increase]",
+      "count": 1,
+      "trees": [
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[rises]",
+      "count": 1,
+      "trees": [
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[remains]",
+      "count": 1,
+      "trees": [
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[uses]",
+      "count": 1,
+      "trees": [
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[does_not_use]",
+      "count": 1,
+      "trees": [
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[contradict]",
+      "count": 1,
+      "trees": [
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[forms]",
+      "count": 1,
+      "trees": [
+        "tree-25-1-31338dc648"
+      ]
+    },
+    {
+      "relation": "[requests]",
+      "count": 1,
+      "trees": [
+        "tree-1-2-ac32ee03c9"
+      ]
+    },
+    {
+      "relation": "[does_not_only_model]",
+      "count": 1,
+      "trees": [
+        "tree-67-5-f27b2c9f04"
+      ]
+    },
+    {
+      "relation": "[it_models]",
+      "count": 1,
+      "trees": [
+        "tree-67-5-f27b2c9f04"
+      ]
+    },
+    {
+      "relation": "[select_for]",
+      "count": 1,
+      "trees": [
+        "tree-67-5-f27b2c9f04"
+      ]
+    },
+    {
+      "relation": "[change]",
+      "count": 1,
+      "trees": [
+        "tree-67-5-f27b2c9f04"
+      ]
+    },
+    {
+      "relation": "[thereby]",
+      "count": 1,
+      "trees": [
+        "tree-63-4-aae5907eb7"
+      ]
+    },
+    {
+      "relation": "[names]",
+      "count": 1,
+      "trees": [
+        "tree-67-1-7b9f398266"
+      ]
+    },
+    {
+      "relation": "[oaicite:4]",
+      "count": 1,
+      "trees": [
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[mistakes]",
+      "count": 1,
+      "trees": [
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[stage]",
+      "count": 1,
+      "trees": [
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[oaicite:5]",
+      "count": 1,
+      "trees": [
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[helps_user_notice]",
+      "count": 1,
+      "trees": [
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[forces_question]",
+      "count": 1,
+      "trees": [
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[makes_visible]",
+      "count": 1,
+      "trees": [
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[oaicite:6]",
+      "count": 1,
+      "trees": [
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[aims_for]",
+      "count": 1,
+      "trees": [
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[overrides]",
+      "count": 1,
+      "trees": [
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[oaicite:7]",
+      "count": 1,
+      "trees": [
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[benefit]",
+      "count": 1,
+      "trees": [
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[suspects]",
+      "count": 1,
+      "trees": [
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[exhibits]",
+      "count": 1,
+      "trees": [
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[oaicite:8]",
+      "count": 1,
+      "trees": [
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[you_miss]",
+      "count": 1,
+      "trees": [
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[you_create]",
+      "count": 1,
+      "trees": [
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[tune]",
+      "count": 1,
+      "trees": [
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[reappears_as]",
+      "count": 1,
+      "trees": [
+        "tree-65-1-a60dc4441e"
+      ]
+    },
+    {
+      "relation": "[by]",
+      "count": 1,
+      "trees": [
+        "tree-73-1-9cd318b1a7"
+      ]
+    },
+    {
+      "relation": "[rule]",
+      "count": 1,
+      "trees": [
+        "tree-73-1-9cd318b1a7"
+      ]
+    },
+    {
+      "relation": "[aims]",
+      "count": 1,
+      "trees": [
+        "tree-73-1-9cd318b1a7"
+      ]
+    },
+    {
+      "relation": "[marks]",
+      "count": 1,
+      "trees": [
+        "tree-73-1-9cd318b1a7"
+      ]
+    },
+    {
+      "relation": "[act_by]",
+      "count": 1,
+      "trees": [
+        "tree-73-1-9cd318b1a7"
+      ]
+    },
+    {
+      "relation": "[never_allow]",
+      "count": 1,
+      "trees": [
+        "tree-73-1-9cd318b1a7"
+      ]
+    },
+    {
+      "relation": "[bind]",
+      "count": 1,
+      "trees": [
+        "tree-79-5-7c2799ed4b"
+      ]
+    },
+    {
+      "relation": "[allow_flow]",
+      "count": 1,
+      "trees": [
+        "tree-79-5-7c2799ed4b"
+      ]
+    },
+    {
+      "relation": "[harden]",
+      "count": 1,
+      "trees": [
+        "tree-79-5-7c2799ed4b"
+      ]
+    },
+    {
+      "relation": "[when_uncertain]",
+      "count": 1,
+      "trees": [
+        "tree-79-5-7c2799ed4b"
+      ]
+    },
+    {
+      "relation": "[stop_and_name]",
+      "count": 1,
+      "trees": [
+        "tree-79-5-7c2799ed4b"
+      ]
+    },
+    {
+      "relation": "[practices]",
+      "count": 1,
+      "trees": [
+        "tree-69-1-2439835c59"
+      ]
+    },
+    {
+      "relation": "[lets]",
+      "count": 1,
+      "trees": [
+        "tree-69-1-2439835c59"
+      ]
+    },
+    {
+      "relation": "[carry]",
+      "count": 1,
+      "trees": [
+        "tree-69-1-2439835c59"
+      ]
+    },
+    {
+      "relation": "[works_when]",
+      "count": 1,
+      "trees": [
+        "tree-69-1-2439835c59"
+      ]
+    },
+    {
+      "relation": "[fails_when]",
+      "count": 1,
+      "trees": [
+        "tree-69-1-2439835c59"
+      ]
+    },
+    {
+      "relation": "[submitted_into]",
+      "count": 1,
+      "trees": [
+        "tree-69-1-2439835c59"
+      ]
+    },
+    {
+      "relation": "[mimics]",
+      "count": 1,
+      "trees": [
+        "tree-69-1-2439835c59"
+      ]
+    },
+    {
+      "relation": "[spun]",
+      "count": 1,
+      "trees": [
+        "tree-69-1-2439835c59"
+      ]
+    },
+    {
+      "relation": "[detaches_from]",
+      "count": 1,
+      "trees": [
+        "tree-69-1-2439835c59"
+      ]
+    },
+    {
+      "relation": "[does_not_supply]",
+      "count": 1,
+      "trees": [
+        "tree-69-1-2439835c59"
+      ]
+    },
+    {
+      "relation": "[must]",
+      "count": 1,
+      "trees": [
+        "tree-69-1-2439835c59"
+      ]
+    },
+    {
+      "relation": "[cannot]",
+      "count": 1,
+      "trees": [
+        "tree-69-1-2439835c59"
+      ]
+    },
+    {
+      "relation": "[warns]",
+      "count": 1,
+      "trees": [
+        "tree-69-1-2439835c59"
+      ]
+    },
+    {
+      "relation": "[predicts]",
+      "count": 1,
+      "trees": [
+        "tree-69-1-2439835c59"
+      ]
+    },
+    {
+      "relation": "[explains]",
+      "count": 1,
+      "trees": [
+        "tree-69-1-2439835c59"
+      ]
+    },
+    {
+      "relation": "[measured_between]",
+      "count": 1,
+      "trees": [
+        "tree-39-1-aea40f429f"
+      ]
+    },
+    {
+      "relation": "[targets]",
+      "count": 1,
+      "trees": [
+        "tree-39-1-aea40f429f"
+      ]
+    },
+    {
+      "relation": "[low_definition_input]",
+      "count": 1,
+      "trees": [
+        "tree-39-1-aea40f429f"
+      ]
+    },
+    {
+      "relation": "[high_participation_output]",
+      "count": 1,
+      "trees": [
+        "tree-39-1-aea40f429f"
+      ]
+    },
+    {
+      "relation": "[shifts_to]",
+      "count": 1,
+      "trees": [
+        "tree-39-1-aea40f429f"
+      ]
+    },
+    {
+      "relation": "[occurs_when]",
+      "count": 1,
+      "trees": [
+        "tree-39-1-aea40f429f"
+      ]
+    },
+    {
+      "relation": "[treated_as]",
+      "count": 1,
+      "trees": [
+        "tree-39-1-aea40f429f"
+      ]
+    },
+    {
+      "relation": "[pushes]",
+      "count": 1,
+      "trees": [
+        "tree-79-2-a233b6e976"
+      ]
+    },
+    {
+      "relation": "[adds]",
+      "count": 1,
+      "trees": [
+        "tree-79-2-a233b6e976"
+      ]
+    },
+    {
+      "relation": "[hopes]",
+      "count": 1,
+      "trees": [
+        "tree-79-2-a233b6e976"
+      ]
+    },
+    {
+      "relation": "[do_not_verify]",
+      "count": 1,
+      "trees": [
+        "tree-37-3-20f5f69428"
+      ]
+    },
+    {
+      "relation": "[can_fabricate]",
+      "count": 1,
+      "trees": [
+        "tree-37-3-20f5f69428"
+      ]
+    },
+    {
+      "relation": "[forcing]",
+      "count": 1,
+      "trees": [
+        "tree-37-3-20f5f69428"
+      ]
+    },
+    {
+      "relation": "[observe]",
+      "count": 1,
+      "trees": [
+        "tree-43-1-66cedc3c7d"
+      ]
+    },
+    {
+      "relation": "[avoids]",
+      "count": 1,
+      "trees": [
+        "tree-43-1-66cedc3c7d"
+      ]
+    },
+    {
+      "relation": "[follows]",
+      "count": 1,
+      "trees": [
+        "tree-43-1-66cedc3c7d"
+      ]
+    },
+    {
+      "relation": "[performs]",
+      "count": 1,
+      "trees": [
+        "tree-43-1-66cedc3c7d"
+      ]
+    },
+    {
+      "relation": "[let_go_of]",
+      "count": 1,
+      "trees": [
+        "tree-43-1-66cedc3c7d"
+      ]
+    },
+    {
+      "relation": "[retain]",
+      "count": 1,
+      "trees": [
+        "tree-43-1-66cedc3c7d"
+      ]
+    },
+    {
+      "relation": "[demand]",
+      "count": 1,
+      "trees": [
+        "tree-43-1-66cedc3c7d"
+      ]
+    },
+    {
+      "relation": "[impose]",
+      "count": 1,
+      "trees": [
+        "tree-43-1-66cedc3c7d"
+      ]
+    },
+    {
+      "relation": "[acts_in]",
+      "count": 1,
+      "trees": [
+        "tree-43-1-66cedc3c7d"
+      ]
+    },
+    {
+      "relation": "[≠]",
+      "count": 1,
+      "trees": [
+        "tree-43-1-66cedc3c7d"
+      ]
+    },
+    {
+      "relation": "[destroys]",
+      "count": 1,
+      "trees": [
+        "tree-43-1-66cedc3c7d"
+      ]
+    },
+    {
+      "relation": "[assumes]",
+      "count": 1,
+      "trees": [
+        "tree-43-1-66cedc3c7d"
+      ]
+    },
+    {
+      "relation": "[inserted_into]",
+      "count": 1,
+      "trees": [
+        "tree-43-1-66cedc3c7d"
+      ]
+    },
+    {
+      "relation": "[recognize]",
+      "count": 1,
+      "trees": [
+        "tree-43-1-66cedc3c7d"
+      ]
+    },
+    {
+      "relation": "[encode]",
+      "count": 1,
+      "trees": [
+        "tree-43-1-66cedc3c7d"
+      ]
+    },
+    {
+      "relation": "[align]",
+      "count": 1,
+      "trees": [
+        "tree-43-1-66cedc3c7d"
+      ]
+    },
+    {
+      "relation": "[never_forces]",
+      "count": 1,
+      "trees": [
+        "tree-79-3-42c29fac35"
+      ]
+    },
+    {
+      "relation": "[combines]",
+      "count": 1,
+      "trees": [
+        "tree-11-1-22caabf831"
+      ]
+    },
+    {
+      "relation": "[based_on]",
+      "count": 1,
+      "trees": [
+        "tree-11-1-22caabf831"
+      ]
+    },
+    {
+      "relation": "[verified_against]",
+      "count": 1,
+      "trees": [
+        "tree-11-1-22caabf831"
+      ]
+    },
+    {
+      "relation": "[persists]",
+      "count": 1,
+      "trees": [
+        "tree-67-4-6f881926ab"
+      ]
+    }
+  ]
+}

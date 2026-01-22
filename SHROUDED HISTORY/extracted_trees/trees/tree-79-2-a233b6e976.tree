@@ -1,0 +1,10 @@
+<The_Mistake_of_Butchers_(Bad_Prompting)>
+├── <novice>
+│   ├── [pushes] <instructions>
+│   ├── [adds] <more_words>
+│   └── [hopes] <the_model_will_comply>
+└── <result>
+    └── <dull_blade>
+        ├── <hallucination>
+        ├── <overreach>
+        └── <broken_context>

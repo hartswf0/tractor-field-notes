@@ -1,0 +1,5 @@
+<High_Risk_Patterns>
+├── <Real_Case> + <Fake_Holding>
+├── <Real_Case> + <Fake_Quote>
+├── <Plausible_Citation_Format> + <Nonexistent_Case>
+└── <Delegated_Verification> (someone_else_checks) → <signature_without_review>

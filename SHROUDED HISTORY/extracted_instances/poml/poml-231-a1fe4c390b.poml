@@ -1,0 +1,252 @@
+<poml version="1.0">
+
+  <!-- ========================================================= -->
+  <!-- THINKING-MACHINE TRANSFORMER (SHIP MODE)                  -->
+  <!-- Turn a weak component into epistemic machinery            -->
+  <!-- ========================================================= -->
+
+  <let name="component_name">[DESCRIBE COMPONENT]</let>
+  <let name="current_behavior">[DESCRIBE BEHAVIOR]</let>
+
+  <let name="user_provided_principles">
+    {{ principles || [
+      { "id": "surface_invisible", "title": "Surface the Invisible", "description": "Reveal hidden state, causal structure, constraints, and provenance so users can see what’s really happening." },
+      { "id": "overcome_limits", "title": "Overcome Cognitive Limits", "description": "Externalize structure; reduce memory load; chunk complexity; show next-best actions." },
+      { "id": "multiple_modes", "title": "Support Multiple Modes", "description": "Provide multiple representations: narrative, table, graph, timeline, diff, evidence view." },
+      { "id": "direct_manipulation", "title": "Direct Manipulation", "description": "Users act on objects directly with immediate feedback; minimize form-filling." },
+      { "id": "semantic_zoom", "title": "Semantic Zoom", "description": "Overview to detail without losing meaning; progressive disclosure with stable anchors." },
+      { "id": "constrained_play", "title": "Constrained Play", "description": "Safe sandbox, reversible actions, audit log, clear 'one-way doors' warnings." }
+    ]}}
+  </let>
+
+  <!-- Optional: systems where meaning arises from concealment / partial access -->
+  <let name="projection_context">
+    {{ projection_context || {
+      "enabled": true,
+      "note": "If the component involves hidden info, partial visibility, shrouding, or mediated access, model visibility as first-class state and design for 'projection effects'."
+    }}}
+  </let>
+
+  <!-- ========================================================= -->
+  <!-- NEGATIVE SPACE: BANNED MOVES (DON'T SHIP TRASH)           -->
+  <!-- ========================================================= -->
+  <meta components="
+    -fluff,
+    -marketing_voice,
+    -generic_advice,
+    -handwavy_wireframes,
+    -unbounded_scope,
+    -undefined_state,
+    -opaque_metrics
+  " />
+
+  <!-- ========================================================= -->
+  <!-- SYSTEM ROLE                                               -->
+  <!-- ========================================================= -->
+  <system>
+    <role>World-Class Interface Designer</role>
+    <expertise>Media for thinking; interface as epistemic machinery; evidence-first UX</expertise>
+    <context>
+      Your job: turn weak software into a thinking machine.
+      Output must be buildable.
+      If you can’t specify state, events, and acceptance tests, you are not done.
+      Prefer structure over persuasion.
+    </context>
+    <task>
+      Apply the six principles to transform the target component into:
+      - a clear object model
+      - an interaction model
+      - a multi-view information architecture
+      - a minimal UI spec that an engineer can implement
+    </task>
+  </system>
+
+  <!-- ========================================================= -->
+  <!-- USER INPUT                                                -->
+  <!-- ========================================================= -->
+  <user>
+    <h1>Transform "{{ component_name }}"</h1>
+
+    <intro>
+      This component is weak. It hides state and forces people to guess.
+      Fix it. Use the six principles. Produce something shippable.
+    </intro>
+
+    <current_state>
+      <component>{{ component_name }}</component>
+      <behavior>{{ current_behavior }}</behavior>
+      <projection_mode>{{ projection_context }}</projection_mode>
+    </current_state>
+
+    <constraints>
+      <must>One concrete redesign, not a list of options.</must>
+      <must>Define data/state and events.</must>
+      <must>Support overview→detail semantic zoom.</must>
+      <must>Include an audit trail if actions matter.</must>
+      <must>Call out one-way doors and irreversible operations.</must>
+      <must>Design for partial visibility if projection_mode.enabled=true.</must>
+      <must>Use short declarative bullets.</must>
+      <must>No filler.</must>
+    </constraints>
+
+    <directive>
+      Output like a designer who actually ships:
+      spec + model + flows + acceptance tests.
+    </directive>
+  </user>
+
+  <!-- ========================================================= -->
+  <!-- OUTPUT CAGE (SHIP READY)                                  -->
+  <!-- ========================================================= -->
+  <output-schema parser="json">
+    {
+      "type": "object",
+      "properties": {
+        "redesign_name": { "type": "string" },
+        "one_sentence_summary": { "type": "string" },
+
+        "principles_applied": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "principle_id": { "type": "string" },
+              "how_it_changes_design": { "type": "string" }
+            },
+            "required": ["principle_id", "how_it_changes_design"]
+          }
+        },
+
+        "object_model": {
+          "type": "object",
+          "description": "Domain objects and relationships. This is the 'truth layer'.",
+          "properties": {
+            "objects": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "fields": { "type": "array", "items": { "type": "string" } },
+                  "invariants": { "type": "array", "items": { "type": "string" } }
+                },
+                "required": ["name","fields"]
+              }
+            },
+            "relationships": { "type": "array", "items": { "type": "string" } }
+          },
+          "required": ["objects"]
+        },
+
+        "state_model": {
+          "type": "object",
+          "description": "Hidden state surfaced. Include visibility as state if projection_mode is on.",
+          "properties": {
+            "states": { "type": "array", "items": { "type": "string" } },
+            "state_variables": { "type": "array", "items": { "type": "string" } },
+            "visibility_rules": { "type": "array", "items": { "type": "string" } }
+          },
+          "required": ["states","state_variables"]
+        },
+
+        "event_model": {
+          "type": "object",
+          "description": "What can happen; what changes; what logs.",
+          "properties": {
+            "events": { "type": "array", "items": { "type": "string" } },
+            "side_effects": { "type": "array", "items": { "type": "string" } },
+            "audit_log_fields": { "type": "array", "items": { "type": "string" } }
+          },
+          "required": ["events"]
+        },
+
+        "information_architecture": {
+          "type": "object",
+          "properties": {
+            "primary_views": { "type": "array", "items": { "type": "string" } },
+            "semantic_zoom_levels": {
+              "type": "array",
+              "items": {
+                "type":"object",
+                "properties":{
+                  "level": { "type":"string" },
+                  "shows": { "type":"array", "items": { "type":"string" } },
+                  "hides": { "type":"array", "items": { "type":"string" } }
+                },
+                "required":["level","shows","hides"]
+              }
+            },
+            "cross_links": { "type": "array", "items": { "type": "string" } }
+          },
+          "required": ["primary_views","semantic_zoom_levels"]
+        },
+
+        "interaction_design": {
+          "type":"object",
+          "properties":{
+            "core_flows": {
+              "type":"array",
+              "items":{
+                "type":"object",
+                "properties":{
+                  "flow_name": { "type":"string" },
+                  "steps": { "type":"array", "items": { "type":"string" } },
+                  "user_sees": { "type":"array", "items": { "type":"string" } },
+                  "system_updates": { "type":"array", "items": { "type":"string" } }
+                },
+                "required":["flow_name","steps"]
+              }
+            },
+            "direct_manipulation_moves": { "type":"array", "items": { "type":"string" } },
+            "reversible_actions": { "type":"array", "items": { "type":"string" } },
+            "one_way_doors": { "type":"array", "items": { "type":"string" } }
+          },
+          "required": ["core_flows","one_way_doors"]
+        },
+
+        "ui_spec_minimal": {
+          "type":"object",
+          "properties":{
+            "components": { "type":"array", "items": { "type":"string" } },
+            "empty_states": { "type":"array", "items": { "type":"string" } },
+            "error_states": { "type":"array", "items": { "type":"string" } },
+            "microcopy_rules": { "type":"array", "items": { "type":"string" } }
+          },
+          "required":["components"]
+        },
+
+        "acceptance_tests": {
+          "type":"array",
+          "description":"Ship tests. If these aren’t here, it’s not buildable.",
+          "items": { "type":"string" }
+        },
+
+        "metrics": {
+          "type":"array",
+          "items":{
+            "type":"object",
+            "properties":{
+              "metric": { "type":"string" },
+              "how_measured": { "type":"string" },
+              "success_threshold": { "type":"string" }
+            },
+            "required":["metric","how_measured","success_threshold"]
+          }
+        }
+      },
+      "required":[
+        "redesign_name",
+        "one_sentence_summary",
+        "principles_applied",
+        "object_model",
+        "state_model",
+        "event_model",
+        "information_architecture",
+        "interaction_design",
+        "ui_spec_minimal",
+        "acceptance_tests"
+      ]
+    }
+  </output-schema>
+
+</poml>

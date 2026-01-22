@@ -1,0 +1,135 @@
+<The_Way_of_Code:_Wu_Wei_Meets_Law>
+├── <Problem_Statement>
+│   └── [observe] <a_collision_between]
+│       ├── <Wu_Wei_Vibe_Coding>
+│       └── <Legal_Disclosure_Verification_Liability_Regime>
+│
+├── <Wu_Wei_(Effortless_Action)>
+│   ├── <definition>
+│   │   └── <wu_wei> [means] <action_without_forcing>
+│   │       ├── [acts_with] <the_nature_of_the_system>
+│   │       └── [avoids] <excessive_control>
+│   ├── <application_to_code>
+│   │   ├── <vibe_coding> [follows] <intent_not_syntax>
+│   │   ├── <human> [sets] <direction_and_constraints>
+│   │   └── <AI> [performs] <execution_labor>
+│   └── <success_condition>
+│       └── <wu_wei> [requires] <trust_in_the_medium>
+│
+├── <The_Way_of_Code>
+│   ├── <principle>
+│   │   └── <the_way_of_code> [is] <alignment_between>
+│       ├── <human_intent>
+│       ├── <medium_capability>
+│       └── <contextual_constraints>
+│   ├── <core_move>
+│   │   └── [let_go_of] <micromanagement>
+│       └── [retain] <judgment_over_direction>
+│   └── <creative_payoff>
+│       └── [produces] <speed> + <fluency> + <expressive_power>
+│
+├── <Legal_Reality:_AI_Disclosure_and_Verification>
+│   ├── <court_rules>
+│   │   ├── [require] <AI_use_disclosure>
+│   │   ├── [demand] <attorney_certification>
+│   │   └── [impose] <full_human_responsibility>
+│   ├── <verification_expectation>
+│   │   └── [assume] <AI_output_can_be_verified>
+│   └── <missing_layer>
+│       └── [lack] <verification_infrastructure>
+│
+├── <The_Case:_What_Goes_Wrong>
+│   ├── <AI> [generates] <plausible_legal_authority>
+│   ├── <lawyer> [acts_in] <wu_wei_mode>
+│   │   └── [trusts] <flow_and_coherence>
+│   ├── <court> [demands] <deterministic_accuracy>
+│   └── <failure>
+│       └── <coherence> [≠] <truth>
+│
+├── <Custom_Liability_Trap>
+│   ├── <disclosure>
+│   │   └── [triggers] <heightened_scrutiny>
+│   ├── <verification>
+│   │   └── [requires] <manual_primary_source_review>
+│   ├── <manual_review>
+│   │   └── [destroys] <wu_wei_efficiency>
+│   ├── <residual_error>
+│   │   └── [produces] <sanctions_or_malpractice>
+│   └── <result>
+│       └── <liability_without_safe_harbor>
+│
+├── <The_Core_Contradiction>
+│   ├── <wu_wei_logic>
+│   │   └── [assumes] <trust_in_flow>
+│   ├── <legal_logic>
+│   │   └── [demands] <proof_and_auditability>
+│   └── <conflict>
+│       └── <effortless_action> [meets] <zero_tolerance_error>
+│
+├── <Why_This_Is_Not_User_Error>
+│   ├── <vibe_coding> [is] <proper_use_of_a_cold_medium>
+│   ├── <law> [is] <a_hot_medium>
+│   │   └── [requires] <high_definition_accuracy>
+│   └── <misalignment>
+│       └── <cold_medium_practice> [inserted_into] <hot_medium_domain>
+│
+├── <The_WTC_Challenge_(What_The_Courts_Missed)>
+│   ├── <what_they_command>
+│   │   ├── <disclose_AI_use>
+│   │   └── <verify_outputs>
+│   ├── <what_they_ignore>
+│   │   ├── <medium_effects>
+│   │   ├── <epistemic_limits_of_AI>
+│   │   └── <wu_wei_failure_under_liability>
+│   └── <result>
+│       └── <rules_without_infrastructure>
+│
+├── <Correct_Reframe:_Wu_Wei_with_Boundaries>
+│   ├── <allow_wu_wei_in>
+│   │   ├── <ideation>
+│   │   ├── <exploration>
+│   │   ├── <outlining>
+│   │   └── <plain_language_translation>
+│   ├── <forbid_wu_wei_in>
+│   │   ├── <citations>
+│   │   ├── <quotes>
+│   │   ├── <holdings>
+│   │   └── <applications_to_facts>
+│   └── <principle>
+│       └── <wu_wei_requires_domain_limits>
+│
+├── <The_Way_Forward>
+│   ├── <law_must>
+│   │   ├── [recognize] <AI_as_medium>
+│   │   ├── [separate] <creative_zones> from <liability_zones>
+│   │   └── [define] <safe_harbors>
+│   ├── <prompting_must>
+│   │   ├── [encode] <where_AI_may_flow>
+│   │   └── [force] <refusal_where_truth_is_required>
+│   └── <insurance_must>
+│       └── [align] <coverage_with_medium_realities>
+│
+└── <Final_Maxim>
+    └── <The_Way_of_Code_in_Law> :=
+        <Flow_where_truth_is_not_binding>
+        ∧ <Friction_where_truth_is_enforced>
+        └── [otherwise] <wu_wei_becomes_liability>
+
+
+Compressed aphorism (Wu Wei × Law):
+
+
+<AI_flows_best_where_it_may_be_wrong>.
+<Law_breaks_where_it_must_be_right>.
+The error is not the flow—
+it is letting flow govern liability.
+
+
+If you want, next I can:
+
+
+Turn this into a one-page doctrine memo
+
+Draft a judicial test for AI use (Wu Wei–safe zones)
+
+Or write it as a philosophical brief courts could actually cite

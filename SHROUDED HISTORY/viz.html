@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Viz</title>
+  <style>
+:root{
+  --bg:#fff;--fg:#111;--muted:#888;--rule:#ddd;
+  --ent:#7c3aed;      /* purple - entities <> */
+  --morph:#0891b2;    /* cyan - morphisms [] */
+  --brace:#c2410c;    /* orange - braces {} */
+  --conn:#9ca3af;     /* gray - tree connectors */
+  --warn:#dc2626;     /* red - warnings */
+  --tag-struct:#7c3aed; /* purple - structural tags */
+  --tag-meta:#0f766e;   /* teal - meta tags */
+  --tag-data:#2563eb;   /* blue - data tags */
+  --attr:#6b7280;       /* gray - attributes */
+  --split:60%;
+  --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:system-ui,-apple-system,sans-serif
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bg);color:var(--fg);font:14px/1.4 var(--sans)}
+
+.app{display:grid;grid-template-rows:auto 1fr auto;height:100%}
+
+.top{display:flex;gap:8px;padding:8px;border-bottom:1px solid var(--rule);align-items:center;flex-wrap:wrap}
+.top select,.top input{font:inherit;padding:6px 8px;border:1px solid var(--rule);background:var(--bg)}
+.top input{flex:1;min-width:120px}
+.top .stat{font-size:11px;color:var(--muted);font-family:var(--mono)}
+
+.main{display:grid;grid-template-columns:200px 1fr;overflow:hidden}
+
+/* Mobile: stacked layout - content on top, list on bottom */
+@media(max-width:900px){
+  .main{grid-template-columns:1fr;grid-template-rows:1fr 1fr}
+  .main .detail{order:1;border-bottom:1px solid var(--rule);grid-template-columns:1fr;grid-template-rows:1fr 4px 1fr}
+  .main .detail .split-handle{height:4px;width:100%;cursor:row-resize}
+  .main .list{order:2;border-right:none}
+}
+
+.list{border-right:1px solid var(--rule);overflow-y:auto}
+
+.list-item{padding:6px 8px;border-bottom:1px solid var(--rule);cursor:pointer;font-size:11px}
+.list-item:hover{background:#f5f5f5}
+.list-item.active{background:var(--fg);color:var(--bg)}
+.list-item .id{font-family:var(--mono);font-size:9px;color:var(--muted)}
+.list-item.active .id{color:#999}
+
+.detail{display:grid;grid-template-columns:var(--split) 6px calc(100% - var(--split) - 6px);overflow:hidden}
+.content{overflow:auto;padding:8px;font-family:var(--mono);font-size:11px;line-height:1.4;white-space:pre-wrap;word-break:break-word}
+.split-handle{background:var(--rule);cursor:col-resize}
+.split-handle:hover{background:var(--fg)}
+.context-pane{overflow:auto;padding:8px;font-family:var(--mono);font-size:10px;line-height:1.35;white-space:pre-wrap;word-break:break-word;background:#fafafa}
+
+.side-tabs{display:flex;border-bottom:1px solid var(--rule)}
+.side-tabs button{flex:1;padding:8px 4px;border:none;background:transparent;font:11px var(--sans);text-transform:uppercase;letter-spacing:.03em;cursor:pointer}
+.side-tabs button.active{background:var(--fg);color:var(--bg)}
+.side-content{flex:1;overflow-y:auto;padding:10px;font-size:12px}
+
+.def-row{padding:6px 0;border-bottom:1px solid var(--rule)}
+.def-row .subj{font-family:var(--mono);color:var(--ent);font-weight:600}
+.def-row .def{color:var(--muted);margin-top:2px}
+
+.idx-row{padding:4px 0;border-bottom:1px solid var(--rule);cursor:pointer}
+.idx-row:hover{background:#f5f5f5}
+.idx-row .name{font-family:var(--mono)}
+.idx-row .count{float:right;color:var(--muted);font-size:11px}
+
+/* Tree highlighting */
+.e{color:var(--ent);font-weight:700;cursor:pointer}
+.e:hover{text-decoration:underline}
+.m{color:var(--morph);font-weight:700}
+.b{color:var(--brace);font-weight:600}
+.c{color:var(--conn)}
+.w{color:var(--warn);font-weight:700}
+.br{color:var(--ent)}  /* angle brackets */
+.sq{color:var(--morph)} /* square brackets */
+.cu{color:var(--brace)} /* curly braces */
+
+/* POML highlighting */
+.tag{font-weight:700}
+.tag-struct{color:var(--tag-struct)}
+.tag-meta{color:var(--tag-meta)}
+.tag-data{color:var(--tag-data)}
+.attr{color:var(--attr)}
+.tpl{color:var(--ent);font-style:italic}
+
+.bottom{display:flex;border-top:1px solid var(--rule)}
+.bottom button{flex:1;padding:10px 6px;border:none;background:transparent;font:11px var(--sans);text-transform:uppercase;letter-spacing:.04em;cursor:pointer}
+.bottom button:not(:last-child){border-right:1px solid var(--rule)}
+.bottom button.active{background:var(--fg);color:var(--bg)}
+
+/* Mobile bottom nav already simplified */
+
+body.present .top,body.present .list,body.present .bottom{display:none}
+body.present .detail{grid-template-columns:1fr}
+body.present .split-handle,body.present .context-pane{display:none}
+body.present .main{grid-template-columns:1fr}
+body.present .content{font-size:15px;max-width:900px;margin:0 auto;padding:24px}
+
+.empty{color:var(--muted);padding:20px;text-align:center}
+  </style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <select id="mode">
+      <option value="trees">Trees</option>
+      <option value="poml">POML</option>
+      <option value="entities">Entities</option>
+      <option value="relations">Relations</option>
+      <option value="definitions">Definitions</option>
+    </select>
+    <input id="q" type="text" placeholder="Search...">
+    <span class="stat" id="stat"></span>
+  </div>
+
+  <div class="main" id="main" data-view="list">
+    <div class="list" id="list"></div>
+    <div class="detail" id="detail">
+      <div class="content" id="content"></div>
+      <div class="split-handle" id="split-handle"></div>
+      <div class="context-pane" id="context-pane"></div>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <button id="btn-list" class="active">List</button>
+    <button id="btn-copy">Copy</button>
+    <button id="btn-present">Present</button>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const data={
+  trees:null,poml:null,entities:null,relations:null,definitions:null,
+  mode:'trees',view:[],sel:null,sideTab:'ctx',
+  sourceCache:new Map()
+};
+
+async function load(){
+  try{
+    const[tc,pc,ei,ri,di]=await Promise.all([
+      fetch('./trees_catalog.json').then(r=>r.ok?r.json():null).catch(()=>null),
+      fetch('./poml_catalog.json').then(r=>r.ok?r.json():null).catch(()=>null),
+      fetch('./entities_index.json').then(r=>r.ok?r.json():null).catch(()=>null),
+      fetch('./relations_index.json').then(r=>r.ok?r.json():null).catch(()=>null),
+      fetch('./definitions_index.json').then(r=>r.ok?r.json():null).catch(()=>null)
+    ]);
+    data.trees=tc?.trees||[];
+    data.poml=pc?.poml||[];
+    data.entities=ei?.entities||[];
+    data.relations=ri?.relations||[];
+    data.definitions=di?.definitions||[];
+    updateStat();
+    filter();
+  }catch(e){console.error(e)}
+}
+
+function updateStat(){
+  const t=data.trees.length,p=data.poml.length,e=data.entities.length,r=data.relations.length,d=data.definitions.length;
+  $('stat').textContent=`${t} trees · ${p} poml · ${e} ents · ${d} defs`;
+}
+
+function items(){
+  if(data.mode==='trees')return data.trees;
+  if(data.mode==='poml')return data.poml;
+  if(data.mode==='entities')return data.entities;
+  if(data.mode==='relations')return data.relations;
+  if(data.mode==='definitions')return data.definitions;
+  return[];
+}
+
+function filter(){
+  const q=($('q').value||'').toLowerCase();
+  const all=items();
+  data.view=all.filter(x=>{
+    if(data.mode==='trees')return((x.label||'')+(x.id||'')+(x.content||'')).toLowerCase().includes(q);
+    if(data.mode==='poml')return((x.label||'')+(x.id||'')+(x.content||'')).toLowerCase().includes(q);
+    if(data.mode==='entities')return(x.entity||'').toLowerCase().includes(q);
+    if(data.mode==='relations')return(x.relation||'').toLowerCase().includes(q);
+    if(data.mode==='definitions')return((x.subject||'')+(x.definition||'')).toLowerCase().includes(q);
+    return true;
+  });
+  render();
+}
+
+function render(){
+  const mode=data.mode;
+  let html='';
+  if(mode==='trees'){
+    html=data.view.map(x=>`<div class="list-item${data.sel?.id===x.id?' active':''}" data-id="${x.id}"><div>${esc(x.label||x.root||x.id)}</div><div class="id">${x.lines||0} lines</div></div>`).join('');
+  }else if(mode==='poml'){
+    html=data.view.map(x=>`<div class="list-item${data.sel?.id===x.id?' active':''}" data-id="${x.id}"><div>${esc(x.label||x.id)}</div><div class="id">${x.is_best?'★ ':''} msg ${x.message_index||'?'}</div></div>`).join('');
+  }else if(mode==='entities'){
+    html=data.view.map(x=>`<div class="idx-row" data-ent="${esc(x.entity)}"><span class="name">${esc(x.entity)}</span><span class="count">${x.count}</span></div>`).join('');
+  }else if(mode==='relations'){
+    html=data.view.map(x=>`<div class="idx-row" data-rel="${esc(x.relation)}"><span class="name">${esc(x.relation)}</span><span class="count">${x.count}</span></div>`).join('');
+  }else if(mode==='definitions'){
+    html=data.view.map(x=>`<div class="def-row"><div class="subj">${esc(x.subject)}</div><div class="def">${esc(x.definition)}</div></div>`).join('');
+  }
+  $('list').innerHTML=html||'<div class="empty">No items</div>';
+  renderDetail();
+  renderContext();
+}
+
+function select(id){
+  // Find in current mode's items
+  if(data.mode==='trees')data.sel=data.trees.find(x=>x.id===id)||null;
+  else if(data.mode==='poml')data.sel=data.poml.find(x=>x.id===id)||null;
+  else data.sel=null;
+  render();
+}
+
+function selectByEntity(ent){
+  // Find trees containing this entity
+  const entry=data.entities.find(x=>x.entity===ent);
+  if(!entry||!entry.trees.length)return;
+  const firstTree=data.trees.find(x=>x.id===entry.trees[0]);
+  if(firstTree){
+    data.mode='trees';
+    $('mode').value='trees';
+    $('q').value=ent.replace(/[<>]/g,'');
+    filter();
+    select(firstTree.id);
+  }
+}
+
+function selectByRelation(rel){
+  const entry=data.relations.find(x=>x.relation===rel);
+  if(!entry||!entry.trees.length)return;
+  const firstTree=data.trees.find(x=>x.id===entry.trees[0]);
+  if(firstTree){
+    data.mode='trees';
+    $('mode').value='trees';
+    $('q').value=rel.replace(/[\[\]]/g,'');
+    filter();
+    select(firstTree.id);
+  }
+}
+
+function renderDetail(){
+  if((data.mode!=='trees'&&data.mode!=='poml')||!data.sel){
+    $('content').innerHTML=(data.mode!=='trees'&&data.mode!=='poml')?'<div class="empty">Select Trees or POML mode</div>':'<div class="empty">Select an item</div>';
+    return;
+  }
+  $('content').innerHTML=highlight(data.sel.content||'');
+}
+
+async function fetchSourceContext(path){
+  if(!path)return null;
+  if(data.sourceCache.has(path))return data.sourceCache.get(path);
+  try{
+    const res=await fetch('./'+path);
+    if(!res.ok)return null;
+    const text=await res.text();
+    data.sourceCache.set(path,text);
+    return text;
+  }catch{return null}
+}
+
+async function renderContext(){
+  // Show source context from the original code-syntax file
+  if(!data.sel){
+    $('context-pane').innerHTML='<span style="color:var(--muted)">Select item</span>';
+    return;
+  }
+  const srcPath=data.sel.source?.path;
+  if(!srcPath){
+    // For POML, show definitions instead
+    let defs=data.definitions;
+    const content=data.sel.content||'';
+    const entsInContent=new Set((content.match(/<[^>\n]+>/g)||[]).map(e=>e));
+    defs=data.definitions.filter(d=>entsInContent.has(d.subject));
+    if(defs.length){
+      $('context-pane').innerHTML=defs.map(d=>`<div style="margin-bottom:6px"><span class="e">${esc(d.subject)}</span> <span style="color:var(--muted)">${esc(d.definition)}</span></div>`).join('');
+    }else{
+      $('context-pane').innerHTML='<span style="color:var(--muted)">No source context</span>';
+    }
+    return;
+  }
+  $('context-pane').innerHTML='<span style="color:var(--muted)">Loading...</span>';
+  const ctx=await fetchSourceContext(srcPath);
+  if(!ctx){
+    $('context-pane').innerHTML='<span style="color:var(--muted)">Could not load</span>';
+    return;
+  }
+  $('context-pane').innerHTML=highlight(ctx);
+}
+
+function highlightTree(s){
+  let h=esc(s);
+  // Entities <...> - purple with colored brackets
+  h=h.replace(/&lt;([^&\n]+?)&gt;/g,'<span class="br">&lt;</span><span class="e" data-ent="&lt;$1&gt;">$1</span><span class="br">&gt;</span>');
+  // Morphisms [...] - cyan with colored brackets
+  h=h.replace(/\[([^\]\n]+?)\]/g,'<span class="sq">[</span><span class="m">$1</span><span class="sq">]</span>');
+  // Braces {...} - orange
+  h=h.replace(/\{([^}\n]+?)\}/g,'<span class="cu">{</span><span class="b">$1</span><span class="cu">}</span>');
+  // Connectors - gray
+  h=h.replace(/(├──|└──|│)/g,'<span class="c">$1</span>');
+  // Warnings
+  h=h.replace(/(\[TRUNCATED[^\]]*\])/gi,'<span class="w">$1</span>');
+  return h;
+}
+
+function highlightPoml(s){
+  let h=esc(s);
+  // Tags with different colors by type
+  const structTags=/poml|system|role|task|context|output-schema/i;
+  const metaTags=/meta|stylesheet|let/i;
+  const dataTags=/document|example|user|intro|directive/i;
+  
+  h=h.replace(/(&lt;\/?)([\w-]+)((?:\s+[^&]*?)?)(\/?&gt;)/g,(m,open,tag,attrs,close)=>{
+    let cls='tag';
+    if(structTags.test(tag))cls='tag tag-struct';
+    else if(metaTags.test(tag))cls='tag tag-meta';
+    else if(dataTags.test(tag))cls='tag tag-data';
+    const attrHtml=attrs?`<span class="attr">${attrs}</span>`:'';
+    return`${open}<span class="${cls}">${tag}</span>${attrHtml}${close}`;
+  });
+  // Template interpolations {{ ... }}
+  h=h.replace(/(\{\{[^}]+\}\})/g,'<span class="tpl">$1</span>');
+  return h;
+}
+
+function highlight(s){
+  // Detect if POML (starts with <poml or has common POML tags)
+  if(/^\s*&lt;poml/i.test(esc(s))||/<poml/i.test(s)){
+    return highlightPoml(s);
+  }
+  return highlightTree(s);
+}
+
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+// Events
+$('list').addEventListener('click',e=>{
+  const item=e.target.closest('.list-item');
+  if(item)select(item.dataset.id);
+  const ent=e.target.closest('.idx-row[data-ent]');
+  if(ent)selectByEntity(ent.dataset.ent);
+  const rel=e.target.closest('.idx-row[data-rel]');
+  if(rel)selectByRelation(rel.dataset.rel);
+});
+
+$('content').addEventListener('click',e=>{
+  const ent=e.target.closest('.e[data-ent]');
+  if(ent){
+    const entity=ent.dataset.ent.replace(/&lt;/g,'<').replace(/&gt;/g,'>');
+    selectByEntity(entity);
+  }
+});
+
+$('context-pane').addEventListener('click',e=>{
+  const ent=e.target.closest('.e[data-ent]');
+  if(ent){
+    const entity=ent.dataset.ent.replace(/&lt;/g,'<').replace(/&gt;/g,'>');
+    selectByEntity(entity);
+  }
+});
+
+// Draggable split handle
+(function initSplit(){
+  const handle=$('split-handle');
+  const detail=$('detail');
+  if(!handle||!detail)return;
+  let dragging=false;
+  handle.addEventListener('pointerdown',e=>{
+    dragging=true;
+    handle.setPointerCapture(e.pointerId);
+  });
+  handle.addEventListener('pointermove',e=>{
+    if(!dragging)return;
+    const rect=detail.getBoundingClientRect();
+    const x=Math.max(100,Math.min(e.clientX-rect.left,rect.width-100));
+    const pct=(x/rect.width)*100;
+    document.documentElement.style.setProperty('--split',pct.toFixed(1)+'%');
+  });
+  handle.addEventListener('pointerup',()=>{dragging=false;});
+  handle.addEventListener('pointercancel',()=>{dragging=false;});
+})();
+
+$('mode').addEventListener('change',()=>{data.mode=$('mode').value;filter();});
+$('q').addEventListener('input',filter);
+
+$('btn-list').addEventListener('click',()=>{
+  $('btn-list').classList.add('active');
+  $('btn-copy').classList.remove('active');
+});
+$('btn-copy').addEventListener('click',async()=>{
+  if(!data.sel)return;
+  try{await navigator.clipboard.writeText(data.sel.content||'')}catch{}
+});
+$('btn-present').addEventListener('click',()=>{
+  document.body.classList.toggle('present');
+  $('btn-present').classList.toggle('active',document.body.classList.contains('present'));
+});
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')document.body.classList.remove('present');
+  if(e.key==='p'&&!e.metaKey&&!e.ctrlKey){e.preventDefault();document.body.classList.toggle('present');}
+});
+
+load();
+</script>
+</body>
+</html>

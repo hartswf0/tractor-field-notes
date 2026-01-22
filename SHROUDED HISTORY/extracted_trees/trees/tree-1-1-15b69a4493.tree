@@ -1,0 +1,34 @@
+<AI_Legal_Verification_Crisis>
+├── <AI_Hallucination>
+│   ├── [fabricates] <nonexistent_cases>
+│   ├── [misstates] <real_holdings>
+│   └── [connects] <real_cases> → <false_legal_principles>
+│
+├── <Verification_Failure>
+│   ├── <Database_Check>
+│   │   └── [verifies] <existence_only>
+│   ├── <Cross_Tool_Checking>
+│   │   └── [diverges] <different_hallucinations>
+│   └── <Manual_Review>
+│       └── [defeats] <efficiency>
+│
+├── <Regulatory_Response>
+│   ├── [requires] <AI_Disclosure>
+│   ├── [demands] <Certification>
+│   └── [omits] <Verification_Infrastructure>
+│
+├── <Insurance_Response>
+│   ├── [excludes] <AI_generated_work>
+│   ├── [increases] <premiums>
+│   └── [denies] <coverage>
+│
+└── <Professional_Dilemma>
+    ├── <Use_AI>
+    │   ├── [requires] <Disclosure>
+    │   ├── [triggers] <Heightened_Scrutiny>
+    │   └── [risks] <Sanctions>
+    │
+    └── <Avoid_AI>
+        ├── [reduces] <Competitiveness>
+        ├── [increases] <Costs>
+        └── [loses] <Clients>

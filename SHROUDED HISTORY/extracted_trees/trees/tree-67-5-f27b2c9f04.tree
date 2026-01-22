@@ -1,0 +1,14 @@
+<Second-Order_Cybernetic_Read_(Your_Suite_as_Observer-In-System)>
+├── <Premise>
+│   └── <observer> [is_part_of] <the_system_observed>
+├── <Your_suite>
+│   └── [does_not_only_model] <slop>
+│       └── [it_models] <how_you_decide_what_slop_is>
+├── <Key_feedback_loop_(design→interpretation→design)>
+│   ├── <UI_affordances> [select_for] <certain_readings>
+│   ├── <those_readings> [stabilize] <user_concepts_of_slop/authority>
+│   ├── <stabilized_concepts> [change] <how_the_tools_are_used>
+│   └── <use_patterns> [pressure] <next_interface_iteration>
+└── <Cybernetic_verdict>
+    └── <AI_slop_discourse> [is] <a_self-describing_system>
+        └── <and_your_suite> [is] <a_mechanism_for_making_that_self-description_visible>

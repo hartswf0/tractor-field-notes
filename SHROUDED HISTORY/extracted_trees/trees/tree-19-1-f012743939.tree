@@ -1,0 +1,46 @@
+<Bar_Association_Guidance_Failure>
+├── <problem_statement>
+│   └── [asserts] <bar_associations_not_helping>
+│
+├── <issued_guidance>
+│   ├── <American_Bar_Association>
+│   │   └── [states] <"exercise_reasonable_care_when_using_AI">
+│   │
+│   ├── <New_York_State_Bar>
+│   │   └── [states] <"verify_AI_outputs">
+│   │
+│   └── <California_Bar>
+│       └── [states] <"maintain_competence">
+│
+├── <guidance_character>
+│   ├── [classified_as] <platitudes>
+│   ├── [lacks] <operational_definitions>
+│   └── [lacks] <enforceable_protocols>
+│
+├── <unanswered_questions>
+│   ├── <how_to_verify?>
+│   ├── <what_is_reasonable_care?>
+│   └── <how_to_detect_hallucinations?>
+│
+├── <guidance_gap>
+│   ├── <actual_guidance>
+│   │   ├── <exercise_reasonable_care>
+│   │   ├── <verify_AI_outputs>
+│   │   ├── <maintain_competence>
+│   │   └── <use_professional_judgment>
+│   │
+│   └── <what_lawyers_need>
+│       ├── <specific_verification_protocols>
+│       ├── <approved_AI_tools_list>
+│       ├── <hallucination_detection_methods>
+│       └── <liability_safe_harbors>
+│
+├── <infrastructure_failure>
+│   ├── [rules_exist_without] <supporting_mechanisms>
+│   ├── [standards_without] <measurement_tools>
+│   └── [duties_without] <compliance_paths>
+│
+└── <systemic_conclusion>
+    ├── [results_in] <professional_risk>
+    ├── [shifts_liability_to] <individual_lawyers>
+    └── [summarized_as] <platitudes_without_protocols>

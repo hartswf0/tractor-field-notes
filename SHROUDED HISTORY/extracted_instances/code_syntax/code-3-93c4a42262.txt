@@ -1,0 +1,161 @@
+Thought for 23s
+
+
+Here’s a more granular, case-and-stats expansion in the same code-syntax ontology style.
+
+
+
+<Legal_AI_Hallucination_Risk> (expanded with <cases> + <stats>)
+
+
+<Legal_AI_Hallucination_Risk> is a <professional_risk_state> where [use] of <LLM_tools> in <legal_writing> or <legal_research> can [produce] <fabricated_authority> or <fabricated_reasoning> that [passes] <surface_checks> but [fails] <substance_checks>, triggering <sanctions> / <discipline> / <disqualification> / <liability>.
+
+
+
+{Cases}
+
+
+<Legal_AI_Hallucination_Risk>
+├── {Cases}
+│   ├── <Mata_v_Avianca_(S.D.N.Y._2023)>
+│   ├── <U.S._v._Cohen_(S.D.N.Y._2024_opinion_about_2023_filings)>
+│   ├── <Alabama_Prison_Litigation_Butler_Snow_(N.D._Ala._2025)>
+│   ├── <7th_Circuit_Pro_Se_AI_Warning_(2026)>
+│   └── <Connecticut_State_Court_Sanctions_Motion_(2026)>
+└── {Stats}
+    └── <Stanford_Preregistered_Eval_of_Legal_AI_Tools_(2024/2025)>
+
+
+
+<Mata_v_Avianca_(S.D.N.Y._2023)>
+
+
+<Mata_v_Avianca_(S.D.N.Y._2023)> is a <sanctions_event> where [use] of <ChatGPT> in <briefing> [produced] <nonexistent_cases> and related <fabricated_support>, prompting the court to [impose] <Rule_11_or_inherent_authority_sanctions>. Justia Law+1
+
+
+Key failure mode
+
+
+<AI_output>: [cites] <case_names> that [do_not_exist]
+
+<verification>: [should_have_read] <primary_sources> but didn’t
+
+<court>: [treats] this as a serious <litigation_integrity_breach> Justia Law+1
+
+
+
+<U.S._v._Cohen_(S.D.N.Y._2024_opinion_about_2023_filings)>
+
+
+<U.S._v._Cohen_(S.D.N.Y._2024...)> is a <judicial_response> where the court [addressed] a filing containing <fake_or_unfindable_cases> in a matter involving Michael Cohen’s counsel, and the opinion discusses how such fabricated authorities can arise and why responsibility attaches to the filer. U.S. District Court
+
+
+Key failure mode
+
+
+[submission] of <cases> that [cannot_be_located] in normal research channels
+
+<court>: [emphasizes] <duty_of_accuracy> regardless of how the text was produced U.S. District Court
+
+
+(If you want, I can extract the exact number of questioned cases and the procedural posture from the PDF in a tighter sub-tree.)
+
+
+
+<Alabama_Prison_Litigation_Butler_Snow_(N.D._Ala._2025)>
+
+
+<Butler_Snow_(N.D._Ala._2025)> is a <disqualification_and_sanctions_event> where attorneys were [removed/disqualified] after filings contained <fabricated_AI_generated_citations>, and the matter was [referred] to the <state_bar> for potential discipline. Reuters+1
+
+
+Key failure mode
+
+
+<workflow_failure> = [one_person_generates] + [others_sign] without <independent_verification> Reuters+1
+
+
+
+<7th_Circuit_Pro_Se_AI_Warning_(2026)>
+
+
+<7th_Circuit_Pro_Se_AI_Warning_(2026)> is a <precedential_warning_signal> where the appellate court [flagged] apparent <AI_hallucinated_quotes> in a pro se filing and [reiterated] that filers remain responsible for <truthfulness> and <accuracy> even if AI was involved. Reuters
+
+
+Key failure mode
+
+
+<fake_quotes_from_real_decisions> = particularly dangerous because <case_exists> but <quote_does_not> Reuters
+
+
+
+<Connecticut_State_Court_Sanctions_Motion_(2026)>
+
+
+<Connecticut_Sanctions_Motion_(2026)> is an alleged <state_court_AI_citation_failure> where a party sought sanctions claiming a filing contained multiple <fabrications> (including <nonexistent_cases> and/or <misquoted_rulings>), tied to [use] of AI tools. CT Insider
+
+
+Key failure mode
+
+
+<multiple_fabrications_in_one_motion> → opposing counsel [must_spend] <time_cost> to [unwind] the record CT Insider
+
+
+
+{Stats}
+
+
+<Stanford_Preregistered_Eval_of_Legal_AI_Tools_(2024/2025)>
+
+
+This is a preregistered empirical evaluation comparing major <legal_AI_research_tools> (Lexis+ AI; Westlaw AI-assisted tools) and <GPT-4> on legal tasks, focusing on hallucinations and reliability.
+
+
+Key stat (load-bearing)
+
+
+The study reports that evaluated legal AI tools hallucinated between ~17% and ~33% (depending on system/task definition used in the paper). arXiv+2Dho Stanford+2
+
+
+Why this matters
+
+
+<Hallucination_rate> is not just [fake_case]:
+
+
+it can be [wrong_rule], [wrong_quote], [wrong_application], or [unsupported_assertion] that still sounds lawyerly. arXiv+1
+
+
+
+{Rules / Governance} (granular correction to “5th Circuit rule” claims)
+
+
+<Fifth_Circuit_AI_Rule_Status>
+
+
+<Fifth_Circuit_AI_Rule_Status>: the Fifth Circuit considered a special rule about AI drafting disclosures/certification but decided not to adopt a special rule “at this time” (per the court’s decision document). Fifth Circuit Court+1
+
+
+So the structure is:
+
+
+<Fifth_Circuit_AI_Rule_Status>
+├── [considered] <proposed_rule>
+└── [declined_to_adopt] <special_rule_at_this_time>
+
+
+
+<Stat+Case_Synthesis> (what to watch for)
+
+
+<High_Risk_Patterns>
+├── <Real_Case> + <Fake_Holding>
+├── <Real_Case> + <Fake_Quote>
+├── <Plausible_Citation_Format> + <Nonexistent_Case>
+└── <Delegated_Verification> (someone_else_checks) → <signature_without_review>
+
+
+These are exactly the patterns that make “database lookup” insufficient: <existence> can be true while <meaning> is false.
+
+
+
+If you tell me whether you want (A) “only courtroom outcomes (sanctions/disqualification)” or (B) “everything including orders-to-show-cause, warnings, and discipline cases,” I can expand the {Cases} subtree to a longer catalog (still in this code syntax) without drifting into low-signal anecdotes.

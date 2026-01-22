@@ -1,0 +1,691 @@
+{
+  "stats": {
+    "total_trees": 63,
+    "unique_entities": 1766,
+    "unique_relations": 438,
+    "definitions": 85,
+    "sources_processed": 30
+  },
+  "definitions": [
+    {
+      "subject": "<AI_slop>",
+      "predicate": "is",
+      "object": "<high_volume_low_friction_symbol_output>",
+      "definition": "is <high_volume_low_friction_symbol_output>",
+      "source_tree": "tree-59-1-8ec429a819",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<AI_slop>",
+      "predicate": "is",
+      "object": "<high_volume_symbol_output>",
+      "definition": "is <high_volume_symbol_output>",
+      "source_tree": "tree-61-1-3b8afa918a",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<message_of_medium>",
+      "predicate": "is",
+      "object": "<change_in_scale_pace_pattern>",
+      "definition": "is <change_in_scale_pace_pattern>",
+      "source_tree": "tree-61-1-3b8afa918a",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<slop>",
+      "predicate": "is",
+      "object": "<the_environment_created_by_scale>",
+      "definition": "is <the_environment_created_by_scale>",
+      "source_tree": "tree-61-1-3b8afa918a",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<culture>",
+      "predicate": "is",
+      "object": "<control_mechanisms>",
+      "definition": "is <control_mechanisms>",
+      "source_tree": "tree-61-1-3b8afa918a",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<AI_slop>",
+      "predicate": "is",
+      "object": "<meaning_signals_detached_from_lifeworld_checks>",
+      "definition": "is <meaning_signals_detached_from_lifeworld_checks>",
+      "source_tree": "tree-61-1-3b8afa918a",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<the_problem>",
+      "predicate": "is",
+      "object": "<not_only_slop>",
+      "definition": "is <not_only_slop>",
+      "source_tree": "tree-61-1-3b8afa918a",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<AI_slop>",
+      "predicate": "is",
+      "object": "<a_system_of_readings_that_remakes_readers>",
+      "definition": "is <a_system_of_readings_that_remakes_readers>",
+      "source_tree": "tree-61-1-3b8afa918a",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<Guidance_without_Protocols>",
+      "predicate": "defined as",
+      "object": "→ <Ambiguous_Duties>",
+      "definition": "→ <Ambiguous_Duties>",
+      "source_file": "extracted_instances/code_syntax/code-19-82b0ded875.txt",
+      "source_type": "glossary"
+    },
+    {
+      "subject": "<task>",
+      "predicate": "defined as",
+      "object": "Analyze the provided legal texts only.",
+      "definition": "Analyze the provided legal texts only.",
+      "source_file": "extracted_instances/code_syntax/code-83-6796230f86.txt",
+      "source_type": "glossary"
+    },
+    {
+      "subject": "<Mata>",
+      "predicate": "is",
+      "object": "<a_prototype_failure>",
+      "definition": "is <a_prototype_failure>",
+      "source_tree": "tree-37-4-2a6c77eef5",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<Disclosure_required>",
+      "predicate": "defined as",
+      "object": "∧ <Verification_unavailable>",
+      "definition": "∧ <Verification_unavailable>",
+      "source_file": "extracted_instances/code_syntax/code-23-b25322b103.txt",
+      "source_type": "glossary"
+    },
+    {
+      "subject": "<human>",
+      "predicate": "is",
+      "object": "<biologically_underdetermined>",
+      "definition": "is <biologically_underdetermined>",
+      "source_tree": "tree-35-1-21923feae3",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<message>",
+      "predicate": "is",
+      "object": "<change_in_scale_pace_pattern>",
+      "definition": "is <change_in_scale_pace_pattern>",
+      "source_tree": "tree-35-1-21923feae3",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<AI>",
+      "predicate": "is",
+      "object": "<symbolic_interaction_technology>",
+      "definition": "is <symbolic_interaction_technology>",
+      "source_tree": "tree-35-1-21923feae3",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<vibe_coding>",
+      "predicate": "is",
+      "object": "<intent_specification_by_natural_language>",
+      "definition": "is <intent_specification_by_natural_language>",
+      "source_tree": "tree-35-1-21923feae3",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<vibe_coding_interface>",
+      "predicate": "is",
+      "object": "<cold_media>",
+      "definition": "is <cold_media>",
+      "source_tree": "tree-35-1-21923feae3",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<context_window>",
+      "predicate": "is",
+      "object": "<medium_environment>",
+      "definition": "is <medium_environment>",
+      "source_tree": "tree-35-1-21923feae3",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<prompting>",
+      "predicate": "is",
+      "object": "<epistemic_control_infrastructure>",
+      "definition": "is <epistemic_control_infrastructure>",
+      "source_tree": "tree-35-1-21923feae3",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<AI>",
+      "predicate": "is",
+      "object": "<a_medium_that_injects_micro_cultures_via_prompts>",
+      "definition": "is <a_medium_that_injects_micro_cultures_via_prompts>",
+      "source_tree": "tree-35-1-21923feae3",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<the_future_of_prompting>",
+      "predicate": "is",
+      "object": "<control_system_design_not_phrasecraft>",
+      "definition": "is <control_system_design_not_phrasecraft>",
+      "source_tree": "tree-35-1-21923feae3",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<law_practice>",
+      "predicate": "is",
+      "object": "<symbolic_control_system>",
+      "definition": "is <symbolic_control_system>",
+      "source_tree": "tree-37-2-52100dc28c",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<AI_in_law>",
+      "predicate": "is",
+      "object": "<culture_injection>",
+      "definition": "is <culture_injection>",
+      "source_tree": "tree-37-2-52100dc28c",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<AI_slop>",
+      "predicate": "is",
+      "object": "<control_mechanism_pollution>",
+      "definition": "is <control_mechanism_pollution>",
+      "source_tree": "tree-67-3-af339cbc28",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<man>",
+      "predicate": "is",
+      "object": "<biologically_incomplete>",
+      "definition": "is <biologically_incomplete>",
+      "source_tree": "tree-41-1-ce6363ad36",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<man_without_culture>",
+      "predicate": "is",
+      "object": "<unworkable>",
+      "definition": "is <unworkable>",
+      "source_tree": "tree-41-1-ce6363ad36",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<culture>",
+      "predicate": "is",
+      "object": "<constitutive_of_man>",
+      "definition": "is <constitutive_of_man>",
+      "source_tree": "tree-41-1-ce6363ad36",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<medium>",
+      "predicate": "is",
+      "object": "<extension_of_man>",
+      "definition": "is <extension_of_man>",
+      "source_tree": "tree-41-1-ce6363ad36",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<culture>",
+      "predicate": "is",
+      "object": "<the_primary_medium_of_man>",
+      "definition": "is <the_primary_medium_of_man>",
+      "source_tree": "tree-41-1-ce6363ad36",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<AI>",
+      "predicate": "is",
+      "object": "<medium>",
+      "definition": "is <medium>",
+      "source_tree": "tree-41-1-ce6363ad36",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<practical_reason>",
+      "predicate": "is",
+      "object": "<primary>",
+      "definition": "is <primary>",
+      "source_tree": "tree-71-1-06ae92e407",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<citation>",
+      "predicate": "is",
+      "object": "<ritual_token>",
+      "definition": "is <ritual_token>",
+      "source_tree": "tree-71-1-06ae92e407",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<quote>",
+      "predicate": "is",
+      "object": "<textual_witness>",
+      "definition": "is <textual_witness>",
+      "source_tree": "tree-71-1-06ae92e407",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<holding>",
+      "predicate": "is",
+      "object": "<control_instruction>",
+      "definition": "is <control_instruction>",
+      "source_tree": "tree-71-1-06ae92e407",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<AI_slop>",
+      "predicate": "is",
+      "object": "<a_medium_effect>",
+      "definition": "is <a_medium_effect>",
+      "source_tree": "tree-67-2-0209428605",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<slop>",
+      "predicate": "is",
+      "object": "<environmental_weather>",
+      "definition": "is <environmental_weather>",
+      "source_tree": "tree-67-2-0209428605",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<slop>",
+      "predicate": "is",
+      "object": "<the_message_of_scale>",
+      "definition": "is <the_message_of_scale>",
+      "source_tree": "tree-59-4-4d7a1fc7e4",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<slop>",
+      "predicate": "is",
+      "object": "<control_mechanisms_filled_with_fog>",
+      "definition": "is <control_mechanisms_filled_with_fog>",
+      "source_tree": "tree-59-4-4d7a1fc7e4",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<what_you_specify>",
+      "predicate": "is",
+      "object": "<clay>",
+      "definition": "is <clay>",
+      "source_tree": "tree-45-1-d7c5a31e2d",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<what_you_leave_unsaid>",
+      "predicate": "is",
+      "object": "<space>",
+      "definition": "is <space>",
+      "source_tree": "tree-45-1-d7c5a31e2d",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<wu_wei>",
+      "predicate": "is",
+      "object": "<wisdom_in_creation>",
+      "definition": "is <wisdom_in_creation>",
+      "source_tree": "tree-45-1-d7c5a31e2d",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<wu_wei>",
+      "predicate": "is",
+      "object": "<danger_in_attestation>",
+      "definition": "is <danger_in_attestation>",
+      "source_tree": "tree-45-1-d7c5a31e2d",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<Bartleby>",
+      "predicate": "is",
+      "object": "<a_first-class_primitive>",
+      "definition": "is <a_first-class_primitive>",
+      "source_tree": "tree-133-1-4a2d3bee4d",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<context>",
+      "predicate": "defined as",
+      "object": "You can search everything. Build the whole ox.",
+      "definition": "You can search everything. Build the whole ox.",
+      "source_file": "extracted_instances/code_syntax/code-133-9b96f46555.txt",
+      "source_type": "glossary"
+    },
+    {
+      "subject": "<task>",
+      "predicate": "defined as",
+      "object": "Retrieve primary sources and build:",
+      "definition": "Retrieve primary sources and build:",
+      "source_file": "extracted_instances/code_syntax/code-133-9b96f46555.txt",
+      "source_type": "glossary"
+    },
+    {
+      "subject": "<user>",
+      "predicate": "defined as",
+      "object": "QUESTION: {{ legal_question }}",
+      "definition": "QUESTION: {{ legal_question }}",
+      "source_file": "extracted_instances/code_syntax/code-133-9b96f46555.txt",
+      "source_type": "glossary"
+    },
+    {
+      "subject": "<context>",
+      "predicate": "defined as",
+      "object": "You cannot search. You cannot guess.",
+      "definition": "You cannot search. You cannot guess.",
+      "source_file": "extracted_instances/code_syntax/code-133-9b96f46555.txt",
+      "source_type": "glossary"
+    },
+    {
+      "subject": "<task>",
+      "predicate": "defined as",
+      "object": "Answer the legal question using verbatim quotes + locations only.",
+      "definition": "Answer the legal question using verbatim quotes + locations only.",
+      "source_file": "extracted_instances/code_syntax/code-133-9b96f46555.txt",
+      "source_type": "glossary"
+    },
+    {
+      "subject": "<user>",
+      "predicate": "defined as",
+      "object": "COOK_DING_INPUT: {{ cook_ding_input }}",
+      "definition": "COOK_DING_INPUT: {{ cook_ding_input }}",
+      "source_file": "extracted_instances/code_syntax/code-133-9b96f46555.txt",
+      "source_type": "glossary"
+    },
+    {
+      "subject": "<Reading_Actual_Opinions>",
+      "predicate": "is",
+      "object": "<high_accuracy>",
+      "definition": "is <high_accuracy>",
+      "source_tree": "tree-25-1-31338dc648",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<AI_slop_discourse>",
+      "predicate": "is",
+      "object": "<a_self-describing_system>",
+      "definition": "is <a_self-describing_system>",
+      "source_tree": "tree-67-5-f27b2c9f04",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<and_your_suite>",
+      "predicate": "is",
+      "object": "<a_mechanism_for_making_that_self-description_visible>",
+      "definition": "is <a_mechanism_for_making_that_self-description_visible>",
+      "source_tree": "tree-67-5-f27b2c9f04",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<modeling_task>",
+      "predicate": "is",
+      "object": "<recover_the_structure_that_makes_action_intelligible>",
+      "definition": "is <recover_the_structure_that_makes_action_intelligible>",
+      "source_tree": "tree-65-1-a60dc4441e",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<explanation>",
+      "predicate": "is",
+      "object": "<showing_how_actions_follow_from_a_cultural_grammar>",
+      "definition": "is <showing_how_actions_follow_from_a_cultural_grammar>",
+      "source_tree": "tree-65-1-a60dc4441e",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<practical_reason>",
+      "predicate": "is",
+      "object": "<available_to_actors>",
+      "definition": "is <available_to_actors>",
+      "source_tree": "tree-65-1-a60dc4441e",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<analyst_mythmaking/projection>",
+      "predicate": "is",
+      "object": "<a_primary_hazard>",
+      "definition": "is <a_primary_hazard>",
+      "source_tree": "tree-65-1-a60dc4441e",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<explanation>",
+      "predicate": "is",
+      "object": "<plausible_motive_interest_constraint_account>",
+      "definition": "is <plausible_motive_interest_constraint_account>",
+      "source_tree": "tree-65-1-a60dc4441e",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<interface>",
+      "predicate": "is",
+      "object": "<a_grammar_switch>",
+      "definition": "is <a_grammar_switch>",
+      "source_tree": "tree-65-1-a60dc4441e",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<interface>",
+      "predicate": "is",
+      "object": "<projection-detector>",
+      "definition": "is <projection-detector>",
+      "source_tree": "tree-65-1-a60dc4441e",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<log>",
+      "predicate": "is",
+      "object": "<ritual_accounting_of_system_state>",
+      "definition": "is <ritual_accounting_of_system_state>",
+      "source_tree": "tree-65-1-a60dc4441e",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<log>",
+      "predicate": "is",
+      "object": "<where_breakdowns_confess_themselves>",
+      "definition": "is <where_breakdowns_confess_themselves>",
+      "source_tree": "tree-65-1-a60dc4441e",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<the_fight>",
+      "predicate": "is",
+      "object": "<about_authority_to_describe_other_minds_and_the_rules_of_evidence_for_that>",
+      "definition": "is <about_authority_to_describe_other_minds_and_the_rules_of_evidence_for_that>",
+      "source_tree": "tree-65-1-a60dc4441e",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<the_project>",
+      "predicate": "is",
+      "object": "<a_cultural_system_in_microcosm>",
+      "definition": "is <a_cultural_system_in_microcosm>",
+      "source_tree": "tree-65-1-a60dc4441e",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<good_judgment>",
+      "predicate": "is",
+      "object": "<the_art_of_not_filling>",
+      "definition": "is <the_art_of_not_filling>",
+      "source_tree": "tree-73-1-9cd318b1a7",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<wu_wei>",
+      "predicate": "is",
+      "object": "<non-forcing_action>",
+      "definition": "is <non-forcing_action>",
+      "source_tree": "tree-73-1-9cd318b1a7",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<a_citation>",
+      "predicate": "is",
+      "object": "<a_name_that_claims_a_root>",
+      "definition": "is <a_name_that_claims_a_root>",
+      "source_tree": "tree-73-1-9cd318b1a7",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<a_quote>",
+      "predicate": "is",
+      "object": "<a_name_that_claims_a_text>",
+      "definition": "is <a_name_that_claims_a_text>",
+      "source_tree": "tree-73-1-9cd318b1a7",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<emptiness>",
+      "predicate": "is",
+      "object": "<designed_absence>",
+      "definition": "is <designed_absence>",
+      "source_tree": "tree-73-1-9cd318b1a7",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<dissent>",
+      "predicate": "is",
+      "object": "<documented_negative_space>",
+      "definition": "is <documented_negative_space>",
+      "source_tree": "tree-73-1-9cd318b1a7",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<context_diagram>",
+      "predicate": "is",
+      "object": "<a_map_of_external_systems_that_impact_the_system>",
+      "definition": "is <a_map_of_external_systems_that_impact_the_system>",
+      "source_tree": "tree-73-1-9cd318b1a7",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<citation>",
+      "predicate": "is",
+      "object": "<a_name>",
+      "definition": "is <a_name>",
+      "source_tree": "tree-69-1-2439835c59",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<holding>",
+      "predicate": "is",
+      "object": "<a_name_of_truth>",
+      "definition": "is <a_name_of_truth>",
+      "source_tree": "tree-69-1-2439835c59",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<AI_interface>",
+      "predicate": "is",
+      "object": "<cool_medium>",
+      "definition": "is <cool_medium>",
+      "source_tree": "tree-69-1-2439835c59",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<court_record>",
+      "predicate": "is",
+      "object": "<hot_medium>",
+      "definition": "is <hot_medium>",
+      "source_tree": "tree-69-1-2439835c59",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<law>",
+      "predicate": "is",
+      "object": "<a_symbolic_control_system>",
+      "definition": "is <a_symbolic_control_system>",
+      "source_tree": "tree-69-1-2439835c59",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<flow_in_creation>",
+      "predicate": "defined as",
+      "object": "∧ <heat_in_attestation>",
+      "definition": "∧ <heat_in_attestation>",
+      "source_file": "extracted_instances/code_syntax/code-69-cd9afd18a8.txt",
+      "source_type": "glossary"
+    },
+    {
+      "subject": "<law>",
+      "predicate": "is",
+      "object": "<symbolic_control_system>",
+      "definition": "is <symbolic_control_system>",
+      "source_tree": "tree-39-1-aea40f429f",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<AI>",
+      "predicate": "is",
+      "object": "<a_new_medium>",
+      "definition": "is <a_new_medium>",
+      "source_tree": "tree-39-1-aea40f429f",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<AI_interface>",
+      "predicate": "is",
+      "object": "<cold_media>",
+      "definition": "is <cold_media>",
+      "source_tree": "tree-39-1-aea40f429f",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<Mata>",
+      "predicate": "is",
+      "object": "<the_first_visible_crack>",
+      "definition": "is <the_first_visible_crack>",
+      "source_tree": "tree-39-1-aea40f429f",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<hallucination_rate>",
+      "predicate": "is",
+      "object": "<nontrivial>",
+      "definition": "is <nontrivial>",
+      "source_tree": "tree-37-3-20f5f69428",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<the_way_of_code>",
+      "predicate": "is",
+      "object": "<alignment_between>",
+      "definition": "is <alignment_between>",
+      "source_tree": "tree-43-1-66cedc3c7d",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<vibe_coding>",
+      "predicate": "is",
+      "object": "<proper_use_of_a_cold_medium>",
+      "definition": "is <proper_use_of_a_cold_medium>",
+      "source_tree": "tree-43-1-66cedc3c7d",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<law>",
+      "predicate": "is",
+      "object": "<a_hot_medium>",
+      "definition": "is <a_hot_medium>",
+      "source_tree": "tree-43-1-66cedc3c7d",
+      "source_type": "tree_structure"
+    },
+    {
+      "subject": "<Flow_where_truth_is_not_binding>",
+      "predicate": "defined as",
+      "object": "∧ <Friction_where_truth_is_enforced>",
+      "definition": "∧ <Friction_where_truth_is_enforced>",
+      "source_file": "extracted_instances/code_syntax/code-43-751b367332.txt",
+      "source_type": "glossary"
+    }
+  ]
+}

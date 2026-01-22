@@ -1,0 +1,74 @@
+<The_Mata_Theorem:_Why_AI_Changes_Law>
+├── <Hook:_The_Case>
+│   ├── <Mata_v_Avianca_(S.D.N.Y._2023)>
+│   │   ├── <fact>
+│   │   │   ├── <AI_generated_brief> [contained] <fabricated_cases_and_quotes>
+│   │   │   └── <court> [imposed] <$5,000_sanction>
+│   │   └── <signal>
+│   │       └── [reveals] <plausibility_can_trigger_liability>
+│
+├── <Hook:_The_Stats>
+│   ├── <hallucination_rate>
+│   │   └── [measured_between] <~8–19%_citations> across <legal_AI_tools>
+│   └── <implication>
+│       └── [means] <error_is_systemic_not_anecdotal>
+│
+├── <Thesis>
+│   └── [claim] <Mata_is_not_user_error>
+│       └── [claim] <Mata_is_medium_exposure>
+│
+├── <Geertz:_Culture_as_Control>
+│   ├── <law> [is] <symbolic_control_system>
+│   ├── <citations_and_quotes> [are] <authority_tokens>
+│   └── <AI>
+│       ├── [generates] <authority_form>
+│       └── [without] <authority_grounding>
+│           └── [causes] <symbolic_system_corruption>
+│
+├── <McLuhan:_Medium_is_Message>
+│   ├── <AI> [is] <a_new_medium>
+│   ├── <the_message>
+│   │   ├── [is] <scale_without_verification>
+│   │   ├── [is] <velocity_without_audit>
+│   │   └── [is] <authority_without_provenance>
+│   └── <court_response>
+│       └── [targets] <behavior_change_not_content>
+│
+├── <Vibe:_Cold_Medium_Dynamics>
+│   ├── <AI_interface> [is] <cold_media>
+│   │   ├── [low_definition_input]
+│   │   └── [high_participation_output]
+│   ├── <human_role>
+│   │   └── [shifts_to] <intent_and_taste>
+│   └── <failure>
+│       └── [occurs_when] <liability_zones> are [treated_as] <creative_zones>
+│
+├── <The_Verification_Gap>
+│   ├── <databases> [verify] <existence>
+│   ├── <but_not> <support> ∧ <accuracy> ∧ <applicability>
+│   └── <therefore>
+│       └── <real_case> + <fake_reasoning> [passes] <formal_checks>
+│
+├── <The_Trap>
+│   ├── <use_AI>
+│   │   ├── [requires] <disclosure>
+│   │   ├── [triggers] <adversarial_scrutiny>
+│   │   └── [retains] <residual_error_risk>
+│   └── <avoid_AI>
+│       └── [causes] <competitive_loss>
+│
+├── <Theorem:_No_Safe_State>
+│   └── ¬∃<workflow>
+│       such_that (<efficiency> ∧ <compliance> ∧ <bounded_liability>)
+│
+├── <Interpretation>
+│   ├── <Geertz>
+│   │   └── <AI_injects_unvetted_culture_into_law>
+│   ├── <McLuhan>
+│   │   └── <AI_changes_the_rules_by_changing_the_medium>
+│   └── <Vibe>
+│       └── <intuition_without_infrastructure_is_dangerous>
+│
+└── <Final_Line>
+    └── <Mata> [is] <the_first_visible_crack>
+        └── [shows] <law_is_judging_the_medium_not_the_text>

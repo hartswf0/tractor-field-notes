@@ -1,0 +1,59 @@
+<Professional_Liability_Crisis_AI>
+├── <current_state>
+│   └── [described_as] <just_beginning>
+│
+├── <malpractice_insurance_response>
+│   ├── <policy_updates>
+│   │   ├── <AI_generated_work_exclusions>
+│   │   │   └── [removes] <coverage_for_AI_outputs>
+│   │   │
+│   │   ├── <premium_increases>
+│   │   │   ├── [triggered_by] <AI_use_disclosure>
+│   │   │   └── [increases_by] <15_to_30_percent>
+│   │   │
+│   │   └── <coverage_denials>
+│   │       ├── [applied_by] <some_insurers>
+│   │       └── [results_in] <no_coverage_for_AI_users>
+│
+├── <bar_association_response>
+│   ├── [offers] <general_principles>
+│   └── [fails_to_provide] <clear_operational_guidance>
+│
+├── <lawyer_operating_conditions>
+│   ├── [lacks] <clear_rules>
+│   ├── [lacks] <safe_harbors>
+│   ├── [lacks] <insurance_backstop>
+│   └── [faces] <million_dollar_malpractice_exposure>
+│
+├── <risk_dynamics>
+│   ├── <disclosure>
+│   │   └── [leads_to] <higher_premiums_or_denial>
+│   ├── <non_disclosure>
+│   │   └── [risks] <coverage_voidance>
+│   └── <any_AI_error>
+│       └── [results_in] <uninsured_liability>
+│
+└── <systemic_conclusion>
+    ├── [shows] <malpractice_exposure_growing>
+    ├── [shows] <insurance_protection_shrinking>
+    ├── [combined_with] <regulatory_ambiguity>
+    └── [creates] <professional_liability_blind_flight>
+
+
+Collapsed logic form:
+
+
+<AI_use> ∧ <Disclosure> → <Higher_Premiums ∨ Coverage_Denial>
+<AI_use> ∧ <Non_Disclosure> → <Policy_Rescission_Risk>
+<Error> → <Uninsured_Malpractice>
+⇒ <No_Protected_State>
+
+
+If you want next, I can:
+
+
+Integrate this directly with the Attorney’s AI Dilemma tree into a single end-to-end liability model
+
+Convert it into a risk surface (actors × incentives × failure modes)
+
+Or formalize it as a regulatory–insurance contradiction proof

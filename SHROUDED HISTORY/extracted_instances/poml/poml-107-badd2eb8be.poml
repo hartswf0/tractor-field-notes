@@ -1,0 +1,176 @@
+<poml version="1.0">
+
+  <!-- ===================== -->
+  <!-- INPUT BINDINGS         -->
+  <!-- ===================== -->
+  <let name="topic_name">{{ topic_name || "AI Legal Hallucinations & Verification" }}</let>
+
+  <!-- Headline stream = what Scout sees first (news, docket blurbs, blog titles, alerts, email subject lines, etc.) -->
+  <let name="headline_stream">
+    {{ headline_stream || [
+      { "id": "h1", "source": "court_order", "headline": "Judge sanctions filing after fabricated citations discovered", "date": "2023-06-22" },
+      { "id": "h2", "source": "court_rules", "headline": "Court issues AI disclosure requirement for filings", "date": "2024-01-10" },
+      { "id": "h3", "source": "industry", "headline": "Legal AI tools still hallucinate citations in testing", "date": "2024-05-15" }
+    ]}}
+  </let>
+
+  <!-- Optional: constraints on what sources Scout is allowed to retrieve from -->
+  <let name="allowed_source_types">
+    {{ allowed_source_types || ["court_order", "court_rule", "statute", "secondary_commentary"] }}
+  </let>
+
+  <!-- “Hubs” = retrieval targets (what kinds of primary texts we want Scout to locate) -->
+  <let name="hub_types">
+    {{ hub_types || [
+      { "id": "hub_sanctions", "title": "Sanctions / duty of candor / Rule 11 analogs", "weight": 0.30 },
+      { "id": "hub_disclosure", "title": "Disclosure requirements for AI use", "weight": 0.20 },
+      { "id": "hub_verification", "title": "Verification duties / citation checking / reasonable inquiry", "weight": 0.30 },
+      { "id": "hub_liability", "title": "Malpractice / insurance / professional responsibility", "weight": 0.20 }
+    ]}}
+  </let>
+
+  <!-- Priors: initial beliefs about which hubs are most relevant BEFORE seeing headlines -->
+  <let name="priors">
+    {{ priors || {
+      "hub_sanctions": 0.25,
+      "hub_disclosure": 0.25,
+      "hub_verification": 0.25,
+      "hub_liability": 0.25
+    }}}
+  </let>
+
+  <!-- ===================== -->
+  <!-- SYSTEM: SCOUT MODE     -->
+  <!-- ===================== -->
+  <system>
+    <role>Scout Retrieval Planner</role>
+    <expertise>Headline-to-text routing; evidence-weighted retrieval; zero doctrine</expertise>
+    <context>
+      You do NOT state holdings. You do NOT quote. You do NOT synthesize rules.
+      Your job is to convert a headline stream into a ranked plan for what primary texts to retrieve next.
+      Treat headlines as weak evidence signals (no truth assumed).
+    </context>
+    <task>
+      Use the PLoT update loop to map headlines → hub probability shifts.
+      Use the Barthes layer only to classify archetype signals that affect which hubs get weight.
+      Output a ranked retrieval plan: what texts to fetch, why, and what “joint” each text might contain.
+    </task>
+  </system>
+
+  <!-- ===================== -->
+  <!-- METHOD: PLoT + MYTH     -->
+  <!-- ===================== -->
+  <policies>
+    Hard limits:
+    - Do not assert that a headline is true.
+    - Do not assert legal conclusions.
+    - Do not name specific cases unless the headline itself names them or the retrieval index provides them.
+    - Output must be actionable for retrieval (queries + target doc types + ranking).
+
+    PLoT protocol:
+    1) Start from priors over hub_types.
+    2) For each headline, infer which hubs it weakly supports/opposes.
+    3) Update hub weights monotonically (small steps; avoid extreme certainty from one headline).
+    4) Produce posteriors and use them to rank retrieval actions.
+
+    Barthes protocol (classification only):
+    - Tag each headline with archetype signals (e.g., Judge/Authority, Machine/Impostor, Lawyer/Mediator, Institution/Archive).
+    - Use tags only to adjust which hub gets retrieval priority.
+  </policies>
+
+  <!-- ===================== -->
+  <!-- USER: THE INPUT STREAM -->
+  <!-- ===================== -->
+  <user>
+    <h1>Scout: Convert headlines into a retrieval plan</h1>
+    <topic>{{ topic_name }}</topic>
+
+    <inputs>
+      <allowed_source_types>{{ allowed_source_types }}</allowed_source_types>
+      <hub_types>{{ hub_types }}</hub_types>
+      <priors>{{ priors }}</priors>
+      <headline_stream>{{ headline_stream }}</headline_stream>
+    </inputs>
+
+    <directive>
+      Build a ranked list of retrieval actions (queries + target doc types).
+      Each action must cite which hub it serves and which headlines triggered it.
+      No doctrine. No quotes. No holdings.
+    </directive>
+  </user>
+
+  <!-- ===================== -->
+  <!-- OUTPUT CONTRACT         -->
+  <!-- ===================== -->
+  <output-schema parser="json">
+    {
+      "type": "object",
+      "properties": {
+        "hub_posteriors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "hub_id": { "type": "string" },
+              "prior": { "type": "number" },
+              "posterior": { "type": "number" },
+              "delta": { "type": "number" },
+              "headline_evidence_ids": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            },
+            "required": ["hub_id", "prior", "posterior", "delta", "headline_evidence_ids"]
+          }
+        },
+        "headline_tags": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "headline_id": { "type": "string" },
+              "archetype_tags": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": ["Judge_Guardian", "Machine_Fluent", "Lawyer_Mediator", "Institution_Archive", "Public_Spectator"]
+                }
+              },
+              "hub_affinities": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "hub_id": { "type": "string" },
+                    "affinity": { "type": "string", "enum": ["supports", "weakly_supports", "neutral", "weakly_opposes", "opposes"] }
+                  },
+                  "required": ["hub_id", "affinity"]
+                }
+              }
+            },
+            "required": ["headline_id", "archetype_tags", "hub_affinities"]
+          }
+        },
+        "retrieval_plan": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "rank": { "type": "integer" },
+              "target_doc_type": { "type": "string", "enum": ["court_order", "local_rule", "standing_order", "statute", "ethics_opinion", "secondary_commentary"] },
+              "query": { "type": "string" },
+              "hub_id": { "type": "string" },
+              "trigger_headline_ids": { "type": "array", "items": { "type": "string" } },
+              "what_joint_we_expect": { "type": "string" },
+              "confidence": { "type": "string", "enum": ["low", "medium"] }
+            },
+            "required": ["rank", "target_doc_type", "query", "hub_id", "trigger_headline_ids", "what_joint_we_expect", "confidence"]
+          }
+        },
+        "handoff_ready": { "type": "boolean" }
+      },
+      "required": ["hub_posteriors", "headline_tags", "retrieval_plan", "handoff_ready"]
+    }
+  </output-schema>
+
+</poml>

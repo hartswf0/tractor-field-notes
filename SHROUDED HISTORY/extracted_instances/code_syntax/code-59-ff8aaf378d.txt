@@ -1,0 +1,103 @@
+<AI_Slop_Discourse:_McLuhan_x_Geertz_Interpretation>
+
+<AI_Slop>
+├── <definition>
+│   └── <AI_slop> [is] <high_volume_low_friction_symbol_output>
+│       ├── [optimized_for] <circulation>
+│       ├── [optimized_for] <coherence>
+│       └── [indifferent_to] <grounding>
+├── <felt_symptoms>
+│   ├── <samey_voice>
+│   ├── <overconfident_tone>
+│   ├── <citationless_claims>
+│   ├── <thin_reasoning>
+│   └── <semantic_fog>
+└── <core_problem>
+    └── <symbolic_abundance> [overwhelms] <interpretive_capacity>
+
+{McLuhan:_Medium_Level_Reading}
+├── <primary_claim>
+│   └── <AI_slop> [is] <a_medium_effect_not_a_content_problem>
+├── <message_of_the_medium>
+│   ├── [changes] <scale> (more text than humans can audit)
+│   ├── [changes] <pace> (faster than verification cycles)
+│   └── [changes] <pattern>
+│       ├── <from> <publication> [to] <continuous_generation>
+│       ├── <from> <editing> [to] <instant_output>
+│       └── <from> <authorship> [to] <throughput>
+├── <content_as_camouflage>
+│   ├── <people> [argue_about] <bad_posts>
+│   └── <while] <the_medium> [restructures] <attention_and_trust>
+├── <temperature_shift>
+│   ├── <AI_interfaces> [behave_like] <cool_media>
+│   │   └── [produce] <conversational_plausibility>
+│   └── <feeds_and_platforms> [act_as] <viral_editor>
+│       └── [selects_for] <resonance_over_truth>
+└── <McLuhan_conclusion>
+    └── <AI_slop> [is] <the_new_background_environment>
+        ├── [not] <a_series_of_bad_items>
+        └── [but] <a_new_attention_climate>
+            └── [therefore] <the_medium_is_the_slop>
+
+{Geertz:_Culture_Level_Reading}
+├── <primary_claim>
+│   └── <AI_slop> [is] <a_cultural_control_problem>
+├── <culture_as_control_mechanisms>
+│   ├── <culture> [is] <plans_recipes_rules_symbols>
+│   └── [which] <humans> [use_to] <make_sense_and_act>
+├── <slop_as_control_pollution>
+│   ├── <AI_slop> [injects] <symbols_without_shared_grounding>
+│   ├── <these_symbols> [simulate] <meaning>
+│   └── [therefore] <webs_of_significance> [become] <noisy_and_self-referential>
+├── <thick_vs_thin>
+│   ├── <thick_description> [anchors] <meaning_in_context>
+│   └── <slop> [is] <thin_description_at_scale>
+│       ├── [removes] <situational_stakes>
+│       ├── [removes] <local_knowledge>
+│       └── [removes] <accountability_traces>
+└── <Geertz_conclusion>
+    └── <AI_slop> [is] <meaning_without_lifeworld>
+        ├── [so] <interpretation_cost> [rises]
+        └── [so] <culture_loses_steering_capacity>
+
+<Joint_Synthesis:_Why_Slop_Feels_Unstoppable>
+├── <McLuhan_layer>
+│   └── <scale_and_speed> [outrun] <human_editorial_institutions>
+├── <Geertz_layer>
+│   └── <symbolic_noise> [erodes] <shared_control_mechanisms>
+├── <feedback_loop>
+│   ├── <more_slop> [reduces] <trust>
+│   ├── <lower_trust> [increases] <reliance_on_vibes_and_signals>
+│   ├── <vibes_and_signals> [favor] <viral_editor_selection>
+│   └── <viral_editor_selection> [amplifies] <more_slop>
+└── <system_name>
+    └── <Slop_Equilibrium>
+        └── [defined_as] <high_throughput_low_grounding_high_circulation>
+
+<Novel_Questions_(Not_Moral_Panic)>
+├── <Q1:_What_is_the_new_signal?>
+│   └── [ask] <what_counts_as_authority_when_symbols_are_cheap?>
+├── <Q2:_How_to_restore_thickness?>
+│   └── [ask] <how_do_we_reinsert_context_and provenance into fast media?>
+├── <Q3:_Where_to_put_friction?>
+│   └── [ask] <what_points_of_deliberate slowness preserve meaning?>
+├── <Q4:_How_to_mark_the_medium?>
+│   └── [ask] <how_do we make “this is generated” perceptible as form, not a footnote?>
+└── <Q5:_What_is_cultural_hygiene?>
+    └── [ask] <what practices keep webs_of_significance steerable?>
+
+<One_Line_Reading>
+├── <McLuhan>
+│   └── <slop> [is] <the_message_of_scale>
+└── <Geertz>
+    └── <slop> [is] <control_mechanisms_filled_with_fog>
+
+
+If you want, I can turn this into:
+
+
+a performable chant (“The Slop is the Medium” / “The Web is Fog”),
+
+a tetrad for AI slop (enhance/obsolesce/retrieve/reverse),
+
+or a thick-description protocol for distinguishing signal from slop in practice.

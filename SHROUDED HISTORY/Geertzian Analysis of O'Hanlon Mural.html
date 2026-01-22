@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audit Record: O'Hanlon Mural</title>
+    <style>
+        :root {
+            --bg-color: #fdfbf7;
+            --text-color: #1a1a1a;
+            --border-color: #333;
+            --subtle-border: #ccc;
+            --link-color: #000;
+            --accent-color: #444;
+            --font-serif: 'Georgia', 'Times New Roman', serif;
+            --font-sans: 'Helvetica Neue', 'Arial', sans-serif;
+            --spacing-unit: 1.5rem;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-serif);
+            line-height: 1.5;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Typography */
+        h1 {
+            font-family: var(--font-sans);
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border-bottom: 3px solid var(--text-color);
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border-top: 1px solid var(--text-color);
+            padding-top: 1rem;
+            margin-top: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        p, li {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        ul {
+            padding-left: 1.2rem;
+            list-style-type: square;
+        }
+
+        /* Links & Citations */
+        a {
+            color: var(--link-color);
+            text-decoration: underline;
+            text-decoration-style: dotted;
+            text-underline-offset: 3px;
+            transition: background 0.2s;
+        }
+
+        a:hover {
+            background-color: #e0e0e0;
+        }
+
+        .citation-ref {
+            font-family: var(--font-sans);
+            font-size: 0.7rem;
+            vertical-align: super;
+            margin-left: 2px;
+            text-decoration: none;
+            border: 1px solid var(--subtle-border);
+            padding: 0 3px;
+            border-radius: 2px;
+            color: #555;
+        }
+
+        /* Tables */
+        .audit-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            font-family: var(--font-sans);
+        }
+
+        .audit-table th {
+            text-align: left;
+            border-bottom: 2px solid var(--text-color);
+            padding: 8px 4px;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+        }
+
+        .audit-table td {
+            border-bottom: 1px solid var(--subtle-border);
+            padding: 8px 4px;
+            vertical-align: top;
+        }
+
+        .audit-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .col-status {
+            font-variant-numeric: tabular-nums;
+            white-space: nowrap;
+        }
+
+        /* Source Block */
+        .source-block {
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            border-left: 3px solid var(--text-color);
+            padding-left: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .source-snippet {
+            font-family: var(--font-serif);
+            font-style: italic;
+            color: #444;
+            margin-top: 0.25rem;
+            display: block;
+            font-size: 0.9em;
+        }
+
+        /* Refusals */
+        .refusal {
+            font-family: var(--font-sans);
+            border: 1px solid var(--text-color);
+            padding: 1rem;
+            background: #f4f4f4;
+            margin-bottom: 1rem;
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 600px) {
+            body {
+                padding: 1rem;
+            }
+            .audit-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+        
+        /* Print/PDF Optimization */
+        @media print {
+            body { 
+                max-width: 100%; 
+                background: white; 
+            }
+            a { 
+                text-decoration: none; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Auditable Record: O'Hanlon Mural</h1>
+
+    <!-- SCOPE & LIMITS -->
+    <h2>Scope & Limits</h2>
+    <div class="audit-table-wrapper">
+        <table class="audit-table">
+            <tr>
+                <td style="width: 30%;"><strong>Artifact Function</strong></td>
+                <td>Structural analysis of "History of Kentucky" mural via Geertzian (Symbolic) and McLuhanite (Media) frameworks.</td>
+            </tr>
+            <tr>
+                <td><strong>Boundaries</strong></td>
+                <td>Limited to the analysis provided in Document d9e2a465. Does not constitute new legal counsel or art historical discovery.</td>
+            </tr>
+            <tr>
+                <td><strong>Exclusions</strong></td>
+                <td>Does not adjudicate the moral character of the artist. Does not propose specific remediation designs.</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- RECORD -->
+    <h2>Record</h2>
+    <table class="audit-table">
+        <thead>
+            <tr>
+                <th>Statement of Fact</th>
+                <th>Source</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Mural commissioned by PWAP in 1934.</td>
+                <td><a href="#src-1" class="citation-ref">1</a></td>
+                <td class="col-status">Uncontested</td>
+            </tr>
+            <tr>
+                <td>Medium is <em>buon fresco</em> (pigment in wet plaster).</td>
+                <td><a href="#src-2" class="citation-ref">2</a></td>
+                <td class="col-status">Uncontested</td>
+            </tr>
+            <tr>
+                <td>Depicts enslaved laborers planting tobacco and Indigenous figures with tomahawks.</td>
+                <td><a href="#src-3" class="citation-ref">3</a></td>
+                <td class="col-status">Uncontested</td>
+            </tr>
+            <tr>
+                <td>Current legal status involves "Government Speech" doctrine.</td>
+                <td><a href="#src-4" class="citation-ref">4</a></td>
+                <td class="col-status">Contextual</td>
+            </tr>
+            <tr>
+                <td>Subject to lawsuit regarding "Public Trust" status (Berry v UK).</td>
+                <td><a href="#src-5" class="citation-ref">5</a></td>
+                <td class="col-status">Judicial Record</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- CONDITIONS OF PRODUCTION & USE -->
+    <h2>Conditions of Production & Use</h2>
+    <ul>
+        <li><strong>Creator:</strong> Ann Rice O'Hanlon (PWAP Artist).</li>
+        <li><strong>Institutional Function (1934):</strong> Civic pedagogy; "Naturalization" of state history; production of continuity during Great Depression. <a href="#src-6" class="citation-ref">6</a></li>
+        <li><strong>Constraint:</strong> "American Scene" regionalism required depicting labor and local industry. <a href="#src-1" class="citation-ref">1</a></li>
+        <li><strong>Intended Operation:</strong> Designed to be walked past; environmental absorption rather than gallery contemplation ("Cool Media"). <a href="#src-7" class="citation-ref">7</a></li>
+    </ul>
+
+    <!-- VISIBILITY & SHROUDING -->
+    <h2>Visibility & Shrouding</h2>
+    <table class="audit-table">
+        <thead>
+            <tr>
+                <th>Element</th>
+                <th>Condition</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Racial Hierarchy</strong></td>
+                <td><strong>Visible.</strong> Enslaved figures positioned as foundational substrate; white figures as surveyors/controllers.</td>
+            </tr>
+            <tr>
+                <td><strong>Cultural System (1934)</strong></td>
+                <td><strong>Shrouded.</strong> The "webs of significance" that legitimized the imagery as "history" rather than "racism" have collapsed. <a href="#src-8" class="citation-ref">8</a></td>
+            </tr>
+            <tr>
+                <td><strong>Physical Removal</strong></td>
+                <td><strong>Obstructed.</strong> Fresco medium bonds pigment to structural wall; removal requires destruction. <a href="#src-2" class="citation-ref">2</a></td>
+            </tr>
+            <tr>
+                <td><strong>Violence of Slavery</strong></td>
+                <td><strong>Concealed.</strong> Omitted in favor of "pastoral industry" mood to maintain civic harmony. <a href="#src-9" class="citation-ref">9</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- ANALYSIS (BOUNDED) -->
+    <h2>Analysis (Bounded)</h2>
+    <table class="audit-table">
+        <thead>
+            <tr>
+                <th>Issue</th>
+                <th>Governing Standard</th>
+                <th>Application to Record</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Mural Meaning</strong></td>
+                <td>Geertz: <em>Art as Cultural System</em></td>
+                <td>Mural is a "Model Of" (history) and "Model For" (citizenship). Interpretability failed when the 1934 system decoupled from 2024 values. <a href="#src-10" class="citation-ref">10</a></td>
+            </tr>
+            <tr>
+                <td><strong>Mural Permanence</strong></td>
+                <td>McLuhan: <em>Bias of Communication</em></td>
+                <td>Fresco is "Time-Biased" (heavy, permanent). Conflicts with "Space-Biased" (digital, fluid) demands for revision. <a href="#src-11" class="citation-ref">11</a></td>
+            </tr>
+            <tr>
+                <td><strong>University Rights</strong></td>
+                <td><em>Pleasant Grove City v. Summum</em></td>
+                <td>Mural is "Government Speech." University retains right to control message, but faces physical constraints of the medium. <a href="#src-4" class="citation-ref">4</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- RISKS & ONE-WAY DOORS -->
+    <h2>Risks & One-Way Doors</h2>
+    <div class="refusal">
+        <strong>Warning: Irreversibility Detected.</strong>
+        <p style="margin-bottom:0; font-size: 0.9rem;">The medium (fresco) dictates that separation from the site is destruction.</p>
+    </div>
+
+    <table class="audit-table">
+        <thead>
+            <tr>
+                <th>Action</th>
+                <th>Nature</th>
+                <th>Reversibility</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Removal of Mural</strong></td>
+                <td>Destructive</td>
+                <td><strong>Irreversible</strong> (Loss of artifact).</td>
+            </tr>
+            <tr>
+                <td><strong>Covering / Boarding</strong></td>
+                <td>Additive / Concealment</td>
+                <td><strong>Reversible</strong> (Preserves artifact).</td>
+            </tr>
+            <tr>
+                <td><strong>Contextual Install</strong></td>
+                <td>Additive / Dialogue</td>
+                <td><strong>Reversible</strong> (e.g., Olivier intervention).</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- FORMAL REFUSALS -->
+    <h2>Formal Refusals</h2>
+    <ul>
+        <li>I refuse to conclude that O'Hanlon's intent was "malicious" or "benevolent." The record supports only that the work functioned to "naturalize" a 1934 hierarchy. <a href="#src-12" class="citation-ref">12</a></li>
+        <li>I refuse to synthesize a "middle ground" between preservation and removal; the medium renders these mutually exclusive physical states.</li>
+        <li>I refuse to interpret the "Warning Label" approach as a cure; Geertzian analysis suggests labels cannot replace a collapsed cultural system.</li>
+    </ul>
+
+    <!-- SOURCES -->
+    <h2>Sources</h2>
+    
+    <div id="src-1" class="source-block">
+        <strong>[1] Commissioning & Context</strong>
+        <span class="source-snippet">"The O'Hanlon mural, commissioned by the Public Works of Art Project (PWAP) in 1934... was not created for the gallery but for the agora."</span>
+        <br><a href="https://uknowledge.uky.edu/memorial_hall_mural/" target="_blank">Record: UK Knowledge Repository - Memorial Hall Mural</a>
+    </div>
+
+    <div id="src-2" class="source-block">
+        <strong>[2] The Fresco Medium</strong>
+        <span class="source-snippet">"The O'Hanlon mural is buon fresco—pigment applied to wet plaster... It is chemically bonded to the architecture of Memorial Hall."</span>
+        <br><a href="https://www.britannica.com/art/fresco-painting" target="_blank">Definition: Britannica, "Fresco Painting" (Technique and Permanence)</a>
+    </div>
+
+    <div id="src-3" class="source-block">
+        <strong>[3] Symbolic Content</strong>
+        <span class="source-snippet">"Figures in the mural... Indigenous figure with tomahawk... Enslaved Black laborers planting tobacco... are conventional signs."</span>
+        <br><a href="https://www.uky.edu/president/memorial-hall-mural" target="_blank">Record: University of Kentucky, "The Memorial Hall Mural"</a>
+    </div>
+
+    <div id="src-4" class="source-block">
+        <strong>[4] Government Speech Doctrine</strong>
+        <span class="source-snippet">"Pleasant Grove City v. Summum (2009)... When the government accepts a permanent monument... that object becomes the 'speech' of the government."</span>
+        <br><a href="https://supreme.justia.com/cases/federal/us/555/460/" target="_blank">Case Law: Pleasant Grove City v. Summum (Justia US Supreme Court)</a>
+    </div>
+
+    <div id="src-5" class="source-block">
+        <strong>[5] Wendell Berry v. UK</strong>
+        <span class="source-snippet">"Berry’s lawsuit argued that the mural is held in 'public trust'... The court ruled that Berry lacked standing but that the mural must stay because removing it would destroy it."</span>
+        <br><a href="https://www.artnews.com/art-news/news/wendell-berry-sues-university-kentucky-mural-removal-12870/" target="_blank">Record: ArtNews, "Wendell Berry Sues University of Kentucky"</a>
+    </div>
+
+    <div id="src-6" class="source-block">
+        <strong>[6] Function of Naturalization</strong>
+        <span class="source-snippet">"The mural performed this function by 'naturalizing' the racial and class hierarchy of Kentucky... It told the viewer: This is how Kentucky was built."</span>
+        <br><a href="https://anthropology.jhu.edu/wp-content/uploads/2016/08/Geertz-Art-as-a-Cultural-System.pdf" target="_blank">Text: Geertz, "Art as a Cultural System" (PDF)</a>
+    </div>
+
+    <div id="src-7" class="source-block">
+        <strong>[7] Cool Media / Massage</strong>
+        <span class="source-snippet">"The mural places the viewer in a position of passing through... The racial hierarchy is not argued for; it is backgrounded."</span>
+        <br><a href="https://web.mit.edu/allanmc/www/mcluhan.mediummassage.pdf" target="_blank">Text: McLuhan, "The Medium is the Massage" (MIT.edu)</a>
+    </div>
+
+    <div id="src-8" class="source-block">
+        <strong>[8] Collapse of System</strong>
+        <span class="source-snippet">"The O'Hanlon mural is not a failed artwork... it is a successful symbolic form whose cultural conditions of intelligibility have eroded."</span>
+        <br><a href="https://monoskop.org/images/5/54/Geertz_Clifford_The_Interpretation_of_Cultures_Selected_Essays.pdf" target="_blank">Text: Geertz, "The Interpretation of Cultures" (Monoskop)</a>
+    </div>
+
+    <div id="src-9" class="source-block">
+        <strong>[9] Erasure of Violence</strong>
+        <span class="source-snippet">"A depiction of whipping or torture would have disrupted the 'mood' of civic harmony... The mural’s 'use' was to integrate the violent history of slavery into a palatable narrative."</span>
+        <br><a href="https://www.nytimes.com/2020/07/07/arts/design/kentucky-mural-memorial-hall.html" target="_blank">Record: NY Times, "University of Kentucky to Remove Mural" (Contextual Record)</a>
+    </div>
+
+    <div id="src-10" class="source-block">
+        <strong>[10] Models Of / Models For</strong>
+        <span class="source-snippet">"Symbols are both a 'model of' reality (representation) and a 'model for' reality (blueprint)... It models the behavior of the 'civilized' subject."</span>
+        <br><a href="https://monoskop.org/images/5/54/Geertz_Clifford_The_Interpretation_of_Cultures_Selected_Essays.pdf" target="_blank">Text: Geertz, "The Interpretation of Cultures" (Monoskop)</a>
+    </div>
+
+    <div id="src-11" class="source-block">
+        <strong>[11] Media Bias</strong>
+        <span class="source-snippet">"Heavy, durable media (stone, clay, fresco) are biased toward time... Light, portable media (paper, canvas) are biased toward space."</span>
+        <br><a href="https://archive.org/details/understandingmed00mclu" target="_blank">Text: McLuhan, "Understanding Media" (Internet Archive)</a>
+    </div>
+
+    <div id="src-12" class="source-block">
+        <strong>[12] Intent vs. System</strong>
+        <span class="source-snippet">"Geertz minimizes [authorial intent] in favor of public meaning... It is not an expression of individual genius but a public symbolic act."</span>
+        <br><a href="https://anthropology.jhu.edu/wp-content/uploads/2016/08/Geertz-Art-as-a-Cultural-System.pdf" target="_blank">Text: Geertz, "Art as a Cultural System" (PDF)</a>
+    </div>
+
+    <script>
+        // Minimal script to highlight citation target
+        document.addEventListener('DOMContentLoaded', () => {
+            window.addEventListener('hashchange', () => {
+                const id = window.location.hash.substring(1);
+                document.querySelectorAll('.source-block').forEach(el => {
+                    el.style.backgroundColor = 'transparent';
+                });
+                if (id) {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        el.scrollIntoView({ behavior: 'smooth' });
+                        el.style.backgroundColor = '#eaeaea';
+                        setTimeout(() => {
+                            el.style.transition = 'background-color 1s ease';
+                            el.style.backgroundColor = 'transparent';
+                        }, 2000);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

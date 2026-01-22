@@ -1,0 +1,36 @@
+<Attorney_AI_Liability_Trap>
+├── <decision_point>
+│   └── [choose] <use_AI_for_legal_research?>
+│
+├── <scenario_1>
+│   ├── <path> <YES_use_AI>
+│   ├── [requires] <AI_use_disclosure>
+│   ├── [induces] <heightened_adversarial_scrutiny>
+│   │   └── <opposing_counsel>
+│   │       └── [challenges] <every_citation>
+│   ├── [forces] <verification_burden>
+│   │   ├── [must_verify] <everything>
+│   │   ├── [costs] <time>
+│   │   └── [costs] <money>
+│   └── <failure_condition>
+│       ├── [if] <one_hallucination_slips_through>
+│       └── [then] <sanctions>
+│
+├── <scenario_2>
+│   ├── <path> <NO_manual_research>
+│   ├── <competitive_environment>
+│   │   └── <competitors_using_AI>
+│   │       └── [work] <faster>
+│   ├── [reduces] <billable_efficiency_competitiveness>
+│   ├── [increases] <costs>
+│   └── <market_outcome>
+│       └── [leads_to] <lose_clients_to_AI_using_firms>
+│
+├── <dilemma_structure>
+│   ├── [frames_as] <damned_either_way>
+│   ├── [shows] <risk_on_AI_path>
+│   └── [shows] <loss_on_non_AI_path>
+│
+└── <conclusion>
+    ├── [states] <no_safe_choice_under_current_rules>
+    └── [caused_by] <disclosure_requirement_without_verification_infrastructure>

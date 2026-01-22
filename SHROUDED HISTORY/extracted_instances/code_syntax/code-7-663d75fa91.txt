@@ -1,0 +1,47 @@
+<Court_AI_Response_Framework_(2023–2024)>
+├── <Trigger>
+│   └── [increased_use_of] <AI_in_legal_work>
+│
+├── <Judicial_Rules>
+│   ├── <Northern_District_of_California>
+│   │   ├── [requires] <AI_use_certification>
+│   │   ├── [imposes] <attorney_attestation>
+│   │   └── [lacks] <specific_verification_rules>
+│   │
+│   ├── <Southern_District_of_New_York>
+│   │   ├── [requires] <disclosure_of_AI_generated_content>
+│   │   └── [lacks] <verification_mechanisms>
+│   │
+│   └── <Fifth_Circuit>
+│       ├── [requires] <verification_of_AI_research>
+│       └── [lacks] <defined_verification_tools>
+│
+├── <Core_Problem>
+│   ├── [requires] <disclosure>
+│   ├── [does_not_provide] <verification_infrastructure>
+│   └── [creates] <asymmetric_burden_on_attorneys>
+│
+├── <Attorney_Position>
+│   ├── [must_admit] <AI_use>
+│   ├── [cannot_prove] <AI_output_truthfulness>
+│   └── [retains] <full_professional_liability>
+│
+├── <Rule_Ambiguity>
+│   ├── <Certification_without_protocols>
+│   ├── <Disclosure_without_validation>
+│   └── <Verification_requirement_without_method>
+│
+└── <System_State_(2024)>
+    ├── [characterized_by] <rapid_rule_expansion>
+    ├── [marked_by] <jurisdictional_inconsistency>
+    └── [summarized_as] <disclosure_required_≠_verification_possible>
+
+
+If you want next steps, I can:
+
+
+Normalize this into a cross-jurisdiction compliance schema
+
+Add a failure-path tree showing how sanctions arise
+
+Convert this into a formal policy gap proof (premises → contradiction → no-safe-equilibrium)

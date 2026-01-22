@@ -1,0 +1,12 @@
+<Context_Engineering_as_Tao_Craft>
+├── <the_prompt>
+│   └── [is_not] <a_command>
+│       └── [is] <a_path>
+├── <the_model>
+│   └── [is_not] <a_worker>
+│       └── [is] <a_force_of_nature>
+├── <the_engineer>
+│   └── [is_not] <a_controller>
+│       └── [is] <a_gardener_of_boundaries>
+└── <craft>
+    └── [appears_when] <control_is_replaced_by_alignment>

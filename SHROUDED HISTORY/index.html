@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Index</title>
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --panel: #0f1620;
+      --text: #e7eef7;
+      --muted: #a9b7c6;
+      --border: #1f2a37;
+      --link: #8ab4ff;
+      --link-hover: #b7d0ff;
+      --code: #0b1220;
+      --shadow: rgba(0,0,0,.35);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 800px at 20% 0%, rgba(138,180,255,.10), transparent 55%),
+                  radial-gradient(900px 600px at 90% 10%, rgba(255,255,255,.06), transparent 60%),
+                  var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    a {
+      color: var(--link);
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: var(--link-hover);
+      text-decoration: underline;
+    }
+
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 28px 18px 56px;
+    }
+
+    header {
+      margin: 8px 0 18px;
+      padding: 18px 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 10px 30px var(--shadow);
+    }
+
+    header h1 {
+      margin: 0 0 6px;
+      font-size: 24px;
+      letter-spacing: .2px;
+    }
+
+    header p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    @media (min-width: 860px) {
+      .grid {
+        grid-template-columns: 1.2fr .8fr;
+        align-items: start;
+      }
+    }
+
+    section {
+      background: rgba(15, 22, 32, .72);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 16px;
+      box-shadow: 0 10px 28px var(--shadow);
+    }
+
+    section h2 {
+      margin: 0 0 10px;
+      font-size: 16px;
+      letter-spacing: .2px;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    ol {
+      margin: 0;
+      padding-left: 22px;
+    }
+
+    li {
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(31, 42, 55, .7);
+    }
+
+    li:last-child {
+      border-bottom: none;
+    }
+
+    .pill {
+      display: inline-block;
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid rgba(31, 42, 55, .9);
+      background: rgba(11, 18, 32, .6);
+      padding: 2px 8px;
+      border-radius: 999px;
+      margin-left: 8px;
+      vertical-align: 1px;
+    }
+
+    .doc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 8px;
+    }
+
+    .doc-list a {
+      display: block;
+      padding: 10px 12px;
+      border: 1px solid rgba(31, 42, 55, .9);
+      border-radius: 12px;
+      background: rgba(11, 18, 32, .55);
+    }
+
+    .doc-list a:hover {
+      background: rgba(11, 18, 32, .8);
+      text-decoration: none;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      background: var(--code);
+      border: 1px solid rgba(31, 42, 55, .9);
+      padding: 2px 6px;
+      border-radius: 8px;
+      font-size: 12px;
+    }
+
+    .footer {
+      margin-top: 14px;
+    }
+
+    .hr {
+      height: 1px;
+      background: var(--border);
+      margin: 16px 0;
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .tool-card {
+      display: flex;
+      flex-direction: column;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: rgba(11, 18, 32, .55);
+      text-align: center;
+    }
+
+    .tool-card:hover {
+      background: rgba(11, 18, 32, .8);
+      text-decoration: none;
+    }
+
+    .tool-card .icon {
+      font-size: 24px;
+      margin-bottom: 6px;
+    }
+
+    .tool-card .name {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .tool-card .desc {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* Mobile improvements */
+    @media (max-width: 600px) {
+      .wrap { padding: 12px 10px 40px; }
+      header { padding: 14px; }
+      header h1 { font-size: 20px; }
+      section { padding: 12px; }
+      section h2 { font-size: 14px; }
+      .doc-list a { padding: 12px; font-size: 13px; }
+      ol { padding-left: 18px; font-size: 13px; }
+      li { padding: 10px 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Working Index</h1>
+      <p>Gemini shares + repository artifacts, with room for an explicit method/process scaffold.</p>
+    </header>
+
+    <div class="grid">
+      <section>
+        <h2>Gemini shares <span class="pill">external</span></h2>
+        <p class="muted">These open in a new tab.</p>
+        <ol>
+          <li><a href="https://gemini.google.com/share/0aa60afe0bed" target="_blank" rel="noopener noreferrer">https://gemini.google.com/share/0aa60afe0bed</a></li>
+          <li><a href="https://gemini.google.com/share/ac1ec48947fb" target="_blank" rel="noopener noreferrer">https://gemini.google.com/share/ac1ec48947fb</a></li>
+          <li><a href="https://gemini.google.com/share/07dc5858d96a" target="_blank" rel="noopener noreferrer">https://gemini.google.com/share/07dc5858d96a</a></li>
+          <li><a href="https://gemini.google.com/share/aa45d22eb5dd" target="_blank" rel="noopener noreferrer">https://gemini.google.com/share/aa45d22eb5dd</a></li>
+          <li><a href="https://gemini.google.com/share/3c0a94da81cf" target="_blank" rel="noopener noreferrer">https://gemini.google.com/share/3c0a94da81cf</a></li>
+          <li><a href="https://gemini.google.com/share/c9b34c11f614" target="_blank" rel="noopener noreferrer">https://gemini.google.com/share/c9b34c11f614</a></li>
+          <li><a href="https://gemini.google.com/share/9639b4313d4d" target="_blank" rel="noopener noreferrer">https://gemini.google.com/share/9639b4313d4d</a></li>
+          <li><a href="https://gemini.google.com/share/d6eb2888c1a6" target="_blank" rel="noopener noreferrer">https://gemini.google.com/share/d6eb2888c1a6</a></li>
+          <li><a href="https://gemini.google.com/share/2c319ede4491" target="_blank" rel="noopener noreferrer">https://gemini.google.com/share/2c319ede4491</a></li>
+          <li><a href="https://gemini.google.com/share/7131229e13cd" target="_blank" rel="noopener noreferrer">https://gemini.google.com/share/7131229e13cd</a></li>
+          <li><a href="https://gemini.google.com/share/7687423bf649" target="_blank" rel="noopener noreferrer">https://gemini.google.com/share/7687423bf649</a></li>
+          <li><a href="https://gemini.google.com/share/a7c4f480f37f" target="_blank" rel="noopener noreferrer">https://gemini.google.com/share/a7c4f480f37f</a></li>
+          <li><a href="https://gemini.google.com/share/a01bdbab318c" target="_blank" rel="noopener noreferrer">https://gemini.google.com/share/a01bdbab318c</a></li>
+          <li><a href="https://gemini.google.com/share/1eb0509beb11" target="_blank" rel="noopener noreferrer">https://gemini.google.com/share/1eb0509beb11</a></li>
+          <li><a href="https://gemini.google.com/share/a1a95c24636b" target="_blank" rel="noopener noreferrer">https://gemini.google.com/share/a1a95c24636b</a></li>
+          <li><a href="https://gemini.google.com/share/85a6b6c38677" target="_blank" rel="noopener noreferrer">https://gemini.google.com/share/85a6b6c38677</a></li>
+          <li><a href="https://gemini.google.com/share/a48e6046b0f7" target="_blank" rel="noopener noreferrer">https://gemini.google.com/share/a48e6046b0f7</a></li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Method / Process <span class="pill">reserved</span></h2>
+        <p class="muted">Placeholder section for the workflow you want to formalize (inputs, constraints, steps, outputs).</p>
+        <p class="muted">Suggested structure:</p>
+        <ul class="muted">
+          <li><code>Goal</code> (what this research output is for)</li>
+          <li><code>Sources</code> (Gemini links, local docs, images, external refs)</li>
+          <li><code>Transforms</code> (summaries, extraction, reconstruction, legal analysis)</li>
+          <li><code>Artifacts</code> (HTML pages, prompts, frameworks, indices)</li>
+          <li><code>Open questions</code> (unknowns / next steps)</li>
+        </ul>
+      </section>
+    </div>
+
+    <section class="footer">
+      <h2>Repository documents <span class="pill">local</span></h2>
+      <p class="muted">Links below are relative to this folder.</p>
+      <ul class="doc-list">
+        <li><a href="Model-Of%20vs.%20Model-For%20Framework.md">Model-Of vs. Model-For Framework.md</a></li>
+        <li><a href="Art%20Analysis_%20Model%20Of%20vs.%20Model%20For.md">Art Analysis_ Model Of vs. Model For.md</a></li>
+        <li><a href="Federal%20Property%20Law%20of%20PWAP%20Murals.md">Federal Property Law of PWAP Murals.md</a></li>
+        <li><a href="Geertzian%20Analysis%20of%20O'Hanlon%20Mural.html">Geertzian Analysis of O'Hanlon Mural.html</a></li>
+        <li><a href="Describing%20and%20Generating%20Art.html">Describing and Generating Art.html</a></li>
+        <li><a href="Pixel-Level%20Mural%20Reconstruction%20Prompts.html">Pixel-Level Mural Reconstruction Prompts.html</a></li>
+        <li><a href="Legal%20Analysis%20of%20Federal%20Art%20Ownership.html">Legal Analysis of Federal Art Ownership.html</a></li>
+      </ul>
+
+      <div class="hr"></div>
+      <h2>Tools <span class="pill">local</span></h2>
+      <div class="tools-grid">
+        <a href="viz.html" class="tool-card">
+          <span class="icon">▦</span>
+          <span class="name">Viz</span>
+          <span class="desc">Browse trees, POML, entities, definitions</span>
+        </a>
+        <a href="compare.html" class="tool-card">
+          <span class="icon">⇄</span>
+          <span class="name">Compare</span>
+          <span class="desc">Diff two trees side-by-side</span>
+        </a>
+        <a href="visualize.html" class="tool-card">
+          <span class="icon">⬡</span>
+          <span class="name">Visualize</span>
+          <span class="desc">Legacy tree viewer</span>
+        </a>
+      </div>
+
+      <div class="hr"></div>
+      <h2>Data files <span class="pill">local</span></h2>
+      <p class="muted">Extracted from <code>data.json</code>.</p>
+      <ul class="doc-list">
+        <li><a href="trees_catalog.json">trees_catalog.json</a></li>
+        <li><a href="poml_catalog.json">poml_catalog.json</a></li>
+        <li><a href="entities_index.json">entities_index.json</a></li>
+        <li><a href="relations_index.json">relations_index.json</a></li>
+        <li><a href="definitions_index.json">definitions_index.json</a></li>
+        <li><a href="extracted_trees/">extracted_trees/</a></li>
+        <li><a href="extracted_instances/">extracted_instances/</a></li>
+      </ul>
+      <p class="muted" style="margin-top: 12px;">If you want, I can rename this page title and add short human-readable labels for each Gemini share once you tell me what each link corresponds to (e.g. “PWAP mural legal chain”, “pixel-level prompt set”, etc.).</p>
+    </section>
+  </div>
+</body>
+</html>

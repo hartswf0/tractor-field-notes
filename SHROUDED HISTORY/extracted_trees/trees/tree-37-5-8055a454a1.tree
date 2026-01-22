@@ -1,0 +1,11 @@
+<Prompt_Infrastructure_Questions_(Law-First)>
+├── <Q1>
+│   └── [how_define] <liability_zone_boundaries> inside <AI_workflows>?
+├── <Q2>
+│   └── [what_counts_as] <reasonable_care> [when] <reasoning_connections> not <case_existence> are the failure mode?
+├── <Q3>
+│   └── [how_force] <retrieval> vs <reasoning> vs <assertion> separation inside a single context window?
+├── <Q4>
+│   └── [when_should] <AI_refuse> and [require] <primary_source_grounding> by design?
+└── <Q5>
+    └── [how_audit] <the_prompt_and_context> (the “micro-culture”) not only <the_output>?

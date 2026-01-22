@@ -1,0 +1,39 @@
+<godofprompt_test_results>
+├── <experiment>
+│   ├── [conducted_by] <godofprompt>
+│   ├── [ran] <100_legal_queries>
+│   ├── [across] <legal_AI_tools>
+│   │   ├── <ChatGPT>
+│   │   ├── <Claude>
+│   │   ├── <Lexis+_AI>
+│   │   └── <Westlaw_AI_Assist>
+│
+├── <measured_metric>
+│   └── <hallucinated_citations_rate>
+│
+├── <results>
+│   ├── <ChatGPT>
+│   │   └── [hallucinated_at_rate] <19_percent>
+│   │
+│   ├── <Claude>
+│   │   └── [hallucinated_at_rate] <14_percent>
+│   │
+│   ├── <Lexis+_AI>
+│   │   └── [hallucinated_at_rate] <11_percent>
+│   │
+│   └── <Westlaw_AI_Assist>
+│       └── [hallucinated_at_rate] <8_percent>
+│
+├── <hallucination_characteristics>
+│   ├── [cite] <real_courts>
+│   ├── [cite] <real_judges>
+│   └── [fabricate] <nonexistent_cases>
+│
+├── <aggregate_observation>
+│   ├── [shows] <specialized_tools_not_immune>
+│   └── [establishes_range] <8_to_19_percent_error_rate>
+│
+└── <interpretive_claim>
+    ├── [asserts] <legal_AI_is_probabilistic>
+    ├── [undermines] <database_verification_sufficiency>
+    └── [creates] <systemic_professional_risk>

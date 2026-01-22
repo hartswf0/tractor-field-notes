@@ -1,0 +1,5 @@
+<System>
+├── <Generators> := {<models>, <users>, <prompt_templates>, <bots>}
+├── <Selectors> := {<feeds>, <ranking>, <virality>, <search>}
+├── <Stabilizers> := {<formats>, <memes>, <style_markers>, <brand_voice>}
+└── <Observers> := {<critics>, <journalists>, <academics>, <platform_trust_teams>, <courts>}

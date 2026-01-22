@@ -1,0 +1,139 @@
+<Full_Argument:_Geertz_x_McLuhan_x_Vibe_Coding>
+├── <Goal>
+│   └── [show] <AI_is_a_cultural_medium_that_reconfigures_thought_and_practice>
+│       └── [implies] <new_prompt_infrastructure_questions>
+│
+├── {Premises: <Geertz>}
+│   ├── <Geertz_Thesis>
+│   │   └── [claims] <human_nature_is_synthetic_not_stratigraphic>
+│   │       ├── [rejects] <stratigraphic_model>
+│   │       │   └── <stratigraphic_model> := <biology> + <psychology> + <culture_as_overlay>
+│   │       └── [asserts] <synthetic_model>
+│   │           └── <synthetic_model> := <biology> × <culture> × <symbolic_control_mechanisms>
+│   │
+│   ├── <Culture_as_Control_Mechanisms>
+│   │   ├── <culture> [is] <control_mechanisms>
+│   │   ├── <control_mechanisms> [include] {<plans>, <recipes>, <rules>, <instructions>, <symbols>}
+│   │   └── [govern] <perception> + <emotion> + <action> + <meaning>
+│   │
+│   └── <Human_Incompleteness>
+│       ├── <human> [is] <biologically_underdetermined>
+│       ├── <nervous_system> [develops_within] <culture>
+│       └── [therefore] <human_without_culture> [becomes] <unworkable_monstrosity>
+│
+├── {Premises: <McLuhan>}
+│   ├── <McLuhan_Thesis>
+│   │   └── [claims] <medium_is_the_message>
+│   │       ├── <medium> [dominates_over] <content>
+│   │       └── <message> [is] <change_in_scale_pace_pattern>
+│   │
+│   ├── <Media_as_Extensions>
+│   │   ├── <medium> [extends] <human_faculty>
+│   │   ├── [rebalances] <sense_ratios>
+│   │   └── [reconfigures] <social_and_psychic_patterns>
+│   │
+│   └── <Hot_vs_Cold_Media>
+│       ├── <hot_media> [are] <high_definition_low_participation>
+│       └── <cold_media> [are] <low_definition_high_participation>
+│
+├── {Bridge: <AI_as_Medium>}
+│   ├── <AI_is_a_Medium>
+│   │   ├── <AI> [is] <symbolic_interaction_technology>
+│   │   ├── <AI> [extends] <cognition_and_language>
+│   │   └── <AI> [operates_as] <meta_medium>   // not just a tool; a thinking interface
+│   │
+│   ├── <AI_Message_(McLuhan)>
+│   │   ├── [shifts] <procedure> → <intent>
+│   │   ├── [shifts] <construction> → <conversation>
+│   │   ├── [shifts] <syntax_labor> → <taste_and_direction>
+│   │   └── [changes] <scale_pace_pattern_of_creation>
+│   │
+│   └── <AI_as_Culture_Injection_(Geertz)>
+│       ├── <prompt> [acts_as] <micro_culture>
+│       ├── <context_window> [acts_as] <temporary_world>
+│       ├── <system_prompt> [acts_as] <normative_order>
+│       └── [therefore] <AI_behavior> [depends_on] <supplied_control_mechanisms>
+│
+├── {Phenomenon: <Vibe_Coding>}
+│   ├── <Definition>
+│   │   └── <vibe_coding> [is] <intent_specification_by_natural_language>
+│   │       [with] <AI_generated_execution>
+│   │
+│   ├── <Why_it_emerges>
+│   │   ├── [because] <AI_collapses_pipeline>
+│   │   │   └── <intent> → <execution>   // compression of traditional layers
+│   │   └── [because] <human_role_changes>
+│   │       ├── <human> [becomes] <director_of_constraints>
+│   │       └── <AI> [becomes] <generator_of_variants>
+│   │
+│   └── <Media_Typing_(McLuhan)>
+│       ├── <vibe_coding_interface> [is] <cold_media>
+│       │   ├── [is] <low_definition_input>
+│       │   └── [requires] <high_participation_iteration>
+│       └── [therefore] <meaning> [emerges_through] <dialogue_not_spec>
+│
+├── {Core_Tension: <Coherence_vs_Correctness>}
+│   ├── <Coherence_Drive>
+│   │   ├── <AI> [optimizes_for] <plausibility_and_continuity>
+│   │   └── <long_context> [amplifies] <narrative_momentum>
+│   │
+│   ├── <Correctness_Demand>
+│   │   ├── <professional_practice> [requires] <truth_conditions>
+│   │   └── <liability_domains> [punish] <silent_failure>
+│   │
+│   └── <Failure_Mode>
+│       ├── <underspecified_intent> [invites] <model_fill_in>
+│       ├── <model_fill_in> [produces] <coherent_world>
+│       └── <coherent_world> [may_diverge_from] <ground_truth>
+│
+├── {Context_Window_Problems: <McLuhan+Geertz>}
+│   ├── <Context_as_Environment_(McLuhan)>
+│   │   ├── <context_window> [is] <medium_environment>
+│   │   └── [reshapes] <attention> + <association> + <judgment>
+│   │
+│   ├── <Context_as_Webs_(Geertz)>
+│   │   ├── <context> [contains] <webs_of_significance>
+│   │   └── [guides] <interpretation_of_output>
+│   │
+│   └── <Context_Pollution>
+│       ├── <early_error> [becomes] <assumption>
+│       ├── <assumption> [propagates_through] <later_steps>
+│       └── [therefore] <long_sessions> [increase] <false_coherence_risk>
+│
+├── {Infrastructure_Conclusion: <Prompting_is_Control_Systems>}
+│   ├── <Key_Claim>
+│   │   └── <prompting> [is_not] <better_wording>
+│   │       └── <prompting> [is] <epistemic_control_infrastructure>
+│   │
+│   ├── <What_infrastructure_means>
+│   │   ├── [design] <constraints> rather_than <instructions>
+│   │   ├── [separate] <retrieval> vs <reasoning> vs <assertion>
+│   │   ├── [force] <uncertainty_display>
+│   │   ├── [install] <context_reset_points>
+│   │   └── [define] <escalation_thresholds>
+│   │
+│   └── <Why_needed>
+│       ├── <AI_as_medium> [reconfigures] <practice>
+│       ├── <culture_as_control> [means] <prompts_finish_the_system>
+│       └── <cold_media> [means] <participation_creates_meaning_and_risk>
+│
+├── {Novel_Overlooked_Questions}
+│   ├── <Q1_Ambiguity_Bandwidth>
+│   │   └── [ask] <how_much_ambiguity_is_productive_before_it_turns_into_world_fabrication?>
+│   ├── <Q2_Improvisation_Bounds>
+│   │   └── [ask] <where_may_AI_improvise_vs_where_must_it_refuse_or_request_grounding?>
+│   ├── <Q3_Context_Ending>
+│   │   └── [ask] <when_should_a_session_end_to_avoid_false_coherence?>
+│   ├── <Q4_Practice_Specificity>
+│   │   └── [ask] <what_epistemic_guarantee_does_this_domain_require?>
+│   ├── <Q5_Auditability>
+│   │   └── [ask] <how_do_we_audit_prompts_and_contexts_not_just_outputs?>
+│   └── <Q6_Liability_Awareness>
+│       └── [ask] <how_do_prompts_encode_risk_classes_and_safe_degradation?>
+│
+└── <Final_Theorem_(McLuhan_x_Geertz_x_Vibe)>
+    ├── <AI> [is] <a_medium_that_injects_micro_cultures_via_prompts>
+    ├── <therefore] <AI_changes_the_scale_pace_pattern_of_thought>
+    ├── <therefore] <vibe_coding_is_a_natural_cold_media_posture>
+    ├── <but] <coherence_can_replace_correctness_without_infrastructure>
+    └── [therefore] <the_future_of_prompting> [is] <control_system_design_not_phrasecraft>

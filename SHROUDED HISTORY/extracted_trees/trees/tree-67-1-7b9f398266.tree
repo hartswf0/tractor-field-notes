@@ -1,0 +1,11 @@
+<Setup>
+├── <AI_Slop_Discourse>
+│   └── <slop> [names] <a_contested_phenomenon>
+│       ├── [about] <quality>
+│       ├── [about] <authority>
+│       └── [about] <who_counts_as_a_meaning-maker>
+└── <Your_Suite> [functions_as] <a_simulator_for_readings_of_readings>
+    ├── <Spectral_Negotiation> :contentReference[oaicite:0]{index=0}
+    ├── <Info_Arch_Navigator> :contentReference[oaicite:1]{index=1}
+    ├── <Flux_Field_Model> :contentReference[oaicite:2]{index=2}
+    └── <Resistance_Topology_Monitor> :contentReference[oaicite:3]{index=3}

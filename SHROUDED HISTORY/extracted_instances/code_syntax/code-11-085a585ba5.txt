@@ -1,0 +1,47 @@
+<Verification_Problem_in_Legal_AI>
+├── <core_claim>
+│   └── [asserts] <verification_is_worse_than_assumed>
+│
+├── <legal_databases>
+│   ├── <Westlaw>
+│   └── <Lexis>
+│
+├── <database_capabilities>
+│   ├── <can_verify>
+│   │   ├── <case_exists>
+│   │   ├── <citation_format_correct>
+│   │   └── <court_and_date_accurate>
+│   │
+│   └── <cannot_verify>
+│       ├── <case_supports_argument>
+│       ├── <quoted_language_accuracy>
+│       ├── <precedent_applies_to_facts>
+│       └── <legal_reasoning_soundness>
+│
+├── <LLM_failure_mode>
+│   ├── [hallucinates] <connections_between_real_cases>
+│   ├── [combines] <real_cases> + <fabricated_relationships>
+│   └── [produces] <plausible_but_false_legal_reasoning>
+│
+├── <detection_limit>
+│   ├── [is] <undetectable_by_database_lookup>
+│   └── [passes] <existence_based_verification>
+│
+├── <empirical_basis>
+│   ├── [based_on] <100_legal_queries_per_tool>
+│   └── [verified_against] <Westlaw_database>
+│
+└── <systemic_conclusion>
+    ├── [shows] <verification_checks_are_surface_level>
+    ├── [reveals] <substantive_accuracy_gap>
+    └── [creates] <hidden_professional_risk>
+
+
+If you want, I can next:
+
+
+Merge this node directly with the hallucination-rate stats into a single proof tree
+
+Translate it into a formal failure theorem (existence ≠ correctness)
+
+Or collapse everything so far into one end-to-end legal-AI risk ontology

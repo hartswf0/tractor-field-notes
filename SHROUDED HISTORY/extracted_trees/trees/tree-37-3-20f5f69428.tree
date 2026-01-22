@@ -1,0 +1,18 @@
+<The_Verification_Trap:_Why_Mata_Scales>
+├── <Observation>
+│   └── <legal_databases> [verify] <existence_metadata>
+│       └── [do_not_verify] <argument_support> ∧ <quote_accuracy> ∧ <applicability>
+├── <Implication>
+│   └── <hallucinated_reasoning>
+│       ├── [can_use] <real_courts_and_judges>
+│       ├── [can_use] <real_cases>
+│       └── [can_fabricate] <the_connection>
+│           └── [passes] <existence_checks>
+├── <Why_stats_matter_here>
+│   ├── <if> <hallucination_rate> [is] <nontrivial>
+│   └── <then> <adversarial_review> [becomes] <cost_amplifier>
+│       └── [forcing] <manual_primary_source_work> that [erodes] <AI_speed_advantage>
+└── <System_level_result>
+    └── [produces] <no_easy_equilibrium>
+        ├── <use_AI> → <more_scrutiny> + <more_verification_cost>
+        └── <avoid_AI> → <competitive_disadvantage>

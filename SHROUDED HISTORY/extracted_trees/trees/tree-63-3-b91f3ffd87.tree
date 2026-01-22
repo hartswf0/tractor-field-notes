@@ -1,0 +1,10 @@
+<Feedback_Loops>
+├── <Loop_1:_Selection_for_Resonance>
+│   ├── <resonant_text> [gets] <distribution>
+│   └── <distribution> [incentivizes] <more_resonant_text>
+├── <Loop_2:_Slop_Discourse_as_Fuel>
+│   ├── <slop_complaints> [generate] <attention>
+│   └── <attention> [selects_for] <more_discourse_and_more_production>
+└── <Loop_3:_Credential_and_Certainty>
+    ├── <uncertainty> [raises] <status_signaling>
+    └── <status_signaling> [selects_for] <performative_certainty_over_verification>

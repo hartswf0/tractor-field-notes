@@ -1,0 +1,887 @@
+{
+  "source_index": "extracted_instances/index.json",
+  "trees": [
+    {
+      "id": "tree-1-1-15b69a4493",
+      "label": "AI_Legal_Verification_Crisis",
+      "root": "<AI_Legal_Verification_Crisis>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-1-1be6af9d05",
+        "message_index": 1,
+        "hash": "1be6af9d055807befd15c4562780ce3a459516aaedbdb74a60ab2acc923aa1de",
+        "path": "extracted_instances/code_syntax/code-1-1be6af9d05.txt"
+      },
+      "path": "extracted_trees/trees/tree-1-1-15b69a4493.tree",
+      "lines": 34
+    },
+    {
+      "id": "tree-1-6-0deb479f78",
+      "label": "AI_Legal_Verification_Crisis",
+      "root": "<AI_Legal_Verification_Crisis>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-1-1be6af9d05",
+        "message_index": 1,
+        "hash": "1be6af9d055807befd15c4562780ce3a459516aaedbdb74a60ab2acc923aa1de",
+        "path": "extracted_instances/code_syntax/code-1-1be6af9d05.txt"
+      },
+      "path": "extracted_trees/trees/tree-1-6-0deb479f78.tree",
+      "lines": 6
+    },
+    {
+      "id": "tree-1-3-e0a080e2be",
+      "label": "AI_Output",
+      "root": "<AI_Output>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-1-1be6af9d05",
+        "message_index": 1,
+        "hash": "1be6af9d055807befd15c4562780ce3a459516aaedbdb74a60ab2acc923aa1de",
+        "path": "extracted_instances/code_syntax/code-1-1be6af9d05.txt"
+      },
+      "path": "extracted_trees/trees/tree-1-3-e0a080e2be.tree",
+      "lines": 3
+    },
+    {
+      "id": "tree-59-1-8ec429a819",
+      "label": "AI_Slop",
+      "root": "<AI_Slop>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-59-ff8aaf378d",
+        "message_index": 59,
+        "hash": "ff8aaf378d68be9fd87c5a1cb603428526d1c6794125f026b037e5c00312a944",
+        "path": "extracted_instances/code_syntax/code-59-ff8aaf378d.txt"
+      },
+      "path": "extracted_trees/trees/tree-59-1-8ec429a819.tree",
+      "lines": 14
+    },
+    {
+      "id": "tree-61-1-3b8afa918a",
+      "label": "AI_Slop_Discourse_as_Readings_of_Readings",
+      "root": "<AI_Slop_Discourse_as_Readings_of_Readings>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-61-395e60c5ab",
+        "message_index": 61,
+        "hash": "395e60c5ab14b0ceeb3c127b1f6eb637c0a83169d59c8ddc717f4edc99436767",
+        "path": "extracted_instances/code_syntax/code-61-395e60c5ab.txt"
+      },
+      "path": "extracted_trees/trees/tree-61-1-3b8afa918a.tree",
+      "lines": 113
+    },
+    {
+      "id": "tree-21-1-86d3a0ad99",
+      "label": "AI_Verification_Methods_Evaluation",
+      "root": "<AI_Verification_Methods_Evaluation>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-21-bb58b91b72",
+        "message_index": 21,
+        "hash": "bb58b91b727872503f3a3db37d9cbd781b8e1821063623c3531f7db052f4d1d2",
+        "path": "extracted_instances/code_syntax/code-21-bb58b91b72.txt"
+      },
+      "path": "extracted_trees/trees/tree-21-1-86d3a0ad99.tree",
+      "lines": 52
+    },
+    {
+      "id": "tree-63-5-f0bf59f3e8",
+      "label": "Anchor_(von_Foerster-style)",
+      "root": "<Anchor_(von_Foerster-style)>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-63-6938057a9a",
+        "message_index": 63,
+        "hash": "6938057a9adb98f1584c359e1a5f633d9beb9fffc77f5885f44d026f0738691f",
+        "path": "extracted_instances/code_syntax/code-63-6938057a9a.txt"
+      },
+      "path": "extracted_trees/trees/tree-63-5-f0bf59f3e8.tree",
+      "lines": 2
+    },
+    {
+      "id": "tree-15-1-21175c1c42",
+      "label": "Attorney_AI_Liability_Trap",
+      "root": "<Attorney_AI_Liability_Trap>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-15-f08750126d",
+        "message_index": 15,
+        "hash": "f08750126d325d0b60f828c40964d14aed930073c969988b75d2f00ef4822083",
+        "path": "extracted_instances/code_syntax/code-15-f08750126d.txt"
+      },
+      "path": "extracted_trees/trees/tree-15-1-21175c1c42.tree",
+      "lines": 36
+    },
+    {
+      "id": "tree-19-1-f012743939",
+      "label": "Bar_Association_Guidance_Failure",
+      "root": "<Bar_Association_Guidance_Failure>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-19-82b0ded875",
+        "message_index": 19,
+        "hash": "82b0ded875a2232de174bfdabe8a30df7adaa9642378038f922c42595c9cda66",
+        "path": "extracted_instances/code_syntax/code-19-82b0ded875.txt"
+      },
+      "path": "extracted_trees/trees/tree-19-1-f012743939.tree",
+      "lines": 46
+    },
+    {
+      "id": "tree-83-3-8245e4cf0e",
+      "label": "Bone_States",
+      "root": "<Bone_States>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-83-6796230f86",
+        "message_index": 83,
+        "hash": "6796230f86164377b00208288c98c567c898cc196b3c44892a9cc4cd01b02d39",
+        "path": "extracted_instances/code_syntax/code-83-6796230f86.txt"
+      },
+      "path": "extracted_trees/trees/tree-83-3-8245e4cf0e.tree",
+      "lines": 6
+    },
+    {
+      "id": "tree-67-6-b7cc3572c3",
+      "label": "Clean_Closure_(One_Sentence)",
+      "root": "<Clean_Closure_(One_Sentence)>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-67-212be4cf54",
+        "message_index": 67,
+        "hash": "212be4cf5478bdc1f7b59272f66b213618a9f6d6d65afef58026c4486b2bd62a",
+        "path": "extracted_instances/code_syntax/code-67-212be4cf54.txt"
+      },
+      "path": "extracted_trees/trees/tree-67-6-b7cc3572c3.tree",
+      "lines": 2
+    },
+    {
+      "id": "tree-79-7-c0c8b0101e",
+      "label": "Closing_(Cook_Ding_Speaks)",
+      "root": "<Closing_(Cook_Ding_Speaks)>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-79-c2a86149dc",
+        "message_index": 79,
+        "hash": "c2a86149dc31c24ba539af79d1dcb8f87ec1a687177399e2768adeec6803bc3d",
+        "path": "extracted_instances/code_syntax/code-79-c2a86149dc.txt"
+      },
+      "path": "extracted_trees/trees/tree-79-7-c0c8b0101e.tree",
+      "lines": 5
+    },
+    {
+      "id": "tree-79-6-99b2a1e327",
+      "label": "Context_Engineering_as_Tao_Craft",
+      "root": "<Context_Engineering_as_Tao_Craft>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-79-c2a86149dc",
+        "message_index": 79,
+        "hash": "c2a86149dc31c24ba539af79d1dcb8f87ec1a687177399e2768adeec6803bc3d",
+        "path": "extracted_instances/code_syntax/code-79-c2a86149dc.txt"
+      },
+      "path": "extracted_trees/trees/tree-79-6-99b2a1e327.tree",
+      "lines": 12
+    },
+    {
+      "id": "tree-7-1-c36ae109c8",
+      "label": "Court_AI_Response_Framework_(2023–2024)",
+      "root": "<Court_AI_Response_Framework_(2023–2024)>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-7-663d75fa91",
+        "message_index": 7,
+        "hash": "663d75fa914c6077f485e9227c2a6f753e3faaa0c971b62ad4cf4e1f15af1b99",
+        "path": "extracted_instances/code_syntax/code-7-663d75fa91.txt"
+      },
+      "path": "extracted_trees/trees/tree-7-1-c36ae109c8.tree",
+      "lines": 37
+    },
+    {
+      "id": "tree-1-5-feacd37d29",
+      "label": "Court_Reality",
+      "root": "<Court_Reality>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-1-1be6af9d05",
+        "message_index": 1,
+        "hash": "1be6af9d055807befd15c4562780ce3a459516aaedbdb74a60ab2acc923aa1de",
+        "path": "extracted_instances/code_syntax/code-1-1be6af9d05.txt"
+      },
+      "path": "extracted_trees/trees/tree-1-5-feacd37d29.tree",
+      "lines": 2
+    },
+    {
+      "id": "tree-1-4-e2624f396b",
+      "label": "Database_Check",
+      "root": "<Database_Check>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-1-1be6af9d05",
+        "message_index": 1,
+        "hash": "1be6af9d055807befd15c4562780ce3a459516aaedbdb74a60ab2acc923aa1de",
+        "path": "extracted_instances/code_syntax/code-1-1be6af9d05.txt"
+      },
+      "path": "extracted_trees/trees/tree-1-4-e2624f396b.tree",
+      "lines": 2
+    },
+    {
+      "id": "tree-83-4-d7091e16e4",
+      "label": "Design",
+      "root": "<Design>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-83-6796230f86",
+        "message_index": 83,
+        "hash": "6796230f86164377b00208288c98c567c898cc196b3c44892a9cc4cd01b02d39",
+        "path": "extracted_instances/code_syntax/code-83-6796230f86.txt"
+      },
+      "path": "extracted_trees/trees/tree-83-4-d7091e16e4.tree",
+      "lines": 2
+    },
+    {
+      "id": "tree-79-8-c997b0f22f",
+      "label": "Epilogue",
+      "root": "<Epilogue>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-79-c2a86149dc",
+        "message_index": 79,
+        "hash": "c2a86149dc31c24ba539af79d1dcb8f87ec1a687177399e2768adeec6803bc3d",
+        "path": "extracted_instances/code_syntax/code-79-c2a86149dc.txt"
+      },
+      "path": "extracted_trees/trees/tree-79-8-c997b0f22f.tree",
+      "lines": 3
+    },
+    {
+      "id": "tree-63-3-b91f3ffd87",
+      "label": "Feedback_Loops",
+      "root": "<Feedback_Loops>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-63-6938057a9a",
+        "message_index": 63,
+        "hash": "6938057a9adb98f1584c359e1a5f633d9beb9fffc77f5885f44d026f0738691f",
+        "path": "extracted_instances/code_syntax/code-63-6938057a9a.txt"
+      },
+      "path": "extracted_trees/trees/tree-63-3-b91f3ffd87.tree",
+      "lines": 10
+    },
+    {
+      "id": "tree-3-2-2a4680087c",
+      "label": "Fifth_Circuit_AI_Rule_Status",
+      "root": "<Fifth_Circuit_AI_Rule_Status>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-3-93c4a42262",
+        "message_index": 3,
+        "hash": "93c4a422627f7f6e8a30e21d7c4187aa905285617f3a13905bbbdb6ad8e2f747",
+        "path": "extracted_instances/code_syntax/code-3-93c4a42262.txt"
+      },
+      "path": "extracted_trees/trees/tree-3-2-2a4680087c.tree",
+      "lines": 3
+    },
+    {
+      "id": "tree-37-4-2a6c77eef5",
+      "label": "Final_Synthesis:_One_Argument,_Three_Thinkers",
+      "root": "<Final_Synthesis:_One_Argument,_Three_Thinkers>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-37-9cb14e5753",
+        "message_index": 37,
+        "hash": "9cb14e5753c10e98544dd8e582f564a9b984642d6a67e10d106d9058e843ba7b",
+        "path": "extracted_instances/code_syntax/code-37-9cb14e5753.txt"
+      },
+      "path": "extracted_trees/trees/tree-37-4-2a6c77eef5.tree",
+      "lines": 14
+    },
+    {
+      "id": "tree-23-1-78a66df910",
+      "label": "Final_Verdict_AI_Legal_Malpractice",
+      "root": "<Final_Verdict_AI_Legal_Malpractice>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-23-b25322b103",
+        "message_index": 23,
+        "hash": "b25322b1038a8c84a091a6245b67fdbd36df5cf01b5e20850feb3739d37abbdd",
+        "path": "extracted_instances/code_syntax/code-23-b25322b103.txt"
+      },
+      "path": "extracted_trees/trees/tree-23-1-78a66df910.tree",
+      "lines": 54
+    },
+    {
+      "id": "tree-35-1-21923feae3",
+      "label": "Full_Argument:_Geertz_x_McLuhan_x_Vibe_Coding",
+      "root": "<Full_Argument:_Geertz_x_McLuhan_x_Vibe_Coding>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-35-0495f6e00d",
+        "message_index": 35,
+        "hash": "0495f6e00d986bc6d07ec7107559214bca9d995cce1ee2b9ae8c3a71a1518a70",
+        "path": "extracted_instances/code_syntax/code-35-0495f6e00d.txt"
+      },
+      "path": "extracted_trees/trees/tree-35-1-21923feae3.tree",
+      "lines": 139
+    },
+    {
+      "id": "tree-37-2-52100dc28c",
+      "label": "Full_Argument:_Mata_Through_Each_Thinker",
+      "root": "<Full_Argument:_Mata_Through_Each_Thinker>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-37-9cb14e5753",
+        "message_index": 37,
+        "hash": "9cb14e5753c10e98544dd8e582f564a9b984642d6a67e10d106d9058e843ba7b",
+        "path": "extracted_instances/code_syntax/code-37-9cb14e5753.txt"
+      },
+      "path": "extracted_trees/trees/tree-37-2-52100dc28c.tree",
+      "lines": 22
+    },
+    {
+      "id": "tree-67-3-af339cbc28",
+      "label": "Geertz_Primary_Mapping_(Culture_as_Control_Mechanisms)",
+      "root": "<Geertz_Primary_Mapping_(Culture_as_Control_Mechanisms)>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-67-212be4cf54",
+        "message_index": 67,
+        "hash": "212be4cf5478bdc1f7b59272f66b213618a9f6d6d65afef58026c4486b2bd62a",
+        "path": "extracted_instances/code_syntax/code-67-212be4cf54.txt"
+      },
+      "path": "extracted_trees/trees/tree-67-3-af339cbc28.tree",
+      "lines": 7
+    },
+    {
+      "id": "tree-5-1-2f70b31ec8",
+      "label": "godofprompt_post",
+      "root": "<godofprompt_post>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-5-ba9b3609f0",
+        "message_index": 5,
+        "hash": "ba9b3609f0d83a118c5e26f01e379055472525201808f60c3925af344fe6e0ee",
+        "path": "extracted_instances/code_syntax/code-5-ba9b3609f0.txt"
+      },
+      "path": "extracted_trees/trees/tree-5-1-2f70b31ec8.tree",
+      "lines": 26
+    },
+    {
+      "id": "tree-9-1-276ef2d9bc",
+      "label": "godofprompt_test_results",
+      "root": "<godofprompt_test_results>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-9-b1fe9072a1",
+        "message_index": 9,
+        "hash": "b1fe9072a1874c5401bdd30158d964fb95e16306129fec1bc9b2f8cad30e0310",
+        "path": "extracted_instances/code_syntax/code-9-b1fe9072a1.txt"
+      },
+      "path": "extracted_trees/trees/tree-9-1-276ef2d9bc.tree",
+      "lines": 39
+    },
+    {
+      "id": "tree-13-1-6d0bea2abf",
+      "label": "Hallucinated_Reasoning_Verification_Failure",
+      "root": "<Hallucinated_Reasoning_Verification_Failure>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-13-6522ac335b",
+        "message_index": 13,
+        "hash": "6522ac335bbe869e7e002010cf4f2370899dde86d2457b4235c6e621fca535af",
+        "path": "extracted_instances/code_syntax/code-13-6522ac335b.txt"
+      },
+      "path": "extracted_trees/trees/tree-13-1-6d0bea2abf.tree",
+      "lines": 36
+    },
+    {
+      "id": "tree-3-3-ab51393306",
+      "label": "High_Risk_Patterns",
+      "root": "<High_Risk_Patterns>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-3-93c4a42262",
+        "message_index": 3,
+        "hash": "93c4a422627f7f6e8a30e21d7c4187aa905285617f3a13905bbbdb6ad8e2f747",
+        "path": "extracted_instances/code_syntax/code-3-93c4a42262.txt"
+      },
+      "path": "extracted_trees/trees/tree-3-3-ab51393306.tree",
+      "lines": 5
+    },
+    {
+      "id": "tree-59-2-191883c61f",
+      "label": "Joint_Synthesis:_Why_Slop_Feels_Unstoppable",
+      "root": "<Joint_Synthesis:_Why_Slop_Feels_Unstoppable>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-59-ff8aaf378d",
+        "message_index": 59,
+        "hash": "ff8aaf378d68be9fd87c5a1cb603428526d1c6794125f026b037e5c00312a944",
+        "path": "extracted_instances/code_syntax/code-59-ff8aaf378d.txt"
+      },
+      "path": "extracted_trees/trees/tree-59-2-191883c61f.tree",
+      "lines": 13
+    },
+    {
+      "id": "tree-37-1-a5214b4265",
+      "label": "Law_Hook:_The_Case_That_Forces_Theory",
+      "root": "<Law_Hook:_The_Case_That_Forces_Theory>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-37-9cb14e5753",
+        "message_index": 37,
+        "hash": "9cb14e5753c10e98544dd8e582f564a9b984642d6a67e10d106d9058e843ba7b",
+        "path": "extracted_instances/code_syntax/code-37-9cb14e5753.txt"
+      },
+      "path": "extracted_trees/trees/tree-37-1-a5214b4265.tree",
+      "lines": 24
+    },
+    {
+      "id": "tree-41-1-ce6363ad36",
+      "label": "Law_of_Culture:_McLuhan_x_Geertz",
+      "root": "<Law_of_Culture:_McLuhan_x_Geertz>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-41-41a06ee935",
+        "message_index": 41,
+        "hash": "41a06ee93585fc9fb6fc47c5011fdee14e410f1e0a61269452f7f63ce31e0ad0",
+        "path": "extracted_instances/code_syntax/code-41-41a06ee935.txt"
+      },
+      "path": "extracted_trees/trees/tree-41-1-ce6363ad36.tree",
+      "lines": 94
+    },
+    {
+      "id": "tree-3-1-87a491074a",
+      "label": "Legal_AI_Hallucination_Risk",
+      "root": "<Legal_AI_Hallucination_Risk>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-3-93c4a42262",
+        "message_index": 3,
+        "hash": "93c4a422627f7f6e8a30e21d7c4187aa905285617f3a13905bbbdb6ad8e2f747",
+        "path": "extracted_instances/code_syntax/code-3-93c4a42262.txt"
+      },
+      "path": "extracted_trees/trees/tree-3-1-87a491074a.tree",
+      "lines": 9
+    },
+    {
+      "id": "tree-71-1-06ae92e407",
+      "label": "Mapping_the_Cook_Debate_onto_Vibe_Coding_and_AI_Legal_Hallucinations",
+      "root": "<Mapping_the_Cook_Debate_onto_Vibe_Coding_and_AI_Legal_Hallucinations>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-71-eec88f0730",
+        "message_index": 71,
+        "hash": "eec88f07302ebe794ff027a9db7b98887ff127ef4f8f299886dc117e3712ec60",
+        "path": "extracted_instances/code_syntax/code-71-eec88f0730.txt"
+      },
+      "path": "extracted_trees/trees/tree-71-1-06ae92e407.tree",
+      "lines": 93
+    },
+    {
+      "id": "tree-67-2-0209428605",
+      "label": "McLuhan_Primary_Mapping_(Medium_before_Content)",
+      "root": "<McLuhan_Primary_Mapping_(Medium_before_Content)>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-67-212be4cf54",
+        "message_index": 67,
+        "hash": "212be4cf5478bdc1f7b59272f66b213618a9f6d6d65afef58026c4486b2bd62a",
+        "path": "extracted_instances/code_syntax/code-67-212be4cf54.txt"
+      },
+      "path": "extracted_trees/trees/tree-67-2-0209428605.tree",
+      "lines": 8
+    },
+    {
+      "id": "tree-79-4-50144e1d15",
+      "label": "Negative_Space_as_Tao_Craft",
+      "root": "<Negative_Space_as_Tao_Craft>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-79-c2a86149dc",
+        "message_index": 79,
+        "hash": "c2a86149dc31c24ba539af79d1dcb8f87ec1a687177399e2768adeec6803bc3d",
+        "path": "extracted_instances/code_syntax/code-79-c2a86149dc.txt"
+      },
+      "path": "extracted_trees/trees/tree-79-4-50144e1d15.tree",
+      "lines": 13
+    },
+    {
+      "id": "tree-59-3-2d530d6c2c",
+      "label": "Novel_Questions_(Not_Moral_Panic)",
+      "root": "<Novel_Questions_(Not_Moral_Panic)>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-59-ff8aaf378d",
+        "message_index": 59,
+        "hash": "ff8aaf378d68be9fd87c5a1cb603428526d1c6794125f026b037e5c00312a944",
+        "path": "extracted_instances/code_syntax/code-59-ff8aaf378d.txt"
+      },
+      "path": "extracted_trees/trees/tree-59-3-2d530d6c2c.tree",
+      "lines": 11
+    },
+    {
+      "id": "tree-59-4-4d7a1fc7e4",
+      "label": "One_Line_Reading",
+      "root": "<One_Line_Reading>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-59-ff8aaf378d",
+        "message_index": 59,
+        "hash": "ff8aaf378d68be9fd87c5a1cb603428526d1c6794125f026b037e5c00312a944",
+        "path": "extracted_instances/code_syntax/code-59-ff8aaf378d.txt"
+      },
+      "path": "extracted_trees/trees/tree-59-4-4d7a1fc7e4.tree",
+      "lines": 5
+    },
+    {
+      "id": "tree-83-1-2f69f674f4",
+      "label": "Phase_1",
+      "root": "<Phase_1>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-83-6796230f86",
+        "message_index": 83,
+        "hash": "6796230f86164377b00208288c98c567c898cc196b3c44892a9cc4cd01b02d39",
+        "path": "extracted_instances/code_syntax/code-83-6796230f86.txt"
+      },
+      "path": "extracted_trees/trees/tree-83-1-2f69f674f4.tree",
+      "lines": 3
+    },
+    {
+      "id": "tree-83-2-b453ba9044",
+      "label": "Phase_2",
+      "root": "<Phase_2>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-83-6796230f86",
+        "message_index": 83,
+        "hash": "6796230f86164377b00208288c98c567c898cc196b3c44892a9cc4cd01b02d39",
+        "path": "extracted_instances/code_syntax/code-83-6796230f86.txt"
+      },
+      "path": "extracted_trees/trees/tree-83-2-b453ba9044.tree",
+      "lines": 5
+    },
+    {
+      "id": "tree-45-1-d7c5a31e2d",
+      "label": "Poetic_Tao_Readings_of_Wu_Wei_Vibe_Coding_and_Legal_AI_Liability",
+      "root": "<Poetic_Tao_Readings_of_Wu_Wei_Vibe_Coding_and_Legal_AI_Liability>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-45-68b99d1398",
+        "message_index": 45,
+        "hash": "68b99d1398ee38aa720cbf80958034c9de77cef2ef2431cd5150b293496e25cf",
+        "path": "extracted_instances/code_syntax/code-45-68b99d1398.txt"
+      },
+      "path": "extracted_trees/trees/tree-45-1-d7c5a31e2d.tree",
+      "lines": 117
+    },
+    {
+      "id": "tree-133-1-4a2d3bee4d",
+      "label": "Poly_Metis_Vibe_Coding_Doctrine",
+      "root": "<Poly_Metis_Vibe_Coding_Doctrine>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-133-9b96f46555",
+        "message_index": 133,
+        "hash": "9b96f46555dfd70edaba1d308e0313b469babb5c83b74e832418d09652b21a4c",
+        "path": "extracted_instances/code_syntax/code-133-9b96f46555.txt"
+      },
+      "path": "extracted_trees/trees/tree-133-1-4a2d3bee4d.tree",
+      "lines": 13
+    },
+    {
+      "id": "tree-79-1-51dbd4ff1b",
+      "label": "Prelude_(The_Koan)",
+      "root": "<Prelude_(The_Koan)>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-79-c2a86149dc",
+        "message_index": 79,
+        "hash": "c2a86149dc31c24ba539af79d1dcb8f87ec1a687177399e2768adeec6803bc3d",
+        "path": "extracted_instances/code_syntax/code-79-c2a86149dc.txt"
+      },
+      "path": "extracted_trees/trees/tree-79-1-51dbd4ff1b.tree",
+      "lines": 9
+    },
+    {
+      "id": "tree-63-1-674ed59681",
+      "label": "Premise_(Second_Order)",
+      "root": "<Premise_(Second_Order)>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-63-6938057a9a",
+        "message_index": 63,
+        "hash": "6938057a9adb98f1584c359e1a5f633d9beb9fffc77f5885f44d026f0738691f",
+        "path": "extracted_instances/code_syntax/code-63-6938057a9a.txt"
+      },
+      "path": "extracted_trees/trees/tree-63-1-674ed59681.tree",
+      "lines": 3
+    },
+    {
+      "id": "tree-17-1-c610362c56",
+      "label": "Professional_Liability_Crisis_AI",
+      "root": "<Professional_Liability_Crisis_AI>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-17-fb574a50c2",
+        "message_index": 17,
+        "hash": "fb574a50c23056b13eb5ec6cdf5247d708d02dac87985df17306252de38ec3ac",
+        "path": "extracted_instances/code_syntax/code-17-fb574a50c2.txt"
+      },
+      "path": "extracted_trees/trees/tree-17-1-c610362c56.tree",
+      "lines": 40
+    },
+    {
+      "id": "tree-37-5-8055a454a1",
+      "label": "Prompt_Infrastructure_Questions_(Law-First)",
+      "root": "<Prompt_Infrastructure_Questions_(Law-First)>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-37-9cb14e5753",
+        "message_index": 37,
+        "hash": "9cb14e5753c10e98544dd8e582f564a9b984642d6a67e10d106d9058e843ba7b",
+        "path": "extracted_instances/code_syntax/code-37-9cb14e5753.txt"
+      },
+      "path": "extracted_trees/trees/tree-37-5-8055a454a1.tree",
+      "lines": 11
+    },
+    {
+      "id": "tree-25-1-31338dc648",
+      "label": "Proof_of_No_Safe_State_in_Legal_AI_Use",
+      "root": "<Proof_of_No_Safe_State_in_Legal_AI_Use>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-25-922c66bee1",
+        "message_index": 25,
+        "hash": "922c66bee1d0f39078ff190f1e3b279dd6dec3cf3cef64f4f449bbf3fad8dc7a",
+        "path": "extracted_instances/code_syntax/code-25-922c66bee1.txt"
+      },
+      "path": "extracted_trees/trees/tree-25-1-31338dc648.tree",
+      "lines": 110
+    },
+    {
+      "id": "tree-1-2-ac32ee03c9",
+      "label": "Query",
+      "root": "<Query>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-1-1be6af9d05",
+        "message_index": 1,
+        "hash": "1be6af9d055807befd15c4562780ce3a459516aaedbdb74a60ab2acc923aa1de",
+        "path": "extracted_instances/code_syntax/code-1-1be6af9d05.txt"
+      },
+      "path": "extracted_trees/trees/tree-1-2-ac32ee03c9.tree",
+      "lines": 2
+    },
+    {
+      "id": "tree-67-5-f27b2c9f04",
+      "label": "Second-Order_Cybernetic_Read_(Your_Suite_as_Observer-In-System)",
+      "root": "<Second-Order_Cybernetic_Read_(Your_Suite_as_Observer-In-System)>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-67-212be4cf54",
+        "message_index": 67,
+        "hash": "212be4cf5478bdc1f7b59272f66b213618a9f6d6d65afef58026c4486b2bd62a",
+        "path": "extracted_instances/code_syntax/code-67-212be4cf54.txt"
+      },
+      "path": "extracted_trees/trees/tree-67-5-f27b2c9f04.tree",
+      "lines": 14
+    },
+    {
+      "id": "tree-63-4-aae5907eb7",
+      "label": "Second_Order_Result",
+      "root": "<Second_Order_Result>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-63-6938057a9a",
+        "message_index": 63,
+        "hash": "6938057a9adb98f1584c359e1a5f633d9beb9fffc77f5885f44d026f0738691f",
+        "path": "extracted_instances/code_syntax/code-63-6938057a9a.txt"
+      },
+      "path": "extracted_trees/trees/tree-63-4-aae5907eb7.tree",
+      "lines": 6
+    },
+    {
+      "id": "tree-67-1-7b9f398266",
+      "label": "Setup",
+      "root": "<Setup>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-67-212be4cf54",
+        "message_index": 67,
+        "hash": "212be4cf5478bdc1f7b59272f66b213618a9f6d6d65afef58026c4486b2bd62a",
+        "path": "extracted_instances/code_syntax/code-67-212be4cf54.txt"
+      },
+      "path": "extracted_trees/trees/tree-67-1-7b9f398266.tree",
+      "lines": 11
+    },
+    {
+      "id": "tree-65-1-a60dc4441e",
+      "label": "Structural_vs_Pragmatic_Reading_of_the_Interface_Suite",
+      "root": "<Structural_vs_Pragmatic_Reading_of_the_Interface_Suite>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-65-a5ac68ce21",
+        "message_index": 65,
+        "hash": "a5ac68ce215d64914ef7a395bd40a3bb3778fc8cd5a020dea1e63e1e55eb08b9",
+        "path": "extracted_instances/code_syntax/code-65-a5ac68ce21.txt"
+      },
+      "path": "extracted_trees/trees/tree-65-1-a60dc4441e.tree",
+      "lines": 112
+    },
+    {
+      "id": "tree-63-2-28a2db667c",
+      "label": "System",
+      "root": "<System>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-63-6938057a9a",
+        "message_index": 63,
+        "hash": "6938057a9adb98f1584c359e1a5f633d9beb9fffc77f5885f44d026f0738691f",
+        "path": "extracted_instances/code_syntax/code-63-6938057a9a.txt"
+      },
+      "path": "extracted_trees/trees/tree-63-2-28a2db667c.tree",
+      "lines": 5
+    },
+    {
+      "id": "tree-73-1-9cd318b1a7",
+      "label": "Taoist_Legal_Philosophy_x_NASA_Negative-Space_Context_Engineering",
+      "root": "<Taoist_Legal_Philosophy_x_NASA_Negative-Space_Context_Engineering>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-73-1c5ff410e3",
+        "message_index": 73,
+        "hash": "1c5ff410e3061b9db5f787dcab83269f90eb5da8ad9f30b5bf10f051c1c37c3f",
+        "path": "extracted_instances/code_syntax/code-73-1c5ff410e3.txt"
+      },
+      "path": "extracted_trees/trees/tree-73-1-9cd318b1a7.tree",
+      "lines": 94
+    },
+    {
+      "id": "tree-79-5-7c2799ed4b",
+      "label": "Taoist_Prompting_Rules_(Cook_Ding_Edition)",
+      "root": "<Taoist_Prompting_Rules_(Cook_Ding_Edition)>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-79-c2a86149dc",
+        "message_index": 79,
+        "hash": "c2a86149dc31c24ba539af79d1dcb8f87ec1a687177399e2768adeec6803bc3d",
+        "path": "extracted_instances/code_syntax/code-79-c2a86149dc.txt"
+      },
+      "path": "extracted_trees/trees/tree-79-5-7c2799ed4b.tree",
+      "lines": 19
+    },
+    {
+      "id": "tree-69-1-2439835c59",
+      "label": "Taoist_Vibe_Coder_x_Legal_Case_(Mata)_x_McLuhan_x_Geertz",
+      "root": "<Taoist_Vibe_Coder_x_Legal_Case_(Mata)_x_McLuhan_x_Geertz>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-69-cd9afd18a8",
+        "message_index": 69,
+        "hash": "cd9afd18a8078c2766b157c678cebacb3bbffec78a8348764c284588118ecbeb",
+        "path": "extracted_instances/code_syntax/code-69-cd9afd18a8.txt"
+      },
+      "path": "extracted_trees/trees/tree-69-1-2439835c59.tree",
+      "lines": 90
+    },
+    {
+      "id": "tree-39-1-aea40f429f",
+      "label": "The_Mata_Theorem:_Why_AI_Changes_Law",
+      "root": "<The_Mata_Theorem:_Why_AI_Changes_Law>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-39-9055d2fdde",
+        "message_index": 39,
+        "hash": "9055d2fdde37490dd3e2c349d00d29458138458c3b42123148432ac2ef63450a",
+        "path": "extracted_instances/code_syntax/code-39-9055d2fdde.txt"
+      },
+      "path": "extracted_trees/trees/tree-39-1-aea40f429f.tree",
+      "lines": 74
+    },
+    {
+      "id": "tree-79-2-a233b6e976",
+      "label": "The_Mistake_of_Butchers_(Bad_Prompting)",
+      "root": "<The_Mistake_of_Butchers_(Bad_Prompting)>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-79-c2a86149dc",
+        "message_index": 79,
+        "hash": "c2a86149dc31c24ba539af79d1dcb8f87ec1a687177399e2768adeec6803bc3d",
+        "path": "extracted_instances/code_syntax/code-79-c2a86149dc.txt"
+      },
+      "path": "extracted_trees/trees/tree-79-2-a233b6e976.tree",
+      "lines": 10
+    },
+    {
+      "id": "tree-37-3-20f5f69428",
+      "label": "The_Verification_Trap:_Why_Mata_Scales",
+      "root": "<The_Verification_Trap:_Why_Mata_Scales>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-37-9cb14e5753",
+        "message_index": 37,
+        "hash": "9cb14e5753c10e98544dd8e582f564a9b984642d6a67e10d106d9058e843ba7b",
+        "path": "extracted_instances/code_syntax/code-37-9cb14e5753.txt"
+      },
+      "path": "extracted_trees/trees/tree-37-3-20f5f69428.tree",
+      "lines": 18
+    },
+    {
+      "id": "tree-43-1-66cedc3c7d",
+      "label": "The_Way_of_Code:_Wu_Wei_Meets_Law",
+      "root": "<The_Way_of_Code:_Wu_Wei_Meets_Law>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-43-751b367332",
+        "message_index": 43,
+        "hash": "751b3673323397fcf03fcd1e4f0deab4f9019a829cee84133850624048b1ee26",
+        "path": "extracted_instances/code_syntax/code-43-751b367332.txt"
+      },
+      "path": "extracted_trees/trees/tree-43-1-66cedc3c7d.tree",
+      "lines": 113
+    },
+    {
+      "id": "tree-79-3-42c29fac35",
+      "label": "The_Way_of_Cook_Ding_(Good_Context_Engineering)",
+      "root": "<The_Way_of_Cook_Ding_(Good_Context_Engineering)>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-79-c2a86149dc",
+        "message_index": 79,
+        "hash": "c2a86149dc31c24ba539af79d1dcb8f87ec1a687177399e2768adeec6803bc3d",
+        "path": "extracted_instances/code_syntax/code-79-c2a86149dc.txt"
+      },
+      "path": "extracted_trees/trees/tree-79-3-42c29fac35.tree",
+      "lines": 11
+    },
+    {
+      "id": "tree-11-1-22caabf831",
+      "label": "Verification_Problem_in_Legal_AI",
+      "root": "<Verification_Problem_in_Legal_AI>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-11-085a585ba5",
+        "message_index": 11,
+        "hash": "085a585ba5c9c25a925345622ffa9b6f9f3fbab995e59fcdc992838bb9aae959",
+        "path": "extracted_instances/code_syntax/code-11-085a585ba5.txt"
+      },
+      "path": "extracted_trees/trees/tree-11-1-22caabf831.tree",
+      "lines": 37
+    },
+    {
+      "id": "tree-67-4-6f881926ab",
+      "label": "Where_Sahlins_vs_Obeyesekere_Reappears_(Structural_vs_Pragmatic)",
+      "root": "<Where_Sahlins_vs_Obeyesekere_Reappears_(Structural_vs_Pragmatic)>",
+      "source": {
+        "kind": "code_syntax",
+        "instance_id": "code-67-212be4cf54",
+        "message_index": 67,
+        "hash": "212be4cf5478bdc1f7b59272f66b213618a9f6d6d65afef58026c4486b2bd62a",
+        "path": "extracted_instances/code_syntax/code-67-212be4cf54.txt"
+      },
+      "path": "extracted_trees/trees/tree-67-4-6f881926ab.tree",
+      "lines": 7
+    }
+  ]
+}

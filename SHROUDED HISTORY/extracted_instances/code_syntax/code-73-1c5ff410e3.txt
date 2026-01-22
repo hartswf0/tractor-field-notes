@@ -1,0 +1,108 @@
+Thought for 20s
+
+
+<Taoist_Legal_Philosophy_x_NASA_Negative-Space_Context_Engineering>
+├── <Thesis>
+│   └── [claim] <good_judgment> [is] <the_art_of_not_filling>
+│       ├── [in] <Taoist_law> : <restraint_before_force>
+│       └── [in] <NASA_context_engineering> : <boundaries_before_detail>
+│
+├── {Taoist_Legal_Philosophy}
+│   ├── <Wu_Wei_in_Law>
+│   │   ├── <wu_wei> [is] <non-forcing_action>
+│   │   ├── <legal_form> [requires] <force_at_the_edges>
+│   │   └── [therefore] <taoist_law> [seeks] <minimum_coercion_with_maximum_clarity>
+│   │       ├── [by] <designing_conditions>
+│   │       └── [not_by] <micromanaging_moves>
+│   │
+│   ├── <Names_and_Roots>
+│   │   ├── <a_citation> [is] <a_name_that_claims_a_root>
+│   │   ├── <a_quote> [is] <a_name_that_claims_a_text>
+│   │   └── [rule] <do_not_let_names_float>
+│   │       └── [because] <floating_names> [become] <authority-shaped_mist>
+│   │
+│   └── <Emptiness_as_Use>
+│       ├── <emptiness> [is] <designed_absence>
+│       ├── <designed_absence> [creates] <function_and_safety>
+│       └── <legal_parallel>
+│           └── <procedural_limits> [are] <emptiness_that_makes_truth_hold>
+│
+├── {NASA_Negative-Space_Context_Engineering}
+│   ├── <Negative_Space_Theory_(NASA_System_Safety)>
+│   │   ├── <negative_space> [means] <define_by_what_is_not_important_or_not_to_be_done>
+│   │   ├── [asks] “<what_do_I_not_need_to_know?>” and “<what_do_I_not_need_to_do?>”
+│   │   └── [aims] <remove_paraxial_clutter_so_objectives_surface>
+│   │       :contentReference[oaicite:0]{index=0}
+│   │
+│   ├── <Legal_System_as_Negative_Space_Practice_(NASA_paper)>
+│   │   ├── <dissent> [is] <documented_negative_space>
+│   │   ├── [because] <minority_view> [marks] <the_boundary_of_the_majority>
+│   │   └── [so] <direction_can_be_challenged_meaningfully>
+│   │       :contentReference[oaicite:1]{index=1}
+│   │
+│   └── <Context_Diagram_(NASA_SE_Handbook)>
+│       ├── <context_diagram> [is] <a_map_of_external_systems_that_impact_the_system>
+│       └── [function] <draw_the_boundary_before_building_inside_it>
+│           :contentReference[oaicite:2]{index=2}
+│
+├── <Synthesis:_Negative_Space_as_Context_Engineering>
+│   ├── <Context_Engineering>
+│   │   └── [is] <shaping_the_system_by_shaping_its_boundary_conditions>
+│   ├── <Negative_Space>
+│   │   └── [is] <boundary_conditions_made_explicit_as_exclusions>
+│   └── <Taoist_Join>
+│       └── <wu_wei> [becomes] <engineering_restraint>
+│           ├── [act_by] <placing_limits>
+│           └── [not_by] <over-specifying_every_move>
+│
+└── <Applied_to_AI_Legal_Hallucinations_(The_Practical_Doctrine)>
+    ├── <The_Problem>
+    │   ├── <AI> [produces] <authority-shaped_language>
+    │   └── <law> [treats] <authority_tokens> [as] <binding_claims>
+    │
+    ├── <The_Taoist-Legal_Rule>
+    │   └── [never_allow] <floating_names>
+    │       ├── <no_uncited_holdings>
+    │       ├── <no_uncited_quotes>
+    │       └── <no_citations_without_primary_text_access>
+    │
+    ├── <NASA-Style_Negative-Space_Prompting_(Keep-Out_Zones)>
+    │   ├── [define] <what_AI_must_not_do>
+    │   │   ├── [do_not] <invent_citations>
+    │   │   ├── [do_not] <paraphrase_as_quote>
+    │   │   ├── [do_not] <state_holdings_without_pinpoint_text>
+    │   │   └── [do_not] <apply_precedent_without_stating_uncertainty_and_missing_facts>
+    │   ├── [define] <what_user_must_supply>
+    │   │   ├── <jurisdiction>
+    │   │   ├── <facts_that_matter>
+    │   │   └── <acceptable_sources>
+    │   └── [define] <stop-doing_list>
+    │       └── <remove_tasks> [to] <make_room_for_verification_work>
+    │           :contentReference[oaicite:3]{index=3}
+    │
+    └── <Context_Diagram_for_a_Legal_AI_Workflow_(Hot/Cold_Boundary)>
+        ├── <External_systems_that_impact_truth>
+        │   ├── <primary_opinions>
+        │   ├── <official_reporters/databases>
+        │   ├── <court_rules_and_sanctions_regime>
+        │   └── <time_budget_and_billing_constraints>
+        ├── <Inside_boundary_(safe_flow_zone)>
+        │   ├── <issue_spotting>
+        │   ├── <argument_outlines>
+        │   └── <plain-english_explanations>
+        └── <Outside_boundary_(must-be-hot_zone)>
+            ├── <citations>
+            ├── <quotes>
+            ├── <holdings>
+            └── <final_factual_assertions>
+            :contentReference[oaicite:4]{index=4}
+
+
+The tight maxim (Tao × NASA × Law):
+
+
+<Design_the_emptiness_first>. 
+<Then_let_the_work_flow_inside_it>.
+
+
+If you want, I can convert this into a single courtroom-ready “protocol card” (one page) with: keep-out rules, refusal rules, and a context-diagram checklist for AI-assisted legal drafting.

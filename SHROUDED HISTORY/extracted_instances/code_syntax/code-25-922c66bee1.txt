@@ -1,0 +1,110 @@
+<Proof_of_No_Safe_State_in_Legal_AI_Use>
+├── <Goal>
+│   └── [prove] <No_Safe_State>
+│       └── <No_Safe_State> := ¬∃<attorney_workflow> such that
+│           (<compliance> ∧ <scalable_verification> ∧ <bounded_liability_risk>)
+│
+├── {Definitions}
+│   ├── <AI_Output>
+│   │   └── <text> that may include <citations>, <quotes>, <holdings>, <rules>, <applications>
+│   ├── <Error>
+│   │   └── <AI_Output> [contains] <false_content>
+│   ├── <Surface_Check>
+│   │   └── [verifies] <existence_format_metadata>
+│   ├── <Substance_Check>
+│   │   └── [verifies] (<quote_accuracy> ∧ <holding_accuracy> ∧ <application_to_facts>)
+│   ├── <Reliable>
+│   │   └── [means] <high_probability_of_detecting_Error>
+│   ├── <Scalable>
+│   │   └── [means] <verification_cost_is_low_enough_to_preserve_AI_efficiency>
+│   └── <Safe_State>
+│       └── [means] (<disclosure_compliance> ∧ <reliable_and_scalable_verification> ∧ <insurance_backstop_or_low_liability>)
+│
+├── {Premises}
+│   ├── <P1_Hallucination_Nonzero>
+│   │   └── [assume] <AI_Output> [has] <nontrivial_error_rate>
+│   │       └── [instantiated_as] <19_percent_hallucinated_citations>   // from provided material
+│   ├── <P2_Surface_Check_Limit>
+│   │   └── [assume] <Legal_Databases> [can_verify] <case_exists>
+│   │       but [cannot_verify] (<supports_argument> ∨ <quote_accuracy> ∨ <precedent_applies> ∨ <reasoning_sound>)
+│   ├── <P3_Substance_Check_Cost>
+│   │   └── [assume] <Reading_Actual_Opinions> [is] <high_accuracy>
+│   │       but [has] <very_high_time_cost>
+│   ├── <P4_Alternative_Checks_Weak>
+│   │   └── [assume] <Cross_Tool_Checking> [has] <low_to_medium_effectiveness>
+│   │       because tools [hallucinate] <different_things>
+│   │       and <Shepardizing> [checks] <citation_history_not_reasoning>
+│   ├── <P5_Rule_Environment>
+│   │   └── [assume] <Courts> [require] <AI_disclosure>
+│   │       while [not_providing] <verification_tools_or_protocols>
+│   ├── <P6_Liability_Environment>
+│   │   └── [assume] <Attorney> [retains] <responsibility_for_accuracy>
+│   │       and <sanctions_or_malpractice> [follow] <material_errors>
+│   └── <P7_Insurance_Environment>
+│       └── [assume] <Malpractice_Insurers> [respond_with] (<exclusions> ∨ <premium_increases> ∨ <coverage_denials>)
+│
+├── {Lemma_1_Existence≠Correctness}
+│   ├── <Claim>
+│   │   └── [show] <Surface_Check> [cannot_imply] <Substance_Check>
+│   ├── <Reason>
+│   │   ├── <Surface_Check> [verifies] <case_exists>
+│   │   └── <Error_Type>
+│   │       └── <Real_Case> + <Fake_Holding_or_Fake_Quote_or_Fake_Application>
+│   └── <Conclusion>
+│       └── [therefore] <Surface_Verification> [allows] <undetected_substantive_error>
+│
+├── {Lemma_2_No_Reliable_And_Scalable_Verification}
+│   ├── <Claim>
+│   │   └── ¬∃<method> such that (<Reliable(method)> ∧ <Scalable(method)>)
+│   ├── <Proof_Sketch>
+│   │   ├── <Manual_Opinion_Review>
+│   │   │   ├── [is] <Reliable>
+│   │   │   └── [is_not] <Scalable> because [costs] <very_high_time>
+│   │   ├── <Database_Lookup>
+│   │   │   ├── [is] <Scalable>
+│   │   │   └── [is_not] <Reliable> by Lemma_1 and <60_percent_effectiveness>
+│   │   ├── <Cross_Tool_Checking>
+│   │   │   ├── [is] <medium_cost>
+│   │   │   └── [is_not] <Reliable> because [diverges_on] <hallucinations>
+│   │   └── <Shepardizing>
+│   │       ├── [is] <Scalable>
+│   │       └── [is_not] <Reliable> because [does_not_check] <reasoning_or_quotes>
+│   └── <Conclusion>
+│       └── [therefore] <Reliable_and_Scalable_Verification> [does_not_exist_in_practice]
+│
+├── {Lemma_3_Disclosure_Increases_Adversarial_Pressure}
+│   ├── <Claim>
+│   │   └── <Disclosure> [tends_to_increase] <scrutiny_and_challenges>
+│   └── <Consequence>
+│       └── [so] <verification_cost> [rises] and <residual_error_risk> [remains]
+│
+├── {Theorem_No_Safe_State}
+│   ├── <Assume_for_contradiction>
+│   │   └── ∃<workflow_W> such that <Safe_State(workflow_W)>
+│   ├── <Case_Split_on_AI_Use>
+│   │   ├── <Case_A> : <workflow_W> [uses] <AI>
+│   │   │   ├── [then] <Disclosure_required> by <P5>
+│   │   │   ├── [and] <Error_rate_nonzero> by <P1>
+│   │   │   ├── [and] verification must be both <Reliable> and <Scalable> to keep risk bounded
+│   │   │   ├── [but] impossible by Lemma_2
+│   │   │   └── [thus] <Safe_State(workflow_W)> [fails]
+│   │   │
+│   │   └── <Case_B> : <workflow_W> [does_not_use] <AI>
+│   │       ├── [then] <Manual_workload> [increases]
+│   │       ├── [thus] <costs> [increase] and <speed> [decreases]
+│   │       ├── [thus] <competitive_viability> [decreases]
+│   │       └── [thus] <workflow_W> [fails] <scalable_practice_constraint>
+│   ├── <Contradiction>
+│   │   └── both cases [contradict] existence of <Safe_State(workflow_W)>
+│   └── <Conclusion>
+│       └── [therefore] ¬∃<Safe_State>  // no safe choice under current rules
+│
+└── {Corollary_System_Loop_(No_Solution_Cycle)}
+    ├── <Courts_require_disclosure>
+    ├── <Hallucination_rate_nontrivial>
+    ├── <No_reliable_verification>
+    ├── <Malpractice_liability>
+    ├── <Insurance_exclusions>
+    └── <Vague_bar_guidance>
+        └── [forms] <self_reinforcing_risk_cycle>
+            └── [summarized_as] <NO_SOLUTION_under_current_infrastructure>

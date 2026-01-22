@@ -1,0 +1,52 @@
+<AI_Verification_Methods_Evaluation>
+├── <evaluation_scope>
+│   ├── [focuses_on] <verification_of_AI_generated_legal_output>
+│   └── [asks] <is_reliable_and_scalable_verification_possible?>
+│
+├── <tested_methods>
+│   ├── <database_lookup>
+│   │   ├── [function] <check_case_existence>
+│   │   ├── [detects] <fake_cases>
+│   │   ├── [effectiveness] <60_percent_of_hallucinations>
+│   │   ├── [time_cost] <low>
+│   │   └── [fails_to_detect] <fake_holdings_and_reasoning>
+│   │
+│   ├── <read_actual_opinions>
+│   │   ├── [function] <human_primary_source_review>
+│   │   ├── [detects] <nearly_all_errors>
+│   │   ├── [effectiveness] <95_percent>
+│   │   ├── [time_cost] <very_high>
+│   │   └── [negates] <AI_efficiency_benefits>
+│   │
+│   ├── <cross_reference_AI_tools>
+│   │   ├── [function] <compare_multiple_AI_outputs>
+│   │   ├── [failure_mode] <divergent_hallucinations>
+│   │   ├── [effectiveness] <40_percent>
+│   │   └── [time_cost] <medium>
+│   │
+│   └── <shepardizing>
+│       ├── [function] <check_citation_history>
+│       ├── [verifies] <precedential_status>
+│       ├── [does_not_verify] <legal_reasoning>
+│       ├── [effectiveness] <30_percent>
+│       └── [time_cost] <low>
+│
+├── <comparative_table>
+│   ├── <database_lookup> → (<60_percent>, <low_cost>)
+│   ├── <read_actual_opinions> → (<95_percent>, <very_high_cost>)
+│   ├── <cross_reference_AI_tools> → (<40_percent>, <medium_cost>)
+│   └── <shepardizing> → (<30_percent>, <low_cost>)
+│
+├── <constraint_analysis>
+│   ├── [requires] <high_accuracy>
+│   ├── [requires] <low_time_cost>
+│   └── [reveals] <tradeoff_between_accuracy_and_scalability>
+│
+├── <negative_result>
+│   ├── [states] <no_method_is_both_reliable_and_scalable>
+│   └── [denies_existence_of] <perfect_verification_method>
+│
+└── <systemic_conclusion>
+    ├── [observes] <technology_outpaced_safeguards>
+    ├── [creates] <verification_gap>
+    └── [leads_to] <unavoidable_professional_risk>

@@ -1,0 +1,112 @@
+<Cook_Ding_Tao:_Context_Engineering_as_Craft>
+
+<Prelude_(The_Koan)>
+├── <Cook_Ding>
+│   └── [carves] <the_ox> [without_force]
+│       ├── [not_by] <strength>
+│       ├── [not_by] <rule-following>
+│       └── [but_by] <seeing_the_spaces>
+└── <Lesson>
+    └── <skill> [matures_into] <perception>
+        └── [and] <perception> [becomes] <effortless_action>
+
+{Translate_the_Koan}
+├── <Ox> := <the_task_domain>
+├── <Knife> := <the_prompt>
+├── <Joints> := <constraints_and_boundaries>
+├── <Blade> := <the_model’s_capabilities>
+└── <Mastery> := <moving_where_resistance_is_absent>
+
+<The_Mistake_of_Butchers_(Bad_Prompting)>
+├── <novice>
+│   ├── [pushes] <instructions>
+│   ├── [adds] <more_words>
+│   └── [hopes] <the_model_will_comply>
+└── <result>
+    └── <dull_blade>
+        ├── <hallucination>
+        ├── <overreach>
+        └── <broken_context>
+
+<The_Way_of_Cook_Ding_(Good_Context_Engineering)>
+├── <first_year>
+│   └── [sees] <the_whole_ox>
+│       └── [writes] <long_prompts>
+├── <third_year>
+│   └── [sees] <patterns>
+│       └── [writes] <structured_prompts>
+└── <after_nineteen_years>
+    └── [sees] <only_the_joints>
+        ├── [moves] <through_negative_space>
+        └── [never_forces] <the_blade>
+
+<Negative_Space_as_Tao_Craft>
+├── <emptiness>
+│   └── [is] <designed_absence>
+│       ├── <what_must_not_be_done>
+│       ├── <what_must_not_be_said>
+│       └── <what_must_not_be_assumed>
+├── <context_engineering>
+│   └── [is] <placing_the_knife>
+│       ├── [before] <cutting>
+│       └── [so_that] <cutting_disappears>
+└── <maxim>
+    └── <do_not_tell_the_model_everything>
+        └── [tell_it_where_not_to_cut]
+
+<Taoist_Prompting_Rules_(Cook_Ding_Edition)>
+├── <Rule_1>
+│   └── [define] <the_forbidden>
+│       └── [before] <the_desired>
+├── <Rule_2>
+│   └── [separate] <vibe> [from] <function>
+│       └── [so] <taste_does_not_distort_truth>
+├── <Rule_3>
+│   └── [bind] <authority_tokens>
+│       ├── <citations>
+│       ├── <quotes>
+│       └── <claims>
+│       └── [to] <their_roots>
+├── <Rule_4>
+│   └── [allow_flow] <where_error_is_reversible>
+│       └── [harden] <where_error_binds>
+└── <Rule_5>
+    └── [when_uncertain]
+        └── [stop_and_name] <the_gap>
+
+<Context_Engineering_as_Tao_Craft>
+├── <the_prompt>
+│   └── [is_not] <a_command>
+│       └── [is] <a_path>
+├── <the_model>
+│   └── [is_not] <a_worker>
+│       └── [is] <a_force_of_nature>
+├── <the_engineer>
+│   └── [is_not] <a_controller>
+│       └── [is] <a_gardener_of_boundaries>
+└── <craft>
+    └── [appears_when] <control_is_replaced_by_alignment>
+
+<Closing_(Cook_Ding_Speaks)>
+├── “I do not look with my eyes.”
+├── “I meet the joints.”
+├── “Where there is space, I move.”
+└── “The blade remains sharp.”
+
+<Epilogue>
+└── <The_Way_of_Context>
+    └── [is] <to_make_correct_action_the_only_action_left>
+
+
+One-line teaching:
+Context engineering is not telling the model what to do; it is arranging the world so the model cannot do the wrong thing.
+
+
+If you want, I can:
+
+
+turn this into a short teaching scroll (to hand to engineers),
+
+map each Tao rule directly onto POML tags,
+
+or write a legal koan version where the “ox” is a court filing and the “joint” is verification.

@@ -1,0 +1,24 @@
+<Law_Hook:_The_Case_That_Forces_Theory>
+├── <Mata_v_Avianca_(S.D.N.Y._2023)>
+│   ├── <event>
+│   │   ├── <filing> [contained] <AI_generated_citations_and_quotes>
+│   │   ├── <court> [found] <multiple_bogus_cases>
+│   │   └── <Judge_Castel> [imposed] <$5,000_sanction>
+│   └── <why_it_matters>
+│       ├── [shows] <legal_truth_is_enforced_by_adversarial_audit>
+│       ├── [shows] <plausible_text_can_be_false>
+│       └── [turns] <AI_use> into <professional_liability_surface>
+│       :contentReference[oaicite:0]{index=0}
+│
+├── <Strong_Stats:_Not_Anecdote>
+│   ├── <independent_benchmarking_(Stanford_HAI)>
+│   │   ├── <Lexis+_AI> [hallucinates] <~17%_or_more_on_tested_tasks>
+│   │   └── <Westlaw_AI_Assisted_Research> [hallucinates] <~34%_or_more_on_tested_tasks>
+│   │   :contentReference[oaicite:1]{index=1}
+│   └── <user_reported_practice_test_(100_queries)>
+│       └── <range_claim> [states] <~8–19%_hallucinated_citations_across_tools>
+│
+└── <Thesis>
+    └── [argue] <Mata_is_not_a_glitch>
+        └── [argue] <Mata_is_the_medium_revealing_itself>
+            └── [therefore] <we_need_theory_plus_infrastructure>

@@ -1,0 +1,94 @@
+<Law_of_Culture:_McLuhan_x_Geertz>
+├── <Title>
+│   └── <The_Impact_of_the_Concept_of_Man_on_the_Concept_of_Culture>
+│
+├── <Aim>
+│   └── [derive] <Law_of_Culture>
+│       ├── [from] <Geertz_definition_of_culture>
+│       └── [through] <McLuhan_law_of_media>
+│
+├── {Geertz: <Culture>}
+│   ├── <Geertz_Definition>
+│   │   └── <culture> [is] <control_mechanisms>
+│   │       ├── [made_of] {<plans>, <recipes>, <rules>, <instructions>, <symbols>}
+│   │       ├── [forming] <webs_of_significance>
+│   │       └── [by_which] <humans> [govern] <perception> + <emotion> + <action> + <meaning>
+│   ├── <Geertz_Claim_about_Man>
+│   │   ├── <man> [is] <biologically_incomplete>
+│   │   ├── <nervous_system> [develops_within] <culture>
+│   │   └── [therefore] <man_without_culture> [is] <unworkable>
+│   └── <Geertz_Inversion>
+│       └── [so] <culture> [is_not] <overlay_on_man>
+│           └── <culture> [is] <constitutive_of_man>
+│
+├── {McLuhan: <Medium>}
+│   ├── <McLuhan_Definition>
+│   │   ├── <medium> [is] <extension_of_man>
+│   │   └── <message_of_medium> [is] <change_in_scale_pace_pattern>
+│   ├── <McLuhan_Principle>
+│   │   └── <content> [functions_as] <camouflage>
+│       └── [while] <medium> [restructures] <sense_ratios> + <attention> + <association>
+│   └── <Laws_of_Media_(tetrad)>
+│       ├── <enhance?>
+│       ├── <obsolesce?>
+│       ├── <retrieve?>
+│       └── <reverse?>
+│
+├── <Synthesis:_Culture_as_Medium>
+│   ├── <Claim_1>
+│   │   └── <culture> [is] <the_primary_medium_of_man>
+│   │       ├── [because] <culture> [extends] <symbolic_control>
+│   │       └── [because] <culture> [programs] <human_functioning>
+│   ├── <Claim_2>
+│   │   └── <media> [are] <culture_engineering_devices>
+│       └── [because] <new_media> [rewrite] <control_mechanisms>
+│
+├── <Law_of_Culture_(Core)>
+│   └── <Law_of_Culture> :=
+│       <Every_new_extension_of_man>
+│       [becomes] <a_new_cultural_control_layer>
+│       which [reprograms] <the_concept_of_man>
+│       and thus [redefines] <the_concept_of_culture>
+│
+├── <The_Impact_of_Man_on_Culture_(Inversion)>
+│   ├── <Old_view>
+│   │   └── <man> [has] <culture>
+│   ├── <Geertz_view>
+│   │   └── <man> [is_made_by] <culture>
+│   └── <Law_of_Culture_view>
+│       └── <man> [creates] <extensions>
+│           └── <extensions> [create] <new_culture>
+│               └── <new_culture> [creates] <new_man>
+│
+├── <Mechanism:_How_Man_Changes_Culture>
+│   ├── <man> [externalizes] <faculties>
+│   │   └── [into] <media_tools>
+│   ├── <media_tools> [stabilize] <new_habits>
+│   ├── <new_habits> [become] <norms>
+│   ├── <norms> [become] <control_mechanisms>
+│   └── <control_mechanisms> [become] <culture>
+│
+├── <McLuhan_Tetrad_Applied_to_Culture_(General_Form)>
+│   ├── <For_any_new_medium_M>
+│   │   ├── <M> [enhances] <some_human_capacity_C+>
+│   │   ├── <M> [obsolesces] <some_prior_capacity_C->
+│   │   ├── <M> [retrieves] <an_older_form_C0>
+│   │   └── <M> [reverses_into] <its_opposite_under_intensity_R>
+│   └── <Therefore>
+│       └── <culture> [updates_as] <tetradic_reconfiguration_of_control_mechanisms>
+│
+├── <Concrete_Instantiation:_AI_as_Culture-Engine>
+│   ├── <AI> [is] <medium>
+│   │   ├── [extends] <language_and_cognition>
+│   │   └── [changes] <scale_pace_pattern_of_symbol_production>
+│   ├── <AI> [therefore_becomes] <culture_layer>
+│   │   ├── [enhances] <symbol_generation>
+│   │   ├── [obsolesces] <syntax_literacy_as_gatekeeping>
+│   │   ├── [retrieves] <oral_dialogue_as_thought>
+│   │   └── [reverses_into] <authority_without_grounding> under <high_scale>
+│   └── <AI_redefines_man>
+│       ├── <man> [shifts_from] <maker> [to] <director>
+│       └── <man> [shifts_from] <knower> [to] <curator_of_plausibility>
+│
+└── <Final_Proposition:_The_Recursive_Loop>
+    └── <The_Impact_of_the_Concept_of_Man_on_the_Concept_of_Culture> :=

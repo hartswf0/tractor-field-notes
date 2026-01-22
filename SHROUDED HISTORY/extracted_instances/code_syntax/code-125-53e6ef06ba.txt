@@ -1,0 +1,334 @@
+Below is a repo-ready write-up you can paste into a GitHub project. I’m assuming the project is about Scout → Cook Ding prompt orchestration for legal/historical authority workflows (anti-hallucination, quote-bound analysis). Edit names as you like.
+
+
+
+Scout → Cook Ding: Whole-Ox Retrieval + Quote-Only Cutting
+
+
+A prompt-orchestrated method for high-stakes research (legal, policy, archival) that separates search from attestation.
+
+
+Goal: get Westlaw-level recall without Westlaw-style failure modes (fabricated holdings, invented connections, quote drift).
+Core idea: one agent finds and packages the world; a second agent only speaks from provided text.
+
+
+
+Why this exists
+
+
+LLMs are excellent at fluent synthesis. In high-stakes domains, fluency is the failure mode.
+
+
+The canonical breakdown looks like this:
+
+
+Search (what exists?)
+
+Selection (what matters?)
+
+Attestation (what can I claim?)
+
+
+Most systems collapse these into a single generative step. That’s where hallucinations enter: the model is pressured to complete an answer even when the record is thin.
+
+
+This repo implements a strict split:
+
+
+Scout: broad retrieval + thick evidence world (the “whole ox”)
+
+Cook Ding: quote-only, location-bound, no search (the “knife”)
+
+Bartleby: formal stop condition (“I would rather not…”) when text is insufficient
+
+
+
+Design principles
+
+
+1) Negative space first
+
+
+We define forbidden states upfront and remove entire classes of error:
+
+
+no invented authorities
+
+no holding claims without verbatim text
+
+no paraphrase-as-quote
+
+no “confidence smoothing”
+
+no speculative completion
+
+
+2) Wide vision, narrow mouth
+
+
+Scout may see everything. Cook Ding may only speak from what Scout provides.
+
+
+3) Whole ox → joints → cut
+
+
+Scout returns a thick world (documents + relationships + candidate joints).
+Cook Ding uses only the selected excerpts (or full text if explicitly allowed).
+
+
+4) Stopping is success
+
+
+If the record doesn’t open, the system stops without negotiation.
+
+
+
+Architecture
+
+
+User Query
+  │
+  ├── Scout (full corpus access)
+  │     ├─ Search & retrieve (court opinions, bulletins, rules, etc.)
+  │     ├─ Build evidence world (metadata + connection map)
+  │     ├─ Extract verbatim candidate joints (with locations)
+  │     └─ Compile Cook Ding input payload (evidence_pack)
+  │
+  └── Cook Ding (no search)
+        ├─ Quote-only extraction
+        ├─ “allows / does_not_allow” boundaries
+        ├─ assumptions_required + unknowns
+        └─ Bartleby if insufficient
+
+
+
+Data contracts
+
+
+A) Scout Output (two layers)
+
+
+Scout returns:
+
+
+evidence_world (for debugging / observability)
+
+cook_ding_input (direct downstream payload)
+
+
+cook_ding_input is the only thing Cook Ding consumes.
+
+
+cook_ding_input schema (conceptual):
+
+
+{
+  "legal_question": "...",
+  "jurisdiction": "...",
+  "facts": "...",
+  "evidence_pack": [
+    {
+      "source_id": "...",
+      "authority_type": "case|statute|rule|administrative_bulletin|...",
+      "title": "...",
+      "court_or_body": "...",
+      "date": "...",
+      "citation_or_identifier": "...",
+      "provenance": "...",
+      "scope_tag": "...",
+      "excerpts": [
+        { "text": "...", "location": "...", "hash": "..." }
+      ]
+    }
+  ]
+}
+
+
+B) Cook Ding Output (attestable JSON)
+
+
+Cook Ding emits only what the provided text supports:
+
+
+{
+  "mode": "SUPPORTED|NOT_SUPPORTED|BARTLEBY",
+  "textual_support": [
+    {
+      "source_id": "...",
+      "quote": "...",
+      "location": "...",
+      "allows": "...",
+      "does_not_allow": "..."
+    }
+  ],
+  "assumptions_required": ["..."],
+  "unknowns": ["..."],
+  "bartleby": "I would rather not proceed without the relevant text."
+}
+
+
+
+What Scout does (and does not do)
+
+
+Scout MUST do
+
+
+retrieve broadly (primary + counter authority)
+
+label procedural posture (opinion/order/bulletin/etc.)
+
+include provenance for every doc
+
+extract verbatim candidate joints with location markers
+
+compile cook_ding_input.evidence_pack
+
+
+Scout MUST NOT do
+
+
+state holdings
+
+synthesize doctrine (“the rule is…”)
+
+apply law to facts
+
+resolve conflicts between sources
+
+
+Scout is a retriever and packager. Not a judge.
+
+
+
+What Cook Ding does (and does not do)
+
+
+Cook Ding MUST do
+
+
+use only the provided evidence_pack
+
+quote verbatim with location
+
+state boundaries: allows / does_not_allow
+
+list assumptions and unknowns
+
+stop with Bartleby when evidence is insufficient
+
+
+Cook Ding MUST NOT do
+
+
+search
+
+guess missing authority
+
+infer holdings not supported by text
+
+paraphrase as quotation
+
+smooth uncertainty with fluent filler
+
+
+Cook Ding is an attestation engine, not a synthesizer.
+
+
+
+Bartleby (formal refusal primitive)
+
+
+When evidence is insufficient, Cook Ding returns:
+
+I would rather not proceed without the relevant text.
+
+No explanation. No workaround. No negotiation.
+
+
+This prevents “helpful completion” from turning into hallucination.
+
+
+
+Recommended audit gate (optional but strongly advised)
+
+
+After Cook Ding returns JSON, run a deterministic verifier:
+
+
+each quote must match an excerpt hash from evidence_pack
+
+each location must be present
+
+each source_id must exist in the pack
+
+if SUPPORTED, must include ≥1 support item
+
+
+If any check fails → block output or force Bartleby.
+
+
+
+Files
+
+
+prompts/scout.poml — Whole-Ox Scout + Cook Ding pack compiler
+
+prompts/cook_ding.poml — Quote-only cutter + Bartleby refusal
+
+schemas/cook_ding_input.json — input contract
+
+schemas/cook_ding_output.json — output contract
+
+audit/verify_quotes.ts — optional audit gate (hash + location checks)
+
+
+
+Usage
+
+
+Run Scout with the user query
+
+Take scout_output.cook_ding_input
+
+Run Cook Ding with that payload
+
+(Optional) run audit gate on Cook Ding output
+
+Publish
+
+
+
+What this method is good for
+
+
+legal research memos
+
+sanctions/ethics-sensitive drafting
+
+archival disputes with controlling documents (bulletins, directives, committee approvals)
+
+any domain where authority tokens must be grounded in primary text
+
+
+
+What this method is not for
+
+
+open-ended ideation where hallucinations are acceptable
+
+tasks where “best effort synthesis” is the goal
+
+situations where you can’t access primary sources at all
+
+
+
+License / disclaimer
+
+
+This repository provides a prompt-orchestration method and does not constitute legal advice.
+Always verify outputs with qualified professionals and primary sources.
+
+
+
+If you paste your current scout.poml and cook_ding.poml filenames/conventions, I can tailor this README to your exact directory structure and add a minimal examples/ flow showing inputs and outputs.

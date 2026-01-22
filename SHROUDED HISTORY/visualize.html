@@ -1,0 +1,1323 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <title>Visualize — Trees / POML</title>
+  <style>
+    :root {
+      --paper:#fbfbf7;
+      --ink:#111214;
+      --muted:#4b4f57;
+      --rule:#d7d9dd;
+      --link:#0b57d0;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      --serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+
+      --accent-1:#0b57d0;
+      --accent-2:#7c3aed;
+      --accent-3:#0f766e;
+      --accent-warn:#b91c1c;
+      --accent-dim:#6b7280;
+
+      --bg-panel:#ffffff;
+      --bg-active:#111214;
+      --bg-active-text:#ffffff;
+      --split: 58%;
+    }
+
+    body.theme-minimal {
+      --link: var(--ink);
+      --accent-1: var(--ink);
+      --accent-2: var(--ink);
+      --accent-3: var(--ink);
+      --accent-warn: var(--ink);
+      --accent-dim: var(--muted);
+    }
+
+    body.presenting {
+      --paper:#ffffff;
+    }
+    *{box-sizing:border-box} html{-webkit-text-size-adjust:100%}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);line-height:1.45;font-size:16px}
+    a{color:var(--link);text-decoration:underline;text-underline-offset:2px}
+    .wrap{max-width:1400px;margin:0 auto;padding:10px 10px 64px}
+    header{padding:10px 0;border-bottom:1px solid var(--rule);margin-bottom:10px}
+    h1{margin:0;font-size:16px;font-family:var(--sans);letter-spacing:.2px}
+    .sub{margin:6px 0 0;color:var(--muted);font-family:var(--sans);font-size:12px}
+
+    .controls{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin-top:10px}
+    label{font-family:var(--sans);font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+    select,input,button{font:inherit}
+    select,input{padding:8px 10px;border:1px solid var(--rule);border-radius:0;background:var(--bg-panel);color:var(--ink)}
+    button{padding:8px 12px;border:1px solid var(--ink);border-radius:0;background:transparent;cursor:pointer;font-family:var(--sans);font-size:13px}
+    button:focus{outline:2px solid var(--ink);outline-offset:2px}
+
+    .btnrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    .btnrow button{padding:6px 10px}
+
+    .topbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px}
+    .topbar button{padding:6px 10px}
+
+    .mobilebar{display:none;margin-top:10px}
+    @media (max-width: 980px){
+      .layout{grid-template-columns:1fr}
+      .mobilebar{display:flex}
+      body[data-view="catalog"] .panel-selected{display:none}
+      body[data-view="selected"] .panel-catalog{display:none}
+    }
+
+    body.presenting header{display:none}
+    body.presenting .panel-catalog{display:none}
+    body.presenting .layout{grid-template-columns:1fr}
+    body.presenting pre{max-height:none;font-size:15px}
+    body.presenting .wrap{max-width:1200px}
+    body.presenting .bottomnav{display:none}
+
+    .layout{display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px}
+    @media (min-width: 980px){ .layout{grid-template-columns: 0.75fr 1.25fr;} }
+
+    .panel{border:1px solid var(--rule);border-radius:0;background:var(--bg-panel);overflow:hidden}
+    .panel header{border-bottom:1px solid var(--rule);margin:0;padding:8px 10px}
+    .panel header h2{margin:0;font-family:var(--sans);font-size:13px;text-transform:uppercase;letter-spacing:.08em}
+
+    .pad{padding:10px 10px}
+
+    .list{max-height:66vh;overflow:auto;border-top:1px solid var(--rule)}
+    .item{padding:10px 10px;border-bottom:1px solid var(--rule);cursor:pointer}
+    .item:hover{background:#f3f4f6}
+    .item.active{background:var(--bg-active);color:var(--bg-active-text)}
+    .item .title{font-family:var(--sans);font-size:14px;font-weight:700}
+    .item .meta{font-family:var(--sans);font-size:12px;color:var(--muted)}
+    .item.active .meta{color:#e5e7eb}
+
+    pre{margin:0;padding:10px 10px;overflow:auto;font-family:var(--mono);font-size:12px;line-height:1.45;white-space:pre;max-height:52vh}
+    pre.code{white-space:pre}
+    .tok-ent{color:var(--accent-2);font-weight:800}
+    .tok-rel{color:var(--accent-1);font-weight:800}
+    .tok-conn{color:var(--accent-dim)}
+    .tok-num{color:var(--accent-3)}
+    .tok-warn{color:var(--accent-warn);font-weight:700}
+    .tok-tag{color:var(--accent-1);font-weight:700}
+    .tok-tag-struct{color:var(--accent-2);font-weight:800}
+    .tok-tag-meta{color:var(--accent-3);font-weight:800}
+    .tok-tag-data{color:var(--accent-1);font-weight:800}
+    .tok-attr{color:var(--accent-dim)}
+    .tok-template{color:var(--accent-2)}
+
+    details{border-top:1px solid var(--rule)}
+    summary{padding:8px 10px;cursor:pointer;font-family:var(--sans);font-size:13px}
+    summary:hover{background:#f3f4f6}
+
+    table{width:100%;border-collapse:collapse}
+    th,td{border-top:1px solid var(--rule);padding:8px 10px;vertical-align:top}
+    th{font-family:var(--sans);font-size:12px;text-transform:uppercase;letter-spacing:.08em;text-align:left;background:#fff}
+    .small{font-family:var(--sans);font-size:12px;color:var(--muted)}
+    code{font-family:var(--mono);font-size:12px}
+
+    .pill{display:inline-block;padding:2px 8px;border-radius:0;border:1px solid var(--rule);background:transparent;color:var(--muted);font-family:var(--sans);font-size:12px}
+
+    textarea.notes{width:100%;min-height:120px;border:1px solid var(--rule);border-radius:0;padding:10px;font-family:var(--sans);font-size:13px;line-height:1.35;resize:vertical}
+
+    .selected-split{display:grid;grid-template-columns: var(--split) 10px calc(100% - var(--split) - 10px);height:100%}
+    .split-handle{border-left:1px solid var(--rule);border-right:1px solid var(--rule);cursor:col-resize;background:transparent}
+    .pane{min-width:0}
+    .pane header{display:flex;gap:8px;align-items:center;justify-content:space-between;border-bottom:1px solid var(--rule);padding:6px 10px;margin:0;font-family:var(--sans);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+    .pane header .left{display:flex;gap:8px;align-items:center}
+    .pane header .right{display:flex;gap:8px;align-items:center}
+    .pane header .right button{padding:6px 10px}
+    .tabs{display:flex;gap:0;border-bottom:1px solid var(--rule)}
+    .tabs button{border:none;border-right:1px solid var(--rule);padding:8px 10px;background:transparent;font-family:var(--sans);font-size:12px;text-transform:uppercase;letter-spacing:.08em;cursor:pointer}
+    .tabs button.active{background:var(--bg-active);color:var(--bg-active-text)}
+    .tabpanels{padding:10px 10px}
+    .tabpanel{display:none}
+    .tabpanel.active{display:block}
+
+    .bottomnav{position:fixed;left:0;right:0;bottom:0;border-top:1px solid var(--rule);background:var(--paper);display:flex;gap:0}
+    .bottomnav button{flex:1;border:none;border-right:1px solid var(--rule);padding:12px 8px;background:transparent;font-family:var(--sans);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+    .bottomnav button:last-child{border-right:none}
+    .bottomnav button.active{background:var(--bg-active);color:var(--bg-active-text)}
+
+    /* Reduce chrome on small screens: bottom nav is the primary control surface */
+    @media (max-width: 980px){
+      header .sub{display:none}
+      header .controls label{display:none}
+      header .controls{gap:8px}
+      header .controls input{min-width: 0}
+      header .controls select{min-width: 0}
+      header .topbar{gap:6px}
+      header .topbar button{padding:6px 8px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Visualize — Trees / POML</h1>
+      <p class="sub">Visualizer reads <code>trees_catalog.json</code> / <code>poml_catalog.json</code> directly from this folder. File picker appears only if auto-load fails.</p>
+
+      <div class="topbar">
+        <button id="toggle-theme" type="button">Theme</button>
+        <button id="toggle-present" type="button">Present</button>
+        <button id="toggle-fullscreen" type="button">Fullscreen</button>
+      </div>
+
+      <div class="controls">
+        <details id="fallback" style="min-width: 260px;" hidden>
+          <summary>Load catalog manually (fallback)</summary>
+          <div style="padding: 10px 0 0;">
+            <label>Catalog file</label><br />
+            <input id="file" type="file" accept="application/json" />
+            <div class="small" style="margin-top: 6px;">If this appeared, your browser likely blocked <code>fetch()</code> under <code>file://</code>. Open via a local server, or use this picker.</div>
+          </div>
+        </details>
+        <div>
+          <label>Type</label><br />
+          <select id="type">
+            <option value="trees">Trees</option>
+            <option value="poml">POML</option>
+          </select>
+        </div>
+        <div>
+          <label>Search</label><br />
+          <input id="q" type="text" placeholder="label / id / text" style="min-width: 240px;" />
+        </div>
+        <div>
+          <label>Filter</label><br />
+          <select id="filter">
+            <option value="all">All</option>
+            <option value="best">Best (POML)</option>
+            <option value="truncated">Truncated</option>
+          </select>
+        </div>
+        <div>
+          <button id="copy" type="button">Copy selected</button>
+          <button id="download" type="button">Download selected JSON</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="mobilebar btnrow">
+      <button id="show-catalog" type="button">Catalog</button>
+      <button id="show-selected" type="button">Selected</button>
+      <span id="status" class="small" aria-live="polite"></span>
+    </div>
+
+    <div class="layout">
+      <section class="panel panel-catalog">
+        <header><h2>Catalog</h2></header>
+        <div class="pad">
+          <div class="small" id="catalog-meta">Load a catalog JSON file.</div>
+        </div>
+        <div class="list" id="list"></div>
+      </section>
+
+      <section class="panel panel-selected">
+        <header><h2>Workspace</h2></header>
+        <div class="selected-split" id="selected-split">
+          <div class="pane" id="pane-item">
+            <header>
+              <div class="left"><span>Item</span><span id="sel-meta" class="small"></span></div>
+              <div class="right">
+                <button id="copy-raw" type="button">Copy</button>
+                <button id="copy-all" type="button">Copy all</button>
+                <button id="max-item" type="button">Max</button>
+                <button id="set-left" type="button">Left</button>
+                <button id="set-right" type="button">Right</button>
+                <a href="compare.html" id="open-compare" class="pill">Compare</a>
+              </div>
+            </header>
+            <pre id="raw" class="code"></pre>
+          </div>
+
+          <div class="split-handle" id="split-handle" title="Drag to resize"></div>
+
+          <div class="pane" id="pane-side">
+            <div class="tabs" role="tablist">
+              <button type="button" class="tabbtn active" data-tab="definitions">Definitions</button>
+              <button type="button" class="tabbtn" data-tab="relations">Relations</button>
+              <button type="button" class="tabbtn" data-tab="gaps">Gaps</button>
+              <button type="button" class="tabbtn" data-tab="notes">Notes</button>
+              <button type="button" class="tabbtn" data-tab="copy">Copy</button>
+            </div>
+            <div class="tabpanels">
+              <div class="tabpanel active" data-tabpanel="definitions">
+                <div id="extracted"></div>
+              </div>
+              <div class="tabpanel" data-tabpanel="relations">
+                <div id="edges"></div>
+              </div>
+              <div class="tabpanel" data-tabpanel="gaps">
+                <div id="gaps"></div>
+              </div>
+              <div class="tabpanel" data-tabpanel="notes">
+                <textarea id="notes" class="notes" placeholder="Annotations (stored locally per block)"></textarea>
+              </div>
+              <div class="tabpanel" data-tabpanel="copy">
+                <div class="btnrow">
+                  <button id="copy-prov" type="button">Copy provenance</button>
+                  <button id="copy-json" type="button">Copy JSON</button>
+                  <button id="copy-entities" type="button">Copy entities</button>
+                  <button id="copy-relations" type="button">Copy relation pairs</button>
+                  <button id="copy-urls" type="button">Copy URLs</button>
+                  <button id="copy-defs" type="button">Copy definitions</button>
+                  <button id="max-side" type="button">Max panel</button>
+                  <button id="reset-split" type="button">Reset</button>
+                </div>
+                <div class="small" style="margin-top:10px;">These copy the underlying raw text / extracted lists (not highlighted HTML).</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <nav class="bottomnav" aria-label="Navigation">
+    <button id="tab-catalog" type="button" class="active">Catalog</button>
+    <button id="tab-item" type="button">Item</button>
+    <button id="tab-defs" type="button">Definitions</button>
+    <button id="tab-notes" type="button">Notes</button>
+    <button id="tab-present" type="button">Present</button>
+  </nav>
+
+  <script>
+    const state = {
+      catalogs: { trees: null, poml: null },
+      type: 'trees',
+      all: [],
+      view: [],
+      selectedId: null,
+      sourceCache: new Map(),
+      theme: 'minimal',
+    };
+
+    function setTheme(next) {
+      state.theme = next;
+      document.body.classList.toggle('theme-minimal', next === 'minimal');
+      try { localStorage.setItem('viz:theme', next); } catch {}
+    }
+
+    function togglePresent() {
+      document.body.classList.toggle('presenting');
+      try { localStorage.setItem('viz:presenting', document.body.classList.contains('presenting') ? '1' : '0'); } catch {}
+      document.body.dataset.view = 'selected';
+
+      // Open notes in presentation mode for live annotation.
+      try {
+        const notesEl = document.getElementById('notes');
+        if (notesEl) {
+          const details = notesEl.closest('details');
+          if (details) details.open = true;
+          notesEl.focus();
+        }
+      } catch {
+      }
+    }
+
+    function toggleTheme() {
+      const next = state.theme === 'minimal' ? 'present' : 'minimal';
+      setTheme(next);
+    }
+
+    function setSplitPercent(pct) {
+      const v = Math.max(10, Math.min(90, pct));
+      document.documentElement.style.setProperty('--split', v.toFixed(2) + '%');
+    }
+
+    function maximizeItem() {
+      setSplitPercent(90);
+    }
+
+    function maximizeSide() {
+      setSplitPercent(10);
+    }
+
+    function resetSplit() {
+      setSplitPercent(58);
+    }
+
+    async function toggleFullscreen() {
+      try {
+        if (!document.fullscreenElement) await document.documentElement.requestFullscreen();
+        else await document.exitFullscreen();
+      } catch {
+      }
+    }
+
+    function escapeHtmlUnsafe(s) {
+      return (s || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+
+    function highlightTree(text) {
+      const lines = (text || '').replace(/\r\n/g,'\n').replace(/\r/g,'\n').split('\n');
+      const out = [];
+      for (const ln of lines) {
+        let s = escapeHtmlUnsafe(ln);
+        s = s.replace(/(TRUNCATED BY EXPORTER[^\n]*|\[\d+ bytes truncated\])/gi, '<span class="tok-warn">$1</span>');
+        s = s.replace(/(&lt;[^\n&]+?&gt;)/g, '<span class="tok-ent">$1</span>');
+        s = s.replace(/(\[[^\]\n]+\])/g, '<span class="tok-rel">$1</span>');
+        s = s.replace(/(\b\d+(?:\.\d+)?\b\s*(?:%|percent)\b)/gi, '<span class="tok-num">$1</span>');
+        s = s.replace(/^(\s*(?:\|\s*)?(?:├──|└──|│\s+))/g, '<span class="tok-conn">$1</span>');
+        out.push(s);
+      }
+      return out.join('\n');
+    }
+
+    function highlightPoml(text) {
+      let s = escapeHtmlUnsafe(text || '');
+      s = s.replace(/(TRUNCATED BY EXPORTER[^\n]*|\[\d+ bytes truncated\])/gi, '<span class="tok-warn">$1</span>');
+      s = s.replace(/(&lt;\/?)([a-zA-Z][a-zA-Z0-9_-]*)([^&]*?)(\/??&gt;)/g, (m, a, tag, attrs, z) => {
+        const t = String(tag || '').toLowerCase();
+        let cls = 'tok-tag';
+        if (t === 'poml' || t === 'system' || t === 'role' || t === 'task' || t === 'context' || t === 'output-schema') cls = 'tok-tag-struct';
+        else if (t === 'meta' || t === 'stylesheet') cls = 'tok-tag-meta';
+        else if (t === 'document' || t === 'example' || t === 'let') cls = 'tok-tag-data';
+        const tagHtml = `<span class="${cls}">${tag}</span>`;
+        const attrsHtml = attrs ? `<span class="tok-attr">${attrs}</span>` : '';
+        return `${a}${tagHtml}${attrsHtml}${z}`;
+      });
+      s = s.replace(/(\{\{[\s\S]*?\}\})/g, '<span class="tok-template">$1</span>');
+      return s;
+    }
+
+    const $ = (id) => document.getElementById(id);
+
+    const TREE_LINE_RE = /^(\s*)(├──|└──|│\s+)(.*)$/;
+    const ROOT_LINE_RE = /^\s*<[^>\n]+>\s*$/;
+    const REL_RE = /\[([^\]\n]+)\]\s*(?:→|->)?\s*<([^>\n]+)>/g;
+    const ANGLE_RE = /<([^>\n]+)>/g;
+    const CONTENT_REF_RE = /:contentReference\[([^\]]+)\]\{([^}]+)\}/g;
+    const TRUNC_RE = /(TRUNCATED BY EXPORTER|\[\d+ bytes truncated\])/i;
+
+    function detectType(cat) {
+      if (cat && Array.isArray(cat.trees)) return 'trees';
+      if (cat && Array.isArray(cat.poml)) return 'poml';
+      return null;
+    }
+
+    function getItems(type) {
+      const cat = state.catalogs[type];
+      return type === 'trees' ? (cat?.trees || []) : (cat?.poml || []);
+    }
+
+    function firstLine(s) {
+      const t = (s || '').replace(/\r\n/g,'\n').replace(/\r/g,'\n');
+      const lines = t.split('\n').map(x => x.trim()).filter(Boolean);
+      return lines[0] || '';
+    }
+
+    function getTitleHint(it) {
+      // Try to show the first definition-like line as a hint.
+      const text = it?.content || '';
+      const m = text.match(/^\s*<[^>\n]+>\s+is\s+a\s+[^\n]+/mi);
+      if (m) return m[0].trim();
+      return '';
+    }
+
+    function listLabel(it) {
+      const base = it.label || it.id;
+      const hint = getTitleHint(it);
+      if (state.type === 'trees') {
+        const mi = it.source?.message_index;
+        return hint ? `${base} — ${hint}` : `${base} (m${mi ?? '?'})`;
+      }
+      const mi = it.message_index;
+      const best = it.is_best ? ' [best]' : '';
+      const trunc = it.is_truncated ? ' [truncated]' : '';
+      return hint ? `${base} — ${hint}${best}${trunc}` : `${base} (m${mi ?? '?'})${best}${trunc}`;
+    }
+
+    function listMeta(it) {
+      if (state.type === 'trees') {
+        return `id=${it.id} lines=${it.lines} source=${it.source?.instance_id || ''}`;
+      }
+      return `id=${it.id} is_best=${!!it.is_best} truncated=${!!it.is_truncated}`;
+    }
+
+    function applyFilters() {
+      const q = ($('q').value || '').trim().toLowerCase();
+      const f = $('filter').value;
+
+      let items = [...state.all];
+
+      if (f === 'best') {
+        items = items.filter(x => state.type === 'poml' ? !!x.is_best : true);
+      }
+      if (f === 'truncated') {
+        items = items.filter(x => !!x.is_truncated || TRUNC_RE.test(x.content || ''));
+      }
+
+      if (q) {
+        items = items.filter(x => {
+          const hay = `${x.id} ${x.label || ''} ${(x.content || '').slice(0, 20000)}`.toLowerCase();
+          return hay.includes(q);
+        });
+      }
+
+      state.view = items;
+      renderList();
+
+      if (state.selectedId && !state.view.some(x => x.id === state.selectedId)) {
+        state.selectedId = null;
+        renderSelected();
+      }
+    }
+
+    function renderList() {
+      const list = $('list');
+      list.innerHTML = '';
+
+      for (const it of state.view) {
+        const div = document.createElement('div');
+        div.className = 'item' + (it.id === state.selectedId ? ' active' : '');
+        div.dataset.id = it.id;
+
+        const t = document.createElement('div');
+        t.className = 'title';
+        t.textContent = listLabel(it);
+
+        const m = document.createElement('div');
+        m.className = 'meta';
+        m.textContent = listMeta(it);
+
+        div.appendChild(t);
+        div.appendChild(m);
+        div.addEventListener('click', () => {
+          state.selectedId = it.id;
+          renderList();
+          renderSelected();
+        });
+
+        list.appendChild(div);
+      }
+    }
+
+    function selected() {
+      return state.view.find(x => x.id === state.selectedId) || state.all.find(x => x.id === state.selectedId) || null;
+    }
+
+    function uniq(arr) {
+      return Array.from(new Set(arr));
+    }
+
+    function extractUrls(text) {
+      const urls = [];
+      const re = /https?:\/\/[^\s)\]"'>]+/g;
+      let m;
+      while ((m = re.exec(text || '')) !== null) urls.push(m[0]);
+      return uniq(urls);
+    }
+
+    function extractEntities(text) {
+      const ents = [];
+      let m;
+      ANGLE_RE.lastIndex = 0;
+      while ((m = ANGLE_RE.exec(text || '')) !== null) {
+        const v = m[1].trim();
+        if (!v) continue;
+        // Filter likely XML tags in POML
+        if (/^[a-zA-Z][a-zA-Z0-9_-]*(\s|$)/.test(v)) {
+          // keep DSL-like entities if they contain underscores/parens or start with uppercase
+          if (!(v.includes('_') || v.includes('(') || v.startsWith('AI_') || /^[A-Z]/.test(v))) continue;
+        }
+        ents.push(`<${v}>`);
+      }
+      return uniq(ents);
+    }
+
+    function extractRelations(text) {
+      const rels = [];
+      const re = /\[([^\]\n]+)\]/g;
+      let m;
+      while ((m = re.exec(text || '')) !== null) {
+        const v = m[1].trim();
+        if (!v) continue;
+        rels.push(`[${v}]`);
+      }
+      return uniq(rels);
+    }
+
+    function extractRelationPairs(text) {
+      const out = [];
+      const re = /\[([^\]\n]+)\]\s*(?:→|->)?\s*<([^>\n]+)>/g;
+      let m;
+      while ((m = re.exec(text || '')) !== null) {
+        out.push({ relation: m[1].trim(), target: `<${m[2].trim()}>` });
+      }
+      // de-dupe
+      const seen = new Set();
+      const uniqOut = [];
+      for (const r of out) {
+        const k = `${r.relation}::${r.target}`;
+        if (seen.has(k)) continue;
+        seen.add(k);
+        uniqOut.push(r);
+      }
+      return uniqOut;
+    }
+
+    function extractDefinitions(text) {
+      const defs = [];
+      const lines = (text || '').replace(/\r\n/g,'\n').replace(/\r/g,'\n').split('\n');
+      for (const ln of lines) {
+        const m = ln.match(/^\s*(<[^>\n]+>)\s+is\s+a\s+(.+)$/i);
+        if (m) {
+          defs.push({ subject: m[1].trim(), definition: m[2].trim() });
+          continue;
+        }
+        const m2 = ln.match(/^\s*(<[^>\n]+>)\s+is\s+an\s+(.+)$/i);
+        if (m2) defs.push({ subject: m2[1].trim(), definition: m2[2].trim() });
+      }
+      return defs;
+    }
+
+    function extractGlossaryDefinitions(text) {
+      // Pattern:
+      // <Term>
+      // (blank lines optional)
+      // Definition sentence...
+      //
+      // We capture the first descriptive line that follows the term heading.
+      const defs = [];
+      const lines = (text || '').replace(/\r\n/g,'\n').replace(/\r/g,'\n').split('\n');
+
+      for (let i = 0; i < lines.length; i++) {
+        const head = (lines[i] || '').trim();
+        if (!/^<[^>\n]+>$/.test(head)) continue;
+        // Ignore root headings that are followed by tree connectors; those are trees, not glossary.
+        const next = (lines[i+1] || '').trim();
+        if (next.startsWith('├──') || next.startsWith('└──')) continue;
+
+        let j = i + 1;
+        while (j < lines.length && (lines[j] || '').trim() === '') j++;
+        if (j >= lines.length) continue;
+        const defLine = (lines[j] || '').trim();
+
+        // Skip other headings.
+        if (!defLine) continue;
+        if (/^<[^>\n]+>$/.test(defLine)) continue;
+        if (defLine.startsWith('├──') || defLine.startsWith('└──') || defLine.startsWith('│')) continue;
+
+        // Only accept lines that look like definitions (avoid "Thought for" etc)
+        if (/^thought\b/i.test(defLine)) continue;
+        if (/^primary definition\b/i.test(defLine)) continue;
+        if (/^recursive definitions\b/i.test(defLine)) continue;
+
+        defs.push({ subject: head, definition: defLine });
+      }
+
+      // de-dupe
+      const seen = new Set();
+      const out = [];
+      for (const d of defs) {
+        const k = `${d.subject}::${d.definition}`;
+        if (seen.has(k)) continue;
+        seen.add(k);
+        out.push(d);
+      }
+      return out;
+    }
+
+    async function loadTreeSourceContext(it) {
+      try {
+        const srcPath = it?.source?.path;
+        if (!srcPath) return '';
+        if (state.sourceCache.has(srcPath)) return state.sourceCache.get(srcPath);
+        const res = await fetch(`./${srcPath.replace(/^\.\//,'')}`, { cache: 'no-store' });
+        if (!res.ok) return '';
+        const txt = await res.text();
+        state.sourceCache.set(srcPath, txt);
+        return txt;
+      } catch {
+        return '';
+      }
+    }
+
+    function extractDefinitionsFromTree(text) {
+      const defs = [];
+      const lines = (text || '').replace(/\r\n/g,'\n').replace(/\r/g,'\n').split('\n');
+      let root = null;
+      const stack = [];
+
+      function normEntity(s) {
+        const m = (s || '').match(/<[^>\n]+>/);
+        return m ? m[0] : null;
+      }
+
+      for (let i = 0; i < lines.length; i++) {
+        const ln = lines[i];
+        if (!root && ROOT_LINE_RE.test(ln) && i + 1 < lines.length && (lines[i+1].includes('├──') || lines[i+1].includes('└──'))) {
+          root = ln.trim();
+          stack.length = 0;
+          stack[0] = root;
+          continue;
+        }
+        if (!root) continue;
+        if (ln.trim() === '') break;
+
+        const m = ln.match(TREE_LINE_RE);
+        if (!m) continue;
+
+        const indent = m[1] || '';
+        const content = (m[3] || '').trim();
+        const depth = Math.floor(indent.length / 4) + 1;
+
+        const entityInLine = normEntity(content);
+
+        // If this line introduces an entity node, set stack at this depth.
+        if (entityInLine && !content.startsWith('[')) {
+          stack[depth] = entityInLine;
+        }
+
+        // Infer definitions: parent_entity [is] <type_entity>
+        // content often looks like: [is] <professional_liability_problem>
+        // parent is the nearest entity at depth-1.
+        const isMatch = content.match(/^\[is\]\s*(<[^>\n]+>)/i);
+        if (isMatch) {
+          const parent = stack[depth - 1] || stack[0] || null;
+          const target = isMatch[1];
+          if (parent && target) {
+            defs.push({ subject: parent, definition: target });
+          }
+        }
+      }
+
+      // de-dupe
+      const seen = new Set();
+      const out = [];
+      for (const d of defs) {
+        const k = `${d.subject}::${d.definition}`;
+        if (seen.has(k)) continue;
+        seen.add(k);
+        out.push(d);
+      }
+      return out;
+    }
+
+    function parseTree(text) {
+      const lines = (text || '').replace(/\r\n/g,'\n').replace(/\r/g,'\n').split('\n');
+      const blocks = [];
+      const nodes = [];
+      let current = null;
+
+      for (let i=0;i<lines.length;i++) {
+        const ln = lines[i];
+        if (ROOT_LINE_RE.test(ln) && i+1 < lines.length && (lines[i+1].includes('├──') || lines[i+1].includes('└──'))) {
+          current = { root: ln.trim(), start: i, lines: [ln] };
+          blocks.push(current);
+          continue;
+        }
+        if (current) {
+          if (ln.trim() === '') break;
+          if (TREE_LINE_RE.test(ln) || ln.trim().startsWith('│') || ln.trim().startsWith('├') || ln.trim().startsWith('└')) {
+            current.lines.push(ln);
+          }
+        }
+      }
+
+      // nodes from first block
+      const block = blocks[0];
+      if (!block) return { root: '', nodes: [], edges: [], citations: [], stats: [], warnings: ['No tree block detected.'] };
+
+      const outNodes = [];
+      const outEdges = [];
+      const citations = [];
+      const stats = [];
+
+      // Root node
+      outNodes.push({ id: block.root, depth: 0, raw: block.root, type: 'root' });
+
+      for (const ln of block.lines.slice(1)) {
+        const m = ln.match(TREE_LINE_RE);
+        if (!m) continue;
+        const indent = m[1] || '';
+        const rest = (m[3] || '').trim();
+        const depth = Math.floor(indent.length / 4) + 1;
+        outNodes.push({ id: rest, depth, raw: ln, type: 'line' });
+      }
+
+      let rm;
+      while ((rm = CONTENT_REF_RE.exec(text || '')) !== null) {
+        citations.push({ raw: rm[1], meta: rm[2] });
+      }
+
+      // naive stats scan
+      const statMatches = (text || '').match(/(\d+(?:\.\d+)?)\s*(%|percent|to|–|-)\s*(\d+(?:\.\d+)?)?\s*(%|percent)?/gi);
+      if (statMatches) stats.push(...statMatches.slice(0, 30));
+
+      // relations scan
+      let relm;
+      while ((relm = REL_RE.exec(text || '')) !== null) {
+        outEdges.push({ relation: relm[1], target: `<${relm[2]}>` });
+      }
+
+      const warnings = [];
+      if (TRUNC_RE.test(text || '')) warnings.push('Truncation marker present.');
+
+      return { root: block.root, nodes: outNodes, edges: outEdges, citations, stats, warnings };
+    }
+
+    function parsePoml(text) {
+      const tags = [];
+      const metaComponents = [];
+      const citations = [];
+      let m;
+
+      const tagRe = /<\/?([a-zA-Z][a-zA-Z0-9_-]*)(?:\s|>|\/>)?/g;
+      while ((m = tagRe.exec(text || '')) !== null) tags.push(m[1].toLowerCase());
+
+      const metaRe = /<meta\s+components=\"([^\"]+)\"\s*\/?>/gi;
+      while ((m = metaRe.exec(text || '')) !== null) {
+        const raw = m[1];
+        const parts = raw.split(/[,\n]+/).map(x => x.trim()).filter(Boolean);
+        metaComponents.push(...parts);
+      }
+
+      while ((m = CONTENT_REF_RE.exec(text || '')) !== null) {
+        citations.push({ raw: m[1], meta: m[2] });
+      }
+
+      const warnings = [];
+      if (!/^\s*<poml\b/i.test(text || '')) warnings.push('Does not start with <poml ...>');
+      if (TRUNC_RE.test(text || '')) warnings.push('Truncation marker present.');
+
+      return { tags: uniq(tags).sort(), metaComponents: uniq(metaComponents).sort(), citations, warnings };
+    }
+
+    function renderSelected() {
+      const it = selected();
+      if (it) {
+        const content = it.content || '';
+        $('raw').innerHTML = state.type === 'poml' ? highlightPoml(content) : highlightTree(content);
+      } else {
+        $('raw').textContent = '';
+      }
+
+      if (!it) {
+        $('sel-meta').textContent = '';
+        $('edges').innerHTML = '';
+        $('gaps').innerHTML = '';
+        $('extracted').innerHTML = '';
+        $('notes').value = '';
+        return;
+      }
+
+      const noteKey = `viz:notes:${state.type}:${it.id}`;
+      try { $('notes').value = localStorage.getItem(noteKey) || ''; } catch { $('notes').value = ''; }
+
+      const urls = extractUrls(it.content || '');
+      const ents = extractEntities(it.content || '');
+      const rels = extractRelations(it.content || '');
+      const relPairs = extractRelationPairs(it.content || '');
+
+      // initial (tree-only) definitions
+      const defsBase = state.type === 'trees'
+        ? extractDefinitionsFromTree(it.content || '').concat(extractDefinitions(it.content || ''))
+        : extractDefinitions(it.content || '');
+
+      $('extracted').innerHTML = renderExtracted(it, { urls, ents, rels, relPairs, defs: defsBase });
+
+      // If this is a tree, definitions may live elsewhere in the source response.
+      if (state.type === 'trees') {
+        const selectedAtCall = it.id;
+        loadTreeSourceContext(it).then((srcText) => {
+          // Only update if still selected
+          if (!srcText) return;
+          const stillSelected = selected() && selected().id === selectedAtCall;
+          if (!stillSelected) return;
+
+          const defsFromGlossary = extractGlossaryDefinitions(srcText);
+          const defsMerged = defsBase.concat(defsFromGlossary);
+
+          // Merge URLs/entities/relations from source context too
+          const urlsMerged = uniq(urls.concat(extractUrls(srcText)));
+          const entsMerged = uniq(ents.concat(extractEntities(srcText)));
+          const relPairsMerged = relPairs.concat(extractRelationPairs(srcText));
+
+          $('extracted').innerHTML = renderExtracted(it, {
+            urls: urlsMerged,
+            ents: entsMerged,
+            rels,
+            relPairs: relPairsMerged,
+            defs: defsMerged
+          });
+        });
+      }
+
+      // meta
+      if (state.type === 'trees') {
+        $('sel-meta').textContent = `id=${it.id} label=${it.label || ''} source=${it.source?.instance_id || ''} message_index=${it.source?.message_index ?? ''}`;
+      } else {
+        $('sel-meta').textContent = `id=${it.id} label=${it.label || ''} message_index=${it.message_index ?? ''} is_best=${!!it.is_best} truncated=${!!it.is_truncated}`;
+      }
+
+      if (state.type === 'trees') {
+        const p = parseTree(it.content || '');
+        $('edges').innerHTML = renderEdges(p.edges);
+        $('gaps').innerHTML = renderGaps(p.warnings, p.citations, p.stats);
+      } else {
+        const p = parsePoml(it.content || '');
+        $('edges').innerHTML = renderEdges([]);
+        $('gaps').innerHTML = renderGaps(p.warnings, p.citations, []);
+      }
+    }
+
+    function renderExtracted(it, x) {
+      const urls = x.urls || [];
+      const ents = x.ents || [];
+      const relPairs = x.relPairs || [];
+      const defs = x.defs || [];
+
+      const urlRows = urls.slice(0, 60).map(u => `<tr><td><a href="${escapeHtml(u)}" target="_blank" rel="noopener noreferrer">${escapeHtml(u)}</a></td></tr>`).join('');
+      const entRows = ents.slice(0, 120).map(e => `<tr><td><code>${escapeHtml(e)}</code></td></tr>`).join('');
+      const pairRows = relPairs.slice(0, 120).map(r => `<tr><td><code>${escapeHtml('['+r.relation+']')}</code></td><td><code>${escapeHtml(r.target)}</code></td></tr>`).join('');
+      const defRows = defs.slice(0, 80).map(d => `<tr><td><code>${escapeHtml(d.subject)}</code></td><td class="small">${escapeHtml(d.definition)}</td></tr>`).join('');
+
+      return `
+        <div class="small">Entities: <code>${ents.length}</code> | Relation pairs: <code>${relPairs.length}</code> | URLs: <code>${urls.length}</code> | Definitions: <code>${defs.length}</code></div>
+        <details open>
+          <summary>Definitions</summary>
+          <table><tr><th>subject</th><th>definition</th></tr>${defRows || '<tr><td colspan="2" class="small">(none)</td></tr>'}</table>
+        </details>
+        <details>
+          <summary>Relation pairs</summary>
+          <table><tr><th>relation</th><th>target</th></tr>${pairRows || '<tr><td colspan="2" class="small">(none)</td></tr>'}</table>
+        </details>
+        <details>
+          <summary>Entities</summary>
+          <table><tr><th>entity</th></tr>${entRows || '<tr><td class="small">(none)</td></tr>'}</table>
+        </details>
+        <details>
+          <summary>URLs</summary>
+          <table><tr><th>url</th></tr>${urlRows || '<tr><td class="small">(none)</td></tr>'}</table>
+        </details>
+      `;
+    }
+
+    function renderTreeStructure(p) {
+      const nodes = p.nodes || [];
+      const rows = nodes.map(n => `<tr><td><code>${escapeHtml(String(n.depth))}</code></td><td><code>${escapeHtml(n.id)}</code></td></tr>`).join('');
+      return `
+        <div class="small">Root: <code>${escapeHtml(p.root)}</code> | Nodes: <code>${nodes.length}</code> | Edges (found): <code>${(p.edges||[]).length}</code></div>
+        <table>
+          <tr><th>Depth</th><th>Node (raw line content)</th></tr>
+          ${rows || '<tr><td colspan="2" class="small">(none)</td></tr>'}
+        </table>
+      `;
+    }
+
+    function renderPomlStructure(p) {
+      const tagRows = (p.tags || []).map(t => `<tr><td><code>${escapeHtml(t)}</code></td></tr>`).join('');
+      const compRows = (p.metaComponents || []).map(c => `<tr><td><code>${escapeHtml(c)}</code></td></tr>`).join('');
+      return `
+        <div class="small">Tags: <code>${(p.tags||[]).length}</code> | Meta components: <code>${(p.metaComponents||[]).length}</code></div>
+        <details open>
+          <summary>Tags</summary>
+          <table><tr><th>tag</th></tr>${tagRows || '<tr><td class="small">(none)</td></tr>'}</table>
+        </details>
+        <details>
+          <summary>Meta components</summary>
+          <table><tr><th>component</th></tr>${compRows || '<tr><td class="small">(none)</td></tr>'}</table>
+        </details>
+      `;
+    }
+
+    function renderEdges(edges) {
+      if (!edges || edges.length === 0) return '<div class="small">(none detected)</div>';
+      const rows = edges.map(e => `<tr><td><code>${escapeHtml(e.relation)}</code></td><td><code>${escapeHtml(e.target)}</code></td></tr>`).join('');
+      return `<table><tr><th>relation</th><th>target</th></tr>${rows}</table>`;
+    }
+
+    function renderGaps(warnings, citations, stats) {
+      const w = warnings || [];
+      const c = citations || [];
+      const s = stats || [];
+
+      const wRows = w.map(x => `<tr><td>${escapeHtml(x)}</td></tr>`).join('');
+      const cRows = c.map(x => `<tr><td><code>${escapeHtml(x.raw)}</code></td><td><code>${escapeHtml(x.meta)}</code></td></tr>`).join('');
+      const sRows = s.slice(0, 40).map(x => `<tr><td><code>${escapeHtml(x)}</code></td></tr>`).join('');
+
+      return `
+        <div class="small">Warnings: <code>${w.length}</code> | Content refs: <code>${c.length}</code> | Stats matches: <code>${s.length}</code></div>
+        <details open>
+          <summary>Warnings</summary>
+          <table><tr><th>warning</th></tr>${wRows || '<tr><td class="small">(none)</td></tr>'}</table>
+        </details>
+        <details>
+          <summary>Content references</summary>
+          <table><tr><th>ref</th><th>meta</th></tr>${cRows || '<tr><td colspan="2" class="small">(none)</td></tr>'}</table>
+        </details>
+        <details>
+          <summary>Stats matches (raw)</summary>
+          <table><tr><th>match</th></tr>${sRows || '<tr><td class="small">(none)</td></tr>'}</table>
+        </details>
+      `;
+    }
+
+    function escapeHtml(s) {
+      return s
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+
+    async function copySelected() {
+      const it = selected();
+      if (!it) return;
+      try {
+        await navigator.clipboard.writeText(it.content || '');
+      } catch {
+      }
+    }
+
+    async function copyText(s) {
+      $('status').textContent = '';
+      try {
+        await navigator.clipboard.writeText(s);
+        $('status').textContent = 'Copied.';
+      } catch {
+        $('status').textContent = 'Copy failed.';
+      }
+      setTimeout(() => ($('status').textContent = ''), 900);
+    }
+
+    function selectedExport() {
+      const it = selected();
+      if (!it) return null;
+      const content = it.content || '';
+      return {
+        id: it.id,
+        label: it.label || '',
+        type: state.type,
+        source: it.source || { message_index: it.message_index },
+        extracted: {
+          urls: extractUrls(content),
+          entities: extractEntities(content),
+          relations: extractRelationPairs(content),
+          definitions: extractDefinitions(content)
+        },
+        content
+      };
+    }
+
+    function provenanceExport() {
+      const it = selected();
+      if (!it) return null;
+      if (state.type === 'trees') {
+        return {
+          type: 'trees',
+          id: it.id,
+          label: it.label || '',
+          root: it.root || null,
+          lines: it.lines || null,
+          source: it.source || null
+        };
+      }
+      return {
+        type: 'poml',
+        id: it.id,
+        label: it.label || '',
+        message_index: it.message_index ?? null,
+        hash: it.hash || null,
+        is_best: !!it.is_best,
+        is_truncated: !!it.is_truncated,
+        truncation_bytes: it.truncation_bytes || []
+      };
+    }
+
+    function formatAllTextBundle(exp) {
+      if (!exp) return '';
+      const prov = provenanceExport();
+      const parts = [];
+      parts.push('PROVENANCE');
+      parts.push(JSON.stringify(prov, null, 2));
+      parts.push('');
+      parts.push('EXTRACTED');
+      parts.push(JSON.stringify(exp.extracted, null, 2));
+      parts.push('');
+      parts.push('CONTENT');
+      parts.push(exp.content || '');
+      if (!parts[parts.length - 1].endsWith('\n')) parts.push('');
+      return parts.join('\n');
+    }
+
+    function setCompareSlot(which) {
+      const it = selected();
+      if (!it) return;
+      const key = which === 'left' ? 'viz:compareLeft' : 'viz:compareRight';
+      localStorage.setItem(key, JSON.stringify({ type: state.type, id: it.id }));
+      localStorage.setItem('viz:compareType', state.type);
+      $('status').textContent = `Set ${which}.`;
+      setTimeout(() => ($('status').textContent = ''), 900);
+    }
+
+    function downloadSelected() {
+      const it = selected();
+      if (!it) return;
+      const payload = JSON.stringify(it, null, 2);
+      const blob = new Blob([payload], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${it.id}.json`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function loadCatalog(cat) {
+      const t = detectType(cat);
+      if (!t) {
+        $('catalog-meta').textContent = 'Unrecognized catalog JSON (expected {trees:[...]} or {poml:[...]}).';
+        return;
+      }
+      state.catalogs[t] = cat;
+      state.all = getItems(state.type);
+      $('catalog-meta').textContent = `${state.type} items: ${state.all.length}`;
+      state.selectedId = state.all[0]?.id || null;
+      applyFilters();
+      renderSelected();
+    }
+
+    async function autoLoad() {
+      const fallback = $('fallback');
+      try {
+        const [treesRes, pomlRes] = await Promise.all([
+          fetch('./trees_catalog.json', { cache: 'no-store' }),
+          fetch('./poml_catalog.json', { cache: 'no-store' })
+        ]);
+
+        if (treesRes.ok) state.catalogs.trees = await treesRes.json();
+        if (pomlRes.ok) state.catalogs.poml = await pomlRes.json();
+
+        // Default type preference: trees if present
+        if (state.catalogs.trees?.trees?.length) {
+          state.type = 'trees';
+          $('type').value = 'trees';
+        } else if (state.catalogs.poml?.poml?.length) {
+          state.type = 'poml';
+          $('type').value = 'poml';
+        }
+
+        state.all = getItems(state.type);
+        $('catalog-meta').textContent = `${state.type} items: ${state.all.length}`;
+        state.selectedId = state.all[0]?.id || null;
+        applyFilters();
+        renderSelected();
+
+        // If neither loaded, show fallback
+        if (!(state.catalogs.trees || state.catalogs.poml)) {
+          fallback.hidden = false;
+          $('catalog-meta').textContent = 'Auto-load failed. Use fallback file picker.';
+        }
+      } catch {
+        fallback.hidden = false;
+        $('catalog-meta').textContent = 'Auto-load blocked (likely file://). Use fallback file picker.';
+      }
+    }
+
+    $('file').addEventListener('change', async (e) => {
+      const f = e.target.files?.[0];
+      if (!f) return;
+      const txt = await f.text();
+      loadCatalog(JSON.parse(txt));
+    });
+
+    $('type').addEventListener('change', (e) => {
+      state.type = e.target.value;
+      state.all = getItems(state.type);
+      state.selectedId = state.all[0]?.id || null;
+      applyFilters();
+      renderSelected();
+    });
+
+    $('q').addEventListener('input', applyFilters);
+    $('filter').addEventListener('change', applyFilters);
+    $('copy').addEventListener('click', copySelected);
+    $('download').addEventListener('click', downloadSelected);
+
+    $('copy-raw').addEventListener('click', async () => {
+      const it = selected();
+      if (!it) return;
+      await copyText(it.content || '');
+    });
+    $('copy-json').addEventListener('click', async () => {
+      const it = selected();
+      if (!it) return;
+      await copyText(JSON.stringify(it, null, 2));
+    });
+    $('copy-entities').addEventListener('click', async () => {
+      const it = selected();
+      if (!it) return;
+      await copyText(extractEntities(it.content || '').join('\n'));
+    });
+    $('copy-relations').addEventListener('click', async () => {
+      const it = selected();
+      if (!it) return;
+      const pairs = extractRelationPairs(it.content || '');
+      await copyText(pairs.map(p => `[${p.relation}] ${p.target}`).join('\n'));
+    });
+    $('copy-urls').addEventListener('click', async () => {
+      const it = selected();
+      if (!it) return;
+      await copyText(extractUrls(it.content || '').join('\n'));
+    });
+    $('copy-defs').addEventListener('click', async () => {
+      const it = selected();
+      if (!it) return;
+      const defs = extractDefinitions(it.content || '');
+      await copyText(defs.map(d => `${d.subject} is a ${d.definition}`).join('\n'));
+    });
+
+    $('copy-prov').addEventListener('click', async () => {
+      const prov = provenanceExport();
+      if (!prov) return;
+      await copyText(JSON.stringify(prov, null, 2));
+    });
+
+    $('copy-all').addEventListener('click', async () => {
+      const exp = selectedExport();
+      if (!exp) return;
+      await copyText(formatAllTextBundle(exp));
+    });
+
+    $('set-left').addEventListener('click', () => setCompareSlot('left'));
+    $('set-right').addEventListener('click', () => setCompareSlot('right'));
+
+    $('show-catalog').addEventListener('click', () => { document.body.dataset.view = 'catalog'; });
+    $('show-selected').addEventListener('click', () => { document.body.dataset.view = 'selected'; });
+
+    $('notes').addEventListener('input', () => {
+      const it = selected();
+      if (!it) return;
+      const noteKey = `viz:notes:${state.type}:${it.id}`;
+      try { localStorage.setItem(noteKey, $('notes').value); } catch {}
+    });
+
+    $('toggle-theme').addEventListener('click', toggleTheme);
+    $('toggle-present').addEventListener('click', togglePresent);
+    $('toggle-fullscreen').addEventListener('click', toggleFullscreen);
+
+    document.getElementById('max-item').addEventListener('click', maximizeItem);
+    document.getElementById('max-side').addEventListener('click', maximizeSide);
+    document.getElementById('reset-split').addEventListener('click', resetSplit);
+
+    // Right-side tabs
+    function selectSideTab(name) {
+      const btns = document.querySelectorAll('.tabbtn');
+      const panels = document.querySelectorAll('.tabpanel');
+      btns.forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+      panels.forEach(p => p.classList.toggle('active', p.dataset.tabpanel === name));
+    }
+
+    document.querySelectorAll('.tabbtn').forEach(btn => {
+      btn.addEventListener('click', () => selectSideTab(btn.dataset.tab));
+    });
+
+    // Bottom nav (thumb)
+    function setBottomActive(id) {
+      const ids = ['tab-catalog','tab-item','tab-defs','tab-notes','tab-present'];
+      for (const x of ids) {
+        const el = document.getElementById(x);
+        if (!el) continue;
+        el.classList.toggle('active', x === id);
+      }
+    }
+
+    document.getElementById('tab-catalog').addEventListener('click', () => {
+      document.body.dataset.view = 'catalog';
+      setBottomActive('tab-catalog');
+    });
+    document.getElementById('tab-item').addEventListener('click', () => {
+      document.body.dataset.view = 'selected';
+      setBottomActive('tab-item');
+    });
+    document.getElementById('tab-defs').addEventListener('click', () => {
+      document.body.dataset.view = 'selected';
+      selectSideTab('definitions');
+      setBottomActive('tab-defs');
+    });
+    document.getElementById('tab-notes').addEventListener('click', () => {
+      document.body.dataset.view = 'selected';
+      selectSideTab('notes');
+      setBottomActive('tab-notes');
+    });
+    document.getElementById('tab-present').addEventListener('click', async () => {
+      togglePresent();
+      await toggleFullscreen();
+      setBottomActive('tab-present');
+    });
+
+    // Mobilebar (still useful on some layouts)
+    $('show-catalog').addEventListener('click', () => {
+      document.body.dataset.view = 'catalog';
+      setBottomActive('tab-catalog');
+    });
+    $('show-selected').addEventListener('click', () => {
+      document.body.dataset.view = 'selected';
+      setBottomActive('tab-item');
+    });
+
+    // Draggable splitter
+    (function initSplitter(){
+      const handle = document.getElementById('split-handle');
+      const split = document.getElementById('selected-split');
+      if (!handle || !split) return;
+
+      let dragging = false;
+      const onMove = (clientX) => {
+        const rect = split.getBoundingClientRect();
+        const x = Math.max(rect.left + 220, Math.min(clientX, rect.right - 220));
+        const pct = ((x - rect.left) / rect.width) * 100;
+        setSplitPercent(pct);
+      };
+
+      handle.addEventListener('pointerdown', (e) => {
+        dragging = true;
+        handle.setPointerCapture(e.pointerId);
+        onMove(e.clientX);
+      });
+      handle.addEventListener('pointermove', (e) => {
+        if (!dragging) return;
+        onMove(e.clientX);
+      });
+      handle.addEventListener('pointerup', () => { dragging = false; });
+      handle.addEventListener('pointercancel', () => { dragging = false; });
+    })();
+
+    document.addEventListener('keydown', (e) => {
+      if (e.defaultPrevented) return;
+      if (e.key === 'p' || e.key === 'P') { e.preventDefault(); togglePresent(); }
+      if (e.key === 't' || e.key === 'T') { e.preventDefault(); toggleTheme(); }
+      if (e.key === 'f' || e.key === 'F') { e.preventDefault(); toggleFullscreen(); }
+      if (e.key === 'c' || e.key === 'C') { e.preventDefault(); document.body.dataset.view = 'catalog'; }
+      if (e.key === 's' || e.key === 'S') { e.preventDefault(); document.body.dataset.view = 'selected'; }
+    });
+
+    // initial
+    document.body.dataset.view = 'catalog';
+    selectSideTab('definitions');
+    setBottomActive('tab-catalog');
+    try {
+      const savedTheme = localStorage.getItem('viz:theme');
+      setTheme(savedTheme === 'present' ? 'present' : 'minimal');
+      const pres = localStorage.getItem('viz:presenting');
+      if (pres === '1') document.body.classList.add('presenting');
+    } catch {
+      setTheme('minimal');
+    }
+    autoLoad();
+  </script>
+</body>
+</html>

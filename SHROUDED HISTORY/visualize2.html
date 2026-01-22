@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Viz</title>
+  <style>
+:root{
+  --bg:#fff;--fg:#111;--muted:#666;--rule:#ccc;
+  --ent:#7c3aed;--rel:#0b57d0;--dim:#888;--warn:#b91c1c;
+  --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bg);color:var(--fg);font:14px/1.4 var(--sans)}
+
+/* Layout: 3 rows - topbar, main, bottombar */
+.app{display:grid;grid-template-rows:auto 1fr auto;height:100%}
+
+/* Top bar: minimal */
+.top{display:flex;gap:8px;padding:8px;border-bottom:1px solid var(--rule);align-items:center}
+.top select,.top input{font:inherit;padding:6px 8px;border:1px solid var(--rule);background:var(--bg)}
+.top input{flex:1;min-width:0}
+.top .count{font-size:12px;color:var(--muted)}
+
+/* Main: 2 columns on desktop, stacked on mobile */
+.main{display:grid;grid-template-columns:280px 1fr;overflow:hidden}
+@media(max-width:800px){
+  .main{grid-template-columns:1fr}
+  .main[data-view="list"] .detail{display:none}
+  .main[data-view="detail"] .list{display:none}
+}
+
+/* List */
+.list{border-right:1px solid var(--rule);overflow-y:auto}
+.list-item{padding:10px 12px;border-bottom:1px solid var(--rule);cursor:pointer;font-size:13px}
+.list-item:hover{background:#f5f5f5}
+.list-item.active{background:var(--fg);color:var(--bg)}
+.list-item .id{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.list-item.active .id{color:#aaa}
+
+/* Detail */
+.detail{display:grid;grid-template-rows:1fr auto;overflow:hidden}
+.content{overflow:auto;padding:12px;font-family:var(--mono);font-size:12px;line-height:1.5;white-space:pre-wrap;word-break:break-word}
+.defs{border-top:1px solid var(--rule);max-height:30vh;overflow-y:auto;padding:10px 12px;font-size:12px}
+.defs h3{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px}
+.defs table{width:100%;border-collapse:collapse}
+.defs td{padding:4px 8px 4px 0;vertical-align:top;border-top:1px solid var(--rule)}
+.defs td:first-child{font-family:var(--mono);white-space:nowrap;color:var(--ent)}
+
+/* Syntax highlighting */
+.e{color:var(--ent);font-weight:600}
+.r{color:var(--rel);font-weight:600}
+.c{color:var(--dim)}
+.w{color:var(--warn);font-weight:700}
+
+/* Bottom bar */
+.bottom{display:flex;border-top:1px solid var(--rule)}
+.bottom button{flex:1;padding:12px 8px;border:none;background:transparent;font:12px var(--sans);text-transform:uppercase;letter-spacing:.05em;cursor:pointer}
+.bottom button:not(:last-child){border-right:1px solid var(--rule)}
+.bottom button.active{background:var(--fg);color:var(--bg)}
+
+/* Present mode */
+body.present .top,body.present .list,body.present .bottom,body.present .defs{display:none}
+body.present .main{grid-template-columns:1fr}
+body.present .content{font-size:15px;max-width:900px;margin:0 auto;padding:24px}
+
+/* Hidden fallback */
+.fallback{padding:12px;font-size:12px;color:var(--muted)}
+.fallback input{margin-top:8px}
+  </style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <select id="type"><option value="trees">Trees</option><option value="poml">POML</option></select>
+    <input id="q" type="text" placeholder="Search...">
+    <span class="count" id="count"></span>
+  </div>
+
+  <div class="main" id="main" data-view="list">
+    <div class="list" id="list"></div>
+    <div class="detail">
+      <div class="content" id="content"></div>
+      <div class="defs" id="defs"></div>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <button id="btn-list" class="active">List</button>
+    <button id="btn-item">Item</button>
+    <button id="btn-copy">Copy</button>
+    <button id="btn-present">Present</button>
+  </div>
+
+  <div class="fallback" id="fallback" hidden>
+    <div>Auto-load failed. Pick catalog file:</div>
+    <input type="file" id="file" accept=".json">
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const state={catalogs:{trees:null,poml:null},type:'trees',all:[],view:[],sel:null};
+
+function items(){
+  const c=state.catalogs[state.type];
+  return c?c[state.type]||[]:[];
+}
+
+function filter(){
+  const q=($('q').value||'').toLowerCase();
+  state.view=items().filter(x=>{
+    const t=(x.label||'')+' '+(x.id||'')+' '+(x.content||'');
+    return t.toLowerCase().includes(q);
+  });
+  $('count').textContent=state.view.length+'/'+items().length;
+  render();
+}
+
+function render(){
+  $('list').innerHTML=state.view.map(x=>`
+    <div class="list-item${state.sel?.id===x.id?' active':''}" data-id="${x.id}">
+      <div>${esc(x.label||x.id)}</div>
+      <div class="id">${esc(x.id)}</div>
+    </div>
+  `).join('');
+  renderDetail();
+}
+
+function select(id){
+  state.sel=state.view.find(x=>x.id===id)||null;
+  render();
+}
+
+function renderDetail(){
+  if(!state.sel){
+    $('content').innerHTML='<span style="color:var(--muted)">Select an item</span>';
+    $('defs').innerHTML='';
+    return;
+  }
+  const raw=state.sel.content||'';
+  $('content').innerHTML=highlight(raw);
+  $('defs').innerHTML=renderDefs(extractDefs(raw));
+}
+
+function highlight(s){
+  let h=esc(s);
+  // entities <...>
+  h=h.replace(/&lt;([^&\n]+?)&gt;/g,'<span class="e">&lt;$1&gt;</span>');
+  // relations [...]
+  h=h.replace(/\[([^\]\n]+?)\]/g,'<span class="r">[$1]</span>');
+  // connectors
+  h=h.replace(/(├──|└──|│)/g,'<span class="c">$1</span>');
+  // truncation
+  h=h.replace(/(\[TRUNCATED[^\]]*\])/gi,'<span class="w">$1</span>');
+  return h;
+}
+
+function extractDefs(s){
+  const defs=[];
+  // Pattern: <Entity> [is] <Type> or <Entity> [is a] <Type>
+  const re=/<([^>\n]+)>\s*\[is(?: a)?\]\s*<([^>\n]+)>/gi;
+  let m;while((m=re.exec(s))!==null)defs.push({subj:'<'+m[1]+'>',def:'is <'+m[2]+'>'});
+  // Pattern: lines like "<Term>" followed by a definition line
+  const lines=s.split('\n');
+  for(let i=0;i<lines.length-1;i++){
+    const l=lines[i].trim();
+    if(/^<[^>\n]+>$/.test(l)){
+      const next=lines[i+1].trim();
+      if(next&&!/^[├└│<\[]/.test(next)&&next.length>10&&next.length<300){
+        defs.push({subj:l,def:next});
+      }
+    }
+  }
+  // dedupe
+  const seen=new Set();
+  return defs.filter(d=>{
+    const k=d.subj+d.def;
+    if(seen.has(k))return false;
+    seen.add(k);return true;
+  });
+}
+
+function renderDefs(defs){
+  if(!defs.length)return'<h3>Definitions</h3><div style="color:var(--muted)">(none extracted)</div>';
+  const rows=defs.slice(0,50).map(d=>`<tr><td>${esc(d.subj)}</td><td>${esc(d.def)}</td></tr>`).join('');
+  return`<h3>Definitions (${defs.length})</h3><table>${rows}</table>`;
+}
+
+function esc(s){
+  return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// Events
+$('list').addEventListener('click',e=>{
+  const el=e.target.closest('.list-item');
+  if(el)select(el.dataset.id);
+});
+$('type').addEventListener('change',()=>{state.type=$('type').value;filter();});
+$('q').addEventListener('input',filter);
+
+$('btn-list').addEventListener('click',()=>{
+  $('main').dataset.view='list';
+  document.body.classList.remove('present');
+  setActive('btn-list');
+});
+$('btn-item').addEventListener('click',()=>{
+  $('main').dataset.view='detail';
+  document.body.classList.remove('present');
+  setActive('btn-item');
+});
+$('btn-copy').addEventListener('click',async()=>{
+  if(!state.sel)return;
+  try{await navigator.clipboard.writeText(state.sel.content||'');}catch{}
+});
+$('btn-present').addEventListener('click',()=>{
+  document.body.classList.toggle('present');
+  setActive(document.body.classList.contains('present')?'btn-present':'btn-item');
+});
+
+function setActive(id){
+  ['btn-list','btn-item','btn-copy','btn-present'].forEach(x=>{
+    $(x).classList.toggle('active',x===id);
+  });
+}
+
+// Keyboard
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')document.body.classList.remove('present');
+  if(e.key==='p'&&!e.metaKey&&!e.ctrlKey){
+    e.preventDefault();
+    document.body.classList.toggle('present');
+  }
+});
+
+// Load
+async function load(){
+  try{
+    const[t,p]=await Promise.all([
+      fetch('./trees_catalog.json').then(r=>r.ok?r.json():null).catch(()=>null),
+      fetch('./poml_catalog.json').then(r=>r.ok?r.json():null).catch(()=>null)
+    ]);
+    state.catalogs.trees=t;
+    state.catalogs.poml=p;
+    if(!t&&!p){$('fallback').hidden=false;return;}
+    state.type=t?.trees?.length?'trees':'poml';
+    $('type').value=state.type;
+    filter();
+    if(state.view.length)select(state.view[0].id);
+  }catch{
+    $('fallback').hidden=false;
+  }
+}
+
+$('file').addEventListener('change',async e=>{
+  const f=e.target.files[0];
+  if(!f)return;
+  try{
+    const c=JSON.parse(await f.text());
+    if(c.trees){state.catalogs.trees=c;state.type='trees';}
+    else if(c.poml){state.catalogs.poml=c;state.type='poml';}
+    $('type').value=state.type;
+    $('fallback').hidden=true;
+    filter();
+    if(state.view.length)select(state.view[0].id);
+  }catch{}
+});
+
+load();
+</script>
+</body>
+</html>

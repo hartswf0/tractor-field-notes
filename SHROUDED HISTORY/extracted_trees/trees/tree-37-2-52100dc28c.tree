@@ -1,0 +1,22 @@
+<Full_Argument:_Mata_Through_Each_Thinker>
+├── {1} <Geertz_Lens:_Culture_as_Control_Mechanisms>
+│   ├── <Geertz_premise>
+│   │   └── <culture> [is] <control_mechanisms>
+│   │       └── <control_mechanisms> := {<plans>, <recipes>, <rules>, <instructions>, <symbols>}
+│   ├── <translation_to_law>
+│   │   ├── <law_practice> [is] <symbolic_control_system>
+│   │   │   ├── <citations> [function_as] <authority_tokens>
+│   │   │   ├── <quotations> [function_as] <textual_evidence>
+│   │   │   └── <procedure> [function_as] <behavior_governor>
+│   │   └── <competence> [means] <operating_within] <these_control_mechanisms>
+│   ├── <Mata_diagnosis_(Geertz)>
+│   │   ├── <ChatGPT_output> [mimicked] <authority_tokens>
+│   │   ├── <lawyer_workflow> [treated] <tokens> as <control_mechanisms>
+│   │   └── <result> [was] <symbolic_system_corruption>
+│   │       ├── <citations> [looked_like] <legal_authority>
+│   │       └── <but> [were] <non_authority>
+│   └── <Geertz_conclusion>
+│       └── [therefore] <AI_in_law> [is] <culture_injection>
+│           ├── <prompt> [becomes] <micro_culture>
+│           └── <context> [becomes] <web_of_significance>
+│               └── [risk] <the_web_can_be_spun_without_ground_truth>

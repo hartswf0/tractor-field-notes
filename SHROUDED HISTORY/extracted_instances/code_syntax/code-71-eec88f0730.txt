@@ -1,0 +1,103 @@
+<Mapping_the_Cook_Debate_onto_Vibe_Coding_and_AI_Legal_Hallucinations>
+├── <Goal>
+│   └── [show] <a_structuralist_vs_pragmatist_split>
+│       └── [reappears_in] <AI_assisted_legal_work>
+│           └── [as] <vibe_coding_vs_verification_conflict>
+│
+├── <Cast_of_Analogues>
+│   ├── <Pragmatist_Camp_(Obeyesekere-like)>
+│   │   ├── <Andrej_Karpathy>
+│   │   │   └── [frames] <vibe_coding> [as] <practical_workflow_shift>
+│   │   │       ├── [optimize_for] <iteration_speed>
+│   │   │       ├── [optimize_for] <getting_to_working_code>
+│   │   │       └── [treats] <models> [as] <useful_tools_despite_imperfection>
+│   │   └── <Rick_Rubin>
+│   │       └── [frames] <creation> [as] <taste_and_direction>
+│   │           ├── [privileges] <intuition>
+│   │           ├── [privileges] <flow>
+│   │           └── [treats] <technical_detail> [as] <delegable_labor>
+│   │
+│   └── <Pragmatist_Principle>
+│       └── <practical_reason> [is] <primary>
+│           ├── [ask] <does_it_work?>
+│           ├── [ask] <does_it_ship?>
+│           └── [assume] <users_can_sort_signal_from_noise_in_context>
+│
+├── <Structuralist_Camp_(Sahlins-like)>
+│   ├── <Sahlins_Principle>
+│   │   └── <symbolic_categories> [are] <causal_operators>
+│   │       ├── <ritual_forms> [shape] <interpretation>
+│   │       └── <authority_tokens> [shape] <what_counts_as_real>
+│   └── <Modern_Analogue_in_Law>
+│       └── <legal_citations> [are] <authority_tokens>
+│           ├── [embedded_in] <institutional_rituals>
+│           ├── [enforced_by] <adversarial_audit>
+│           └── [carrying] <binding_force>
+│
+├── <The_Case_That_Forces_the_Split:_AI_Legal_Hallucinations>
+│   ├── <phenomenon>
+│   │   └── <AI_output> [produces] <authority_form>
+│   │       ├── <citations>
+│   │       ├── <quotes>
+│   │       └── <holdings>
+│   │       └── [without] <authority_grounding>
+│   ├── <failure_mode>
+│   │   └── <real_case> + <fabricated_holding_or_quote>
+│   │       ├── [passes] <existence_checks>
+│   │       └── [fails] <court_reality>
+│   └── <institutional_response>
+│       ├── [demands] <attorney_certification>
+│       ├── [demands] <disclosure>
+│       └── [retains] <full_human_liability>
+│
+├── <Why_Obeyesekere-like_Practice_Fails_in_Law>
+│   ├── <vibe_coding_logic>
+│   │   ├── [iterate] fast
+│   │   ├── [accept] imperfect drafts
+│   │   └── [trust] <practical_sorting>
+│   ├── <law_logic>
+│   │   ├── [treats] <citations_and_quotes> [as] <binding_claims>
+│   │   └── [punishes] <single_material_error>
+│   └── <collision>
+│       └── <pragmatic_good_enough>
+│           [becomes] <sanctionable_misrepresentation>
+│
+├── <Why_Sahlins-like_Structure_Explains_the_Trap>
+│   ├── <law_as_symbolic_order>
+│   │   ├── <citation> [is] <ritual_token>
+│   │   ├── <quote> [is] <textual_witness>
+│   │   └── <holding> [is] <control_instruction>
+│   ├── <AI_hallucination>
+│   │   └── [is] <ritual_token_mimicry>
+│   │       ├── [reproduces] <form>
+│   │       └── [detaches] <force>
+│   └── <structuralist_verdict>
+│       └── <the_error_is_in_the_medium>:
+│           <authority_form_at_scale> [without] <institutional_grounding>
+│
+├── <Geertzian_Read_of_This_New_Culture_War>
+│   ├── <the_fight>
+│   │   └── [is_about] <what_counts_as_reasonable_practice_under_a_new_medium>
+│   ├── <pragmatists>
+│   │   └── [protect] <creative_freedom_and_speed>
+│   ├── <structuralists>
+│   │   └── [protect] <institutional_truth_conditions>
+│   └── <Geertzian_punchline>
+│       └── <AI_slop_and_legal_hallucinations>
+│           [are] <proxy_terms_for_a_struggle_over_interpretive_sovereignty>
+│
+└── <Resolution:_A_Taoist_Boundary_Doctrine_(Wu_Wei_with_Liability)>
+    ├── <allow_wu_wei_in> {<ideation>, <outlining>, <plain_english_explanation>, <issue_spotting>}
+    ├── <forbid_wu_wei_in> {<citations>, <quotes>, <holdings>, <application_to_facts>}
+    └── <maxim>
+        └── <pragmatism_in_creation>
+            ∧ <structure_in_attestation>
+            └── [so_that] <flow_does_not_sign_the_affidavit>
+
+
+One-line synthesis
+
+
+<Karpathy/Rubin_pragmatism> [wins] in <draft_space>;
+<Sahlins_structure> [rules] in <record_space>;
+<AI_hallucinations> [occur_when] <draft_space_tokens> [masquerade_as] <record_space_authority>.

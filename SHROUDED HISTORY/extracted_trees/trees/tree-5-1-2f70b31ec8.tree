@@ -1,0 +1,26 @@
+<godofprompt_post>
+├── <Mata_v_Avianca_(S.D.N.Y._2023)>
+│   ├── [is] <case>
+│   ├── [involves] <lawyer_Steven_Schwartz>
+│   │   ├── [used] <ChatGPT>
+│   │   │   ├── [for] <legal_research>
+│   │   │   └── [produced] <hallucinated_citations>
+│   │   │       ├── [invented] <Varghese_v_China_Southern_Airlines>
+│   │   │       │   └── [has_property] <does_not_exist>
+│   │   │       ├── [invented] <Shaboon_v_Egyptair>
+│   │   │       │   └── [has_property] <does_not_exist>
+│   │   │       └── [invented] <Petersen_v_Iran_Air>
+│   │   │           └── [has_property] <does_not_exist>
+│   ├── <fabrication_details>
+│   │   ├── [included] <fake_quotes>
+│   │   ├── [included] <fake_page_numbers>
+│   │   └── [included] <fake_holdings>
+│   ├── <judge_Castel>
+│   │   └── [stated] <"Six_of_the_submitted_cases_appear_to_be_bogus.">
+│   └── <outcome>
+│       ├── [resulted_in] <$5,000_sanctions>
+│       └── [resulted_in] <reputational_damage>
+└── <interpretation_frame>
+    ├── [labels_as] <Mata_v_Avianca:_The_Hallucination_Sanctions>
+    ├── [positions_as] <real_documented_example>
+    └── [claims] <catastrophic_AI_failure_in_legal_work>

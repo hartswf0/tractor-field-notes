@@ -1,0 +1,3 @@
+<Premise_(Second_Order)>
+└── <observer> [is_part_of] <the_system_observed>
+    └── [so] <descriptions> [feed_back_into] <the_system>
