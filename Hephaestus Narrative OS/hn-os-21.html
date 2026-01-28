@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HEPHAESTUS_OS_V21</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --manila-base: #d97706; 
+            --manila-light: #fbbf24;
+            --bg-obsidian: #020305;
+            --blue-tech: #22d3ee;
+            --ui-border: rgba(217, 119, 6, 0.2);
+            --bg-panel: #080a0e;
+        }
+
+        body { 
+            margin: 0; background: var(--bg-obsidian); color: #d1d5db; 
+            overflow: hidden; font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase; display: flex; flex-direction: column; height: 100vh;
+        }
+
+        /* Fixed Split-Screen Layout */
+        #top-viewport { flex: 0 0 55vh; position: relative; border-bottom: 2px solid var(--ui-border); background: #000; overflow: hidden; }
+        #bottom-ide { flex: 1; background: var(--bg-panel); display: flex; overflow: hidden; position: relative; border-top: 1px solid rgba(255,255,255,0.05); }
+
+        canvas { display: block; }
+        
+        /* TUI Panes */
+        .ide-pane { flex: 1; border-right: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; height: 100%; overflow: hidden; position: relative; }
+        .ide-pane:last-child { border-right: none; }
+        .pane-header { padding: 10px 15px; background: rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; }
+        .pane-content { flex: 1; overflow-y: auto; padding: 15px; position: relative; }
+
+        /* Tactical Scrollbars */
+        .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
+        .custom-scroll::-webkit-scrollbar-thumb { background: var(--manila-base); border-radius: 10px; }
+        .custom-scroll::-webkit-scrollbar-thumb:hover { background: var(--blue-tech); box-shadow: 0 0 10px var(--blue-tech); }
+
+        .label-micro { font-size: 7px; color: #64748b; font-weight: bold; letter-spacing: 1.5px; }
+        .amber-glow { color: var(--manila-light); text-shadow: 0 0 10px rgba(245, 158, 11, 0.4); }
+
+        /* IDE Elements */
+        .file-item { padding: 8px 12px; font-size: 9px; cursor: pointer; border-left: 2px solid transparent; margin-bottom: 2px; transition: all 0.2s; display: flex; justify-content: space-between; }
+        .file-item:hover { background: rgba(255,255,255,0.03); }
+        .file-item.active { border-left-color: var(--manila-base); background: rgba(217, 119, 6, 0.08); color: white; }
+
+        /* Minimap Implementation */
+        .minimap-gutter { position: absolute; right: 0; top: 0; bottom: 0; width: 40px; background: rgba(0,0,0,0.3); border-left: 1px solid rgba(255,255,255,0.05); pointer-events: none; }
+        .minimap-thumb { position: absolute; width: 100%; background: var(--manila-base); opacity: 0.2; }
+
+        .btn-tui { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: #64748b; font-size: 8px; padding: 6px 12px; transition: all 0.2s; cursor: pointer; }
+        .btn-tui:hover { color: white; border-color: var(--blue-tech); }
+        .btn-tui.active { background: var(--blue-tech); color: black; border-color: white; font-weight: 900; }
+
+        .strata-block { border-left: 2px solid var(--manila-base); background: rgba(255,255,255,0.015); padding: 12px; margin-bottom: 10px; border-radius: 0 4px 4px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
+        .strata-block.image { border-left-color: var(--blue-tech); background: rgba(34, 211, 238, 0.05); }
+        .strata-tag { font-size: 6px; font-weight: 900; opacity: 0.4; margin-bottom: 5px; display: block; letter-spacing: 2px; text-transform: uppercase; }
+
+        #context-menu { 
+            position: fixed; display: none; z-index: 500; background: #0a0c12; border: 1px solid var(--blue-tech); 
+            box-shadow: 0 0 40px rgba(0,0,0,0.9); min-width: 180px; 
+        }
+        .menu-item { padding: 10px 14px; font-size: 8px; font-weight: bold; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .menu-item:hover { background: var(--blue-tech); color: #000; }
+
+        @media (max-width: 768px) {
+            #bottom-ide { flex-direction: column; overflow-y: auto; }
+            .ide-pane { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); flex: 0 0 auto; width: 100% !important; min-height: 250px; }
+        }
+    </style>
+</head>
+<body class="select-none">
+
+    <!-- 3D VIEWPORT -->
+    <div id="top-viewport">
+        <div class="absolute top-4 left-4 z-50 pointer-events-none">
+            <div class="tui-panel bg-black/80 border border-amber-900/30 p-4 border-l-4 border-l-amber-600 rounded-sm shadow-2xl">
+                <div class="flex items-center gap-3">
+                    <div class="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse"></div>
+                    <h1 class="text-[11px] font-black amber-glow tracking-[0.4em]">PROVENANCE_OS_V21</h1>
+                </div>
+                <div class="flex gap-4 text-[6px] text-slate-500 mt-2 font-bold uppercase tracking-widest">
+                    <span id="stat-nodes">LATTICE: 0</span>
+                    <span id="stat-sel">SELECTED: 0</span>
+                    <span id="stat-clock">00:00:00</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute top-4 right-4 z-50 flex gap-2">
+            <button id="ctrl-multi" class="btn-tui">MULTI_SELECT: OFF</button>
+            <button id="ctrl-xray" class="btn-tui">XRAY_SCAN</button>
+            <button id="ctrl-reinit" class="btn-tui">RE-INIT_CORE</button>
+        </div>
+
+        <div id="three-target" class="w-full h-full"></div>
+        
+        <div class="absolute bottom-4 left-4 flex gap-4 pointer-events-none opacity-50">
+            <div class="flex items-center gap-1"><div class="w-1.5 h-1.5 bg-yellow-500"></div><span class="text-[7px] font-bold">COSMOS</span></div>
+            <div class="flex items-center gap-1"><div class="w-1.5 h-1.5 bg-orange-600"></div><span class="text-[7px] font-bold">POLIS</span></div>
+            <div class="flex items-center gap-1"><div class="w-1.5 h-1.5 bg-slate-400"></div><span class="text-[7px] font-bold">AGRO</span></div>
+            <div class="flex items-center gap-1"><div class="w-1.5 h-1.5 bg-blue-800"></div><span class="text-[7px] font-bold">RIM</span></div>
+        </div>
+    </div>
+
+    <!-- IDE WORKSPACE -->
+    <main id="bottom-ide">
+        
+        <!-- PANE 1: DIRECTORY EXPLORER -->
+        <aside class="ide-pane" style="max-width: 22%;">
+            <div class="pane-header">
+                <span class="label-micro uppercase">Archive_Explorer</span>
+            </div>
+            <div id="explorer-content" class="pane-content custom-scroll">
+                <!-- Directory listing -->
+            </div>
+        </aside>
+
+        <!-- PANE 2: STRATA EDITOR (Large Text Management) -->
+        <section class="ide-pane">
+            <div class="pane-header">
+                <span class="label-micro uppercase">Provenance_Strata_Editor</span>
+                <div class="flex gap-2">
+                    <button id="cmd-subdivide" class="btn-tui font-black !text-sky-400">SUBDIVIDE</button>
+                    <button id="cmd-weld" class="btn-tui font-black !text-amber-500">WELD_PROMPT</button>
+                </div>
+            </div>
+            <div id="editor-viewport" class="pane-content custom-scroll relative">
+                <div id="msg-empty" class="h-full flex flex-col items-center justify-center text-slate-700 italic text-[9px] text-center p-8 gap-4 opacity-40">
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                    AWAITING_LOCUS_SELECTION
+                </div>
+                <div id="msg-active" class="hidden space-y-6 pr-12">
+                    <div class="p-4 manila-folder border border-white/5">
+                        <span class="strata-tag">Poetic_Root_Line</span>
+                        <p id="ui-ground" class="text-xs lg:text-sm font-serif italic text-amber-50/90 leading-relaxed">...</p>
+                    </div>
+                    <div id="ui-strata" class="space-y-4">
+                        <!-- Strata blocks -->
+                    </div>
+                </div>
+                
+                <!-- Minimap for large text navigation -->
+                <div class="minimap-gutter">
+                    <div id="minimap-thumb" class="minimap-thumb"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PANE 3: ANALYTICS & MONITOR -->
+        <aside class="ide-pane" style="max-width: 28%;">
+            <div class="pane-header">
+                <span class="label-micro uppercase">Audit_Log</span>
+            </div>
+            <div class="pane-content custom-scroll space-y-6">
+                <div>
+                    <span class="label-micro mb-3 block uppercase text-sky-500">Neighbor_Synapses</span>
+                    <div id="ui-neighbors" class="space-y-1"></div>
+                </div>
+                <div class="pt-4 border-t border-white/5 space-y-2 text-[8px] font-bold text-slate-600">
+                    <div class="flex justify-between"><span>MAT_ONYX:</span> <span id="val-mat" class="text-amber-500">...</span></div>
+                    <div class="flex justify-between"><span>RING:</span> <span id="val-ring" class="text-amber-500">...</span></div>
+                    <div class="flex justify-between"><span>ID:</span> <span id="val-id" class="text-amber-500">...</span></div>
+                    <div class="flex justify-between"><span>COORDS:</span> <span id="val-pos" class="text-amber-500">...</span></div>
+                    <div class="flex justify-between"><span>DEPTH:</span> <span id="val-res" class="text-amber-500">...</span></div>
+                </div>
+                <div class="space-y-2">
+                    <span class="label-micro uppercase opacity-50">Operational_Provenance</span>
+                    <div id="ui-history-log" class="text-[7px] space-y-1 opacity-60">
+                        <!-- Prov log -->
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Context Menu -->
+    <div id="context-menu">
+        <div class="menu-item" id="ctx-clone">CLONE_PROMPT_CHAIN</div>
+        <div class="menu-item" id="ctx-delete">PURGE_FROM_LATTICE</div>
+        <div class="menu-item" id="ctx-subdivide">SUBDIVIDE_REGION</div>
+        <div class="menu-item" id="ctx-resolve">RESOLVE_PROMPT_LAYER</div>
+        <div class="menu-item text-rose-500 border-t border-white/10" id="ctx-exit">CANCEL_OPERATION</div>
+    </div>
+
+    <script>
+        // --- POETIC DATA ---
+        const POETIC_GROUNDS = [
+            "With stars he dight the umbo's central round",
+            "Two cities radiant on the surface rise",
+            "There weddings celebrate festive songs",
+            "Forum speaks with loud debate",
+            "Two talents gold for the judge's prize",
+            "War in bronze and ambush set",
+            "Field of three-fold fallow ploughed",
+            "Vintage ripens in the silvered sun",
+            "Boy with lyre sings of Linus' fate",
+            "Ocean's might contains the outer rim"
+        ];
+
+        const RINGS = [
+            { id: 'COSMOS', rS: 0.1, rE: 1.6, mat: 'GOLD', count: 6, color: 0xfbbf24 },
+            { id: 'POLIS', rS: 1.6, rE: 3.6, mat: 'BRONZE', count: 12, color: 0xca8a04 },
+            { id: 'FIELD', rS: 3.6, rE: 5.6, mat: 'TIN', count: 18, color: 0x94a3b8 },
+            { id: 'RIM', rS: 5.6, rE: 7.2, mat: 'KYANOS', count: 24, color: 0x1e3a8a }
+        ];
+
+        // --- ENGINE ---
+        const scene = new THREE.Scene();
+        const viewport = document.getElementById('top-viewport');
+        const camera = new THREE.PerspectiveCamera(40, window.innerWidth / (window.innerHeight * 0.55), 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight * 0.55);
+        document.getElementById('three-target').appendChild(renderer.domElement);
+
+        camera.position.set(0, -18, 18);
+        camera.lookAt(0, 0, 0);
+
+        const worldGroup = new THREE.Group();
+        scene.add(worldGroup);
+
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+        
+        let cabinets = [];
+        let selectedIDs = new Set();
+        let isMulti = false, isXray = false;
+        let touchTimer = null;
+
+        // --- FILING SYSTEM OBJECT ---
+        class KeystoneCabinet {
+            constructor(rS, rE, aS, aE, ringId, depth = 1) {
+                this.rS = rS; this.rE = rE; this.aS = aS; this.aE = aE;
+                this.depth = depth;
+                this.ringId = ringId;
+                this.id = `C_${Math.random().toString(36).substr(2,4).toUpperCase()}`;
+                
+                const ring = RINGS.find(r => r.id === ringId);
+                this.color = ring.color;
+                this.matText = ring.mat;
+
+                // Provenance and History tracking
+                this.created_epoch = Date.now();
+                this.ops_history = [`INSTANTIATED_AT_DEPTH_${depth}`];
+                
+                // Detailed Document Stack
+                this.files = Array.from({length: 4 + depth * 2}, (_, i) => ({
+                    id: `F_${i}`,
+                    name: `layer_${i}_prompt.yaml`,
+                    type: i === 0 ? 'SYSTEM' : 'PROMPT',
+                    content: `WELD_GROUND_AT_RESOLUTION_${depth}_PASS_${i}_STABILITY_0.94`,
+                    timestamp: this.created_epoch + (i * 1000)
+                }));
+                
+                this.height = (0.2 + (this.files.length * 0.22));
+                this.ground = POETIC_GROUNDS[Math.floor(Math.random() * POETIC_GROUNDS.length)];
+                
+                const domeR = 15;
+                const midR = (rS + rE) / 2;
+                this.zBase = Math.sqrt(Math.max(0, domeR*domeR - midR*midR)) * 0.5;
+
+                this.mesh = this.createMesh();
+                worldGroup.add(this.mesh);
+                cabinets.push(this);
+            }
+
+            createMesh() {
+                const midR = (this.rS + this.rE) / 2;
+                const midA = (this.aS + this.aE) / 2;
+                const dR = this.rE - this.rS;
+                const dA = this.aE - this.aS;
+                const arcW = midR * dA;
+                
+                const geo = new THREE.BoxGeometry(arcW * 0.94, dR * 0.94, this.height);
+                const mat = new THREE.MeshBasicMaterial({ color: this.color, transparent: true, opacity: 0.2, wireframe: true });
+                const mesh = new THREE.Mesh(geo, mat);
+                
+                mesh.position.set(Math.cos(midA) * midR, Math.sin(midA) * midR, this.zBase + this.height/2);
+                mesh.rotation.z = midA + Math.PI / 2;
+                mesh.userData = this;
+                return mesh;
+            }
+
+            subdivide() {
+                if (this.depth >= 6) return;
+                worldGroup.remove(this.mesh);
+                cabinets = cabinets.filter(c => c !== this);
+                const mR = (this.rS + this.rE) / 2;
+                const mA = (this.aS + this.aE) / 2;
+                new KeystoneCabinet(this.rS, mR, this.aS, mA, this.ringId, this.depth + 1);
+                new KeystoneCabinet(mR, this.rE, this.aS, mA, this.ringId, this.depth + 1);
+                new KeystoneCabinet(this.rS, mR, mA, this.aE, this.ringId, this.depth + 1);
+                new KeystoneCabinet(mR, this.rE, mA, this.aE, this.ringId, this.depth + 1);
+                updateGlobalUI();
+            }
+        }
+
+        // --- CORE LOGIC ---
+        function initForge() {
+            while(worldGroup.children.length > 0) worldGroup.remove(worldGroup.children[0]);
+            cabinets = [];
+            selectedIDs.clear();
+            RINGS.forEach(ring => {
+                const step = (Math.PI * 2) / ring.count;
+                for(let i=0; i<ring.count; i++) {
+                    new KeystoneCabinet(ring.rS, ring.rE, i * step, (i+1) * step, ring.id);
+                }
+            });
+            updateGlobalUI();
+            hideActiveIDE();
+        }
+
+        function updateGlobalUI() {
+            safeSetText('stat-nodes', `LATTICE: ${cabinets.length} NODES`);
+            safeSetText('stat-sel', `SELECTED: ${selectedIDs.size}`);
+
+            const explorer = document.getElementById('explorer-content');
+            if (!explorer) return;
+
+            let html = '';
+            RINGS.forEach(ring => {
+                const ringCabinets = cabinets.filter(c => c.ringId === ring.id);
+                html += `<div class="label-micro mt-4 mb-2 text-slate-600">${ring.id}_VOLUME (${ringCabinets.length})</div>`;
+                ringCabinets.forEach(c => {
+                    const active = selectedIDs.has(c.id);
+                    html += `<div class="file-item ${active ? 'active' : ''}" onclick="handleFileClick('${c.id}')"><span>/${c.id}</span><span class="opacity-40 text-[6px] font-bold">${c.files.length}F</span></div>`;
+                });
+            });
+            explorer.innerHTML = html;
+        }
+
+        // --- INTERACTION ---
+        function onAction(e, type) {
+            const ev = e.touches ? e.touches[0] : e;
+            const rect = renderer.domElement.getBoundingClientRect();
+            if (!rect || ev.clientY > rect.bottom) return;
+
+            mouse.x = ((ev.clientX - rect.left) / rect.width) * 2 - 1;
+            mouse.y = -((ev.clientY - rect.top) / rect.height) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+            const hits = raycaster.intersectObjects(worldGroup.children);
+            
+            if (hits.length > 0) {
+                const cab = hits[0].object.userData;
+                if (type === 'context') {
+                    showContextMenu(ev.clientX, ev.clientY, cab);
+                } else {
+                    handleFileClick(cab.id);
+                }
+                hits[0].object.scale.set(1.1, 1.1, 1.1);
+                setTimeout(() => hits[0].object.scale.set(1, 1, 1), 200);
+            } else if (type === 'click' && !isMulti) {
+                selectedIDs.clear();
+                hideActiveIDE();
+                updateGlobalUI();
+            }
+        }
+
+        function handleFileClick(id) {
+            const cab = cabinets.find(c => c.id === id);
+            if (!cab) return;
+
+            if (isMulti) {
+                if (selectedIDs.has(id)) selectedIDs.delete(id);
+                else selectedIDs.add(id);
+            } else {
+                selectedIDs = new Set([id]);
+            }
+
+            updateActiveIDE(cab);
+            updateGlobalUI();
+        }
+
+        function updateActiveIDE(cab) {
+            safeShow('msg-active');
+            safeHide('msg-empty');
+
+            safeSetText('val-id', cab.id);
+            safeSetText('ui-ground', `"${cab.ground}"`);
+            safeSetText('val-res', cab.depth);
+            safeSetText('val-mat', cab.matText);
+            safeSetText('val-ring', cab.ringId);
+            safeSetText('val-pos', `${((cab.rS + cab.rE)/2).toFixed(2)}, ${((cab.aS + cab.aE)/2).toFixed(2)}`);
+            safeSetText('val-mass', (cab.files.length * 1.8).toFixed(1) + ' KB');
+
+            // Strata Editor Listing with Provenance metadata
+            const stack = document.getElementById('ui-strata');
+            if (stack) {
+                stack.innerHTML = cab.files.map((f, i) => `
+                    <div class="strata-block ${f.type === 'IMAGE' ? 'image' : ''}">
+                        <span class="strata-tag">${f.name} // ${f.type}</span>
+                        <p class="text-[9px] text-sky-400 font-mono mb-2">${f.content}</p>
+                        <div class="flex justify-between text-[6px] opacity-40 font-bold uppercase">
+                            <span>Hash: 0x${Math.random().toString(16).substr(2, 8)}</span>
+                            <span>TS: ${new Date(f.timestamp).toLocaleTimeString()}</span>
+                        </div>
+                    </div>
+                `).join('');
+                
+                // Initialize Minimap
+                updateMinimap();
+            }
+
+            // Neighbors Monitor
+            const nList = document.getElementById('ui-neighbors');
+            if (nList) {
+                const neighbors = cabinets.filter(c => c !== cab && Math.abs(c.rS - cab.rS) < 1.2).slice(0, 4);
+                nList.innerHTML = neighbors.map(n => `
+                    <div class="neighbor-card rounded-sm border border-white/5 flex justify-between items-center">
+                        <span class="text-sky-500 font-black text-[8px] tracking-widest">${n.id}</span>
+                        <span class="text-slate-700 text-[6px]">${n.ringId}</span>
+                    </div>
+                `).join('');
+            }
+
+            // History Log
+            const historyLog = document.getElementById('ui-history-log');
+            if (historyLog) {
+                historyLog.innerHTML = cab.ops_history.map(h => `
+                    <div class="border-b border-white/5 pb-1">> ${h}</div>
+                `).join('');
+            }
+        }
+
+        function updateMinimap() {
+            const viewport = document.getElementById('editor-viewport');
+            const thumb = document.getElementById('minimap-thumb');
+            if (!viewport || !thumb) return;
+
+            const ratio = viewport.clientHeight / viewport.scrollHeight;
+            thumb.style.height = (ratio * 100) + '%';
+            thumb.style.top = (viewport.scrollTop / viewport.scrollHeight * 100) + '%';
+        }
+
+        document.getElementById('editor-viewport').addEventListener('scroll', updateMinimap);
+
+        function hideActiveIDE() {
+            safeHide('msg-active');
+            safeShow('msg-empty');
+        }
+
+        function safeSetText(id, txt) { const el = document.getElementById(id); if (el) el.innerText = txt; }
+        function safeHide(id) { const el = document.getElementById(id); if (el) el.classList.add('hidden'); }
+        function safeShow(id) { const el = document.getElementById(id); if (el) el.classList.remove('hidden'); }
+
+        function showContextMenu(x, y, cab) {
+            const menu = document.getElementById('context-menu');
+            if (!menu) return;
+            menu.style.display = 'block';
+            menu.style.left = x + 'px';
+            menu.style.top = y + 'px';
+            menu.dataset.targetId = cab.id;
+        }
+
+        function hideContextMenu() { 
+            const menu = document.getElementById('context-menu');
+            if (menu) menu.style.display = 'none'; 
+        }
+
+        // --- RENDER LOOP ---
+        function animate() {
+            requestAnimationFrame(animate);
+            worldGroup.rotation.z += 0.0002;
+            worldGroup.rotation.x += (mouse.y * 0.012 - worldGroup.rotation.x) * 0.04;
+            worldGroup.rotation.y += (mouse.x * 0.012 - worldGroup.rotation.y) * 0.04;
+
+            const t = Date.now() * 0.001;
+            cabinets.forEach(c => {
+                const sel = selectedIDs.has(c.id);
+                c.mesh.material.opacity = (sel ? 0.9 : (0.1 + (c.depth * 0.12))) + Math.sin(t + c.rS) * 0.05;
+                c.mesh.material.wireframe = !sel && !isXray;
+                if (isXray) c.mesh.material.color.setHex(0x22d3ee);
+                else c.mesh.material.color.setHex(c.color);
+                
+                if (sel) c.mesh.scale.lerp(new THREE.Vector3(1.1, 1.1, 1.1), 0.1);
+                else c.mesh.scale.lerp(new THREE.Vector3(1, 1, 1), 0.1);
+            });
+            renderer.render(scene, camera);
+        }
+
+        // --- BINDINGS ---
+        window.addEventListener('click', (e) => { hideContextMenu(); onAction(e, 'click'); });
+        window.addEventListener('contextmenu', (e) => { e.preventDefault(); onAction(e, 'context'); });
+        window.addEventListener('touchstart', (e) => { touchTimer = setTimeout(() => onAction(e, 'context'), 700); });
+        window.addEventListener('touchend', () => clearTimeout(touchTimer));
+
+        const multiBtn = document.getElementById('ctrl-multi');
+        if (multiBtn) multiBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); isMulti = !isMulti;
+            multiBtn.innerText = `MULTI_SELECT: ${isMulti ? 'ON' : 'OFF'}`;
+            multiBtn.classList.toggle('active', isMulti);
+            if (!isMulti) selectedIDs.clear();
+            updateGlobalUI();
+        });
+
+        const xrayBtn = document.getElementById('ctrl-xray');
+        if (xrayBtn) xrayBtn.addEventListener('click', (e) => {
+            e.stopPropagation(); isXray = !isXray;
+            xrayBtn.classList.toggle('active', isXray);
+        });
+
+        const reinitBtn = document.getElementById('ctrl-reinit');
+        if (reinitBtn) reinitBtn.addEventListener('click', (e) => { e.stopPropagation(); initForge(); });
+
+        const subBtn = document.getElementById('cmd-subdivide');
+        if (subBtn) subBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (selectedIDs.size === 1) {
+                const id = Array.from(selectedIDs)[0];
+                const cab = cabinets.find(c => c.id === id);
+                if (cab) {
+                    cab.ops_history.push(`SUBDIVIDED_AT_DEPTH_${cab.depth}`);
+                    cab.subdivide();
+                }
+            }
+        });
+
+        const weldBtn = document.getElementById('cmd-weld');
+        if (weldBtn) weldBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (selectedIDs.size > 0) {
+                weldBtn.innerText = 'WELDING_PROVENANCE...';
+                setTimeout(() => { weldBtn.innerText = 'WELD_COMPLETE'; setTimeout(() => weldBtn.innerText = 'WELD_PROMPT', 1000); }, 1000);
+            }
+        });
+
+        // Context Menu Handlers
+        document.getElementById('ctx-clone')?.addEventListener('click', () => {
+            const id = document.getElementById('context-menu').dataset.targetId;
+            const cab = cabinets.find(c => c.id === id);
+            if (cab) {
+                const newFile = { ...cab.files[0], id: `F_${cab.files.length}`, timestamp: Date.now() };
+                cab.files.push(newFile);
+                cab.ops_history.push(`CLONED_PROMPT_LAYER_${cab.files.length}`);
+                updateActiveIDE(cab);
+            }
+        });
+
+        document.getElementById('ctx-delete')?.addEventListener('click', () => {
+            const id = document.getElementById('context-menu').dataset.targetId;
+            const cab = cabinets.find(c => c.id === id);
+            if (cab) {
+                worldGroup.remove(cab.mesh);
+                cabinets = cabinets.filter(c => c.id !== id);
+                selectedIDs.delete(id);
+                updateGlobalUI(); hideActiveIDE();
+            }
+        });
+
+        document.getElementById('ctx-subdivide')?.addEventListener('click', () => {
+            const id = document.getElementById('context-menu').dataset.targetId;
+            const cab = cabinets.find(c => c.id === id);
+            if (cab) cab.subdivide();
+        });
+
+        window.addEventListener('resize', () => {
+            const h = window.innerHeight * 0.55;
+            camera.aspect = window.innerWidth / h;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, h);
+        });
+
+        setInterval(() => {
+            const clock = document.getElementById('stat-clock');
+            if (clock) clock.innerText = new Date().toTimeString().split(' ')[0];
+        }, 1000);
+
+        initForge();
+        animate();
+    </script>
+</body>
+</html>

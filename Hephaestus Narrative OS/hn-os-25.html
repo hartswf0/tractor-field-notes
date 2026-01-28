@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HEPHAESTUS_OS_V25_STABLE</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --manila-base: #d97706; 
+            --manila-light: #fbbf24;
+            --bg-obsidian: #020305;
+            --blue-tech: #22d3ee;
+            --ui-border: rgba(217, 119, 6, 0.2);
+            --bg-panel: #080a0e;
+        }
+
+        body { 
+            margin: 0; background: var(--bg-obsidian); color: #d1d5db; 
+            overflow: hidden; font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase; display: flex; flex-direction: column; height: 100vh;
+        }
+
+        /* 55/45 Stable Split */
+        #top-viewport { flex: 0 0 55vh; position: relative; border-bottom: 2px solid var(--ui-border); background: #000; overflow: hidden; }
+        #bottom-ide { flex: 1; background: var(--bg-panel); display: flex; overflow: hidden; position: relative; border-top: 1px solid rgba(255,255,255,0.05); }
+
+        canvas { display: block; }
+        
+        /* TUI Panes */
+        .ide-pane { flex: 1; border-right: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; height: 100%; overflow: hidden; position: relative; }
+        .ide-pane:last-child { border-right: none; }
+        .pane-header { padding: 10px 15px; background: rgba(255,255,255,0.02); border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; }
+        .pane-content { flex: 1; overflow-y: auto; padding: 15px; position: relative; scroll-behavior: smooth; }
+
+        /* Tactical Scrollbars */
+        .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scroll::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); }
+        .custom-scroll::-webkit-scrollbar-thumb { background: var(--manila-base); border-radius: 10px; border: 1px solid rgba(0,0,0,0.5); }
+        .custom-scroll::-webkit-scrollbar-thumb:hover { background: var(--blue-tech); }
+
+        /* Minimap Gutter */
+        .minimap-container { position: absolute; right: 0; top: 0; bottom: 0; width: 35px; background: rgba(0,0,0,0.6); border-left: 1px solid rgba(255,255,255,0.05); pointer-events: none; z-index: 10; }
+        .minimap-thumb { position: absolute; width: 100%; background: var(--manila-base); opacity: 0.3; border: 1px solid var(--manila-light); }
+
+        .label-micro { font-size: 7px; color: #64748b; font-weight: bold; letter-spacing: 1.5px; }
+        .amber-glow { color: var(--manila-light); text-shadow: 0 0 10px rgba(245, 158, 11, 0.4); }
+
+        .file-item { padding: 8px 12px; font-size: 8.5px; cursor: pointer; border-left: 2px solid transparent; margin-bottom: 2px; transition: all 0.2s; display: flex; justify-content: space-between; align-items: center; }
+        .file-item:hover { background: rgba(255,255,255,0.03); }
+        .file-item.active { border-left-color: var(--blue-tech); background: rgba(34, 211, 238, 0.1); color: white; }
+
+        .strata-block { border-left: 2px solid var(--manila-base); background: rgba(255,255,255,0.015); padding: 12px; margin-bottom: 12px; border-radius: 0 4px 4px 0; border-bottom: 1px solid rgba(255,255,255,0.03); position: relative; }
+        .strata-block.chain { border-left-color: var(--blue-tech); background: rgba(34, 211, 238, 0.03); }
+        .strata-tag { font-size: 6px; font-weight: 900; opacity: 0.4; margin-bottom: 6px; display: block; letter-spacing: 2px; text-transform: uppercase; }
+
+        .btn-os { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: #64748b; font-size: 8px; padding: 6px 12px; transition: all 0.2s; cursor: pointer; font-weight: 700; }
+        .btn-os:hover { color: white; border-color: var(--blue-tech); background: rgba(34, 211, 238, 0.1); }
+        .btn-os.active { background: var(--blue-tech); color: black; border-color: white; font-weight: 900; }
+
+        #context-menu { 
+            position: fixed; display: none; z-index: 500; background: #0a0c12; border: 1px solid var(--blue-tech); 
+            box-shadow: 0 0 50px rgba(0,0,0,0.9); min-width: 200px; 
+        }
+        .menu-item { padding: 12px 16px; font-size: 8px; font-weight: bold; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .menu-item:hover { background: var(--blue-tech); color: #000; }
+
+        /* TUI Selection Tabs */
+        .tui-tabs { display: flex; gap: 4px; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 0 10px; }
+        .tui-tab { padding: 8px 12px; font-size: 7px; font-weight: bold; cursor: pointer; color: #64748b; border-bottom: 2px solid transparent; }
+        .tui-tab.active { color: var(--manila-light); border-bottom-color: var(--manila-base); background: rgba(217, 119, 6, 0.05); }
+
+        .scanline { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%); z-index: 100; background-size: 100% 4px; pointer-events: none; opacity: 0.05; }
+    </style>
+</head>
+<body class="select-none">
+
+    <div class="scanline"></div>
+
+    <!-- TOP: TERRAIN VIEWPORT (STATIC) -->
+    <div id="top-viewport">
+        <div class="absolute top-4 left-4 z-50 pointer-events-none">
+            <div class="tui-panel bg-black/80 border border-amber-900/30 p-4 border-l-4 border-l-amber-600 rounded-sm shadow-2xl">
+                <div class="flex items-center gap-3">
+                    <div class="w-1.5 h-1.5 bg-amber-500 rounded-full animate-pulse"></div>
+                    <h1 class="text-[10px] font-black amber-glow tracking-[0.4em]">HEPHAESTUS_OS_V25</h1>
+                </div>
+                <div class="flex gap-4 text-[6px] text-slate-500 mt-2 font-bold uppercase tracking-widest">
+                    <span id="stat-nodes">LATTICE: 0</span>
+                    <span id="stat-view">VIEW: 3D_STATIC</span>
+                    <span id="stat-clock">00:00:00</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute top-4 right-4 z-50 flex gap-2">
+            <button id="ctrl-view" class="btn-os">TACTICAL_2D</button>
+            <button id="ctrl-xray" class="btn-os">XRAY_SCAN</button>
+            <button id="ctrl-reinit" class="btn-os">REFORGE_CORE</button>
+        </div>
+
+        <div id="three-target" class="w-full h-full"></div>
+        
+        <!-- Legend Overlay -->
+        <div class="absolute bottom-4 left-4 flex gap-4 pointer-events-none opacity-50">
+            <div class="flex items-center gap-1"><div class="w-1.5 h-1.5 bg-yellow-500"></div><span class="text-[7px] font-bold">UMBO</span></div>
+            <div class="flex items-center gap-1"><div class="w-1.5 h-1.5 bg-orange-600"></div><span class="text-[7px] font-bold">CIVIC</span></div>
+            <div class="flex items-center gap-1"><div class="w-1.5 h-1.5 bg-slate-400"></div><span class="text-[7px] font-bold">AGRI</span></div>
+            <div class="flex items-center gap-1"><div class="w-1.5 h-1.5 bg-blue-800"></div><span class="text-[7px] font-bold">RIM</span></div>
+        </div>
+    </div>
+
+    <!-- BOTTOM: IDE WORKSPACE -->
+    <main id="bottom-ide">
+        
+        <!-- PANE 1: VODEL EXPLORER -->
+        <aside class="ide-pane" style="max-width: 22%;">
+            <div class="pane-header">
+                <span class="label-micro uppercase">Vodel_Registry</span>
+            </div>
+            <div id="explorer-content" class="pane-content custom-scroll">
+                <!-- Directory listing -->
+            </div>
+        </aside>
+
+        <!-- PANE 2: PROVENANCE WORKSPACE -->
+        <section class="ide-pane">
+            <div class="pane-header">
+                <div class="tui-tabs">
+                    <div class="tui-tab active" data-tab="strata">STRATA_EDITOR</div>
+                    <div class="tui-tab" data-tab="chains">CHAINS</div>
+                    <div class="tui-tab" data-tab="media">ARTIFACTS</div>
+                </div>
+                <div class="flex gap-2">
+                    <button id="cmd-subdivide" class="btn-os !text-sky-400">SUBDIVIDE</button>
+                    <button id="cmd-weld" class="btn-os !text-amber-500">WELD_SCENE</button>
+                </div>
+            </div>
+            <div id="editor-viewport" class="pane-content custom-scroll relative">
+                <div id="msg-empty" class="h-full flex flex-col items-center justify-center text-slate-700 italic text-[9px] text-center p-8 gap-4 opacity-40">
+                    <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                    AWAITING_RADIAL_SELECTION
+                </div>
+                <div id="msg-active" class="hidden space-y-6 pr-12">
+                    <div class="p-4 manila-folder border border-white/5 bg-white/5">
+                        <span class="strata-tag">Homeric_Source_Anchor</span>
+                        <p id="ui-ground" class="text-xs lg:text-sm font-serif italic text-amber-50 leading-relaxed">...</p>
+                    </div>
+                    <div id="ui-strata" class="space-y-4">
+                        <!-- Strata blocks -->
+                    </div>
+                </div>
+                
+                <div class="minimap-container">
+                    <div id="minimap-thumb" class="minimap-thumb"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PANE 3: CONTEXT AUDIT -->
+        <aside class="ide-pane" style="max-width: 25%;">
+            <div class="pane-header">
+                <span class="label-micro uppercase">Audit_Terminal</span>
+            </div>
+            <div class="pane-content custom-scroll space-y-6">
+                <div>
+                    <span class="label-micro mb-3 block uppercase text-sky-500">Neighbor_Synapses</span>
+                    <div id="ui-neighbors" class="space-y-1"></div>
+                </div>
+                <div class="pt-4 border-t border-white/5 space-y-2 text-[8px] font-bold text-slate-600">
+                    <div class="flex justify-between"><span>MAT_ONYX:</span> <span id="val-mat" class="text-amber-500">...</span></div>
+                    <div class="flex justify-between"><span>RING_ID:</span> <span id="val-ring" class="text-amber-500">...</span></div>
+                    <div class="flex justify-between"><span>UUID:</span> <span id="val-id" class="text-amber-500">...</span></div>
+                    <div class="flex justify-between"><span>MASS:</span> <span id="val-mass" class="text-amber-500">...</span></div>
+                </div>
+                <div class="space-y-2">
+                    <span class="label-micro uppercase opacity-50">Operational_Log</span>
+                    <div id="ui-history" class="text-[7px] space-y-1 opacity-60 font-mono">
+                        <!-- Log lines -->
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Context Menu -->
+    <div id="context-menu">
+        <div class="menu-item" id="ctx-clone">CLONE_VODEL_STATE</div>
+        <div class="menu-item" id="ctx-delete">PURGE_FROM_LATTICE</div>
+        <div class="menu-item" id="ctx-subdivide">FORCED_SUBDIVISION</div>
+        <div class="menu-item text-rose-500 border-t border-white/10" id="ctx-exit">EXIT_PROCESS</div>
+    </div>
+
+    <script>
+        // --- DATA ---
+        const POETIC_ROOTS = [
+            "With stars he dight the umbo's central round",
+            "Two cities radiant on the surface rise",
+            "There weddings celebrate festive songs",
+            "Forum speaks with loud debate",
+            "Two talents gold for the judge's prize",
+            "War in bronze and ambush set",
+            "Field of three-fold fallow ploughed",
+            "Vintage ripens in the silvered sun",
+            "Boy with lyre sings of Linus' fate",
+            "Ocean's might contains the outer rim"
+        ];
+
+        const RINGS = [
+            { id: 'COSMOS', rS: 0.1, rE: 1.6, mat: 'GOLD', count: 6, color: 0xfbbf24 },
+            { id: 'CIVIC', rS: 1.6, rE: 3.6, mat: 'BRONZE', count: 12, color: 0xca8a04 },
+            { id: 'AGRI', rS: 3.6, rE: 5.6, mat: 'TIN', count: 18, color: 0x94a3b8 },
+            { id: 'RIM', rS: 5.6, rE: 7.2, mat: 'KYANOS', count: 24, color: 0x1e3a8a }
+        ];
+
+        // --- THREE.JS ---
+        const scene = new THREE.Scene();
+        const getVH = () => window.innerHeight * 0.55;
+        const camera = new THREE.PerspectiveCamera(40, window.innerWidth / getVH(), 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, getVH());
+        document.getElementById('three-target').appendChild(renderer.domElement);
+
+        const worldGroup = new THREE.Group();
+        // Lower the entire world group so it centers properly in the top split
+        worldGroup.position.set(0, 0, -3);
+        scene.add(worldGroup);
+
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+        
+        let cabinets = [];
+        let selectedIDs = new Set();
+        let isMulti = false, isXray = false, is2D = false;
+        let touchTimer = null;
+        
+        // Stable Camera Targets (No Auto-Rotation)
+        const cameraTarget = new THREE.Vector3(0, -18, 18);
+        const lookAtTarget = new THREE.Vector3(0, 0, -3);
+
+        // --- VODEL CLASS ---
+        class ArchCabinet {
+            constructor(rS, rE, aS, aE, ringId, depth = 1) {
+                this.rS = rS; this.rE = rE; this.aS = aS; this.aE = aE;
+                this.depth = depth;
+                this.ringId = ringId;
+                this.id = `V_${Math.random().toString(36).substr(2,4).toUpperCase()}`;
+                
+                const ring = RINGS.find(r => r.id === ringId);
+                this.color = ring.color;
+                this.matText = ring.mat;
+                this.history = [`VODEL_INIT_DEPTH_${depth}`];
+                
+                // OS-style file management
+                this.docCount = 4 + depth * 2;
+                this.files = Array.from({length: this.docCount}, (_, i) => ({
+                    id: `f${i}`,
+                    name: i === 0 ? `system_manifest.yaml` : `chain_pass_0${i}.txt`,
+                    type: i === 0 ? 'MANIFEST' : 'CHAIN',
+                    content: `ORCHESTRATE_RECURSIVE_THICKNESS_LEVEL_${depth}_V_${i}`,
+                    hash: '0x' + Math.random().toString(16).substr(2, 6)
+                }));
+                
+                this.height = (0.2 + (this.files.length * 0.25));
+                this.ground = POETIC_ROOTS[Math.floor(Math.random() * POETIC_ROOTS.length)];
+                
+                const domeR = 15;
+                const midR = (rS + rE) / 2;
+                this.zBase = Math.sqrt(Math.max(0, domeR*domeR - midR*midR)) * 0.5;
+
+                this.mesh = this.createMesh();
+                worldGroup.add(this.mesh);
+                cabinets.push(this);
+            }
+
+            createMesh() {
+                const midR = (this.rS + this.rE) / 2;
+                const midA = (this.aS + this.aE) / 2;
+                const dR = this.rE - this.rS;
+                const dA = this.aE - this.aS;
+                const arcW = midR * dA;
+                
+                const geo = new THREE.BoxGeometry(arcW * 0.95, dR * 0.95, is2D ? 0.1 : this.height);
+                const mat = new THREE.MeshBasicMaterial({ color: this.color, transparent: true, opacity: 0.2, wireframe: true });
+                const mesh = new THREE.Mesh(geo, mat);
+                
+                mesh.position.set(Math.cos(midA) * midR, Math.sin(midA) * midR, is2D ? 0.1 : this.zBase + this.height/2);
+                mesh.rotation.z = midA + Math.PI / 2;
+                mesh.userData = this;
+                return mesh;
+            }
+
+            subdivide() {
+                if (this.depth >= 6) return;
+                worldGroup.remove(this.mesh);
+                cabinets = cabinets.filter(c => c !== this);
+                const mR = (this.rS + this.rE) / 2;
+                const mA = (this.aS + this.aE) / 2;
+
+                new ArchCabinet(this.rS, mR, this.aS, mA, this.ringId, this.depth + 1);
+                new ArchCabinet(mR, this.rE, this.aS, mA, this.ringId, this.depth + 1);
+                new ArchCabinet(this.rS, mR, mA, this.aE, this.ringId, this.depth + 1);
+                new ArchCabinet(mR, this.rE, mA, this.aE, this.ringId, this.depth + 1);
+                updateGlobalUI();
+            }
+        }
+
+        // --- OPERATIONAL CORE ---
+        function initForge() {
+            while(worldGroup.children.length > 0) worldGroup.remove(worldGroup.children[0]);
+            cabinets = [];
+            selectedIDs.clear();
+            RINGS.forEach(ring => {
+                const step = (Math.PI * 2) / ring.count;
+                for(let i=0; i<ring.count; i++) {
+                    new ArchCabinet(ring.rS, ring.rE, i * step, (i+1) * step, ring.id);
+                }
+            });
+            updateGlobalUI();
+            hideActiveIDE();
+            
+            // Fixed camera reset
+            cameraTarget.set(0, -18, 18);
+            lookAtTarget.set(0, 0, -3);
+        }
+
+        function updateGlobalUI() {
+            safeSetText('stat-nodes', `LATTICE: ${cabinets.length} VODELS`);
+            safeSetText('stat-sel', selectedIDs.size > 0 ? `ACTIVE: ${Array.from(selectedIDs)[0]}` : 'ACTIVE: NULL');
+
+            const explorer = document.getElementById('explorer-content');
+            if (!explorer) return;
+
+            let html = '';
+            RINGS.forEach(ring => {
+                const ringCabinets = cabinets.filter(c => c.ringId === ring.id);
+                html += `<div class="label-micro mt-4 mb-2 text-slate-600 font-bold">${ring.id}_RING (${ringCabinets.length})</div>`;
+                ringCabinets.forEach(c => {
+                    const active = selectedIDs.has(c.id);
+                    html += `<div class="file-item ${active ? 'active' : ''}" onclick="handleFileClick('${c.id}')"><span>/${c.id}</span><span class="opacity-30 text-[6px]">${c.files.length}V</span></div>`;
+                });
+            });
+            explorer.innerHTML = html;
+        }
+
+        // --- INTERACTION ---
+        function onAction(e, type) {
+            const ev = e.touches ? e.touches[0] : e;
+            const rect = renderer.domElement.getBoundingClientRect();
+            if (!rect || ev.clientY > rect.bottom) return;
+
+            mouse.x = ((ev.clientX - rect.left) / rect.width) * 2 - 1;
+            mouse.y = -((ev.clientY - rect.top) / rect.height) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+            const hits = raycaster.intersectObjects(worldGroup.children);
+            
+            if (hits.length > 0) {
+                const cab = hits[0].object.userData;
+                
+                // Focus camera to stable coordinate (No nausea rotation)
+                if (!is2D) {
+                    const pos = hits[0].object.position.clone();
+                    const angle = Math.atan2(pos.y, pos.x);
+                    cameraTarget.set(pos.x + Math.cos(angle) * 7, pos.y + Math.sin(angle) * 7, pos.z + 6);
+                    lookAtTarget.copy(pos);
+                }
+
+                if (type === 'context') {
+                    showContextMenu(ev.clientX, ev.clientY, cab);
+                } else {
+                    handleFileClick(cab.id);
+                }
+            } else if (type === 'click' && !isMulti) {
+                selectedIDs.clear();
+                hideActiveIDE();
+                updateGlobalUI();
+                if (!is2D) {
+                    cameraTarget.set(0, -18, 18);
+                    lookAtTarget.set(0, 0, -3);
+                }
+            }
+        }
+
+        function handleFileClick(id) {
+            const cab = cabinets.find(c => c.id === id);
+            if (!cab) return;
+            if (isMulti) {
+                if (selectedIDs.has(id)) selectedIDs.delete(id);
+                else selectedIDs.add(id);
+            } else {
+                selectedIDs = new Set([id]);
+            }
+            updateActiveIDE(cab);
+            updateGlobalUI();
+        }
+
+        function updateActiveIDE(cab) {
+            safeShow('msg-active');
+            safeHide('msg-empty');
+
+            safeSetText('val-id', cab.id);
+            safeSetText('ui-ground', `"${cab.ground}"`);
+            safeSetText('val-res', cab.depth);
+            safeSetText('val-mat', cab.matText);
+            safeSetText('val-ring', cab.ringId);
+            safeSetText('val-mass', (cab.files.length * 2.8).toFixed(1) + ' KB');
+
+            const stack = document.getElementById('ui-strata');
+            if (stack) {
+                stack.innerHTML = cab.files.map((f, i) => `
+                    <div class="strata-block ${f.type === 'CHAIN' ? 'chain' : ''}">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="strata-tag">${f.name} // TYPE:${f.type}</span>
+                            <span class="text-[5px] font-black opacity-30">HASH:${f.hash}</span>
+                        </div>
+                        <p class="text-[9px] text-sky-400 font-mono leading-tight">${f.content}</p>
+                    </div>
+                `).join('');
+                updateMinimap();
+            }
+
+            const nList = document.getElementById('ui-neighbors');
+            if (nList) {
+                const neighbors = cabinets.filter(c => c !== cab && Math.abs(c.rS - cab.rS) < 1.4).slice(0, 4);
+                nList.innerHTML = neighbors.map(n => `
+                    <div class="neighbor-card rounded-sm flex justify-between items-center border border-white/5">
+                        <span class="text-sky-500 font-bold text-[8px] tracking-widest">${n.id}</span>
+                        <span class="text-slate-700 text-[6px] uppercase">${n.ringId}</span>
+                    </div>
+                `).join('');
+            }
+
+            const histLog = document.getElementById('ui-history');
+            if (histLog) {
+                histLog.innerHTML = cab.history.map(h => `<div class="pb-1 border-b border-white/5">> ${h}</div>`).join('');
+            }
+        }
+
+        function updateMinimap() {
+            const viewport = document.getElementById('editor-viewport');
+            const thumb = document.getElementById('minimap-thumb');
+            if (!viewport || !thumb) return;
+            const ratio = viewport.clientHeight / viewport.scrollHeight;
+            thumb.style.height = Math.max(10, ratio * 100) + '%';
+            thumb.style.top = (viewport.scrollTop / viewport.scrollHeight * 100) + '%';
+        }
+
+        document.getElementById('editor-viewport')?.addEventListener('scroll', updateMinimap);
+
+        function hideActiveIDE() { safeHide('msg-active'); safeShow('msg-empty'); }
+        function safeSetText(id, txt) { const el = document.getElementById(id); if (el) el.innerText = txt; }
+        function safeHide(id) { const el = document.getElementById(id); if (el) el.classList.add('hidden'); }
+        function safeShow(id) { const el = document.getElementById(id); if (el) el.classList.remove('hidden'); }
+
+        function showContextMenu(x, y, cab) {
+            const menu = document.getElementById('context-menu');
+            if (!menu) return;
+            menu.style.display = 'block';
+            menu.style.left = x + 'px';
+            menu.style.top = y + 'px';
+            menu.dataset.targetId = cab.id;
+        }
+
+        function hideContextMenu() { 
+            const menu = document.getElementById('context-menu');
+            if (menu) menu.style.display = 'none'; 
+        }
+
+        // --- RENDER LOOP ---
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Stable Camera LERP (No spinning)
+            camera.position.lerp(cameraTarget, 0.05);
+            camera.lookAt(lookAtTarget);
+
+            const t = Date.now() * 0.001;
+            cabinets.forEach(c => {
+                const sel = selectedIDs.has(c.id);
+                c.mesh.material.opacity = (sel ? 0.9 : (0.1 + (c.depth * 0.12))) + Math.sin(t + c.rS) * 0.05;
+                c.mesh.material.wireframe = !sel && !isXray;
+                if (isXray) c.mesh.material.color.setHex(0x22d3ee);
+                else c.mesh.material.color.setHex(c.color);
+                
+                if (sel) c.mesh.scale.lerp(new THREE.Vector3(1.1, 1.1, 1.1), 0.1);
+                else c.mesh.scale.lerp(new THREE.Vector3(1, 1, 1), 0.1);
+            });
+            renderer.render(scene, camera);
+        }
+
+        // --- BINDINGS ---
+        window.addEventListener('click', (e) => { hideContextMenu(); onAction(e, 'click'); });
+        window.addEventListener('contextmenu', (e) => { e.preventDefault(); onAction(e, 'context'); });
+        window.addEventListener('touchstart', (e) => { touchTimer = setTimeout(() => onAction(e, 'context'), 700); });
+        window.addEventListener('touchend', () => clearTimeout(touchTimer));
+
+        document.getElementById('ctrl-view')?.addEventListener('click', (e) => {
+            is2D = !is2D;
+            e.target.innerText = is2D ? 'PERSPECTIVE_3D' : 'TACTICAL_2D';
+            e.target.classList.toggle('active', is2D);
+            safeSetText('stat-view', is2D ? 'VIEW: 2D_MAP' : 'VIEW: 3D_STATIC');
+            
+            if (is2D) {
+                cameraTarget.set(0, 0, 16);
+                lookAtTarget.set(0, 0, -3);
+            } else {
+                cameraTarget.set(0, -18, 18);
+            }
+            
+            // Toggle Vodel geometry height for 2D/3D
+            cabinets.forEach(c => {
+                c.mesh.geometry.dispose();
+                c.mesh.geometry = new THREE.BoxGeometry(
+                    c.mesh.geometry.parameters.width,
+                    c.mesh.geometry.parameters.height,
+                    is2D ? 0.1 : c.height
+                );
+                c.mesh.position.z = is2D ? 0.1 : c.zBase + c.height/2;
+            });
+        });
+
+        document.getElementById('ctrl-multi')?.addEventListener('click', (e) => {
+            isMulti = !isMulti;
+            e.target.innerText = `MULTI_MODE: ${isMulti ? 'ON' : 'OFF'}`;
+            e.target.classList.toggle('active', isMulti);
+            if (!isMulti) selectedIDs.clear();
+            updateGlobalUI();
+        });
+
+        document.getElementById('ctrl-xray')?.addEventListener('click', (e) => {
+            isXray = !isXray;
+            e.target.classList.toggle('active', isXray);
+        });
+
+        document.getElementById('ctrl-reinit')?.addEventListener('click', initForge);
+
+        document.getElementById('cmd-subdivide')?.addEventListener('click', () => {
+            if (selectedIDs.size === 1) {
+                const id = Array.from(selectedIDs)[0];
+                const cab = cabinets.find(c => c.id === id);
+                if (cab) {
+                    cab.history.push(`USER_SUBDIVIDE_D${cab.depth}`);
+                    cab.subdivide();
+                }
+            }
+        });
+
+        document.getElementById('cmd-weld')?.addEventListener('click', (e) => {
+            if (selectedIDs.size > 0) {
+                e.target.innerText = 'WELDING_PROVENANCE...';
+                setTimeout(() => { e.target.innerText = 'SCENE_WELDED'; setTimeout(() => e.target.innerText = 'WELD_SCENE', 1000); }, 1000);
+            }
+        });
+
+        // Context Menu Handlers
+        document.getElementById('ctx-clone')?.addEventListener('click', () => {
+            const id = document.getElementById('context-menu').dataset.targetId;
+            const cab = cabinets.find(c => c.id === id);
+            if (cab) {
+                cab.files.push({...cab.files[cab.files.length-1], id: `v${cab.files.length}`, timestamp: Date.now()});
+                cab.history.push(`CLONE_VODEL_VERSION_V${cab.files.length}`);
+                if (!is2D) {
+                    cab.height += 0.2;
+                    cab.mesh.geometry.dispose();
+                    cab.mesh.geometry = new THREE.BoxGeometry(cab.mesh.geometry.parameters.width, cab.mesh.geometry.parameters.height, cab.height);
+                    cab.mesh.position.z = cab.zBase + cab.height/2;
+                }
+                updateActiveIDE(cab);
+            }
+            hideContextMenu();
+        });
+
+        document.getElementById('ctx-delete')?.addEventListener('click', () => {
+            const id = document.getElementById('context-menu').dataset.targetId;
+            const cab = cabinets.find(c => c.id === id);
+            if (cab) {
+                worldGroup.remove(cab.mesh);
+                cabinets = cabinets.filter(c => c.id !== id);
+                selectedIDs.delete(id);
+                updateGlobalUI(); hideActiveIDE();
+            }
+            hideContextMenu();
+        });
+
+        document.getElementById('ctx-exit')?.addEventListener('click', hideContextMenu);
+
+        window.addEventListener('resize', () => {
+            const h = getVH();
+            camera.aspect = window.innerWidth / h;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, h);
+        });
+
+        setInterval(() => {
+            const clock = document.getElementById('stat-clock');
+            if (clock) clock.innerText = new Date().toTimeString().split(' ')[0];
+        }, 1000);
+
+        // --- BOOT ---
+        initForge();
+        animate();
+    </script>
+</body>
+</html>

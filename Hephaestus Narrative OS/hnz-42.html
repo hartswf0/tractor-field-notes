@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PROTOCOL_Ω_BROWN_V42</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root { --amber: #fbbf24; --gold: #f59e0b; --cyan: #22d3ee; --crimson: #ef4444; --dim: #020617; }
+        body { margin: 0; background: #000; color: var(--amber); overflow: hidden; font-family: 'JetBrains Mono', monospace; font-size: 10px; display: flex; flex-direction: column; height: 100vh; }
+        
+        /* Tactical Layout */
+        #visual-field { height: 42vh; width: 100%; position: relative; border-bottom: 2px solid rgba(34, 211, 238, 0.4); background: radial-gradient(circle at center, #0a0e1a 0%, #000 100%); cursor: crosshair; }
+        #terminal-deck { height: 58vh; width: 100%; background: #010208; display: flex; flex-direction: column; position: relative; }
+        
+        /* Unified Command Bar */
+        #interface-header { background: #020617; border-bottom: 1px solid rgba(251, 191, 36, 0.1); padding: 8px 15px; display: flex; gap: 8px; align-items: center; z-index: 20; flex-wrap: wrap; }
+        #unified-stream { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column-reverse; gap: 10px; position: relative; }
+        #parameter-footer { background: #020617; border-top: 1px solid rgba(251, 191, 36, 0.1); padding: 10px 15px; display: flex; gap: 20px; align-items: center; z-index: 10; height: 50px; }
+
+        /* Tactical Feed Entries */
+        .entry { border-left: 2px solid var(--amber); background: rgba(255,255,255,0.01); padding: 12px; animation: slideIn 0.1s ease-out; border-radius: 0 4px 4px 0; border-bottom: 1px solid rgba(255,255,255,0.02); max-width: 1100px; }
+        .entry.audit { border-left-color: var(--cyan); background: rgba(34, 211, 238, 0.05); }
+        .entry.assembly { border-left-color: #fff; background: rgba(255, 255, 255, 0.03); }
+        .entry-tag { font-size: 6px; font-weight: 900; opacity: 0.4; margin-bottom: 4px; display: block; letter-spacing: 2px; text-transform: uppercase; }
+        .entry-yaml { font-size: 8.5px; color: var(--cyan); opacity: 0.9; line-height: 1.5; white-space: pre-wrap; }
+        .yaml-k { color: var(--gold); font-weight: bold; }
+
+        /* Instrument Buttons */
+        .btn-inst { 
+            background: #010208; border: 1px solid rgba(251, 191, 36, 0.2); 
+            padding: 6px 12px; border-radius: 2px; cursor: pointer; color: var(--amber);
+            font-size: 9px; font-weight: 900; transition: all 0.2s; text-transform: uppercase;
+        }
+        .btn-inst:hover { border-color: var(--cyan); color: #fff; }
+        .btn-inst.active { background: var(--cyan); color: #000; border-color: #fff; box-shadow: 0 0 15px var(--cyan); }
+        
+        #engage-field { 
+            background: rgba(34, 211, 238, 0.05); border: 2px solid var(--cyan); 
+            color: var(--cyan); padding: 6px 18px; font-size: 10px; font-weight: 900;
+            text-transform: uppercase; letter-spacing: 2px; transition: all 0.3s;
+        }
+        #engage-field.active { background: var(--crimson); border-color: #fff; color: #fff; box-shadow: 0 0 20px var(--crimson); }
+
+        @keyframes slideIn { from { transform: translateX(-10px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        /* Sliders */
+        input[type=range] { -webkit-appearance: none; background: rgba(255,255,255,0.05); height: 2px; flex: 1; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 10px; height: 10px; background: var(--cyan); border-radius: 50%; cursor: pointer; box-shadow: 0 0 8px var(--cyan); }
+
+        #radar-mask { position: absolute; right: 25px; top: 25px; width: 100px; aspect-ratio: 1; border: 1px solid rgba(34, 211, 238, 0.2); border-radius: 50%; background: rgba(0,0,0,0.8); overflow: hidden; pointer-events: none; z-index: 5; }
+        .custom-scroll::-webkit-scrollbar { width: 4px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 10px; }
+    </style>
+</head>
+<body class="select-none">
+
+    <!-- TOP VISUAL FIELD: TURNTABLE STACK -->
+    <div id="visual-field">
+        <div id="canvas-container" class="w-full h-full"></div>
+        <div id="radar-mask"><canvas id="radar-canvas" class="w-full h-full opacity-60"></canvas></div>
+        
+        <!-- Discreet Telemetry Overlay -->
+        <div class="absolute top-6 left-6 pointer-events-none">
+            <div class="flex items-center gap-3 text-white/40 text-[8px] font-black tracking-widest uppercase">
+                <span class="text-cyan-400">● 0x92.LATTICE</span>
+                <span>Strata: Multi-LOD</span>
+            </div>
+            <div class="w-24 h-px bg-cyan-500/20 mt-2"></div>
+        </div>
+    </div>
+
+    <!-- BOTTOM: TACTICAL TERMINAL DECK -->
+    <div id="terminal-deck">
+        
+        <!-- Command Bar -->
+        <div id="interface-header">
+            <button id="tool-audit" class="btn-inst active">F1_Audit</button>
+            <button id="tool-cross" class="btn-inst">F2_Crossing</button>
+            <button id="tool-audio" class="btn-inst">F3_Sonic</button>
+            <button id="tool-xray" class="btn-inst">F4_Excavate</button>
+            <div class="w-px h-4 bg-white/10 mx-1"></div>
+            <button id="engage-field">ENGAGEMENT: OFF</button>
+            <div class="flex-1 min-w-[5px]"></div>
+            <button id="reset-btn" class="btn-inst !text-red-500 border-red-500/20">Reforge_Core</button>
+        </div>
+
+        <!-- The Monolithic Stream -->
+        <div id="unified-stream" class="custom-scroll">
+            <div class="entry">
+                <span class="entry-tag">Operational_Start</span>
+                Instrument initialized. Tabula Rasa Disk ready. 
+                Drag Turntable horizontally to spin, vertically to tilt.
+                Use 'F2_Crossing' to breed narrative subdivisions.
+                Use 'Depth_Slicer' slider below to navigate the stack layers.
+            </div>
+        </div>
+
+        <!-- Parameter Controls -->
+        <div id="parameter-footer">
+            <div class="flex items-center gap-4 w-48">
+                <span class="text-[7px] font-black opacity-30 uppercase">Relief</span>
+                <input type="range" id="slider-relief" min="0" max="300" value="150">
+            </div>
+            <div class="flex items-center gap-4 w-48">
+                <span class="text-[7px] font-black opacity-30 uppercase">Stack_LOD</span>
+                <input type="range" id="slider-lod" min="0" max="100" value="100">
+            </div>
+            <div class="flex items-center gap-4 w-48">
+                <span class="text-[7px] font-black opacity-30 uppercase">Sonic</span>
+                <input type="range" id="slider-audio" min="0" max="100" value="30">
+            </div>
+            <div class="flex-1"></div>
+            <div class="flex gap-8 text-[8px] font-black uppercase opacity-20 tracking-widest">
+                <span>⌬ MARKS: <span id="stat-nodes" class="text-white">0</span></span>
+                <span class="text-cyan-400">⌖ VEC: <span id="stat-addr">0,0</span></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- ONTOLOGICAL DATA & NARRATIVE GENES ---
+        const ONTOLOGY = {
+            CORE: { name: "Galactic_Core", color: 0xfbbf24, h: 2.0, assets: ["law_codex.txt", "monolith_mesh", "royal_sigil"] },
+            RIM: { name: "Outer_Rim", color: 0x92400e, h: 0.8, assets: ["scavenger_log.txt", "rust_texture", "warp_drive"] },
+            MARGIN: { name: "Sentient_Debris", color: 0x64748b, h: 0.4, assets: ["memory_core.hex", "scrap_metal", "vibe_synth"] }
+        };
+
+        const PROMPT_GENES = {
+            CORE: ["Regal nobility: site of first severance.", "Crystalline bureaucracy: order defined by crystalline law.", "The Sovereign Mark: opulence and sterile law."],
+            RIM: ["The Outlaw Swerve: perturbation in the sterile center.", "Latent medium: where law is not recognized.", "The Space Severed: home of the clinamen."],
+            MARGIN: ["Marginalized superposition: scavengers in the debris.", "Bottom-up wave: vibration of the revolution.", "The Unmarked State: droids carrying potential spark."]
+        };
+
+        // --- SPATIOTEMPORAL EKPHRASIS PATCH ---
+        class EkphrasisPatch {
+            constructor(x, y, size, depth, config, parentId) {
+                this.x = x; this.y = y; this.size = size; this.depth = depth;
+                this.config = config; this.id = parentId;
+                this.isSplit = false; this.children = [];
+                this.type = config.type;
+                this.weight = (depth === 0 ? 0.05 : ONTOLOGY[config.type].h + (Math.random() * 0.4));
+                this.history = [config.prompt || "Tabula Rasa: unmarked."];
+                this.inventory = ONTOLOGY[config.type]?.assets || [];
+            }
+            subdivide() {
+                if (this.depth >= 5) return false;
+                this.isSplit = true;
+                const s = this.size/2, o = s/2;
+                const coords = [{x:this.x+o,y:this.y+o},{x:this.x-o,y:this.y+o},{x:this.x-o,y:this.y-o},{x:this.x+o,y:this.y-o}];
+                this.children = coords.map((c, i) => {
+                    const nextType = (this.depth === 0) ? (i % 2 === 0 ? "CORE" : "RIM") : this.type;
+                    const pool = PROMPT_GENES[nextType];
+                    const prompt = pool[Math.floor(Math.random() * pool.length)];
+                    const node = new EkphrasisPatch(c.x, c.y, s, this.depth + 1, { type: nextType, prompt: prompt }, `${this.id}_${i}`);
+                    node.history = [...this.history, prompt];
+                    node.weight = this.weight + (ONTOLOGY[nextType].h * 0.25);
+                    return node;
+                });
+                return true;
+            }
+            getLeaves(res = []) {
+                if (!this.isSplit) res.push(this);
+                else this.children.forEach(c => c.getLeaves(res));
+                return res;
+            }
+        }
+
+        // --- THREE.JS ORCHESTRATION ---
+        const visualField = document.getElementById('visual-field');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(40, visualField.clientWidth / visualField.clientHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(visualField.clientWidth, visualField.clientHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        document.getElementById('canvas-container').appendChild(renderer.domElement);
+        
+        camera.position.set(0, -11, 10.5); camera.lookAt(0, 0, 0);
+
+        // Selection Marker (Weighted Drill-Pin)
+        const drillGeo = new THREE.CylinderGeometry(0.08, 0.08, 12, 16);
+        const drillMat = new THREE.MeshBasicMaterial({ color: 0x22d3ee, transparent: true, opacity: 0.4 });
+        const drillMarker = new THREE.Mesh(drillGeo, drillMat);
+        drillMarker.rotation.x = Math.PI / 2;
+        drillMarker.visible = false;
+        scene.add(drillMarker);
+
+        const material = new THREE.ShaderMaterial({
+            uniforms: {
+                u_seeds: { value: new Float32Array(256 * 3) },
+                u_colors: { value: new Float32Array(256 * 3) },
+                u_weights: { value: new Float32Array(256) },
+                u_seed_count: { value: 0 },
+                u_time: { value: 0 },
+                u_relief: { value: 1.0 },
+                u_lod_filter: { value: 1.0 },
+                u_xray: { value: 0.0 },
+                u_slice_x: { value: -10.0 },
+                u_bounds_center: { value: new THREE.Vector2(0.5, 0.5) },
+                u_bounds_size: { value: 0.0 }
+            },
+            vertexShader: `
+                uniform vec3 u_seeds[256];
+                uniform float u_weights[256];
+                uniform int u_seed_count;
+                uniform float u_relief;
+                varying vec2 vUv;
+                varying float vHeight;
+
+                void main() {
+                    vUv = uv;
+                    vec3 pos = position;
+                    float totalW = 0.0, combH = 0.0;
+                    for (int i = 0; i < 256; i++) {
+                        if (i >= u_seed_count) break;
+                        float d = distance(uv, u_seeds[i].xy);
+                        float w = 1.0 / pow(max(d, 0.04), 3.0); 
+                        totalW += w; combH += u_weights[i] * w;
+                    }
+                    float baseH = (totalW > 0.0) ? (combH / totalW) : 0.0;
+                    
+                    // Volumetric Stack Quantization (The "Library Heap")
+                    float stackH = floor(baseH * 12.0) / 12.0;
+                    
+                    float hill = 1.0 / (1.0 + exp(30.0 * (distance(uv, vec2(0.5)) - 0.35)));
+                    vHeight = stackH * hill;
+                    pos.z += vHeight * u_relief * 1.5;
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+                }
+            `,
+            fragmentShader: `
+                uniform vec3 u_seeds[256];
+                uniform vec3 u_colors[256];
+                uniform int u_seed_count;
+                uniform float u_time;
+                uniform float u_xray;
+                uniform float u_slice_x;
+                uniform float u_lod_filter;
+                uniform vec2 u_bounds_center;
+                uniform float u_bounds_size;
+                varying vec2 vUv;
+                varying float vHeight;
+
+                void main() {
+                    vec2 uv = vUv;
+                    if (distance(uv, vec2(0.5)) > 0.495) discard;
+                    if (u_xray > 0.5 && uv.x > u_slice_x) discard;
+
+                    float minDist = 10.0; int closestIdx = 0;
+                    for (int i = 0; i < 256; i++) {
+                        if (i >= u_seed_count) break;
+                        float d = distance(uv, u_seeds[i].xy);
+                        if (d < minDist) { minDist = d; closestIdx = i; }
+                    }
+                    
+                    vec3 color = u_colors[closestIdx];
+                    
+                    // Topographic Survey Lines
+                    float contour = abs(fract(vHeight * 18.0 + 0.5) - 0.5);
+                    float line = smoothstep(0.12, 0.0, contour);
+                    
+                    // Recursive Distinction Lattice
+                    float edge = 0.0;
+                    for (int i = 0; i < 256; i++) {
+                        if (i >= u_seed_count || i == closestIdx) continue;
+                        float d = distance(uv, u_seeds[i].xy);
+                        edge = max(edge, 1.0 - smoothstep(0.0, 0.003, abs(d - minDist)));
+                    }
+                    
+                    float sliceBeam = smoothstep(0.004, 0.0, abs(uv.x - u_slice_x));
+
+                    if (u_xray > 0.5) {
+                        color = vec3(0.02, 0.04, 0.1);
+                        color += edge * vec3(0.0, 1.0, 1.0) * 0.5;
+                        color += sliceBeam * vec3(1.0, 0.0, 0.0) * 2.5;
+                    } else {
+                        color *= (0.6 + vHeight * 0.4); 
+                        color = mix(color, vec3(0.1, 0.9, 1.0), line * 0.4); // Topo lines
+                        color += edge * 0.4 * vec3(1.0, 1.0, 1.0); // Divisions
+                    }
+
+                    // Hover Selection Target
+                    if (u_bounds_size > 0.0) {
+                        vec2 bDist = abs(uv - u_bounds_center);
+                        if (bDist.x < u_bounds_size/2.0 && bDist.y < u_bounds_size/2.0) {
+                            color += 0.2;
+                            if (max(bDist.x, bDist.y) > (u_bounds_size/2.0 - 0.003)) color = vec3(1.0);
+                        }
+                    }
+
+                    gl_FragColor = vec4(color, 1.0);
+                }
+            `,
+            transparent: true
+        });
+
+        const plane = new THREE.Mesh(new THREE.PlaneGeometry(12, 12, 512, 512), material);
+        scene.add(plane);
+
+        // --- STATE & RADAR ---
+        let rootNode = null;
+        let tool = 'audit', isSimEngaged = false, audioCtx, osc, gainNode;
+        const radarCanvas = document.getElementById('radar-canvas');
+        const radarCtx = radarCanvas.getContext('2d');
+
+        function initTabulaRasa() {
+            rootNode = new EkphrasisPatch(0, 0, 10, 0, { type: "MARGIN", prompt: "TABULA RASA: drawing the first distinction." }, "ROOT");
+            updateLattice();
+        }
+
+        function updateLattice() {
+            let leaves = []; rootNode.getLeaves(leaves);
+            leaves = leaves.slice(0, 256);
+            
+            const pos = material.uniforms.u_seeds.value;
+            const col = material.uniforms.u_colors.value;
+            const wgt = material.uniforms.u_weights.value;
+            
+            leaves.forEach((l, i) => {
+                pos[i*3] = (l.x + 6) / 12; pos[i*3+1] = (l.y + 6) / 12;
+                const c = new THREE.Color(ONTOLOGY[l.type]?.color || 0x64748b);
+                col[i*3] = c.r; col[i*3+1] = c.g; col[i*3+2] = c.b;
+                wgt[i] = l.weight;
+            });
+            material.uniforms.u_seed_count.value = leaves.length;
+            document.getElementById('stat-nodes').innerText = leaves.length;
+            drawRadar(leaves);
+        }
+
+        function drawRadar(leaves) {
+            const size = 100; radarCanvas.width = radarCanvas.height = size;
+            radarCtx.clearRect(0, 0, size, size);
+            radarCtx.strokeStyle = 'rgba(34, 211, 238, 0.2)';
+            radarCtx.strokeRect(0, 0, size, size);
+            leaves.forEach(l => {
+                const rx = ((l.x + 6) / 12) * size, ry = ((l.y + 6) / 12) * size;
+                radarCtx.fillStyle = (l.type === "CORE") ? "#fbbf24" : (l.type === "RIM" ? "#92400e" : "#64748b");
+                radarCtx.globalAlpha = 0.6;
+                radarCtx.fillRect(rx - 1, ry - 1, 2, 2);
+            });
+        }
+
+        function pushFeed(msg, tag = 'INFO', isYaml = false) {
+            const buffer = document.getElementById('unified-stream');
+            const entry = document.createElement('div');
+            entry.className = `entry ${tag === 'AUDIT' ? 'audit' : ''} ${tag === 'ASSEMBLY' ? 'assembly' : ''}`;
+            if (isYaml) entry.innerHTML = `<span class="entry-tag">${tag}</span><div class="entry-yaml">${msg}</div>`;
+            else entry.innerHTML = `<span class="entry-tag">${tag}</span>${msg}`;
+            buffer.prepend(entry);
+            if (buffer.childNodes.length > 50) buffer.removeChild(buffer.lastChild);
+        }
+
+        // --- TURNTABLE INTERACTION ---
+        const mouse = new THREE.Vector2();
+        const raycaster = new THREE.Raycaster();
+        let isDragging = false, lastMouse = { x: 0, y: 0 }, spinVel = { x: 0, y: 0 };
+
+        function onDown(x, y) { isDragging = true; lastMouse = { x, y }; }
+        function onUp() { isDragging = false; }
+        function onMove(x, y) {
+            const rect = visualField.getBoundingClientRect();
+            mouse.x = ((x - rect.left) / rect.width) * 2 - 1;
+            mouse.y = -((y - rect.top) / rect.height) * 2 + 1;
+            if (isDragging) {
+                const dx = x - lastMouse.x;
+                const dy = y - lastMouse.y;
+                spinVel.x = dx * 0.007; // Drag Right = Spin Right
+                spinVel.y = dy * 0.007;
+                lastMouse = { x, y };
+            }
+            handleHover();
+        }
+
+        visualField.addEventListener('mousedown', (e) => onDown(e.clientX, e.clientY));
+        window.addEventListener('mouseup', onUp);
+        window.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY));
+        visualField.addEventListener('touchstart', (e) => { onDown(e.touches[0].clientX, e.touches[0].clientY); e.preventDefault(); });
+        window.addEventListener('touchend', onUp);
+        window.addEventListener('touchmove', (e) => onMove(e.touches[0].clientX, e.touches[0].clientY));
+
+        function handleHover() {
+            raycaster.setFromCamera(mouse, camera);
+            const hits = raycaster.intersectObject(plane);
+            if (hits.length > 0) {
+                let leaves = []; rootNode.getLeaves(leaves);
+                const pt = hits[0].point;
+                let closest = null, dMin = 999;
+                leaves.forEach(l => {
+                    const d = Math.sqrt((l.x-pt.x)**2 + (l.y-pt.y)**2);
+                    if (d < dMin) { dMin = d; closest = l; }
+                });
+
+                drillMarker.visible = true;
+                drillMarker.position.set(pt.x, pt.y, 0);
+                material.uniforms.u_slice_x.value = (pt.x + 6) / 12;
+                document.getElementById('stat-addr').innerText = `${pt.x.toFixed(1)}, ${pt.y.toFixed(1)}`;
+
+                if (closest && dMin < 2.0) {
+                    material.uniforms.u_bounds_center.value.set((closest.x + 6) / 12, (closest.y + 6) / 12);
+                    material.uniforms.u_bounds_size.value = closest.size / 12;
+                    if (tool === 'audit') auditLocus(closest);
+                    if (tool === 'audio') playSonic(140 + closest.weight * 200);
+                }
+            } else {
+                drillMarker.visible = false;
+                material.uniforms.u_bounds_size.value = 0;
+                if (tool === 'audio') stopSonic();
+            }
+        }
+
+        let lastAuditId = null;
+        function auditLocus(node) {
+            if (node.id === lastAuditId) return;
+            lastAuditId = node.id;
+            const yaml = `<span class="yaml-k">PATCH_ID:</span> ${node.id}\n<span class="yaml-k">STRATA_DOMAIN:</span> ${node.type}\n<span class="yaml-k">INVENTORY:</span> [${node.inventory.join(', ')}]\n<span class="yaml-k">EKPHRASIS_PROMPT:</span> ${node.history[node.history.length-1]}`;
+            pushFeed(yaml, 'AUDIT', true);
+        }
+
+        function playSonic(hz) {
+            if (!audioCtx) return;
+            const vol = document.getElementById('slider-audio').value / 800;
+            osc.frequency.setTargetAtTime(hz, audioCtx.currentTime, 0.1);
+            gainNode.gain.setTargetAtTime(vol, audioCtx.currentTime, 0.1);
+        }
+        function stopSonic() { if (gainNode) gainNode.gain.setTargetAtTime(0, audioCtx.currentTime, 0.2); }
+
+        visualField.addEventListener('click', () => {
+            if (!audioCtx) {
+                audioCtx = new AudioContext();
+                osc = audioCtx.createOscillator(); gainNode = audioCtx.createGain();
+                osc.connect(gainNode); gainNode.connect(audioCtx.destination);
+                osc.start(); gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+            }
+            if (tool === 'cross') {
+                raycaster.setFromCamera(mouse, camera);
+                const hits = raycaster.intersectObject(plane);
+                if (hits.length > 0) {
+                    let leaves = []; rootNode.getLeaves(leaves);
+                    const pt = hits[0].point;
+                    let closest = null, dMin = 999;
+                    leaves.forEach(l => {
+                        const d = Math.sqrt((l.x-pt.x)**2 + (l.y-pt.y)**2);
+                        if (d < dMin) { dMin = d; closest = l; }
+                    });
+                    if (closest && closest.subdivide()) {
+                        pushFeed(`ASSEMBLY: Distinction drawn at ${closest.id}. Visual stack extruded.`, 'ASSEMBLY');
+                        updateLattice();
+                    }
+                }
+            }
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            material.uniforms.u_time.value += 0.01;
+            
+            if (!isDragging) {
+                spinVel.x *= 0.97;
+                spinVel.y *= 0.97;
+                plane.rotation.z += 0.0002;
+            }
+            plane.rotation.z += spinVel.x;
+            plane.rotation.x -= spinVel.y;
+            plane.rotation.x = Math.max(-1.1, Math.min(0.2, plane.rotation.x));
+            
+            drillMarker.rotation.z = -plane.rotation.z;
+
+            if (isSimEngaged && Math.random() > 0.99) {
+                let leaves = []; rootNode.getLeaves(leaves);
+                const t = leaves[Math.floor(Math.random()*leaves.length)];
+                if (t.subdivide()) {
+                    pushFeed(`STOCHASTIC_BREED: Breeding narrative niche ${t.id}.`, 'ASSEMBLY');
+                    updateLattice();
+                }
+            }
+            renderer.render(scene, camera);
+        }
+
+        // --- BINDINGS ---
+        document.getElementById('slider-relief').addEventListener('input', (e) => {
+            material.uniforms.u_relief.value = e.target.value / 150;
+            document.getElementById('lbl-relief').innerText = (e.target.value / 150).toFixed(1) + 'x';
+        });
+        document.getElementById('slider-lod').addEventListener('input', (e) => {
+            material.uniforms.u_lod_filter.value = e.target.value / 100;
+            pushFeed(`Depth filter tuned to LOD index ${e.target.value}%.`, 'PARAMETER');
+        });
+
+        const tools = ['audit', 'cross', 'audio', 'xray'];
+        tools.forEach(t => {
+            document.getElementById(`tool-${t}`).addEventListener('click', () => {
+                if (t === 'xray') {
+                    const active = material.uniforms.u_xray.value > 0.5;
+                    material.uniforms.u_xray.value = active ? 0.0 : 1.0;
+                    document.getElementById('tool-xray').classList.toggle('active');
+                    pushFeed(`Volumetric Slicer ${active ? 'Standby' : 'Engaged'}.`, 'SYSTEM');
+                    return;
+                }
+                tool = t === 'cross' ? 'cross' : (t === 'audio' ? 'audio' : 'audit');
+                document.querySelectorAll('.btn-inst').forEach(b => { if(b.id.startsWith('tool')) b.classList.remove('active'); });
+                document.getElementById(`tool-${t}`).classList.add('active');
+                if (t !== 'audio') stopSonic();
+                pushFeed(`Instrument mode set to ${t.toUpperCase()}.`, 'SYSTEM');
+            });
+        });
+
+        document.getElementById('engage-field').addEventListener('click', (e) => {
+            isSimEngaged = !isSimEngaged;
+            e.target.classList.toggle('active');
+            e.target.innerText = isSimEngaged ? 'ENGAGEMENT: ON' : 'ENGAGEMENT: OFF';
+            pushFeed(`Engagement State: ${isSimEngaged ? 'Active' : 'Standby'}.`, 'SYSTEM');
+        });
+
+        document.getElementById('reset-btn').addEventListener('click', () => { initTabulaRasa(); pushFeed("Tabula Rasa: field collapsed.", "RESET"); });
+        
+        window.addEventListener('resize', () => {
+            renderer.setSize(visualField.clientWidth, visualField.clientHeight);
+            camera.aspect = visualField.clientWidth / visualField.clientHeight;
+            camera.updateProjectionMatrix();
+        });
+
+        initTabulaRasa(); animate();
+    </script>
+</body>
+</html>

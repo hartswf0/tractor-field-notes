@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hephaestus Forge: Spatiotemporal Transclusion Engine</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #020305;
+            --panel: #0a0c10;
+            --amber: #fbbf24;
+            --gold: #d97706;
+            --cyan: #22d3ee;
+            --muted: #64748b;
+            --border: rgba(251, 191, 36, 0.15);
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--bg);
+            color: var(--amber);
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        header {
+            background: var(--panel);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        h1 {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--cyan);
+            margin-bottom: 4px;
+        }
+        
+        .subtitle {
+            font-size: 8px;
+            color: var(--muted);
+            letter-spacing: 1px;
+        }
+        
+        main {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+        }
+        
+        @media (min-width: 768px) {
+            main { flex-direction: row; }
+        }
+        
+        #manifest {
+            background: var(--panel);
+            border-right: 1px solid var(--border);
+            padding: 12px;
+            overflow-y: auto;
+            flex-shrink: 0;
+        }
+        
+        @media (max-width: 767px) {
+            #manifest {
+                max-height: 35vh;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+        }
+        
+        @media (min-width: 768px) {
+            #manifest { width: 260px; }
+        }
+        
+        .family {
+            margin-bottom: 16px;
+        }
+        
+        .family-header {
+            font-size: 7px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+            padding: 6px 8px;
+            background: rgba(217, 119, 6, 0.08);
+            border-left: 2px solid var(--gold);
+            margin-bottom: 6px;
+        }
+        
+        .file-item {
+            display: block;
+            padding: 10px 12px;
+            font-size: 9px;
+            color: var(--amber);
+            text-decoration: none;
+            border-left: 2px solid transparent;
+            transition: all 0.15s;
+            cursor: pointer;
+            background: transparent;
+            border-bottom: 1px solid rgba(255,255,255,0.02);
+        }
+        
+        .file-item:hover {
+            background: rgba(34, 211, 238, 0.05);
+            border-left-color: var(--cyan);
+            color: #fff;
+        }
+        
+        .file-item.active {
+            background: rgba(34, 211, 238, 0.1);
+            border-left-color: var(--cyan);
+            color: var(--cyan);
+        }
+        
+        .file-id {
+            font-weight: 700;
+            display: block;
+            margin-bottom: 2px;
+        }
+        
+        .file-title {
+            font-size: 7px;
+            color: var(--muted);
+            letter-spacing: 0.5px;
+        }
+        
+        #viewport {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg);
+            min-height: 0;
+        }
+        
+        #frame-header {
+            background: var(--panel);
+            border-bottom: 1px solid var(--border);
+            padding: 8px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 36px;
+        }
+        
+        #frame-label {
+            font-size: 8px;
+            color: var(--cyan);
+            letter-spacing: 1px;
+        }
+        
+        .frame-controls {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .ctrl-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--amber);
+            font-size: 8px;
+            padding: 4px 10px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.15s;
+        }
+        
+        .ctrl-btn:hover {
+            border-color: var(--cyan);
+            color: var(--cyan);
+        }
+        
+        #transclusion-frame {
+            flex: 1;
+            border: none;
+            background: #000;
+            width: 100%;
+        }
+        
+        #empty-state {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 12px;
+            color: var(--muted);
+        }
+        
+        .empty-glyph {
+            font-size: 32px;
+            opacity: 0.3;
+        }
+        
+        .empty-text {
+            font-size: 9px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Hephaestus Forge</h1>
+        <div class="subtitle">Spatiotemporal Transclusion Engine</div>
+    </header>
+    
+    <main>
+        <nav id="manifest">
+            <div class="family">
+                <div class="family-header">Protocol Ω Brown // HNZ</div>
+                <a class="file-item" data-src="hnz-38.html">
+                    <span class="file-id">HNZ-38</span>
+                    <span class="file-title">V38</span>
+                </a>
+                <a class="file-item" data-src="hnz-39.html">
+                    <span class="file-id">HNZ-39</span>
+                    <span class="file-title">V39</span>
+                </a>
+                <a class="file-item" data-src="hnz-40.html">
+                    <span class="file-id">HNZ-40</span>
+                    <span class="file-title">V40</span>
+                </a>
+                <a class="file-item" data-src="hnz-41.html">
+                    <span class="file-id">HNZ-41</span>
+                    <span class="file-title">V41</span>
+                </a>
+                <a class="file-item" data-src="hnz-42.html">
+                    <span class="file-id">HNZ-42</span>
+                    <span class="file-title">V42</span>
+                </a>
+                <a class="file-item" data-src="hnz-43.html">
+                    <span class="file-id">HNZ-43</span>
+                    <span class="file-title">V43</span>
+                </a>
+            </div>
+            
+            <div class="family">
+                <div class="family-header">Protocol Ω Brown // HF</div>
+                <a class="file-item" data-src="hf-44.html">
+                    <span class="file-id">HF-44</span>
+                    <span class="file-title">V44</span>
+                </a>
+                <a class="file-item" data-src="hf-45.html">
+                    <span class="file-id">HF-45</span>
+                    <span class="file-title">V45 // Strata Stack</span>
+                </a>
+                <a class="file-item" data-src="hf-46.html">
+                    <span class="file-id">HF-46</span>
+                    <span class="file-title">V46 // Synthesis</span>
+                </a>
+                <a class="file-item" data-src="hf-48.html">
+                    <span class="file-id">HF-48</span>
+                    <span class="file-title">V48 // Ekphrastic OS</span>
+                </a>
+                <a class="file-item" data-src="hf-01.html">
+                    <span class="file-id">HF-01</span>
+                    <span class="file-title">V49 // Ekphrastic Narrator</span>
+                </a>
+            </div>
+            
+            <div class="family">
+                <div class="family-header">Hephaestus Narrative OS</div>
+                <a class="file-item" data-src="hn-os-21.html">
+                    <span class="file-id">HN-OS-21</span>
+                    <span class="file-title">Core System</span>
+                </a>
+                <a class="file-item" data-src="hn-os-25.html">
+                    <span class="file-id">HN-OS-25</span>
+                    <span class="file-title">Stable Release</span>
+                </a>
+            </div>
+            
+            <div class="family">
+                <div class="family-header">Story Fracture</div>
+                <a class="file-item" data-src="sf01.html">
+                    <span class="file-id">SF-01</span>
+                    <span class="file-title">Shield of Achilles</span>
+                </a>
+                <a class="file-item" data-src="osf-01.html">
+                    <span class="file-id">OSF-01</span>
+                    <span class="file-title">ONYX Story Fracture</span>
+                </a>
+            </div>
+            
+            <div class="family">
+                <div class="family-header">Hephaestus Prime</div>
+                <a class="file-item" data-src="pbc-01.html">
+                    <span class="file-id">PBC-01</span>
+                    <span class="file-title">Prompt Breeding Chamber</span>
+                </a>
+                <a class="file-item" data-src="vss-01.html">
+                    <span class="file-id">VSS-01</span>
+                    <span class="file-title">Variant Synthesis</span>
+                </a>
+            </div>
+            
+            <div class="family">
+                <div class="family-header">ONYX // Special Editions</div>
+                <a class="file-item" data-src="hn-odd.html">
+                    <span class="file-id">ONYX</span>
+                    <span class="file-title">Shield of Achilles</span>
+                </a>
+                <a class="file-item" data-src="or-ba.html">
+                    <span class="file-id">OR-BA</span>
+                    <span class="file-title">Voronoi Story Space</span>
+                </a>
+            </div>
+        </nav>
+        
+        <section id="viewport">
+            <div id="frame-header">
+                <span id="frame-label">SELECT ARTIFACT</span>
+                <div class="frame-controls">
+                    <button class="ctrl-btn" id="btn-new-tab">↗ NEW TAB</button>
+                    <button class="ctrl-btn" id="btn-close">✕ CLOSE</button>
+                </div>
+            </div>
+            <div id="empty-state">
+                <div class="empty-glyph">◇</div>
+                <div class="empty-text">Select artifact from manifest</div>
+            </div>
+            <iframe id="transclusion-frame" style="display:none;"></iframe>
+        </section>
+    </main>
+    
+    <script>
+        const manifest = document.getElementById('manifest');
+        const frame = document.getElementById('transclusion-frame');
+        const emptyState = document.getElementById('empty-state');
+        const frameLabel = document.getElementById('frame-label');
+        const btnNewTab = document.getElementById('btn-new-tab');
+        const btnClose = document.getElementById('btn-close');
+        
+        let currentSrc = null;
+        
+        manifest.addEventListener('click', (e) => {
+            const item = e.target.closest('.file-item');
+            if (!item) return;
+            
+            const src = item.dataset.src;
+            if (!src) return;
+            
+            document.querySelectorAll('.file-item').forEach(el => el.classList.remove('active'));
+            item.classList.add('active');
+            
+            currentSrc = src;
+            frame.src = src;
+            frame.style.display = 'block';
+            emptyState.style.display = 'none';
+            frameLabel.textContent = item.querySelector('.file-id').textContent;
+        });
+        
+        btnNewTab.addEventListener('click', () => {
+            if (currentSrc) window.open(currentSrc, '_blank');
+        });
+        
+        btnClose.addEventListener('click', () => {
+            frame.src = '';
+            frame.style.display = 'none';
+            emptyState.style.display = 'flex';
+            frameLabel.textContent = 'SELECT ARTIFACT';
+            currentSrc = null;
+            document.querySelectorAll('.file-item').forEach(el => el.classList.remove('active'));
+        });
+    </script>
+</body>
+</html>

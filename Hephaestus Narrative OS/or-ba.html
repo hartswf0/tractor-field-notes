@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ONYX: Voronoi Story Space</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg:#0a0e1a; --cyan:#4dd9cc; --gold:#e8b849; --muted:#64748b; --border:rgba(77,217,204,0.3); }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'JetBrains Mono',monospace; background:var(--bg); color:var(--cyan); height:100vh; height:100dvh; overflow:hidden; }
+        
+        #app { display:flex; flex-direction:column; height:100%; }
+        
+        canvas { display:block; flex:1; cursor:pointer; }
+        
+        #hud { background:rgba(0,0,0,0.9); border-bottom:1px solid var(--border); padding:8px 12px; display:flex; justify-content:space-between; align-items:center; gap:12px; font-size:10px; flex-shrink:0; }
+        .hud-item { display:flex; flex-direction:column; gap:2px; }
+        .hud-label { font-size:7px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; }
+        .hud-value { color:var(--cyan); font-weight:bold; }
+        .hud-value.gold { color:var(--gold); }
+        
+        #controls { position:fixed; left:12px; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.9); border:1px solid var(--border); padding:8px; border-radius:8px; display:flex; flex-direction:column; gap:6px; z-index:30; }
+        .ctrl-btn { width:40px; height:40px; background:rgba(77,217,204,0.1); border:1px solid var(--cyan); border-radius:6px; color:var(--cyan); display:flex; align-items:center; justify-content:center; cursor:pointer; transition:all 0.2s; font-size:14px; }
+        .ctrl-btn:hover { background:rgba(232,184,73,0.2); border-color:var(--gold); color:var(--gold); }
+        .ctrl-btn:active { transform:scale(0.95); }
+        .ctrl-sep { height:1px; background:var(--border); margin:4px 0; }
+        
+        #inspector { background:rgba(0,0,0,0.95); border-top:1px solid var(--gold); padding:12px; max-height:35vh; overflow-y:auto; flex-shrink:0; display:none; }
+        #inspector.show { display:block; }
+        .insp-title { font-size:11px; color:var(--gold); font-weight:bold; margin-bottom:8px; }
+        .insp-text { font-size:9px; color:#e2e8f0; line-height:1.6; }
+        .insp-meta { font-size:8px; color:var(--muted); margin-top:8px; display:flex; gap:12px; }
+        
+        #breadcrumb { background:rgba(0,0,0,0.9); border-top:1px solid var(--border); padding:8px 12px; font-size:9px; display:flex; gap:8px; align-items:center; overflow-x:auto; flex-shrink:0; }
+        .crumb { color:var(--cyan); cursor:pointer; white-space:nowrap; }
+        .crumb:hover { color:var(--gold); text-decoration:underline; }
+        .crumb-sep { color:var(--muted); }
+        .crumb.current { color:var(--gold); font-weight:bold; }
+        
+        #toast { position:fixed; bottom:100px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.95); border:1px solid var(--gold); padding:8px 16px; border-radius:6px; font-size:10px; color:var(--gold); z-index:100; opacity:0; transition:opacity 0.3s; pointer-events:none; }
+        #toast.show { opacity:1; }
+        
+        /* Export Modal */
+        #export-modal { position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:200; display:none; align-items:center; justify-content:center; padding:16px; }
+        #export-modal.show { display:flex; }
+        .modal-content { background:#0a0e1a; border:1px solid var(--gold); border-radius:8px; width:100%; max-width:500px; max-height:90vh; overflow:hidden; display:flex; flex-direction:column; }
+        .modal-header { padding:12px 16px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; }
+        .modal-title { font-size:11px; color:var(--gold); font-weight:bold; }
+        .modal-close { background:none; border:none; color:var(--muted); cursor:pointer; font-size:16px; }
+        .modal-close:hover { color:var(--gold); }
+        .modal-body { padding:16px; overflow-y:auto; flex:1; }
+        .modal-row { margin-bottom:12px; }
+        .modal-label { font-size:8px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
+        .modal-select, .modal-input { width:100%; background:#1a1f2e; border:1px solid var(--border); border-radius:4px; padding:8px; color:var(--cyan); font-family:inherit; font-size:10px; }
+        .modal-select:focus, .modal-input:focus { outline:none; border-color:var(--gold); }
+        .modal-textarea { width:100%; min-height:120px; background:#1a1f2e; border:1px solid var(--border); border-radius:4px; padding:8px; color:#e2e8f0; font-family:inherit; font-size:9px; resize:vertical; }
+        .modal-preview { background:#111827; border:1px solid var(--border); border-radius:4px; padding:8px; font-size:8px; color:#94a3b8; max-height:150px; overflow-y:auto; white-space:pre-wrap; word-break:break-word; }
+        .modal-btns { display:flex; gap:8px; margin-top:12px; }
+        .modal-btn { flex:1; padding:10px; border:1px solid var(--cyan); background:rgba(77,217,204,0.1); color:var(--cyan); font-family:inherit; font-size:9px; font-weight:bold; border-radius:4px; cursor:pointer; }
+        .modal-btn:hover { background:rgba(77,217,204,0.2); }
+        .modal-btn.primary { border-color:var(--gold); background:rgba(232,184,73,0.2); color:var(--gold); }
+        
+        /* Inspector notes */
+        .insp-notes { margin-top:8px; padding-top:8px; border-top:1px solid var(--border); }
+        .insp-notes-label { font-size:7px; color:var(--muted); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
+        .insp-notes-input { width:100%; background:#1a1f2e; border:1px solid var(--border); border-radius:4px; padding:6px; color:#e2e8f0; font-family:inherit; font-size:9px; resize:vertical; min-height:40px; }
+        .insp-notes-input:focus { outline:none; border-color:var(--gold); }
+        .insp-actions { display:flex; gap:6px; margin-top:8px; }
+        .insp-btn { padding:6px 10px; border:1px solid var(--cyan); background:rgba(77,217,204,0.1); color:var(--cyan); font-family:inherit; font-size:8px; border-radius:4px; cursor:pointer; }
+        .insp-btn:hover { background:rgba(77,217,204,0.2); }
+        
+        @media (max-width:600px) {
+            #controls { left:50%; top:auto; bottom:120px; transform:translateX(-50%); flex-direction:row; }
+            .ctrl-btn { width:36px; height:36px; font-size:12px; }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div id="hud">
+            <div class="hud-item"><div class="hud-label">Depth</div><div class="hud-value" id="hud-depth">D0</div></div>
+            <div class="hud-item"><div class="hud-label">Nodes</div><div class="hud-value" id="hud-nodes">1</div></div>
+            <div class="hud-item"><div class="hud-label">Current</div><div class="hud-value gold" id="hud-current">ILIAD_XVIII</div></div>
+            <div class="hud-item"><div class="hud-label">Children</div><div class="hud-value" id="hud-children">0</div></div>
+        </div>
+        
+        <canvas id="canvas"></canvas>
+        
+        <div id="inspector">
+            <div class="insp-title" id="insp-title"></div>
+            <div class="insp-text" id="insp-text"></div>
+            <div class="insp-meta">
+                <span id="insp-type"></span>
+                <span id="insp-lines"></span>
+            </div>
+            <div class="insp-notes">
+                <div class="insp-notes-label">Notes</div>
+                <textarea class="insp-notes-input" id="insp-notes" placeholder="Add notes for this node..." onchange="saveNote()"></textarea>
+            </div>
+            <div class="insp-actions">
+                <button class="insp-btn" onclick="copyNode()">📋 Copy</button>
+                <button class="insp-btn" onclick="openExport()">📤 Export</button>
+                <button class="insp-btn" onclick="exportUp()">⬆ Export Up</button>
+                <button class="insp-btn" onclick="exportDown()">⬇ Export Down</button>
+            </div>
+        </div>
+        
+        <div id="breadcrumb"></div>
+    </div>
+    
+    <div id="controls">
+        <div class="ctrl-btn" onclick="navUp()" title="Up">↑</div>
+        <div class="ctrl-btn" onclick="navDown()" title="Down">↓</div>
+        <div class="ctrl-btn" onclick="navPrev()" title="Prev">←</div>
+        <div class="ctrl-btn" onclick="navNext()" title="Next">→</div>
+        <div class="ctrl-sep"></div>
+        <div class="ctrl-btn" onclick="goRoot()" title="Root">⌂</div>
+    </div>
+    
+    <div id="toast"></div>
+    
+    <div id="export-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="export-title">Export Node</div>
+                <button class="modal-close" onclick="closeExport()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-row">
+                    <div class="modal-label">Format</div>
+                    <select class="modal-select" id="export-format" onchange="updatePreview()">
+                        <option value="markdown">Markdown (Nested)</option>
+                        <option value="plain">Plain Text</option>
+                        <option value="json">JSON</option>
+                        <option value="yaml">YAML-like</option>
+                        <option value="prompt">LLM Prompt</option>
+                        <option value="outline">Outline</option>
+                    </select>
+                </div>
+                <div class="modal-row">
+                    <div class="modal-label">Depth (levels to include)</div>
+                    <select class="modal-select" id="export-depth" onchange="updatePreview()">
+                        <option value="0">Current node only</option>
+                        <option value="1">+1 level</option>
+                        <option value="2">+2 levels</option>
+                        <option value="3" selected>+3 levels</option>
+                        <option value="5">+5 levels</option>
+                        <option value="99">All descendants</option>
+                    </select>
+                </div>
+                <div class="modal-row">
+                    <div class="modal-label">Direction</div>
+                    <select class="modal-select" id="export-direction" onchange="updatePreview()">
+                        <option value="down" selected>Down (children)</option>
+                        <option value="up">Up (ancestors)</option>
+                        <option value="both">Both (full context)</option>
+                    </select>
+                </div>
+                <div class="modal-row">
+                    <div class="modal-label">Preview</div>
+                    <div class="modal-preview" id="export-preview"></div>
+                </div>
+                <div class="modal-btns">
+                    <button class="modal-btn" onclick="copyExport()">📋 Copy</button>
+                    <button class="modal-btn primary" onclick="downloadExport()">💾 Download</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+const CAN = document.getElementById('canvas');
+const CTX = CAN.getContext('2d');
+let W, H, DPR = window.devicePixelRatio || 1;
+
+const ONTOLOGY = {
+    Book:     { color:'#fbbf24', mat:'GOLD' },
+    Section:  { color:'#c084fc', mat:'BRONZE' },
+    Scene:    { color:'#60a5fa', mat:'TIN' },
+    Entity:   { color:'#4ade80', mat:'SILVER' },
+    Speech:   { color:'#f472b6', mat:'KYANOS' },
+    Action:   { color:'#fb923c', mat:'IRON' },
+    Image:    { color:'#22d3ee', mat:'ENAMEL' }
+};
+
+const ILIAD_XVIII = {
+    id: 'root', type: 'Book', label: 'ILIAD XVIII', lines: '1-617',
+    text: 'The Shield of Achilles — Thetis brings divine armour forged by Hephaestus',
+    children: [
+        {
+            id: 's1', type: 'Section', label: '1-77', lines: '1-77',
+            text: 'Thetis responds to Achilles\' sorrow',
+            children: [
+                { id: 's1a', type: 'Scene', label: 'At the Ships', lines: '1-14', text: 'Achilles agonises while fighting rages. Antilochus approaches.', children: [
+                    { id: 's1a1', type: 'Entity', label: 'Antilochus', lines: '1-2', text: 'Swift-footed messenger bringing news' },
+                    { id: 's1a2', type: 'Entity', label: 'Achilles', lines: '3-6', text: 'In front of high-sterned ships, communing anxiously with his proud heart' },
+                    { id: 's1a3', type: 'Speech', label: 'Inner Monologue', lines: '6-14', text: '"What woe is this? Why are the long-haired Greeks in flight? Is Patroclus dead?"', children: [
+                        { id: 's1a3a', type: 'Image', label: 'Prophecy Recalled', lines: '9-11', text: 'Mother prophesied best of Myrmidons would die at Trojan hands' },
+                        { id: 's1a3b', type: 'Entity', label: 'Patroclus', lines: '12-14', text: 'Despite warning to return once fire was out, not to battle Hector' }
+                    ]}
+                ]},
+                { id: 's1b', type: 'Scene', label: 'The News', lines: '15-21', text: 'Antilochus delivers the bitter news.', children: [
+                    { id: 's1b1', type: 'Image', label: 'Scalding Tears', lines: '15-16', text: 'Antilochus bathed in scalding tears' },
+                    { id: 's1b2', type: 'Speech', label: 'Death Announcement', lines: '17-21', text: '"Patroclus has fallen, they fight over his corpse, his naked corpse, for Hector has your armour"' }
+                ]},
+                { id: 's1c', type: 'Scene', label: 'Achilles\' Grief', lines: '22-35', text: 'Black cloud of grief shrouds Achilles.', children: [
+                    { id: 's1c1', type: 'Action', label: 'Ash & Sand', lines: '22-24', text: 'Grasping handfuls of dark sand and ash, poured over head and handsome face' },
+                    { id: 's1c2', type: 'Image', label: 'Soiled Tunic', lines: '24-25', text: 'Scented tunic soiled with ash' },
+                    { id: 's1c3', type: 'Image', label: 'Fallen Giant', lines: '25-27', text: 'Flung himself in dust, lying outstretched, tore and fouled his hair' },
+                    { id: 's1c4', type: 'Entity', label: 'Slave Girls', lines: '28-30', text: 'Women seized as prizes shrieked, beat their breasts, sank to ground' },
+                    { id: 's1c5', type: 'Entity', label: 'Antilochus', lines: '31-34', text: 'Weeping, grasped Achilles\' hand, fearing he might cut his own throat' },
+                    { id: 's1c6', type: 'Image', label: 'Noble Grief', lines: '34-35', text: 'So heart-felt was his noble grief' }
+                ]},
+                { id: 's1d', type: 'Scene', label: 'Sea Cave', lines: '36-49', text: 'Thetis hears the groan deep beneath the sea.', children: [
+                    { id: 's1d1', type: 'Entity', label: 'Thetis', lines: '36-38', text: 'Divine mother beside her ancient Father in the depths' },
+                    { id: 's1d2', type: 'Action', label: 'Her Cry', lines: '38-39', text: 'She cried out, and all the Nereids gathered' },
+                    { id: 's1d3', type: 'Scene', label: 'Nereids Catalogue', lines: '39-49', text: '33 daughters of the deep gathered to Thetis', children: [
+                        { id: 'n01', type: 'Entity', label: 'Glauce', lines: '39', text: '"Gleaming one" — sea-nymph of calm waters' },
+                        { id: 'n02', type: 'Entity', label: 'Thaleia', lines: '39', text: '"Blooming one" — nymph of festivity' },
+                        { id: 'n03', type: 'Entity', label: 'Cymodoce', lines: '39', text: '"Wave-receiver" — nymph who calms the waves' },
+                        { id: 'n04', type: 'Entity', label: 'Nesaea', lines: '40', text: '"Island-dweller" — nymph of island shores' },
+                        { id: 'n05', type: 'Entity', label: 'Speio', lines: '40', text: '"Cave-dweller" — nymph of sea-caves' },
+                        { id: 'n06', type: 'Entity', label: 'Thoe', lines: '40', text: '"Swift one" — nymph of swift currents' },
+                        { id: 'n07', type: 'Entity', label: 'Halie', lines: '40', text: '"Ox-eyed Halie" — large-eyed sea-nymph' },
+                        { id: 'n08', type: 'Entity', label: 'Cymothoe', lines: '41', text: '"Wave-swift" — nymph of swift waves' },
+                        { id: 'n09', type: 'Entity', label: 'Actaeë', lines: '41', text: '"Shore-dweller" — nymph of the coastline' },
+                        { id: 'n10', type: 'Entity', label: 'Limnoreia', lines: '41', text: '"Of the salt marsh" — nymph of harbours' },
+                        { id: 'n11', type: 'Entity', label: 'Melite', lines: '42', text: '"Honey-sweet" — gentle sea-nymph' },
+                        { id: 'n12', type: 'Entity', label: 'Iaera', lines: '42', text: '"The sender" — nymph who sends fair winds' },
+                        { id: 'n13', type: 'Entity', label: 'Amphithoe', lines: '42', text: '"Swift-surrounding" — nymph of encircling waters' },
+                        { id: 'n14', type: 'Entity', label: 'Agave', lines: '42', text: '"Illustrious" — noble sea-nymph' },
+                        { id: 'n15', type: 'Entity', label: 'Doto', lines: '43', text: '"Giver" — nymph of safe voyage' },
+                        { id: 'n16', type: 'Entity', label: 'Proto', lines: '43', text: '"First" — primordial sea-nymph' },
+                        { id: 'n17', type: 'Entity', label: 'Pherusa', lines: '43', text: '"Bringer" — nymph who brings cargo safe' },
+                        { id: 'n18', type: 'Entity', label: 'Dynamene', lines: '43', text: '"Able" — powerful sea-nymph' },
+                        { id: 'n19', type: 'Entity', label: 'Dexamene', lines: '44', text: '"Receiving" — hospitable nymph' },
+                        { id: 'n20', type: 'Entity', label: 'Amphinome', lines: '44', text: '"Surrounding pasture" — nymph of rich waters' },
+                        { id: 'n21', type: 'Entity', label: 'Callianeira', lines: '44', text: '"Beautiful swimmer" — graceful nymph' },
+                        { id: 'n22', type: 'Entity', label: 'Doris', lines: '45', text: '"Bountiful" — their mother\'s namesake' },
+                        { id: 'n23', type: 'Entity', label: 'Panope', lines: '45', text: '"All-seeing" — nymph of panoramic vision' },
+                        { id: 'n24', type: 'Entity', label: 'Galatea', lines: '45', text: '"Milk-white" — famous for beauty' },
+                        { id: 'n25', type: 'Entity', label: 'Nemertes', lines: '46', text: '"Unerring" — truthful nymph' },
+                        { id: 'n26', type: 'Entity', label: 'Apseudes', lines: '46', text: '"Guileless" — honest nymph' },
+                        { id: 'n27', type: 'Entity', label: 'Callianassa', lines: '46', text: '"Beautiful queen" — regal nymph' },
+                        { id: 'n28', type: 'Entity', label: 'Clymene', lines: '47', text: '"Famous" — renowned sea-nymph' },
+                        { id: 'n29', type: 'Entity', label: 'Ianeira', lines: '47', text: '"Enchantress" — mesmerizing nymph' },
+                        { id: 'n30', type: 'Entity', label: 'Ianassa', lines: '47', text: '"Queen enchantress" — commanding nymph' },
+                        { id: 'n31', type: 'Entity', label: 'Maera', lines: '48', text: '"Sparkling" — bright sea-nymph' },
+                        { id: 'n32', type: 'Entity', label: 'Oreithyia', lines: '48', text: '"Mountain-rusher" — nymph of strong currents' },
+                        { id: 'n33', type: 'Entity', label: 'Amatheia', lines: '49', text: '"Long-haired Amatheia" — sandy-haired nymph of the shore' }
+                    ]}
+                ]},
+                { id: 's1e', type: 'Scene', label: 'Thetis\' Lament', lines: '50-64', text: 'The bright sea-cave fills with nymphs beating their breasts.', children: [
+                    { id: 's1e1', type: 'Speech', label: 'Sisters Listen', lines: '50-64', text: '"How wretched I am! I brought a mighty and peerless son into this world. I nursed him like a shoot in a fertile orchard. I sent him to Ilium but I shall never welcome him home."', children: [
+                        { id: 's1e1a', type: 'Image', label: 'Sapling', lines: '54-56', text: 'Nursed like a shoot, swiftly grew like a sapling' },
+                        { id: 's1e1b', type: 'Image', label: 'Beaked Ships', lines: '57-58', text: 'Sent to Ilium with the beaked ships' },
+                        { id: 's1e1c', type: 'Image', label: 'House of Peleus', lines: '59-60', text: 'Never to return to the house of Peleus' }
+                    ]}
+                ]},
+                { id: 's1f', type: 'Scene', label: 'Journey to Shore', lines: '65-77', text: 'Thetis and nymphs part the waves to Troy.', children: [
+                    { id: 's1f1', type: 'Action', label: 'Leaving Cave', lines: '65-66', text: 'She left the cave with the weeping nymphs' },
+                    { id: 's1f2', type: 'Image', label: 'Parting Waves', lines: '66-67', text: 'They parted the waves till they came to fertile land of Troy' },
+                    { id: 's1f3', type: 'Image', label: 'Myrmidon Ships', lines: '68-69', text: 'Ships beached in lines around swift Achilles' },
+                    { id: 's1f4', type: 'Action', label: 'Mother Arrives', lines: '70-72', text: 'Divine mother reached his side, took his head in her hands with piercing cry' },
+                    { id: 's1f5', type: 'Speech', label: 'Comfort', lines: '73-77', text: '"My child, why these tears? Speak, don\'t hide it from me. Surely Zeus has fulfilled what you prayed for?"' }
+                ]}
+            ]
+        },
+        {
+            id: 's2', type: 'Section', label: '78-147', lines: '78-147',
+            text: 'Thetis promises Achilles fresh armour',
+            children: [
+                { id: 's2a', type: 'Speech', label: 'Achilles\' Lament', lines: '78-93', text: '"What is that to me now Patroclus is dead, whom I honoured as my own self?"', children: [
+                    { id: 's2a1', type: 'Entity', label: 'Patroclus', lines: '78-82', text: 'Dear friend, honoured more than all, honoured as his own self' },
+                    { id: 's2a2', type: 'Entity', label: 'Hector', lines: '82-84', text: 'The killer who stripped the wondrous armour' },
+                    { id: 's2a3', type: 'Image', label: 'Wedding Gift', lines: '84-87', text: 'Fine, great, wondrous armour the gods gave Peleus on wedding day' },
+                    { id: 's2a4', type: 'Speech', label: 'Regret', lines: '88-93', text: '"I wished you had stayed among immortal sea-nymphs, Peleus taken human bride"' }
+                ]},
+                { id: 's2b', type: 'Speech', label: 'Prophecy', lines: '94-96', text: '"My child, your own death will swiftly follow if Hector dies, for your doom must inexorably follow."' },
+                { id: 's2c', type: 'Speech', label: 'Resolution', lines: '97-126', text: '"Let it follow instantly! May discord be banished from gods and men."', children: [
+                    { id: 's2c1', type: 'Image', label: 'Anger as Smoke', lines: '107-110', text: 'That insidious anger that rises in the breast like smoke, sweeter than trickling honey' },
+                    { id: 's2c2', type: 'Entity', label: 'Agamemnon', lines: '111-113', text: 'King of men who stirred such rage in Achilles\' heart' },
+                    { id: 's2c3', type: 'Entity', label: 'Heracles', lines: '115-119', text: 'Not even Heracles escaped doom, dear as he was to Zeus' },
+                    { id: 's2c4', type: 'Speech', label: 'Fame Vow', lines: '120-126', text: '"Let me win fame and glory, make Trojan women moan, wiping tears from tender cheeks"' }
+                ]},
+                { id: 's2d', type: 'Speech', label: 'Promise of Armour', lines: '127-137', text: '"Refrain from battle until you see me here again. I will bring glorious armour from Lord Hephaestus."', children: [
+                    { id: 's2d1', type: 'Entity', label: 'Hector\'s Doom', lines: '132-134', text: '"Though not for long, since his own death is upon him"' },
+                    { id: 's2d2', type: 'Entity', label: 'Hephaestus', lines: '135-137', text: 'Lord Hephaestus, the master-craftsman' }
+                ]},
+                { id: 's2e', type: 'Scene', label: 'Nereids Depart', lines: '138-147', text: 'Thetis instructs Nereids and sets out for Olympus.', children: [
+                    { id: 's2e1', type: 'Speech', label: 'Instructions', lines: '138-142', text: '"Plunge beneath the deep, go to our father\'s house, to the Old Man of the Sea. Tell him everything."' },
+                    { id: 's2e2', type: 'Action', label: 'Nereids Dive', lines: '143-144', text: 'They dived beneath the waves' },
+                    { id: 's2e3', type: 'Action', label: 'Thetis Ascends', lines: '145-147', text: 'Silver-footed goddess set out for Olympus to win glorious armour' }
+                ]}
+            ]
+        },
+        {
+            id: 's3', type: 'Section', label: '148-242', lines: '148-242',
+            text: 'Hera tells Achilles to show himself to the Trojans',
+            children: [
+                { id: 's3a', type: 'Scene', label: 'Battle for Corpse', lines: '148-164', text: 'Greeks flee, Hector seizes Patroclus\' feet three times.', children: [
+                    { id: 's3a1', type: 'Action', label: 'Greek Flight', lines: '148-150', text: 'Greeks fleeing with shouts of terror from man-killing Hector' },
+                    { id: 's3a2', type: 'Image', label: 'Hellespont', lines: '150-151', text: 'Reached ships by the Hellespont' },
+                    { id: 's3a3', type: 'Entity', label: 'Hector', lines: '152-156', text: 'Son of Priam, fiery in valour, three times seized corpse\'s feet' },
+                    { id: 's3a4', type: 'Entity', label: 'Aiantes', lines: '157-159', text: 'Resisting furiously, drove him from the body three times' },
+                    { id: 's3a5', type: 'Image', label: 'Tawny Lion', lines: '160-164', text: 'Like shepherds trying to drive away a lion hungry for his kill' }
+                ]},
+                { id: 's3b', type: 'Scene', label: 'Iris\' Message', lines: '165-201', text: 'Swift-footed Iris sent by Hera carries message to Achilles.', children: [
+                    { id: 's3b1', type: 'Entity', label: 'Iris', lines: '165-168', text: 'Sent by Hera, unbeknown to Zeus and other gods except Athene' },
+                    { id: 's3b2', type: 'Speech', label: 'Summons', lines: '169-180', text: '"Up, son of Peleus! Save the body of Patroclus! Fear shame if he becomes plaything for dogs of Troy."', children: [
+                        { id: 's3b2a', type: 'Image', label: 'Head on Stake', lines: '175-177', text: 'Hector sets heart on slicing head from tender neck, fixing it on stake' }
+                    ]},
+                    { id: 's3b3', type: 'Speech', label: 'Achilles\' Question', lines: '181-186', text: '"Which immortal sends you? The Trojans have my armour."' },
+                    { id: 's3b4', type: 'Speech', label: 'Iris\' Reply', lines: '187-195', text: '"Hera sent me. Go to the trench and show yourself. Even unarmed, they may fear the sight of you."' },
+                    { id: 's3b5', type: 'Entity', label: 'Ajax\'s Shield', lines: '193-195', text: 'Only arms Achilles could use, but Ajax in front ranks defending Patroclus' }
+                ]},
+                { id: 's3c', type: 'Scene', label: 'Epiphany at Trench', lines: '202-231', text: 'Achilles shows himself. Athene makes fire blaze from his head.', children: [
+                    { id: 's3c1', type: 'Entity', label: 'Athene', lines: '202-206', text: 'Flung tasselled aegis over his shoulders, shed golden mist about his head' },
+                    { id: 's3c2', type: 'Image', label: 'Fiery Beacon', lines: '207-214', text: 'Like beacons that flare at sunset from a besieged island, so the blaze shone from Achilles\' head to the heavens', children: [
+                        { id: 's3c2a', type: 'Image', label: 'Island Siege', lines: '207-211', text: 'City cloaked by smoke, men fighting from battlements all day' },
+                        { id: 's3c2b', type: 'Image', label: 'Signal Light', lines: '211-214', text: 'Beacons shine out for neighbours to see, hoping they might send ships to rescue' }
+                    ]},
+                    { id: 's3c3', type: 'Action', label: 'At the Wall', lines: '215-218', text: 'Stood by wall beyond trench, avoiding Greek ranks as mother instructed' },
+                    { id: 's3c4', type: 'Action', label: 'The War Cry', lines: '219-229', text: 'Three times Achilles shouted, Athene echoed. Voice clear as trumpet from beleaguered city.', children: [
+                        { id: 's3c4a', type: 'Image', label: 'Voice of Bronze', lines: '220-223', text: 'Hearts of Trojans appalled at that voice of bronze' },
+                        { id: 's3c4b', type: 'Action', label: 'Horses Wheel', lines: '223-225', text: 'Long-maned horses wheeled chariots round, filled with dread' },
+                        { id: 's3c4c', type: 'Action', label: 'Trojans Reel', lines: '226-229', text: 'Three times Trojans and allies reeled in panic. Twelve warriors died.' }
+                    ]}
+                ]},
+                { id: 's3d', type: 'Scene', label: 'Rescue & Sunset', lines: '230-242', text: 'Greeks bear Patroclus away. Hera orders the sun to set.', children: [
+                    { id: 's3d1', type: 'Action', label: 'Rescue', lines: '230-233', text: 'Greeks overjoyed bore Patroclus out of range, laid him on bier' },
+                    { id: 's3d2', type: 'Action', label: 'Achilles\' Tears', lines: '234-237', text: 'Fleet-footed Achilles joined them shedding hot tears, seeing faithful friend mangled' },
+                    { id: 's3d3', type: 'Image', label: 'Chariot Sent', lines: '237-239', text: 'With chariot and horses he had sent him to battle, never to welcome him back' },
+                    { id: 's3d4', type: 'Entity', label: 'Hera', lines: '240-242', text: 'Ox-eyed Queen told tireless sun to return unwillingly to Ocean\'s stream' }
+                ]}
+            ]
+        },
+        {
+            id: 's4', type: 'Section', label: '243-309', lines: '243-309',
+            text: 'The Trojan Assembly',
+            children: [
+                { id: 's4a', type: 'Scene', label: 'Assembly Gathers', lines: '243-252', text: 'Trojans gather in assembly, too anxious to sit.', children: [
+                    { id: 's4a1', type: 'Action', label: 'Withdrawal', lines: '243-245', text: 'Having withdrawn from battle, loosed swift horses from chariots' },
+                    { id: 's4a2', type: 'Action', label: 'Standing', lines: '246-248', text: 'Gathered without thinking of eating, stood throughout' },
+                    { id: 's4a3', type: 'Image', label: 'Unnerved', lines: '249-252', text: 'Too anxious to sit, unnerved by Achilles\' sudden appearance after long absence' }
+                ]},
+                { id: 's4b', type: 'Speech', label: 'Polydamas Speaks', lines: '253-283', text: '"Think carefully. I recommend we retreat to the city walls."', children: [
+                    { id: 's4b1', type: 'Entity', label: 'Polydamas', lines: '253-256', text: 'Son of Panthous, friend of Hector, born same night, best in oratory as Hector in war' },
+                    { id: 's4b2', type: 'Speech', label: 'Warning', lines: '257-267', text: '"Now I fear fleet-footed Achilles greatly. He is too impetuous. He will attack the city, putting womenfolk at threat."' },
+                    { id: 's4b3', type: 'Speech', label: 'Plan', lines: '268-278', text: '"Assemble in square tonight, walls and gates bolted tight. At dawn, man the walls. If he attacks, so much the worse for him."' },
+                    { id: 's4b4', type: 'Image', label: 'Running Dogs', lines: '279-283', text: '"The running dogs will eat him first" — prediction of Achilles\' fate' }
+                ]},
+                { id: 's4c', type: 'Speech', label: 'Hector\'s Reply', lines: '284-309', text: '"I can\'t approve penning ourselves inside. I won\'t run from Achilles."', children: [
+                    { id: 's4c1', type: 'Speech', label: 'Defiance', lines: '284-293', text: '"Are you not tired of being caged by those walls? Our treasures traded to Phrygia and Maeonia since we incurred Zeus\' wrath."' },
+                    { id: 's4c2', type: 'Speech', label: 'Counter-Plan', lines: '294-302', text: '"Eat company by company, keep watch, stay awake. Hand possessions over for all to share."' },
+                    { id: 's4c3', type: 'Speech', label: 'Challenge', lines: '303-309', text: '"At dawn we attack. If Achilles is stirred, the worse for him. I\'ll fight him face to face. The war-god treats all men alike."' }
+                ]}
+            ]
+        },
+        {
+            id: 's5', type: 'Section', label: '310-367', lines: '310-367',
+            text: 'The lamentation for Patroclus',
+            children: [
+                { id: 's5a', type: 'Scene', label: 'Trojans Acclaim', lines: '310-313', text: 'Trojans foolishly acclaim Hector\'s faulty plan.', children: [
+                    { id: 's5a1', type: 'Entity', label: 'Athene', lines: '310-312', text: 'Pallas Athene robbed them of judgement' },
+                    { id: 's5a2', type: 'Action', label: 'Taking Meal', lines: '312-313', text: 'They took their meal throughout the ranks' }
+                ]},
+                { id: 's5b', type: 'Scene', label: 'Greeks Lament', lines: '314-323', text: 'All night the Greeks lamented Patroclus. Achilles leads the grief.', children: [
+                    { id: 's5b1', type: 'Action', label: 'Hands on Chest', lines: '315-317', text: 'Achilles placed warlike hands on friend\'s chest, groaned endlessly' },
+                    { id: 's5b2', type: 'Image', label: 'Bearded Lion', lines: '318-323', text: 'Like a bearded lion whose cubs a stag-hunter has snatched from dense thicket. Returns grieving, tracks the man through many a glade.' }
+                ]},
+                { id: 's5c', type: 'Speech', label: 'Achilles\' Vow', lines: '324-342', text: '"I shall not hold your funeral till I return with Hector\'s head."', children: [
+                    { id: 's5c1', type: 'Entity', label: 'Menoetius', lines: '324-327', text: 'Patroclus\' father, to whom Achilles promised to bring his son home with spoils' },
+                    { id: 's5c2', type: 'Speech', label: 'Shared Fate', lines: '328-332', text: '"Zeus does not fulfil all our plans. We are both fated to stain this earth with blood."' },
+                    { id: 's5c3', type: 'Speech', label: 'Vengeance Vow', lines: '333-342', text: '"Before your pyre I\'ll slit throats of twelve fine youths of Troy to slake my anger."' }
+                ]},
+                { id: 's5d', type: 'Scene', label: 'Funeral Rites', lines: '343-355', text: 'They wash Patroclus, anoint him, lay him on the bier.', children: [
+                    { id: 's5d1', type: 'Action', label: 'Heating Water', lines: '343-346', text: 'Set cauldron on fire, kindled wood, filled it, watched flames' },
+                    { id: 's5d2', type: 'Action', label: 'Washing', lines: '347-350', text: 'Washed him, anointed with rich oil, filled wounds with nine-year old unguent' },
+                    { id: 's5d3', type: 'Image', label: 'Shrouded', lines: '351-355', text: 'Laid on bier, shrouded with soft linen head to foot, white robe on top' },
+                    { id: 's5d4', type: 'Action', label: 'Myrmidons Mourn', lines: '355', text: 'All night round Achilles, Myrmidons moaned in grief' }
+                ]},
+                { id: 's5e', type: 'Speech', label: 'Zeus & Hera', lines: '356-367', text: '"Once more you get your way, spurring Achilles into action."', children: [
+                    { id: 's5e1', type: 'Entity', label: 'Zeus', lines: '356-359', text: 'Watching, spoke to sister-wife: "Those Greeks might as well be your own offspring."' },
+                    { id: 's5e2', type: 'Speech', label: 'Hera\'s Reply', lines: '360-367', text: '"How could I, the greatest of goddesses, refrain from causing Trojans all the trouble I can?"' }
+                ]}
+            ]
+        },
+        {
+            id: 's6', type: 'Section', label: '368-467', lines: '368-467',
+            text: 'Thetis asks Hephaestus for help',
+            children: [
+                { id: 's6a', type: 'Scene', label: 'Arrival at Forge', lines: '368-390', text: 'Thetis reaches Hephaestus\' house of imperishable bronze, adorned with stars.', children: [
+                    { id: 's6a1', type: 'Image', label: 'Bronze House', lines: '368-371', text: 'House of imperishable bronze, adorned with stars, finest among immortals' },
+                    { id: 's6a2', type: 'Entity', label: 'Hephaestus', lines: '372-375', text: 'Running back and forth to bellows, sweating with toil' },
+                    { id: 's6a3', type: 'Image', label: 'Twenty Tables', lines: '375-379', text: 'Triple-legged tables with golden wheels to roll themselves to gods\' assembly' },
+                    { id: 's6a4', type: 'Image', label: 'Unfinished Work', lines: '380-382', text: 'Not quite finished, still lacking elaborate handles, forging rivets' }
+                ]},
+                { id: 's6b', type: 'Scene', label: 'Charis Welcomes', lines: '383-393', text: 'Lovely Charis of the glistening veil welcomes Thetis.', children: [
+                    { id: 's6b1', type: 'Entity', label: 'Charis', lines: '383-386', text: 'Wife of the illustrious lame god, glistening veil' },
+                    { id: 's6b2', type: 'Speech', label: 'Welcome', lines: '387-390', text: '"Thetis of the long robe, honoured and welcome guest, follow me inside"' },
+                    { id: 's6b3', type: 'Image', label: 'Splendid Chair', lines: '391-393', text: 'Sat on chair adorned with silver studs, footstool beneath' }
+                ]},
+                { id: 's6c', type: 'Speech', label: 'Hephaestus\' Gratitude', lines: '394-409', text: '"A goddess I honour and revere! She saved me when Hera threw me from Olympus."', children: [
+                    { id: 's6c1', type: 'Entity', label: 'Hera', lines: '395-397', text: 'Mother who shamed him for his lameness, threw him from Olympus' },
+                    { id: 's6c2', type: 'Entity', label: 'Thetis & Eurynome', lines: '398-401', text: 'Took him to their breasts, daughters of encircling Ocean' },
+                    { id: 's6c3', type: 'Scene', label: 'Nine Years', lines: '402-409', text: 'Stayed in their deep cave, worked fine ornaments — brooches, bracelets, necklaces, rosettes — while Ocean flowed seething with foam' }
+                ]},
+                { id: 's6d', type: 'Scene', label: 'Hephaestus Prepares', lines: '410-427', text: 'He puts away tools, cleans himself, dons tunic, limps from forge.', children: [
+                    { id: 's6d1', type: 'Action', label: 'Tools Away', lines: '410-414', text: 'Moved bellows from fire, collected tools into silver chest' },
+                    { id: 's6d2', type: 'Action', label: 'Cleaning', lines: '415-417', text: 'Wiped hands and face, huge neck, shaggy breast with sponge' },
+                    { id: 's6d3', type: 'Scene', label: 'Golden Servants', lines: '418-423', text: 'Servants made of gold, fashioned like living girls, with intellect and skill in subtle crafts', children: [
+                        { id: 'gs1', type: 'Entity', label: 'Golden Servant 1', lines: '418-420', text: 'First automaton, golden girl with voice and intellect' },
+                        { id: 'gs2', type: 'Entity', label: 'Golden Servant 2', lines: '420-423', text: 'Second automaton, golden girl skilled in subtle crafts taught by the gods' }
+                    ]},
+                    { id: 's6d4', type: 'Action', label: 'Limping', lines: '424-427', text: 'Grasping thick staff, limped from forge supported by golden servants' }
+                ]},
+                { id: 's6e', type: 'Speech', label: 'Thetis\' Plea', lines: '428-461', text: '"Is there a goddess who has suffered more? Give my doomed son armour."', children: [
+                    { id: 's6e1', type: 'Speech', label: 'Her Sorrows', lines: '428-443', text: '"I alone of daughters of sea wedded to mortal. Peleus keeps to palace, weighed down by years."', children: [
+                        { id: 's6e1a', type: 'Entity', label: 'Peleus', lines: '432-435', text: 'Son of Aeacus, the mortal spouse, now sadly aged' },
+                        { id: 's6e1b', type: 'Image', label: 'Sapling Again', lines: '436-440', text: 'Nursed like shoot in fertile orchard, sent to Ilium with beaked ships' }
+                    ]},
+                    { id: 's6e2', type: 'Speech', label: 'Recent Events', lines: '444-461', text: '"Agamemnon took the girl. Patroclus donned his armour. Apollo caused his death. Hector has the armour."', children: [
+                        { id: 's6e2a', type: 'Entity', label: 'Agamemnon', lines: '444-447', text: 'King who took the girl, causing Achilles to refuse to fight' },
+                        { id: 's6e2b', type: 'Entity', label: 'Apollo', lines: '454-456', text: 'Caused death of Patroclus at height of success, granted final act to Hector' },
+                        { id: 's6e2c', type: 'Speech', label: 'Request', lines: '457-461', text: '"Give my son, doomed to early death, a shield, helmet, breastplate, greaves"' }
+                    ]}
+                ]},
+                { id: 's6f', type: 'Speech', label: 'Promise', lines: '462-467', text: '"Take heart. I wish I could save him from death as easily as I can grant splendid armour."', children: [
+                    { id: 's6f1', type: 'Speech', label: 'Hephaestus\' Vow', lines: '462-467', text: '"Splendid enough to make many a man marvel who gazes on it some fine day"' }
+                ]}
+            ]
+        },
+        {
+            id: 's7', type: 'Section', label: '468-617', lines: '468-617',
+            text: 'Hephaestus forges the Shield — COSMOS to OCEAN in five concentric rings',
+            children: [
+                { id: 's7a', type: 'Scene', label: 'The Forge', lines: '468-482', text: 'Twenty nozzles blow on crucibles. Stubborn bronze, tin, precious gold and silver.', children: [
+                    { id: 's7a1', type: 'Image', label: 'Bellows', lines: '468-470', text: 'Set of twenty nozzles sending varying blasts of air at need' },
+                    { id: 's7a2', type: 'Image', label: 'Metals', lines: '471-474', text: 'Stubborn bronze, tin, precious gold and silver into crucibles' },
+                    { id: 's7a3', type: 'Image', label: 'Anvil', lines: '475-477', text: 'Great anvil on its block, massive hammer in one hand, tongs in other' },
+                    { id: 's7a4', type: 'Image', label: 'Five Layers', lines: '478-482', text: 'Broad and solid, five layers, triple glittering rim, silver strap attached' }
+                ]},
+                { id: 's7b', type: 'Scene', label: 'COSMOS', lines: '483-489', text: 'The umbo: earth, sea, sky. The tireless sun, full moon, all constellations.', children: [
+                    { id: 's7b1', type: 'Image', label: 'Earth', lines: '483', text: 'The solid ground beneath all scenes' },
+                    { id: 's7b2', type: 'Image', label: 'Sea', lines: '483', text: 'The wine-dark waters surrounding' },
+                    { id: 's7b3', type: 'Image', label: 'Sky', lines: '483', text: 'The brazen dome above' },
+                    { id: 's7b4', type: 'Image', label: 'Sun', lines: '484', text: 'Tireless Helios crossing daily' },
+                    { id: 's7b5', type: 'Image', label: 'Moon', lines: '484', text: 'Full Selene in silver' },
+                    { id: 's7b6', type: 'Scene', label: 'Pleiades', lines: '486', text: 'Seven sisters, daughters of Atlas and Pleione', children: [
+                        { id: 'pl1', type: 'Entity', label: 'Maia', lines: '486', text: 'Eldest sister, mother of Hermes by Zeus' },
+                        { id: 'pl2', type: 'Entity', label: 'Electra', lines: '486', text: 'Second sister, mother of Dardanus founder of Troy' },
+                        { id: 'pl3', type: 'Entity', label: 'Taygete', lines: '486', text: 'Third sister, mother of Lacedaemon' },
+                        { id: 'pl4', type: 'Entity', label: 'Alcyone', lines: '486', text: 'Fourth sister, brightest of the seven' },
+                        { id: 'pl5', type: 'Entity', label: 'Celaeno', lines: '486', text: 'Fifth sister, the dark one' },
+                        { id: 'pl6', type: 'Entity', label: 'Sterope', lines: '486', text: 'Sixth sister, lightning flash' },
+                        { id: 'pl7', type: 'Entity', label: 'Merope', lines: '486', text: 'Seventh sister, the lost one who married mortal Sisyphus' }
+                    ]},
+                    { id: 's7b7', type: 'Image', label: 'Hyades', lines: '486', text: 'Rain-bringing cluster near Aldebaran' },
+                    { id: 's7b8', type: 'Image', label: 'Orion', lines: '486', text: 'Great hunter with belt and sword' },
+                    { id: 's7b9', type: 'Image', label: 'The Bear', lines: '487-489', text: 'Also called the Wain, circles round never bathing in Ocean, gazing warily at Orion' }
+                ]},
+                { id: 's7c', type: 'Scene', label: 'CITY OF PEACE', lines: '490-508', text: 'First of two cities: weddings and justice flourish here.', children: [
+                    { id: 's7c1', type: 'Scene', label: 'Wedding Procession', lines: '490-496', text: 'Brides led from chambers through city by blazing torchlight', children: [
+                        { id: 's7c1a', type: 'Image', label: 'Torches', lines: '490-491', text: 'Blazing flames lighting the night streets' },
+                        { id: 's7c1b', type: 'Image', label: 'Brides', lines: '491-492', text: 'Young women led from their rooms through the city' },
+                        { id: 's7c1c', type: 'Image', label: 'Wedding Songs', lines: '492', text: 'Hymeneal chorus rising through streets' },
+                        { id: 's7c1d', type: 'Entity', label: 'Dancing Youths', lines: '493-494', text: 'Young men circling in the dance, whirling to flutes and lyres' },
+                        { id: 's7c1e', type: 'Entity', label: 'Women in Doorways', lines: '495-496', text: 'Standing and gazing at the procession passing' }
+                    ]},
+                    { id: 's7c2', type: 'Scene', label: 'Assembly & Trial', lines: '497-508', text: 'Men gathered arguing blood-price for a death', children: [
+                        { id: 's7c2a', type: 'Entity', label: 'Defendant', lines: '499-500', text: 'Claims he has paid all that was right, putting this to the people' },
+                        { id: 's7c2b', type: 'Entity', label: 'Accuser', lines: '500-501', text: 'Refuses acceptance, seeks arbitration' },
+                        { id: 's7c2c', type: 'Entity', label: 'Supporters', lines: '502-503', text: 'Both sides cheered by supporters, restrained by heralds' },
+                        { id: 's7c2d', type: 'Entity', label: 'Elders', lines: '504-506', text: 'Seated on sacred bench, polished stone semicircle, receiving speaker\'s staff' },
+                        { id: 's7c2e', type: 'Image', label: 'Speaker\'s Staff', lines: '505-506', text: 'Passed from loud-voiced heralds, rising to give judgement in turn' },
+                        { id: 's7c2f', type: 'Image', label: 'Two Talents Gold', lines: '507-508', text: 'At their feet, fee for the one who gave soundest judgement' }
+                    ]}
+                ]},
+                { id: 's7d', type: 'Scene', label: 'CITY AT WAR', lines: '509-540', text: 'Second city: siege, ambush, battle. Ares and Athene lead in gold.', children: [
+                    { id: 's7d1', type: 'Scene', label: 'The Siege', lines: '509-515', text: 'Two armies in glittering armour surround the walls', children: [
+                        { id: 's7d1a', type: 'Entity', label: 'Besiegers', lines: '510-511', text: 'Plan to attempt to sack it, or accept half its wealth' },
+                        { id: 's7d1b', type: 'Entity', label: 'Citizens', lines: '512-513', text: 'Resist secretly, arming for ambush' },
+                        { id: 's7d1c', type: 'Entity', label: 'Defenders', lines: '514-515', text: 'Beloved wives, children, old men guard the walls' }
+                    ]},
+                    { id: 's7d2', type: 'Scene', label: 'Divine Leaders', lines: '516-519', text: 'Ares and Athene lead the sortie in gold', children: [
+                        { id: 's7d2a', type: 'Entity', label: 'Ares', lines: '516-517', text: 'God of war, tall and beautiful in golden clothes and armour' },
+                        { id: 's7d2b', type: 'Entity', label: 'Athene', lines: '517', text: 'Goddess of wisdom, gleaming beside him in gold' },
+                        { id: 's7d2c', type: 'Image', label: 'Scale', lines: '518-519', text: 'As gods should look, they rose above smaller warriors at their feet' }
+                    ]},
+                    { id: 's7d3', type: 'Scene', label: 'The Ambush', lines: '520-529', text: 'By the river where herds come to water', children: [
+                        { id: 's7d3a', type: 'Entity', label: 'Scouts', lines: '520-522', text: 'Two posted ahead, waiting for sight of sheep or glossy cattle' },
+                        { id: 's7d3b', type: 'Entity', label: 'Herdsmen', lines: '523-524', text: 'Two herdsmen behind, playing flutes, ignorant of the trap' },
+                        { id: 's7d3c', type: 'Action', label: 'Attack', lines: '525-529', text: 'Ambushers rush out as they neared, cutting out herd and fine white flock, killing herdsmen' }
+                    ]},
+                    { id: 's7d4', type: 'Scene', label: 'Battle at the River', lines: '530-540', text: 'Ranks clash with bronze-tipped spears', children: [
+                        { id: 's7d4a', type: 'Entity', label: 'Strife', lines: '535-536', text: 'Personified discord at work among the fighters' },
+                        { id: 's7d4b', type: 'Entity', label: 'Panic', lines: '536', text: 'Terror spreading through ranks' },
+                        { id: 's7d4c', type: 'Entity', label: 'Fate', lines: '536-540', text: 'Ruthless, laying hands on wounded and unscathed, dragging corpses by feet, cloak red with blood' }
+                    ]}
+                ]},
+                { id: 's7e', type: 'Scene', label: 'AGRICULTURE', lines: '541-572', text: 'Three farming scenes: ploughing, harvest, vintage.', children: [
+                    { id: 's7e1', type: 'Scene', label: 'Ploughing', lines: '541-549', text: 'Fallow-land, soft, rich, broad, thrice-ploughed', children: [
+                        { id: 's7e1a', type: 'Entity', label: 'Ploughmen', lines: '542-544', text: 'Driving teams to and fro across the field' },
+                        { id: 's7e1b', type: 'Entity', label: 'Cup-Bearer', lines: '545-546', text: 'Man at field\'s end held cup of honeyed wine to give to them at each turn' },
+                        { id: 's7e1c', type: 'Image', label: 'Golden Field', lines: '548-549', text: 'Made of gold yet looked black as if ploughed — wonderful feature of the work' }
+                    ]},
+                    { id: 's7e2', type: 'Scene', label: 'Harvest', lines: '550-560', text: 'Royal estate where labourers reap with sharp sickles', children: [
+                        { id: 's7e2a', type: 'Entity', label: 'Reapers', lines: '551-553', text: 'Labourers cutting with sharp sickles, armfuls falling in swathes' },
+                        { id: 's7e2b', type: 'Entity', label: 'Boys', lines: '553-554', text: 'Gathering armfuls, carrying to the three binders' },
+                        { id: 's7e2c', type: 'Scene', label: 'Three Binders', lines: '554-555', text: 'Three workers tying sheaves with twists of straw', children: [
+                            { id: 'bind1', type: 'Entity', label: 'Binder 1', lines: '554', text: 'First binder, receiving sheaves from boys, tying with straw' },
+                            { id: 'bind2', type: 'Entity', label: 'Binder 2', lines: '554', text: 'Second binder, working alongside, stacking tied bundles' },
+                            { id: 'bind3', type: 'Entity', label: 'Binder 3', lines: '555', text: 'Third binder, completing the line, passing bundles back' }
+                        ]},
+                        { id: 's7e2d', type: 'Entity', label: 'King', lines: '556-557', text: 'Staff in hand, stood joyfully and silently beside them' },
+                        { id: 's7e2e', type: 'Scene', label: 'Feast Preparation', lines: '558-560', text: 'Heralds beneath oak readying feast, dressing sacrificial ox, women sprinkling white barley' }
+                    ]},
+                    { id: 's7e3', type: 'Scene', label: 'Vintage', lines: '561-572', text: 'Fine vineyard laden with grapes in gold, clusters black, vines on silver poles', children: [
+                        { id: 's7e3a', type: 'Image', label: 'Vineyard', lines: '562-565', text: 'Ditch of blue enamel round it, fence of tin outside, single path for all coming and going' },
+                        { id: 's7e3b', type: 'Entity', label: 'Grape-Bearers', lines: '566-567', text: 'Girls and youths joyfully carrying ripe grapes in wicker baskets' },
+                        { id: 's7e3c', type: 'Entity', label: 'Boy with Lyre', lines: '568-570', text: 'In their midst, boy sang of Linos in sweet treble voice to pleasant clear-toned lyre' },
+                        { id: 's7e3d', type: 'Action', label: 'Dancing', lines: '571-572', text: 'All skipped along with chorus of cries, beating earth in time with dancing feet' }
+                    ]}
+                ]},
+                { id: 's7f', type: 'Scene', label: 'PASTORAL', lines: '573-589', text: 'Herds and flocks: cattle with lions, sheep in meadow.', children: [
+                    { id: 's7f1', type: 'Scene', label: 'Cattle Herd', lines: '573-578', text: 'Straight-horned cattle in gold and tin, lowing from byre to stream', children: [
+                        { id: 's7f1a', type: 'Scene', label: 'Four Herdsmen', lines: '576', text: 'Four golden figures walking beside the herd', children: [
+                            { id: 'herd1', type: 'Entity', label: 'Herdsman 1', lines: '576', text: 'First golden figure, walking at the head' },
+                            { id: 'herd2', type: 'Entity', label: 'Herdsman 2', lines: '576', text: 'Second golden figure, walking at left flank' },
+                            { id: 'herd3', type: 'Entity', label: 'Herdsman 3', lines: '576', text: 'Third golden figure, walking at right flank' },
+                            { id: 'herd4', type: 'Entity', label: 'Herdsman 4', lines: '576', text: 'Fourth golden figure, walking at the rear' }
+                        ]},
+                        { id: 's7f1b', type: 'Scene', label: 'Nine Dogs', lines: '577', text: 'Nine swift dogs running behind the herd', children: [
+                            { id: 'dog1', type: 'Entity', label: 'Dog 1', lines: '577', text: 'First swift hound, running at point' },
+                            { id: 'dog2', type: 'Entity', label: 'Dog 2', lines: '577', text: 'Second swift hound, flanking left' },
+                            { id: 'dog3', type: 'Entity', label: 'Dog 3', lines: '577', text: 'Third swift hound, flanking right' },
+                            { id: 'dog4', type: 'Entity', label: 'Dog 4', lines: '577', text: 'Fourth swift hound, mid-pack left' },
+                            { id: 'dog5', type: 'Entity', label: 'Dog 5', lines: '577', text: 'Fifth swift hound, mid-pack right' },
+                            { id: 'dog6', type: 'Entity', label: 'Dog 6', lines: '577', text: 'Sixth swift hound, mid-pack center' },
+                            { id: 'dog7', type: 'Entity', label: 'Dog 7', lines: '577', text: 'Seventh swift hound, rear left' },
+                            { id: 'dog8', type: 'Entity', label: 'Dog 8', lines: '577', text: 'Eighth swift hound, rear right' },
+                            { id: 'dog9', type: 'Entity', label: 'Dog 9', lines: '577', text: 'Ninth swift hound, rear guard' }
+                        ]},
+                        { id: 's7f1c', type: 'Image', label: 'Stream', lines: '574-575', text: 'Murmuring stream beside swaying rushes where cattle graze' }
+                    ]},
+                    { id: 's7f2', type: 'Scene', label: 'Lion Attack', lines: '579-586', text: 'Two savage lions grip a bellowing bull among the leaders', children: [
+                        { id: 's7f2a', type: 'Scene', label: 'Two Lions', lines: '579-580', text: 'Two savage beasts gripping, dragging off the bull', children: [
+                            { id: 'lion1', type: 'Entity', label: 'Lion 1', lines: '579', text: 'First savage lion, gripping the bull\'s shoulder' },
+                            { id: 'lion2', type: 'Entity', label: 'Lion 2', lines: '580', text: 'Second savage lion, gripping the bull\'s haunch' }
+                        ]},
+                        { id: 's7f2b', type: 'Entity', label: 'The Bull', lines: '580-581', text: 'Bellowing loudly, flank torn open, dragged away' },
+                        { id: 's7f2c', type: 'Action', label: 'Devouring', lines: '582-583', text: 'Lions lap the dark blood, devour innards' },
+                        { id: 's7f2d', type: 'Action', label: 'Dogs Fail', lines: '584-586', text: 'Herdsmen set hounds on them in vain, scared to grapple, barking then leaping aside' }
+                    ]},
+                    { id: 's7f3', type: 'Scene', label: 'Sheep Meadow', lines: '587-589', text: 'Meadowland full of white sheep in a fine valley', children: [
+                        { id: 's7f3a', type: 'Image', label: 'Sheepfolds', lines: '588', text: 'Enclosures for the flocks' },
+                        { id: 's7f3b', type: 'Image', label: 'Huts', lines: '589', text: 'Shepherds\' dwellings in the valley' },
+                        { id: 's7f3c', type: 'Image', label: 'Pens', lines: '589', text: 'Nighttime enclosures for safety' }
+                    ]}
+                ]},
+                { id: 's7g', type: 'Scene', label: 'THE DANCE', lines: '590-606', text: 'Intricate dancing floor like Daedalus made for Ariadne in spacious Cnossos.', children: [
+                    { id: 's7g1', type: 'Entity', label: 'Daedalus', lines: '590-591', text: 'Master craftsman, referenced as the floor\'s original maker in Cnossos' },
+                    { id: 's7g2', type: 'Entity', label: 'Ariadne', lines: '591', text: 'Long-haired princess for whom the floor was made' },
+                    { id: 's7g3', type: 'Scene', label: 'The Dancers', lines: '592-598', text: 'Young men and girls worth many cattle, hands clasping wrists', children: [
+                        { id: 's7g3a', type: 'Entity', label: 'Girls', lines: '593-594', text: 'White linen dresses, pretty garlands on heads' },
+                        { id: 's7g3b', type: 'Entity', label: 'Young Men', lines: '595-598', text: 'Fine-woven tunics with soft sheen, daggers of gold on silver belts' }
+                    ]},
+                    { id: 's7g4', type: 'Scene', label: 'The Movements', lines: '599-602', text: 'Light steps, skilful, like a potter\'s wheel being tested', children: [
+                        { id: 's7g4a', type: 'Action', label: 'Circle Dance', lines: '599-600', text: 'Dancing lightly with skilful steps like potter testing his wheel' },
+                        { id: 's7g4b', type: 'Action', label: 'Lines Meeting', lines: '601-602', text: 'Running in lines to meet each other' },
+                        { id: 's7g4c', type: 'Image', label: 'Potter\'s Wheel', lines: '600-601', text: 'Simile for the spinning motion when testing to see how it will run' }
+                    ]},
+                    { id: 's7g5', type: 'Scene', label: 'Spectators & Acrobats', lines: '603-606', text: 'Host of people enjoying the lovely scene', children: [
+                        { id: 's7g5a', type: 'Entity', label: 'Crowd', lines: '603-604', text: 'Host of people standing round about, enjoying' },
+                        { id: 's7g5b', type: 'Scene', label: 'Two Acrobats', lines: '605-606', text: 'Pair whirling among them, keeping time to the dance', children: [
+                            { id: 'acro1', type: 'Entity', label: 'Acrobat 1', lines: '605', text: 'First tumbler, leading the whirl, cartwheeling through the dancers' },
+                            { id: 'acro2', type: 'Entity', label: 'Acrobat 2', lines: '606', text: 'Second tumbler, matching the rhythm, somersaulting in time' }
+                        ]}
+                    ]}
+                ]},
+                { id: 's7h', type: 'Scene', label: 'OCEAN', lines: '607-617', text: 'Finally, round the rim: the mighty stream of Ocean containing all.', children: [
+                    { id: 's7h1', type: 'Image', label: 'Ocean Stream', lines: '607-608', text: 'Round the rim of the solid shield, the mighty stream of Ocean' },
+                    { id: 's7h2', type: 'Image', label: 'Breastplate', lines: '610-611', text: 'Shone brighter than flame' },
+                    { id: 's7h3', type: 'Image', label: 'Helmet', lines: '612-613', text: 'Massive, cleverly embossed, crest of gold' },
+                    { id: 's7h4', type: 'Image', label: 'Greaves', lines: '613', text: 'Pliable tin, fitted with ankle-pieces' },
+                    { id: 's7h5', type: 'Action', label: 'Presentation', lines: '614-615', text: 'When the lame god had wrought the armour, he set it before Thetis' },
+                    { id: 's7h6', type: 'Action', label: 'Descent', lines: '616-617', text: 'She swooped like a falcon from snow-topped Olympus, bearing Hephaestus\' gleaming gift' }
+                ]}
+            ]
+        }
+    ]
+};
+
+const STATE = { tree: null, nodeMap: {}, current: null, path: [], selected: null };
+
+function buildTree(data, parent = null, depth = 0) {
+    const node = { ...data, parent, depth, rect: null };
+    STATE.nodeMap[node.id] = node;
+    node.children = (data.children || []).map(c => buildTree(c, node, depth + 1));
+    return node;
+}
+
+function init() {
+    STATE.tree = buildTree(ILIAD_XVIII);
+    STATE.current = STATE.tree;
+    STATE.path = [STATE.tree];
+    resize();
+    updateHUD();
+    updateBreadcrumb();
+    toast('Tap cells to explore');
+}
+
+function resize() {
+    const rect = CAN.getBoundingClientRect();
+    W = rect.width * DPR;
+    H = rect.height * DPR;
+    CAN.width = W;
+    CAN.height = H;
+    render();
+}
+
+// TREEMAP LAYOUT - clean non-overlapping rectangles
+function treemapLayout(children, x, y, w, h) {
+    if (children.length === 0) return;
+    
+    const pad = 4 * DPR;
+    const n = children.length;
+    
+    // Squarified treemap algorithm (simplified)
+    if (n === 1) {
+        children[0].rect = { x: x + pad, y: y + pad, w: w - pad*2, h: h - pad*2 };
+    } else if (n === 2) {
+        if (w > h) {
+            children[0].rect = { x: x + pad, y: y + pad, w: w/2 - pad*1.5, h: h - pad*2 };
+            children[1].rect = { x: x + w/2 + pad/2, y: y + pad, w: w/2 - pad*1.5, h: h - pad*2 };
+        } else {
+            children[0].rect = { x: x + pad, y: y + pad, w: w - pad*2, h: h/2 - pad*1.5 };
+            children[1].rect = { x: x + pad, y: y + h/2 + pad/2, w: w - pad*2, h: h/2 - pad*1.5 };
+        }
+    } else if (n === 3) {
+        if (w > h) {
+            children[0].rect = { x: x + pad, y: y + pad, w: w/2 - pad*1.5, h: h - pad*2 };
+            children[1].rect = { x: x + w/2 + pad/2, y: y + pad, w: w/2 - pad*1.5, h: h/2 - pad*1.5 };
+            children[2].rect = { x: x + w/2 + pad/2, y: y + h/2 + pad/2, w: w/2 - pad*1.5, h: h/2 - pad*1.5 };
+        } else {
+            children[0].rect = { x: x + pad, y: y + pad, w: w - pad*2, h: h/3 - pad*1.5 };
+            children[1].rect = { x: x + pad, y: y + h/3 + pad/2, w: w - pad*2, h: h/3 - pad*1.5 };
+            children[2].rect = { x: x + pad, y: y + h*2/3 + pad/2, w: w - pad*2, h: h/3 - pad*1.5 };
+        }
+    } else if (n === 4) {
+        const hw = w/2 - pad*1.5, hh = h/2 - pad*1.5;
+        children[0].rect = { x: x + pad, y: y + pad, w: hw, h: hh };
+        children[1].rect = { x: x + w/2 + pad/2, y: y + pad, w: hw, h: hh };
+        children[2].rect = { x: x + pad, y: y + h/2 + pad/2, w: hw, h: hh };
+        children[3].rect = { x: x + w/2 + pad/2, y: y + h/2 + pad/2, w: hw, h: hh };
+    } else {
+        // Grid layout for 5+
+        const cols = Math.ceil(Math.sqrt(n));
+        const rows = Math.ceil(n / cols);
+        const cw = w / cols;
+        const ch = h / rows;
+        children.forEach((child, i) => {
+            const col = i % cols;
+            const row = Math.floor(i / cols);
+            child.rect = {
+                x: x + col * cw + pad,
+                y: y + row * ch + pad,
+                w: cw - pad * 2,
+                h: ch - pad * 2
+            };
+        });
+    }
+}
+
+function wrapText(text, maxWidth) {
+    const words = text.split(' ');
+    const lines = [];
+    let line = '';
+    words.forEach(word => {
+        const test = line + (line ? ' ' : '') + word;
+        if (CTX.measureText(test).width > maxWidth && line) {
+            lines.push(line);
+            line = word;
+        } else {
+            line = test;
+        }
+    });
+    if (line) lines.push(line);
+    return lines;
+}
+
+function render() {
+    CTX.fillStyle = '#0a0e1a';
+    CTX.fillRect(0, 0, W, H);
+    
+    if (!STATE.current) return;
+    
+    const margin = 16 * DPR;
+    treemapLayout(STATE.current.children, margin, margin, W - margin*2, H - margin*2);
+    
+    STATE.current.children.forEach(child => {
+        if (!child.rect) return;
+        const r = child.rect;
+        const color = ONTOLOGY[child.type]?.color || '#4dd9cc';
+        const isSelected = STATE.selected === child;
+        const hasKids = child.children.length > 0;
+        
+        // Fill - stronger background
+        CTX.fillStyle = color + (isSelected ? '45' : '25');
+        CTX.beginPath();
+        CTX.roundRect(r.x, r.y, r.w, r.h, 8 * DPR);
+        CTX.fill();
+        
+        // Border - thicker
+        CTX.strokeStyle = isSelected ? '#fff' : color;
+        CTX.lineWidth = isSelected ? 3 : 2;
+        CTX.stroke();
+        
+        // Type badge at top
+        const badgeH = 18 * DPR;
+        CTX.fillStyle = color + '60';
+        CTX.beginPath();
+        CTX.roundRect(r.x, r.y, r.w, badgeH, [8*DPR, 8*DPR, 0, 0]);
+        CTX.fill();
+        
+        CTX.fillStyle = '#fff';
+        CTX.font = `bold ${10 * DPR}px JetBrains Mono`;
+        CTX.textAlign = 'left';
+        CTX.textBaseline = 'middle';
+        CTX.fillText(child.type.toUpperCase(), r.x + 8*DPR, r.y + badgeH/2);
+        
+        // Children count on right of badge
+        if (hasKids) {
+            CTX.textAlign = 'right';
+            CTX.fillStyle = 'rgba(255,255,255,0.7)';
+            CTX.fillText(`▼ ${child.children.length}`, r.x + r.w - 8*DPR, r.y + badgeH/2);
+        }
+        
+        // Main label - BIGGER
+        const labelSize = Math.max(14, Math.min(20, r.w / 6)) * DPR;
+        CTX.fillStyle = '#fff';
+        CTX.font = `bold ${labelSize}px JetBrains Mono`;
+        CTX.textAlign = 'center';
+        CTX.textBaseline = 'middle';
+        const labelY = r.y + badgeH + (r.h - badgeH) * 0.35;
+        CTX.fillText(child.label, r.x + r.w/2, labelY);
+        
+        // Description text - wrapped
+        if (child.text && r.h > 80 * DPR) {
+            const descSize = Math.max(9, Math.min(11, r.w / 12)) * DPR;
+            CTX.font = `${descSize}px JetBrains Mono`;
+            CTX.fillStyle = 'rgba(255,255,255,0.7)';
+            const maxW = r.w - 16 * DPR;
+            const lines = wrapText(child.text, maxW);
+            const startY = labelY + labelSize * 0.8;
+            const lineH = descSize * 1.3;
+            const maxLines = Math.floor((r.y + r.h - startY - 8*DPR) / lineH);
+            lines.slice(0, maxLines).forEach((line, i) => {
+                CTX.fillText(line, r.x + r.w/2, startY + i * lineH);
+            });
+        }
+        
+        // Lines reference at bottom
+        if (child.lines && r.h > 60 * DPR) {
+            CTX.font = `${8 * DPR}px JetBrains Mono`;
+            CTX.fillStyle = color;
+            CTX.textAlign = 'right';
+            CTX.fillText(`ℓ${child.lines}`, r.x + r.w - 8*DPR, r.y + r.h - 8*DPR);
+        }
+    });
+    
+    // Empty state - current node info
+    if (STATE.current.children.length === 0) {
+        const cx = W/2, cy = H/2;
+        CTX.fillStyle = ONTOLOGY[STATE.current.type]?.color || '#4dd9cc';
+        CTX.font = `bold ${16 * DPR}px JetBrains Mono`;
+        CTX.textAlign = 'center';
+        CTX.fillText(STATE.current.label, cx, cy - 40 * DPR);
+        
+        CTX.fillStyle = 'rgba(255,255,255,0.8)';
+        CTX.font = `${12 * DPR}px JetBrains Mono`;
+        const lines = wrapText(STATE.current.text || '', W * 0.7);
+        lines.slice(0, 4).forEach((line, i) => {
+            CTX.fillText(line, cx, cy - 10 * DPR + i * 18 * DPR);
+        });
+        
+        CTX.fillStyle = 'rgba(255,255,255,0.3)';
+        CTX.font = `${10 * DPR}px JetBrains Mono`;
+        CTX.fillText('Leaf node · Press ↑ to go up', cx, cy + 60 * DPR);
+    }
+}
+
+function navUp() {
+    if (STATE.path.length <= 1) return;
+    STATE.path.pop();
+    STATE.current = STATE.path[STATE.path.length - 1];
+    STATE.selected = null;
+    hideInspector();
+    updateAll();
+}
+
+function navDown() {
+    if (STATE.selected && STATE.selected.children.length > 0) {
+        drillInto(STATE.selected);
+    } else if (STATE.current.children.length > 0) {
+        drillInto(STATE.current.children[0]);
+    }
+}
+
+function navPrev() {
+    if (STATE.path.length <= 1) return;
+    const parent = STATE.path[STATE.path.length - 2];
+    const idx = parent.children.indexOf(STATE.current);
+    if (idx > 0) {
+        STATE.path.pop();
+        STATE.current = parent.children[idx - 1];
+        STATE.path.push(STATE.current);
+        STATE.selected = null;
+        hideInspector();
+        updateAll();
+    }
+}
+
+function navNext() {
+    if (STATE.path.length <= 1) return;
+    const parent = STATE.path[STATE.path.length - 2];
+    const idx = parent.children.indexOf(STATE.current);
+    if (idx < parent.children.length - 1) {
+        STATE.path.pop();
+        STATE.current = parent.children[idx + 1];
+        STATE.path.push(STATE.current);
+        STATE.selected = null;
+        hideInspector();
+        updateAll();
+    }
+}
+
+function goRoot() {
+    STATE.current = STATE.tree;
+    STATE.path = [STATE.tree];
+    STATE.selected = null;
+    hideInspector();
+    updateAll();
+}
+
+function drillInto(node) {
+    STATE.path.push(node);
+    STATE.current = node;
+    STATE.selected = null;
+    hideInspector();
+    updateAll();
+}
+
+function selectNode(node) {
+    STATE.selected = node;
+    showInspector(node);
+    render();
+}
+
+function updateAll() { render(); updateHUD(); updateBreadcrumb(); }
+
+function updateHUD() {
+    document.getElementById('hud-depth').textContent = `D${STATE.path.length - 1}`;
+    document.getElementById('hud-nodes').textContent = Object.keys(STATE.nodeMap).length;
+    document.getElementById('hud-current').textContent = STATE.current.label;
+    document.getElementById('hud-children').textContent = STATE.current.children.length;
+}
+
+function updateBreadcrumb() {
+    document.getElementById('breadcrumb').innerHTML = STATE.path.map((node, i) => {
+        const isLast = i === STATE.path.length - 1;
+        const cls = isLast ? 'crumb current' : 'crumb';
+        const click = isLast ? '' : `onclick="jumpTo('${node.id}')"`;
+        return `<span class="${cls}" ${click}>${node.label}</span>${isLast ? '' : '<span class="crumb-sep">›</span>'}`;
+    }).join('');
+}
+
+function jumpTo(id) {
+    const node = STATE.nodeMap[id];
+    if (!node) return;
+    const idx = STATE.path.findIndex(n => n.id === id);
+    if (idx >= 0) {
+        STATE.path = STATE.path.slice(0, idx + 1);
+        STATE.current = node;
+        STATE.selected = null;
+        hideInspector();
+        updateAll();
+    }
+}
+
+function showInspector(node) {
+    document.getElementById('insp-title').textContent = `${node.type}: ${node.label}`;
+    document.getElementById('insp-text').textContent = node.text || '';
+    document.getElementById('insp-type').textContent = `MAT: ${ONTOLOGY[node.type]?.mat || 'UNKNOWN'}`;
+    document.getElementById('insp-lines').textContent = node.lines ? `LINES: ${node.lines}` : '';
+    document.getElementById('insp-notes').value = loadNote(node.id);
+    document.getElementById('inspector').classList.add('show');
+}
+
+function hideInspector() { document.getElementById('inspector').classList.remove('show'); }
+
+function toast(msg) {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 2000);
+}
+
+// Notes persistence
+function saveNote() {
+    if (!STATE.selected) return;
+    const notes = JSON.parse(localStorage.getItem('iliad_notes') || '{}');
+    notes[STATE.selected.id] = document.getElementById('insp-notes').value;
+    localStorage.setItem('iliad_notes', JSON.stringify(notes));
+    toast('Note saved');
+}
+
+function loadNote(id) {
+    const notes = JSON.parse(localStorage.getItem('iliad_notes') || '{}');
+    return notes[id] || '';
+}
+
+// Export functions
+let exportNode = null;
+
+function openExport() {
+    if (!STATE.selected) return;
+    exportNode = STATE.selected;
+    document.getElementById('export-title').textContent = `Export: ${exportNode.label}`;
+    document.getElementById('export-modal').classList.add('show');
+    updatePreview();
+}
+
+function closeExport() {
+    document.getElementById('export-modal').classList.remove('show');
+    exportNode = null;
+}
+
+function exportUp() {
+    if (!STATE.selected) return;
+    exportNode = STATE.selected;
+    document.getElementById('export-direction').value = 'up';
+    document.getElementById('export-title').textContent = `Export Up: ${exportNode.label}`;
+    document.getElementById('export-modal').classList.add('show');
+    updatePreview();
+}
+
+function exportDown() {
+    if (!STATE.selected) return;
+    exportNode = STATE.selected;
+    document.getElementById('export-direction').value = 'down';
+    document.getElementById('export-title').textContent = `Export Down: ${exportNode.label}`;
+    document.getElementById('export-modal').classList.add('show');
+    updatePreview();
+}
+
+function getAncestors(node) {
+    const path = [];
+    let n = node;
+    while (n) {
+        path.unshift(n);
+        n = n.parent;
+    }
+    return path;
+}
+
+function getDescendants(node, maxDepth, currentDepth = 0) {
+    if (currentDepth > maxDepth) return [];
+    const result = [{ node, depth: currentDepth }];
+    for (const child of (node.children || [])) {
+        result.push(...getDescendants(child, maxDepth, currentDepth + 1));
+    }
+    return result;
+}
+
+function formatMarkdown(nodes, includeNotes = true) {
+    return nodes.map(({ node, depth }) => {
+        const indent = '#'.repeat(Math.min(depth + 1, 6));
+        const note = includeNotes ? loadNote(node.id) : '';
+        let out = `${indent} ${node.type}: ${node.label}`;
+        if (node.lines) out += ` [${node.lines}]`;
+        out += '\n';
+        if (node.text) out += `${node.text}\n`;
+        if (note) out += `> **Note:** ${note}\n`;
+        return out;
+    }).join('\n');
+}
+
+function formatPlain(nodes) {
+    return nodes.map(({ node, depth }) => {
+        const indent = '  '.repeat(depth);
+        let out = `${indent}${node.type}: ${node.label}`;
+        if (node.lines) out += ` [${node.lines}]`;
+        if (node.text) out += `\n${indent}  ${node.text}`;
+        return out;
+    }).join('\n');
+}
+
+function formatJSON(nodes) {
+    const build = (node, maxD, d = 0) => {
+        if (d > maxD) return null;
+        return {
+            id: node.id,
+            type: node.type,
+            label: node.label,
+            lines: node.lines,
+            text: node.text,
+            note: loadNote(node.id) || undefined,
+            children: d < maxD ? (node.children || []).map(c => build(c, maxD, d + 1)).filter(Boolean) : undefined
+        };
+    };
+    const depth = parseInt(document.getElementById('export-depth').value);
+    return JSON.stringify(build(exportNode, depth), null, 2);
+}
+
+function formatYAML(nodes) {
+    return nodes.map(({ node, depth }) => {
+        const indent = '  '.repeat(depth);
+        let out = `${indent}- type: ${node.type}\n`;
+        out += `${indent}  label: "${node.label}"\n`;
+        if (node.lines) out += `${indent}  lines: "${node.lines}"\n`;
+        if (node.text) out += `${indent}  text: "${node.text.replace(/"/g, '\\"')}"\n`;
+        return out;
+    }).join('');
+}
+
+function formatPrompt(nodes) {
+    const ancestors = getAncestors(exportNode);
+    let out = `You are analyzing a passage from Homer's Iliad, Book XVIII.\n\n`;
+    out += `## Context Path\n`;
+    ancestors.forEach((n, i) => {
+        out += `${'  '.repeat(i)}→ ${n.type}: ${n.label}${n.lines ? ` [lines ${n.lines}]` : ''}\n`;
+    });
+    out += `\n## Current Node\n`;
+    out += `**${exportNode.type}:** ${exportNode.label}\n`;
+    if (exportNode.lines) out += `**Lines:** ${exportNode.lines}\n`;
+    if (exportNode.text) out += `**Content:** ${exportNode.text}\n`;
+    const note = loadNote(exportNode.id);
+    if (note) out += `**User Note:** ${note}\n`;
+    if (exportNode.children.length > 0) {
+        out += `\n## Children (${exportNode.children.length})\n`;
+        exportNode.children.forEach(c => {
+            out += `- ${c.type}: ${c.label}${c.lines ? ` [${c.lines}]` : ''}\n`;
+        });
+    }
+    out += `\n## Task\nAnalyze this narrative element within its context.\n`;
+    return out;
+}
+
+function formatOutline(nodes) {
+    return nodes.map(({ node, depth }) => {
+        const bullets = ['I', 'A', '1', 'a', 'i', '•'];
+        const bullet = bullets[Math.min(depth, bullets.length - 1)];
+        const indent = '  '.repeat(depth);
+        return `${indent}${bullet}. ${node.label}${node.lines ? ` [${node.lines}]` : ''}`;
+    }).join('\n');
+}
+
+function generateExport() {
+    if (!exportNode) return '';
+    const format = document.getElementById('export-format').value;
+    const depth = parseInt(document.getElementById('export-depth').value);
+    const direction = document.getElementById('export-direction').value;
+    
+    let nodes = [];
+    if (direction === 'up' || direction === 'both') {
+        const ancestors = getAncestors(exportNode);
+        nodes.push(...ancestors.map((n, i) => ({ node: n, depth: i })));
+    }
+    if (direction === 'down' || direction === 'both') {
+        const startDepth = direction === 'both' ? getAncestors(exportNode).length - 1 : 0;
+        const descendants = getDescendants(exportNode, depth);
+        if (direction === 'both') descendants.shift(); // avoid duplicate
+        nodes.push(...descendants.map(d => ({ node: d.node, depth: startDepth + d.depth })));
+    }
+    
+    switch (format) {
+        case 'markdown': return formatMarkdown(nodes);
+        case 'plain': return formatPlain(nodes);
+        case 'json': return formatJSON(nodes);
+        case 'yaml': return formatYAML(nodes);
+        case 'prompt': return formatPrompt(nodes);
+        case 'outline': return formatOutline(nodes);
+        default: return formatPlain(nodes);
+    }
+}
+
+function updatePreview() {
+    document.getElementById('export-preview').textContent = generateExport();
+}
+
+function copyExport() {
+    navigator.clipboard.writeText(generateExport());
+    toast('Copied to clipboard');
+}
+
+function copyNode() {
+    if (!STATE.selected) return;
+    const n = STATE.selected;
+    const text = `${n.type}: ${n.label}${n.lines ? ` [${n.lines}]` : ''}\n${n.text || ''}`;
+    navigator.clipboard.writeText(text);
+    toast('Copied');
+}
+
+function downloadExport() {
+    const content = generateExport();
+    const format = document.getElementById('export-format').value;
+    const ext = format === 'json' ? 'json' : format === 'markdown' ? 'md' : 'txt';
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `iliad_${exportNode.id}.${ext}`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast('Downloaded');
+    closeExport();
+}
+
+CAN.addEventListener('click', e => {
+    const rect = CAN.getBoundingClientRect();
+    const x = (e.clientX - rect.left) * DPR;
+    const y = (e.clientY - rect.top) * DPR;
+    
+    for (const child of STATE.current.children) {
+        if (!child.rect) continue;
+        const r = child.rect;
+        if (x >= r.x && x <= r.x + r.w && y >= r.y && y <= r.y + r.h) {
+            if (STATE.selected === child) {
+                if (child.children.length > 0) drillInto(child);
+                else toast('Leaf node');
+            } else {
+                selectNode(child);
+            }
+            return;
+        }
+    }
+    
+    if (STATE.selected) {
+        STATE.selected = null;
+        hideInspector();
+        render();
+    } else if (STATE.path.length > 1) {
+        navUp();
+    }
+});
+
+window.addEventListener('resize', resize);
+window.addEventListener('keydown', e => {
+    if (e.key === 'ArrowUp' || e.key === 'Escape') navUp();
+    if (e.key === 'ArrowDown' || e.key === 'Enter') navDown();
+    if (e.key === 'ArrowLeft') navPrev();
+    if (e.key === 'ArrowRight') navNext();
+    if (e.key === 'h' || e.key === 'H') goRoot();
+});
+
+init();
+</script>
+</body>
+</html>

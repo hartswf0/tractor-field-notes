@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PROTOCOL_Ω_BROWN_V49 // EKPHRASTIC_NARRATOR</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root { --amber: #fbbf24; --gold: #f59e0b; --cyan: #22d3ee; --crimson: #ef4444; --dim: #020617; }
+        body { margin: 0; background: #000; color: var(--amber); overflow: hidden; font-family: 'JetBrains Mono', monospace; font-size: 10px; display: flex; flex-direction: column; height: 100vh; }
+        
+        #visual-field { height: 42vh; width: 100%; position: relative; border-bottom: 2px solid rgba(34, 211, 238, 0.4); background: radial-gradient(circle at center, #0a1229 0%, #000 100%); cursor: crosshair; }
+        #terminal-deck { height: 58vh; width: 100%; background: #010208; display: flex; flex-direction: column; position: relative; }
+        
+        #interface-header { background: #020617; border-bottom: 1px solid rgba(251, 191, 36, 0.2); padding: 8px 15px; display: flex; gap: 8px; align-items: center; z-index: 50; flex-wrap: wrap; }
+        #archive-stream { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column-reverse; gap: 12px; position: relative; }
+        #parameter-footer { background: #020617; border-top: 1px solid rgba(251, 191, 36, 0.2); padding: 10px 15px; display: flex; gap: 24px; align-items: center; z-index: 10; height: 50px; }
+
+        .manifest-entry { border-left: 2px solid var(--amber); background: rgba(255,255,255,0.015); padding: 12px; animation: slideIn 0.1s ease-out; border-radius: 0 4px 4px 0; border-bottom: 1px solid rgba(255,255,255,0.02); max-width: 1100px; }
+        .manifest-entry.narrative { border-left-color: var(--cyan); background: rgba(34, 211, 238, 0.08); box-shadow: inset 4px 0 10px rgba(34, 211, 238, 0.05); }
+        .manifest-entry.audit { border-left-color: var(--gold); }
+        .entry-tag { font-size: 6px; font-weight: 900; opacity: 0.4; margin-bottom: 5px; display: block; letter-spacing: 2px; text-transform: uppercase; }
+        
+        .verse-highlight { color: #fff; font-size: 10px; font-style: italic; line-height: 1.6; }
+        .yaml-k { color: var(--gold); font-weight: bold; }
+
+        .btn-inst { 
+            background: #010208; border: 1px solid rgba(251, 191, 36, 0.2); 
+            padding: 6px 14px; border-radius: 2px; cursor: pointer; color: var(--amber);
+            font-size: 9px; font-weight: 900; transition: all 0.2s; text-transform: uppercase;
+        }
+        .btn-inst:hover { border-color: var(--cyan); color: #fff; }
+        .btn-inst.active { background: var(--cyan); color: #000; border-color: #fff; box-shadow: 0 0 15px var(--cyan); }
+        
+        #btn-next-verse { 
+            background: rgba(34, 211, 238, 0.1); border: 2px solid var(--cyan); 
+            color: var(--cyan); padding: 6px 20px; font-size: 10px; font-weight: 900;
+            text-transform: uppercase; letter-spacing: 2px;
+            animation: pulse-border 2s infinite;
+        }
+        @keyframes pulse-border { 0% { border-color: rgba(34, 211, 238, 0.3); } 50% { border-color: var(--cyan); } 100% { border-color: rgba(34, 211, 238, 0.3); } }
+        @keyframes slideIn { from { transform: translateX(-10px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        #radar-mask { position: absolute; right: 25px; top: 25px; width: 110px; aspect-ratio: 1; border: 1px solid rgba(34, 211, 238, 0.2); border-radius: 50%; background: rgba(0,0,0,0.8); overflow: hidden; pointer-events: none; z-index: 5; }
+        .custom-scroll::-webkit-scrollbar { width: 4px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 10px; }
+        
+        input[type=range] { -webkit-appearance: none; background: rgba(255,255,255,0.05); height: 2px; flex: 1; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 10px; height: 10px; background: var(--cyan); border-radius: 50%; cursor: pointer; }
+    </style>
+</head>
+<body class="select-none">
+
+    <div id="visual-field">
+        <div id="canvas-container" class="w-full h-full"></div>
+        <div id="radar-mask"><canvas id="radar-canvas" class="w-full h-full opacity-60"></canvas></div>
+        
+        <div class="absolute top-8 left-8 pointer-events-none space-y-1">
+            <h1 class="font-black text-sm tracking-[0.6em] text-white">⌖ Ω_BROWN // NARRATOR</h1>
+            <div class="flex gap-4 text-[7px] text-cyan-400 font-mono uppercase tracking-widest">
+                <span id="verse-index">Verse: 0/77</span>
+                <span id="active-domain">Domain: Tabula Rasa</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="terminal-deck">
+        <div id="interface-header">
+            <button id="tool-audit" class="btn-inst active">F1_Audit</button>
+            <button id="tool-cross" class="btn-inst">F2_Crossing</button>
+            <button id="btn-next-verse">READ_NEXT_VERSE</button>
+            <button id="tool-xray" class="btn-inst">F4_Peel</button>
+            <div class="flex-1 min-w-[5px]"></div>
+            <button id="reset-btn" class="btn-inst !text-red-500 border-red-500/20">Reforge_Lattice</button>
+        </div>
+
+        <div id="archive-stream" class="custom-scroll">
+            <!-- Verse cards injected here -->
+        </div>
+
+        <div id="parameter-footer">
+            <div class="flex items-center gap-4 w-52">
+                <span class="text-[7px] font-black opacity-30 uppercase">Peel</span>
+                <input type="range" id="slider-peel" min="0" max="100" value="100">
+                <span id="lbl-peel" class="text-[8px] text-cyan-400 font-bold w-6">100</span>
+            </div>
+            <div class="flex items-center gap-4 w-52">
+                <span class="text-[7px] font-black opacity-30 uppercase">Lustre</span>
+                <input type="range" id="slider-relief" min="0" max="300" value="150">
+                <span id="lbl-relief" class="text-[8px] text-cyan-400 font-bold w-12">1.0x</span>
+            </div>
+            <div class="flex-1"></div>
+            <div class="flex gap-8 text-[8px] font-black uppercase opacity-20 tracking-widest">
+                <span>⌬ MARKS: <span id="stat-nodes" class="text-white">0</span></span>
+                <span class="text-cyan-400">⌖ VECTOR: <span id="stat-addr">0,0</span></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- HOMERIC NARRATIVE DATASET ---
+        const ILIAD_XVIII = [
+            { t: "MARGIN", v: "So the fighting raged, while swift-footed Antilochus brought the news to Achilles." },
+            { t: "MARGIN", v: "He found him in front of the high-sterned ships, agonizing over the war." },
+            { t: "RIM", v: "‘What woe is this? Why are the long-haired Greeks in flight?’" },
+            { t: "RIM", v: "Is Patroclus dead, in his rashness: despite my warning to return to the ships?" },
+            { t: "MARGIN", v: "At these words, a black cloud of grief shrouded Achilles." },
+            { t: "MARGIN", v: "Grasping handfuls of dark sand and ash, he poured them over his head." },
+            { t: "CORE", v: "Dreadful a groan did Achilles give voice to that his divine mother Thetis heard him." },
+            { t: "CORE", v: "Deep beneath the sea where she sat beside her ancient Father." },
+            { t: "CORE", v: "All the divinities, the Nereids of the depths, gathered to her." },
+            { t: "CORE", v: "Glauce, Thaleia and Cymodoce were there; Nesaea, Speio, Thoe." },
+            { t: "CORE", v: "The bright sea-cave was filled with nymphs, beating their breasts." },
+            { t: "CORE", v: "Thetis promised: I will return tomorrow with the sun, and bring glorious armour from Lord Hephaestus." },
+            { t: "RIM", v: "While Thetis journeyed, the Greeks reached the ships by the Hellespont." },
+            { t: "RIM", v: "Hector of the gleaming helm wears your lovely armour and exults." },
+            { t: "CORE", v: "Silver-footed Thetis reached Hephaestus’ house of imperishable bronze, adorned with stars." },
+            { t: "CORE", v: "She found him running back and forth to his bellows, sweating with toil." },
+            { t: "CORE", v: "Then he first made a shield, broad and solid, adorning it skilfully everywhere." },
+            { t: "CORE", v: "On it he showed the earth, sea, sky, the tireless sun and the full moon." },
+            { t: "CORE", v: "Pleiades, Hyades, great Orion, and the Bear that men call the Wain." },
+            { t: "RIM", v: "On it he showed two fine cities: brides led from their rooms to the sound of wedding songs." },
+            { t: "RIM", v: "The other city was besieged by two armies clad in glittering armour." },
+            { t: "MARGIN", v: "On the shield also, he depicted fallow-land, soft, rich, broad and thrice-ploughed." },
+            { t: "MARGIN", v: "Behind them the field, though made of gold, looked black as if it had been ploughed." },
+            { t: "MARGIN", v: "He portrayed in gold a fine vineyard laden with grapes, clusters black on silver poles." },
+            { t: "MARGIN", v: "A boy sang of Linos, in a sweet treble voice, to the pleasant music of the clear-toned lyre." },
+            { t: "CORE", v: "Round the rim of the solid shield, he laid out the mighty stream of Ocean." }
+        ];
+
+        const ONTOLOGY = {
+            CORE: { name: "Celestial_Umbo", color: 0xfbbf24, h: 2.2 },
+            RIM: { name: "City_Distinction", color: 0x92400e, h: 1.0 },
+            MARGIN: { name: "Foundational_Grief", color: 0x64748b, h: 0.5 }
+        };
+
+        // --- NARRATIVE NODE ---
+        class NarrativeKernel {
+            constructor(x, y, size, depth, config, parentId) {
+                this.x = x; this.y = y; this.size = size; this.depth = depth;
+                this.id = parentId; this.type = config.type;
+                this.isSplit = false; this.children = [];
+                this.weight = (depth === 0 ? 0.05 : ONTOLOGY[config.type].h + (Math.random() * 0.4));
+                this.verses = [config.verse || "Achilles' anxious heart."];
+            }
+            subdivide(type, verse) {
+                if (this.depth >= 6) return false;
+                this.isSplit = true;
+                const s = this.size/2, o = s/2;
+                const coords = [{x:this.x+o,y:this.y+o},{x:this.x-o,y:this.y+o},{x:this.x-o,y:this.y-o},{x:this.x+o,y:this.y-o}];
+                this.children = coords.map((c, i) => {
+                    return new NarrativeKernel(c.x, c.y, s, this.depth + 1, { type: type, verse: verse }, `${this.id}_${i}`);
+                });
+                return true;
+            }
+            getLeaves(res = []) {
+                if (!this.isSplit) res.push(this);
+                else this.children.forEach(c => c.getLeaves(res));
+                return res;
+            }
+        }
+
+        // --- THREE.JS ENGINE ---
+        const visualField = document.getElementById('visual-field');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(40, visualField.clientWidth / visualField.clientHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(visualField.clientWidth, visualField.clientHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        document.getElementById('canvas-container').appendChild(renderer.domElement);
+        camera.position.set(0, -11.5, 10); camera.lookAt(0, 0, 0);
+
+        const material = new THREE.ShaderMaterial({
+            uniforms: {
+                u_seeds: { value: new Float32Array(256 * 3) },
+                u_colors: { value: new Float32Array(256 * 3) },
+                u_weights: { value: new Float32Array(256) },
+                u_seed_count: { value: 0 },
+                u_time: { value: 0 },
+                u_relief: { value: 1.0 },
+                u_peel_h: { value: 1.0 },
+                u_xray: { value: 0.0 },
+                u_bounds_center: { value: new THREE.Vector2(0.5, 0.5) },
+                u_bounds_size: { value: 0.0 }
+            },
+            vertexShader: `
+                uniform vec3 u_seeds[256];
+                uniform float u_weights[256];
+                uniform int u_seed_count;
+                uniform float u_relief;
+                varying vec2 vUv;
+                varying float vHeight;
+                void main() {
+                    vUv = uv;
+                    vec3 pos = position;
+                    float totalW = 0.0, combH = 0.0;
+                    for (int i = 0; i < 256; i++) {
+                        if (i >= u_seed_count) break;
+                        float d = distance(uv, u_seeds[i].xy);
+                        float w = 1.0 / pow(max(d, 0.045), 3.0); 
+                        totalW += w; combH += u_weights[i] * w;
+                    }
+                    float baseH = (totalW > 0.0) ? (combH / totalW) : 0.0;
+                    float blockH = floor(baseH * 16.0) / 16.0;
+                    float hill = 1.0 / (1.0 + exp(28.0 * (distance(uv, vec2(0.5)) - 0.35)));
+                    vHeight = blockH * hill;
+                    pos.z += vHeight * u_relief * 1.8;
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+                }
+            `,
+            fragmentShader: `
+                uniform vec3 u_seeds[256];
+                uniform vec3 u_colors[256];
+                uniform int u_seed_count;
+                uniform float u_xray;
+                uniform float u_peel_h;
+                uniform vec2 u_bounds_center;
+                uniform float u_bounds_size;
+                varying vec2 vUv;
+                varying float vHeight;
+                void main() {
+                    vec2 uv = vUv;
+                    if (distance(uv, vec2(0.5)) > 0.495) discard;
+                    if (u_xray > 0.5 && vHeight > (u_peel_h * 2.8)) discard;
+
+                    float minDist = 10.0; int closestIdx = 0;
+                    for (int i = 0; i < 256; i++) {
+                        if (i >= u_seed_count) break;
+                        float d = distance(uv, u_seeds[i].xy);
+                        if (d < minDist) { minDist = d; closestIdx = i; }
+                    }
+                    
+                    vec3 color = u_colors[closestIdx];
+                    float contour = abs(fract(vHeight * 18.0 + 0.5) - 0.5);
+                    float line = smoothstep(0.12, 0.0, contour);
+                    float edge = 0.0;
+                    for (int i = 0; i < 256; i++) {
+                        if (i >= u_seed_count || i == closestIdx) continue;
+                        float d = distance(uv, u_seeds[i].xy);
+                        edge = max(edge, 1.0 - smoothstep(0.0, 0.003, abs(d - minDist)));
+                    }
+
+                    bool isActiveNode = false;
+                    if (u_bounds_size > 0.0) {
+                        vec2 bDist = abs(uv - u_bounds_center);
+                        if (bDist.x < u_bounds_size/2.0 && bDist.y < u_bounds_size/2.0) isActiveNode = true;
+                    }
+
+                    if (u_bounds_size > 0.0 && !isActiveNode) color *= 0.2;
+
+                    color *= (0.6 + vHeight * 0.4); 
+                    color = mix(color, vec3(0.1, 0.9, 1.0), line * 0.3); 
+                    color += edge * 0.4 * vec3(1.0, 1.0, 1.0); 
+                    
+                    if (isActiveNode) color += 0.2;
+                    gl_FragColor = vec4(color, 1.0);
+                }
+            `,
+            transparent: true
+        });
+
+        const plane = new THREE.Mesh(new THREE.PlaneGeometry(12, 12, 512, 512), material);
+        scene.add(plane);
+
+        // --- OS STATE ---
+        let rootNode = null;
+        let activeTool = 'audit', currentVerseIdx = 0;
+        let isDragging = false, spinVel = { x: 0, y: 0 }, lastMouse = { x: 0, y: 0 };
+        const radarCanvas = document.getElementById('radar-canvas');
+        const radarCtx = radarCanvas.getContext('2d');
+
+        function init() {
+            rootNode = new NarrativeKernel(0, 0, 10, 0, { type: "MARGIN", verse: "Tabula Rasa: Root sector established." }, "ROOT");
+            currentVerseIdx = 0;
+            updateKernel();
+            document.getElementById('verse-index').innerText = `Verse: 0/${ILIAD_XVIII.length}`;
+            document.getElementById('archive-stream').innerHTML = "";
+            pushFeed("Instrument reset. Field is unmarked.", "SYSTEM");
+        }
+
+        function updateKernel() {
+            let leaves = []; rootNode.getLeaves(leaves);
+            leaves = leaves.slice(0, 256);
+            const pos = material.uniforms.u_seeds.value;
+            const col = material.uniforms.u_colors.value;
+            const wgt = material.uniforms.u_weights.value;
+            leaves.forEach((l, i) => {
+                pos[i*3] = (l.x + 6) / 12; pos[i*3+1] = (l.y + 6) / 12;
+                const c = new THREE.Color(ONTOLOGY[l.type]?.color || 0x64748b);
+                col[i*3] = c.r; col[i*3+1] = c.g; col[i*3+2] = c.b;
+                wgt[i] = l.weight;
+            });
+            material.uniforms.u_seed_count.value = leaves.length;
+            document.getElementById('stat-nodes').innerText = leaves.length;
+            drawRadar(leaves);
+        }
+
+        function drawRadar(leaves) {
+            const s = 110; radarCanvas.width = radarCanvas.height = s;
+            radarCtx.clearRect(0, 0, s, s);
+            radarCtx.strokeStyle = 'rgba(34, 211, 238, 0.2)';
+            radarCtx.strokeRect(0, 0, s, s);
+            leaves.forEach(l => {
+                const rx = ((l.x + 6) / 12) * s, ry = ((l.y + 6) / 12) * s;
+                radarCtx.fillStyle = ONTOLOGY[l.type] ? `#${ONTOLOGY[l.type].color.toString(16).padStart(6,'0')}` : "#64748b";
+                radarCtx.fillRect(rx - 1, ry - 1, 2, 2);
+            });
+        }
+
+        function stepPoem() {
+            if (currentVerseIdx >= ILIAD_XVIII.length) {
+                pushFeed("Poem completed. All spatiotemporal distinctions drawn.", "SYSTEM");
+                return;
+            }
+            const verseData = ILIAD_XVIII[currentVerseIdx];
+            currentVerseIdx++;
+            
+            // Logic: Find a leaf of the appropriate type to subdivide
+            let leaves = []; rootNode.getLeaves(leaves);
+            let target = leaves.find(l => l.type === verseData.t);
+            if (!target) target = leaves[Math.floor(Math.random() * leaves.length)];
+
+            if (target.subdivide(verseData.t, verseData.v)) {
+                pushFeed(`<div class="verse-highlight">${verseData.v}</div>`, "NARRATIVE");
+                document.getElementById('verse-index').innerText = `Verse: ${currentVerseIdx}/${ILIAD_XVIII.length}`;
+                document.getElementById('active-domain').innerText = `Domain: ${verseData.t}`;
+                updateKernel();
+            }
+        }
+
+        function pushFeed(msg, tag = 'SYSTEM') {
+            const buffer = document.getElementById('archive-stream');
+            const entry = document.createElement('div');
+            entry.className = `manifest-entry ${tag.toLowerCase()}`;
+            entry.innerHTML = `<span class="entry-tag">${tag}</span>${msg}`;
+            buffer.prepend(entry);
+        }
+
+        // --- INTERACTION ---
+        function onMove(x, y) {
+            const rect = visualField.getBoundingClientRect();
+            const mouseX = ((x - rect.left) / rect.width) * 2 - 1;
+            const mouseY = -((y - rect.top) / rect.height) * 2 + 1;
+            if (isDragging) {
+                spinVel.x = (x - lastMouse.x) * 0.008;
+                spinVel.y = (y - lastMouse.y) * 0.008;
+                lastMouse = { x, y };
+            }
+            const r = new THREE.Raycaster();
+            r.setFromCamera(new THREE.Vector2(mouseX, mouseY), camera);
+            const hits = r.intersectObject(plane);
+            if (hits.length > 0) {
+                const pt = hits[0].point;
+                let leaves = []; rootNode.getLeaves(leaves);
+                let closest = null, dMin = 999;
+                leaves.forEach(l => {
+                    const d = Math.sqrt((l.x-pt.x)**2 + (l.y-pt.y)**2);
+                    if (d < dMin) { dMin = d; closest = l; }
+                });
+                if (closest && dMin < 1.8) {
+                    material.uniforms.u_bounds_center.value.set((closest.x + 6) / 12, (closest.y + 6) / 12);
+                    material.uniforms.u_bounds_size.value = closest.size / 12;
+                    if (activeTool === 'audit') {
+                         document.getElementById('stat-addr').innerText = `${closest.x.toFixed(1)}, ${closest.y.toFixed(1)}`;
+                    }
+                }
+            }
+        }
+
+        visualField.addEventListener('mousedown', (e) => { isDragging = true; lastMouse = { x: e.clientX, y: e.clientY }; });
+        window.addEventListener('mouseup', () => isDragging = false);
+        window.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY));
+        visualField.addEventListener('touchstart', (e) => { isDragging = true; lastMouse = { x: e.touches[0].clientX, y: e.touches[0].clientY }; }, { passive: false });
+        window.addEventListener('touchend', () => isDragging = false);
+        window.addEventListener('touchmove', (e) => onMove(e.touches[0].clientX, e.touches[0].clientY), { passive: false });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            if (!isDragging) {
+                spinVel.x *= 0.97; spinVel.y *= 0.97;
+                plane.rotation.z += 0.0003;
+            }
+            plane.rotation.z += spinVel.x;
+            plane.rotation.x -= spinVel.y;
+            plane.rotation.x = Math.max(-1.1, Math.min(0.2, plane.rotation.x));
+            renderer.render(scene, camera);
+        }
+
+        window.onload = () => {
+            document.getElementById('slider-peel').addEventListener('input', (e) => {
+                material.uniforms.u_peel_h.value = e.target.value / 100;
+                document.getElementById('lbl-peel').innerText = e.target.value;
+            });
+            document.getElementById('slider-relief').addEventListener('input', (e) => {
+                material.uniforms.u_relief.value = e.target.value / 150;
+                document.getElementById('lbl-relief').innerText = (e.target.value / 150).toFixed(1) + 'x';
+            });
+            document.getElementById('btn-next-verse').addEventListener('click', stepPoem);
+            document.getElementById('reset-btn').addEventListener('click', init);
+
+            const tools = ['audit', 'cross', 'xray'];
+            tools.forEach(t => {
+                const btn = document.getElementById(`tool-${t}`);
+                if (btn) btn.addEventListener('click', () => {
+                    if (t === 'xray') {
+                        material.uniforms.u_xray.value = material.uniforms.u_xray.value > 0.5 ? 0.0 : 1.0;
+                        btn.classList.toggle('active');
+                        return;
+                    }
+                    activeTool = t;
+                    document.querySelectorAll('.btn-inst').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                });
+            });
+
+            init(); animate();
+        };
+    </script>
+</body>
+</html>

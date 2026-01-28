@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ONYX Story Fracture</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #0b0f1a;
+            --bg-panel: #111827;
+            --bg-surface: #1f2937;
+            --border: #374151;
+            --text: #e5e7eb;
+            --text-muted: #6b7280;
+            --cyan: #22d3ee;
+            --cyan-dim: rgba(34, 211, 238, 0.2);
+            --gold: #fbbf24;
+            --gold-dim: rgba(251, 191, 36, 0.2);
+            --purple: #c084fc;
+            --green: #4ade80;
+            --red: #f87171;
+            --blue: #60a5fa;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--bg-primary);
+            color: var(--text);
+            overflow: hidden;
+            height: 100vh;
+            height: 100dvh;
+        }
+
+        /* Layout */
+        .app {
+            display: grid;
+            grid-template-rows: 60px 1fr auto;
+            grid-template-columns: 1fr;
+            height: 100vh;
+        }
+
+        @media (min-width: 1024px) {
+            .app {
+                grid-template-columns: 280px 1fr 320px;
+                grid-template-rows: 60px 1fr;
+            }
+        }
+
+        /* Header */
+        .header {
+            background: var(--bg-panel);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1rem;
+            z-index: 50;
+        }
+
+        @media (min-width: 1024px) {
+            .header { grid-column: 1 / -1; }
+            .mobile-only { display: none; }
+        }
+
+        @media (max-width: 1023px) {
+            .desktop-only { display: none; }
+        }
+
+        /* Panels */
+        .sidebar, .inspector {
+            background: var(--bg-panel);
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+        }
+
+        @media (max-width: 1023px) {
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 60px;
+                bottom: 70px;
+                width: 280px;
+                transform: translateX(-100%);
+                z-index: 40;
+                border-right: 1px solid var(--border);
+            }
+            .sidebar.open { transform: translateX(0); }
+            
+            .inspector {
+                position: fixed;
+                right: 0;
+                top: 60px;
+                bottom: 70px;
+                width: 100%;
+                max-width: 380px;
+                transform: translateX(100%);
+                z-index: 40;
+                border-left: 1px solid var(--border);
+            }
+            .inspector.open { transform: translateX(0); }
+        }
+
+        @media (min-width: 1024px) {
+            .sidebar { border-right: 1px solid var(--border); }
+            .inspector { border-left: 1px solid var(--border); }
+        }
+
+        /* Canvas Area */
+        .canvas-container {
+            position: relative;
+            overflow: hidden;
+            background: #0a0e17;
+        }
+
+        #main-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Grid Overlay (9x9) */
+        .grid-overlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .grid-overlay.active {
+            opacity: 1;
+            background-image: 
+                linear-gradient(rgba(34, 211, 238, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(34, 211, 238, 0.1) 1px, transparent 1px);
+            background-size: 11.11% 11.11%;
+        }
+
+        /* HUD */
+        .hud {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: none;
+            z-index: 20;
+        }
+
+        .hud-pill {
+            background: rgba(0,0,0,0.8);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 6px 12px;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            pointer-events: auto;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            overflow-x: auto;
+            max-width: 200px;
+            scrollbar-width: none;
+        }
+
+        .breadcrumb::-webkit-scrollbar { display: none; }
+
+        .crumb {
+            color: var(--cyan);
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .crumb:hover { text-decoration: underline; }
+        .crumb:last-child { color: var(--gold); font-weight: 600; }
+
+        /* Bottom Controls */
+        .controls {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: var(--bg-panel);
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 0 1rem;
+            padding-bottom: env(safe-area-inset-bottom);
+            z-index: 50;
+        }
+
+        @media (min-width: 1024px) {
+            .controls {
+                position: absolute;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: auto;
+                height: auto;
+                background: rgba(0,0,0,0.9);
+                border: 1px solid var(--border);
+                border-radius: 12px;
+                padding: 12px;
+            }
+        }
+
+        .control-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--bg-surface);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            font-size: 9px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .control-btn:hover, .control-btn.active {
+            border-color: var(--cyan);
+            color: var(--cyan);
+            background: var(--cyan-dim);
+        }
+
+        .control-btn.primary {
+            border-color: var(--gold);
+            color: var(--gold);
+            background: var(--gold-dim);
+            width: 64px;
+            height: 56px;
+        }
+
+        .control-btn.primary:hover {
+            box-shadow: 0 0 20px var(--gold-dim);
+        }
+
+        .control-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* Entity Palette */
+        .palette {
+            padding: 1rem;
+        }
+
+        .palette-title {
+            font-size: 10px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        .palette-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .palette-item:hover {
+            border-color: var(--cyan);
+            transform: translateX(4px);
+        }
+
+        .palette-item i {
+            width: 24px;
+            text-align: center;
+        }
+
+        /* Inspector */
+        .inspector-content {
+            padding: 1rem;
+        }
+
+        .inspector-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .inspector-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .inspector-input {
+            width: 100%;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.5rem 0.75rem;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 13px;
+        }
+
+        .inspector-input:focus {
+            outline: none;
+            border-color: var(--cyan);
+        }
+
+        select.inspector-input {
+            cursor: pointer;
+        }
+
+        .entity-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .entity-tag {
+            background: var(--cyan-dim);
+            border: 1px solid var(--cyan);
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .entity-tag i {
+            cursor: pointer;
+            opacity: 0.6;
+        }
+
+        .entity-tag i:hover {
+            opacity: 1;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--bg-surface);
+            border: 1px solid var(--cyan);
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-size: 12px;
+            z-index: 100;
+            opacity: 0;
+            transition: all 0.3s;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* Overlay for mobile menu */
+        .overlay {
+            position: fixed;
+            inset: 60px 0 70px 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 35;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="flex items-center gap-3">
+                <button class="mobile-only p-2 hover:bg-white/5 rounded-lg" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight">ONYX</h1>
+                    <p class="text-[10px] text-[var(--cyan)]">Story Fracture Engine</p>
+                </div>
+            </div>
+            
+            <div class="hud-pill desktop-only">
+                <div class="breadcrumb" id="breadcrumb">
+                    <span class="crumb" onclick="navigateToRoot()">Story Root</span>
+                </div>
+            </div>
+
+            <button class="mobile-only p-2 hover:bg-white/5 rounded-lg" onclick="toggleInspector()">
+                <i class="fas fa-sliders-h"></i>
+            </button>
+        </header>
+
+        <!-- Sidebar (Palette) -->
+        <aside class="sidebar" id="sidebar">
+            <div class="palette">
+                <div class="palette-title">Entity Palette</div>
+                
+                <div class="palette-item" onclick="selectPaletteItem('Entity')">
+                    <i class="fas fa-cube text-[var(--blue)]"></i>
+                    <div>
+                        <div class="text-sm font-medium">Entity</div>
+                        <div class="text-[10px] text-[var(--text-muted)]">Characters, objects</div>
+                    </div>
+                </div>
+
+                <div class="palette-item" onclick="selectPaletteItem('Core')">
+                    <i class="fas fa-gem text-[var(--gold)]"></i>
+                    <div>
+                        <div class="text-sm font-medium">Core</div>
+                        <div class="text-[10px] text-[var(--text-muted)]">Key plot points</div>
+                    </div>
+                </div>
+
+                <div class="palette-item" onclick="selectPaletteItem('Goal')">
+                    <i class="fas fa-bullseye text-[var(--green)]"></i>
+                    <div>
+                        <div class="text-sm font-medium">Goal</div>
+                        <div class="text-[10px] text-[var(--text-muted)]">Objectives</div>
+                    </div>
+                </div>
+
+                <div class="palette-item" onclick="selectPaletteItem('Obstacle')">
+                    <i class="fas fa-ban text-[var(--red)]"></i>
+                    <div>
+                        <div class="text-sm font-medium">Obstacle</div>
+                        <div class="text-[10px] text-[var(--text-muted)]">Conflicts, barriers</div>
+                    </div>
+                </div>
+
+                <div class="palette-item" onclick="selectPaletteItem('Scene')">
+                    <i class="fas fa-film text-[var(--purple)]"></i>
+                    <div>
+                        <div class="text-sm font-medium">Scene</div>
+                        <div class="text-[10px] text-[var(--text-muted)]">Container for beats</div>
+                    </div>
+                </div>
+
+                <div class="mt-6 palette-title">Current Selection</div>
+                <div id="selection-info" class="text-sm text-[var(--text-muted)]">
+                    No sector selected
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Canvas -->
+        <main class="canvas-container">
+            <canvas id="main-canvas"></canvas>
+            <div class="grid-overlay" id="grid-overlay"></div>
+            
+            <!-- HUD -->
+            <div class="hud">
+                <div class="hud-pill">
+                    <i class="fas fa-layer-group text-[var(--cyan)]"></i>
+                    <span id="depth-indicator">Depth: 0</span>
+                </div>
+                <div class="hud-pill mobile-only">
+                    <span class="crumb" onclick="navigateToRoot()">Root</span>
+                </div>
+            </div>
+        </main>
+
+        <!-- Inspector -->
+        <aside class="inspector" id="inspector">
+            <div class="inspector-content">
+                <div class="inspector-section">
+                    <div class="inspector-label">Sector Name</div>
+                    <input type="text" class="inspector-input" id="sector-name" 
+                           placeholder="Unnamed Sector" onchange="updateSectorName(this.value)">
+                </div>
+
+                <div class="inspector-section">
+                    <div class="inspector-label">Sector Type</div>
+                    <select class="inspector-input" id="sector-type" onchange="updateSectorType(this.value)">
+                        <option value="Story">Story</option>
+                        <option value="Scene">Scene</option>
+                        <option value="Act">Act</option>
+                        <option value="Sequence">Sequence</option>
+                        <option value="Beat">Beat</option>
+                    </select>
+                </div>
+
+                <div class="inspector-section">
+                    <div class="inspector-label">Contents</div>
+                    <div class="entity-list" id="entity-list">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+
+                <div class="inspector-section" id="action-section" style="display: none;">
+                    <button class="w-full py-3 bg-[var(--red)]/20 border border-[var(--red)] rounded-lg text-sm hover:bg-[var(--red)]/30 transition-colors" onclick="deleteCurrentSector()">
+                        <i class="fas fa-trash mr-2"></i>Delete Sector
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Bottom Controls -->
+        <nav class="controls">
+            <button class="control-btn" onclick="navigateUp()" id="btn-up" disabled>
+                <i class="fas fa-arrow-up text-lg"></i>
+                <span>UP</span>
+            </button>
+            
+            <button class="control-btn" onclick="selectPrevSector()" id="btn-prev" disabled>
+                <i class="fas fa-arrow-left text-lg"></i>
+                <span>PREV</span>
+            </button>
+
+            <button class="control-btn primary" onclick="fractureCurrent()" id="btn-fracture">
+                <i class="fas fa-code-branch text-xl"></i>
+                <span>FRACTURE</span>
+            </button>
+
+            <button class="control-btn" onclick="selectNextSector()" id="btn-next" disabled>
+                <i class="fas fa-arrow-right text-lg"></i>
+                <span>NEXT</span>
+            </button>
+
+            <button class="control-btn" onclick="enterSelectedSector()" id="btn-enter" disabled>
+                <i class="fas fa-sign-in-alt text-lg"></i>
+                <span>ENTER</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- Mobile Overlay -->
+    <div class="overlay" id="overlay" onclick="closePanels()"></div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // =========================================
+        // STATE
+        // =========================================
+        const STATE = {
+            nodes: [],
+            currentNode: null,
+            selectedNode: null,
+            path: [],
+            depth: 0,
+            paletteSelection: null,
+            nextId: 1,
+            camera: { x: 0, y: 0, zoom: 1 }
+        };
+
+        const COLORS = {
+            Story: '#c084fc',
+            Scene: '#22d3ee',
+            Act: '#fbbf24',
+            Sequence: '#4ade80',
+            Beat: '#f87171',
+            Entity: '#60a5fa',
+            Core: '#fbbf24',
+            Goal: '#4ade80',
+            Obstacle: '#f87171',
+            default: '#9ca3af'
+        };
+
+        // =========================================
+        // INITIALIZATION
+        // =========================================
+        function init() {
+            // Create root node
+            const root = createNode({
+                type: 'Story',
+                label: 'Story Root',
+                x: 50,
+                y: 50,
+                depth: 0,
+                children: [],
+                entities: [],
+                cell: null,
+                fractured: false
+            });
+
+            STATE.currentNode = root;
+            STATE.path = [root];
+            
+            resizeCanvas();
+            render();
+            updateUI();
+            
+            window.addEventListener('resize', () => {
+                resizeCanvas();
+                render();
+            });
+
+            setupInputHandlers();
+        }
+
+        function createNode(data) {
+            const node = { id: STATE.nextId++, ...data };
+            STATE.nodes.push(node);
+            return node;
+        }
+
+        function resizeCanvas() {
+            const canvas = document.getElementById('main-canvas');
+            const container = canvas.parentElement;
+            canvas.width = container.clientWidth;
+            canvas.height = container.clientHeight;
+        }
+
+        // =========================================
+        // VORONOI SUBDIVISION
+        // =========================================
+        function computeVoronoiCells(parent, count) {
+            const canvas = document.getElementById('main-canvas');
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = Math.min(canvas.width, canvas.height) * 0.38;
+            
+            const cells = [];
+            const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+            
+            for (let i = 0; i < count; i++) {
+                const t = i / count;
+                const angle = i * goldenAngle;
+                const r = Math.sqrt(t) * radius * 0.9;
+                
+                const x = centerX + Math.cos(angle) * r;
+                const y = centerY + Math.sin(angle) * r;
+                
+                // Generate cell polygon
+                const polygon = generateCellPolygon(x, y, radius * 0.4, i, count);
+                
+                cells.push({
+                    x, y,
+                    polygon,
+                    angle,
+                    radius: r
+                });
+            }
+            
+            return cells;
+        }
+
+        function generateCellPolygon(cx, cy, baseRadius, index, total) {
+            const points = [];
+            const sides = 6 + Math.floor(Math.random() * 3);
+            const variance = 0.3;
+            
+            for (let i = 0; i < sides; i++) {
+                const angle = (i / sides) * Math.PI * 2;
+                const r = baseRadius * (0.7 + Math.random() * variance);
+                points.push({
+                    x: cx + Math.cos(angle) * r,
+                    y: cy + Math.sin(angle) * r
+                });
+            }
+            
+            return points;
+        }
+
+        function fractureNode(node) {
+            if (!node) node = STATE.selectedNode || STATE.currentNode;
+            if (!node) return;
+            
+            const fractureCount = 3 + Math.floor(Math.random() * 4); // 3-6 pieces
+            const cellData = computeVoronoiCells(node, fractureCount);
+            
+            node.children = [];
+            node.fractured = true;
+            
+            cellData.forEach((cell, i) => {
+                const child = createNode({
+                    type: 'Scene',
+                    label: `Sector ${i + 1}`,
+                    x: (cell.x / document.getElementById('main-canvas').width) * 100,
+                    y: (cell.y / document.getElementById('main-canvas').height) * 100,
+                    depth: node.depth + 1,
+                    parentId: node.id,
+                    children: [],
+                    entities: [],
+                    cell: cell,
+                    fractured: false
+                });
+                
+                node.children.push(child.id);
+            });
+            
+            showToast(`Fractured into ${fractureCount} sectors`);
+            render();
+            updateUI();
+        }
+
+        // =========================================
+        // RENDERING
+        // =========================================
+        function render() {
+            const canvas = document.getElementById('main-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            ctx.fillStyle = '#0a0e17';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw parent boundary if not root
+            if (STATE.path.length > 1) {
+                drawParentBoundary(ctx);
+            }
+            
+            // Draw current node's children (sectors)
+            if (STATE.currentNode.fractured) {
+                drawSectors(ctx);
+            } else {
+                // Draw empty state or prompt to fracture
+                drawEmptyState(ctx);
+            }
+            
+            // Draw entities if inside a sector
+            if (STATE.path.length > 1) {
+                drawEntities(ctx);
+            }
+        }
+
+        function drawParentBoundary(ctx) {
+            const canvas = document.getElementById('main-canvas');
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+            const r = Math.min(canvas.width, canvas.height) * 0.4;
+            
+            ctx.strokeStyle = 'rgba(34, 211, 238, 0.2)';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.arc(cx, cy, r, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            // Label
+            ctx.fillStyle = 'rgba(34, 211, 238, 0.5)';
+            ctx.font = '12px "JetBrains Mono"';
+            ctx.textAlign = 'center';
+            ctx.fillText(STATE.currentNode.label, cx, cy - r - 10);
+        }
+
+        function drawSectors(ctx) {
+            const children = STATE.currentNode.children
+                .map(id => STATE.nodes.find(n => n.id === id))
+                .filter(Boolean);
+            
+            children.forEach(child => {
+                const isSelected = STATE.selectedNode?.id === child.id;
+                const color = COLORS[child.type] || COLORS.default;
+                
+                if (child.cell && child.cell.polygon) {
+                    // Draw cell
+                    ctx.fillStyle = color + (isSelected ? '40' : '20');
+                    ctx.strokeStyle = isSelected ? color : color + '60';
+                    ctx.lineWidth = isSelected ? 3 : 1.5;
+                    
+                    ctx.beginPath();
+                    const poly = child.cell.polygon;
+                    ctx.moveTo(poly[0].x, poly[0].y);
+                    for (let i = 1; i < poly.length; i++) {
+                        ctx.lineTo(poly[i].x, poly[i].y);
+                    }
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.stroke();
+                    
+                    // Draw label
+                    ctx.fillStyle = '#fff';
+                    ctx.font = isSelected ? 'bold 13px "JetBrains Mono"' : '12px "JetBrains Mono"';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(child.label, child.cell.x, child.cell.y);
+                    
+                    // Draw type indicator
+                    ctx.fillStyle = color;
+                    ctx.font = '10px "JetBrains Mono"';
+                    ctx.fillText(child.type, child.cell.x, child.cell.y + 16);
+                    
+                    // Show entity count if any
+                    if (child.entities && child.entities.length > 0) {
+                        ctx.fillStyle = color;
+                        ctx.beginPath();
+                        ctx.arc(child.cell.x + 30, child.cell.y - 20, 10, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.fillStyle = '#000';
+                        ctx.font = 'bold 10px "JetBrains Mono"';
+                        ctx.fillText(child.entities.length, child.cell.x + 30, child.cell.y - 20);
+                    }
+                }
+            });
+        }
+
+        function drawEmptyState(ctx) {
+            const canvas = document.getElementById('main-canvas');
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+            
+            ctx.strokeStyle = 'rgba(251, 191, 36, 0.3)';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([10, 5]);
+            ctx.beginPath();
+            ctx.arc(cx, cy, Math.min(canvas.width, canvas.height) * 0.35, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.setLineDash([]);
+            
+            ctx.fillStyle = 'rgba(251, 191, 36, 0.6)';
+            ctx.font = '14px "JetBrains Mono"';
+            ctx.textAlign = 'center';
+            ctx.fillText('Click FRACTURE to subdivide', cx, cy);
+        }
+
+        function drawEntities(ctx) {
+            // Draw entities placed in current sector's grid
+            if (!STATE.currentNode.entities) return;
+            
+            const canvas = document.getElementById('main-canvas');
+            
+            STATE.currentNode.entities.forEach(entity => {
+                const x = (entity.gridX / 9) * canvas.width;
+                const y = (entity.gridY / 9) * canvas.height;
+                const color = COLORS[entity.type] || COLORS.default;
+                
+                // Entity node
+                ctx.beginPath();
+                ctx.arc(x, y, 18, 0, Math.PI * 2);
+                ctx.fillStyle = color + '30';
+                ctx.fill();
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                
+                // Icon
+                ctx.fillStyle = '#fff';
+                ctx.font = '10px "Font Awesome 6 Free"';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                const icon = getEntityIcon(entity.type);
+                ctx.fillText(icon, x, y - 5);
+                
+                // Label
+                ctx.font = '9px "JetBrains Mono"';
+                ctx.fillText(entity.label, x, y + 12);
+            });
+        }
+
+        function getEntityIcon(type) {
+            const icons = {
+                Entity: '\uf1b2',
+                Core: '\uf3a5',
+                Goal: '\uf140',
+                Obstacle: '\uf05e',
+                Scene: '\uf008'
+            };
+            return icons[type] || '\uf111';
+        }
+
+        // =========================================
+        // INPUT HANDLING
+        // =========================================
+        function setupInputHandlers() {
+            const canvas = document.getElementById('main-canvas');
+            
+            canvas.addEventListener('mousedown', handlePointerDown);
+            canvas.addEventListener('touchstart', handlePointerDown, { passive: false });
+            
+            // Keyboard shortcuts
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowUp' || e.key === 'Escape') navigateUp();
+                if (e.key === 'ArrowLeft') selectPrevSector();
+                if (e.key === 'ArrowRight') selectNextSector();
+                if (e.key === 'ArrowDown' || e.key === 'Enter') enterSelectedSector();
+                if (e.key === 'f' || e.key === 'F') fractureCurrent();
+            });
+        }
+
+        function handlePointerDown(e) {
+            e.preventDefault();
+            const pos = getPointerPos(e);
+            const canvas = document.getElementById('main-canvas');
+            
+            // Check if clicking on a sector
+            if (STATE.currentNode.fractured) {
+                const children = STATE.currentNode.children
+                    .map(id => STATE.nodes.find(n => n.id === id))
+                    .filter(Boolean);
+                
+                for (const child of children) {
+                    if (child.cell && pointInPolygon(pos.x, pos.y, child.cell.polygon)) {
+                        selectSector(child);
+                        return;
+                    }
+                }
+            }
+            
+            // Check if clicking on grid to place entity
+            if (STATE.path.length > 1 && STATE.paletteSelection) {
+                const gridX = Math.floor((pos.x / canvas.width) * 9);
+                const gridY = Math.floor((pos.y / canvas.height) * 9);
+                
+                if (gridX >= 0 && gridX < 9 && gridY >= 0 && gridY < 9) {
+                    placeEntity(gridX, gridY);
+                    return;
+                }
+            }
+            
+            // Deselect
+            STATE.selectedNode = null;
+            updateUI();
+            render();
+        }
+
+        function getPointerPos(e) {
+            const canvas = document.getElementById('main-canvas');
+            const rect = canvas.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            return {
+                x: (clientX - rect.left) * (canvas.width / rect.width),
+                y: (clientY - rect.top) * (canvas.height / rect.height)
+            };
+        }
+
+        function pointInPolygon(x, y, polygon) {
+            let inside = false;
+            for (let i = 0, j = polygon.length - 1; i < polygon.length; j = i++) {
+                const xi = polygon[i].x, yi = polygon[i].y;
+                const xj = polygon[j].x, yj = polygon[j].y;
+                const intersect = ((yi > y) !== (yj > y)) &&
+                    (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+                if (intersect) inside = !inside;
+            }
+            return inside;
+        }
+
+        // =========================================
+        // ACTIONS
+        // =========================================
+        function selectSector(node) {
+            STATE.selectedNode = node;
+            updateUI();
+            render();
+            
+            // Update inspector
+            document.getElementById('sector-name').value = node.label;
+            document.getElementById('sector-type').value = node.type;
+            document.getElementById('action-section').style.display = 'block';
+            
+            // Show entities in inspector
+            updateEntityList(node);
+            
+            if (window.innerWidth < 1024) {
+                document.getElementById('inspector').classList.add('open');
+                document.getElementById('overlay').classList.add('active');
+            }
+        }
+
+        function selectPaletteItem(type) {
+            STATE.paletteSelection = type;
+            
+            // Visual feedback
+            document.querySelectorAll('.palette-item').forEach(item => {
+                item.style.borderColor = '';
+                item.style.background = '';
+            });
+            event.currentTarget.style.borderColor = 'var(--cyan)';
+            event.currentTarget.style.background = 'var(--cyan-dim)';
+            
+            document.getElementById('selection-info').innerHTML = `
+                <span style="color: var(--cyan)">Selected: ${type}</span><br>
+                <span style="font-size: 10px; color: var(--text-muted)">
+                    ${STATE.path.length > 1 ? 'Tap grid to place' : 'Enter a sector first'}
+                </span>
+            `;
+            
+            // Show grid overlay when palette selected and inside sector
+            if (STATE.path.length > 1) {
+                document.getElementById('grid-overlay').classList.add('active');
+            }
+        }
+
+        function placeEntity(gridX, gridY) {
+            if (!STATE.paletteSelection || STATE.path.length <= 1) return;
+            
+            // Check if slot occupied
+            const existing = STATE.currentNode.entities?.find(e => 
+                e.gridX === gridX && e.gridY === gridY
+            );
+            if (existing) {
+                showToast('Slot already occupied');
+                return;
+            }
+            
+            const entity = {
+                id: Date.now(),
+                type: STATE.paletteSelection,
+                label: `New ${STATE.paletteSelection}`,
+                gridX,
+                gridY
+            };
+            
+            if (!STATE.currentNode.entities) STATE.currentNode.entities = [];
+            STATE.currentNode.entities.push(entity);
+            
+            showToast(`Placed ${STATE.paletteSelection}`);
+            updateEntityList(STATE.currentNode);
+            render();
+        }
+
+        function enterSelectedSector() {
+            if (!STATE.selectedNode) {
+                showToast('Select a sector first');
+                return;
+            }
+            
+            const node = STATE.selectedNode;
+            
+            // Navigate into sector
+            STATE.path.push(node);
+            STATE.currentNode = node;
+            STATE.depth++;
+            STATE.selectedNode = null;
+            
+            // Show grid overlay
+            document.getElementById('grid-overlay').classList.add('active');
+            
+            updateUI();
+            render();
+            closePanels();
+        }
+
+        function navigateUp() {
+            if (STATE.path.length <= 1) {
+                showToast('Already at root');
+                return;
+            }
+            
+            STATE.path.pop();
+            STATE.currentNode = STATE.path[STATE.path.length - 1];
+            STATE.depth--;
+            STATE.selectedNode = null;
+            
+            // Hide grid if back to root
+            if (STATE.path.length <= 1) {
+                document.getElementById('grid-overlay').classList.remove('active');
+            }
+            
+            updateUI();
+            render();
+        }
+
+        function navigateToRoot() {
+            STATE.path = [STATE.path[0]];
+            STATE.currentNode = STATE.path[0];
+            STATE.depth = 0;
+            STATE.selectedNode = null;
+            document.getElementById('grid-overlay').classList.remove('active');
+            updateUI();
+            render();
+        }
+
+        function selectPrevSector() {
+            if (!STATE.selectedNode || STATE.path.length <= 1) return;
+            
+            const parent = STATE.path[STATE.path.length - 2];
+            const siblings = parent.children;
+            const idx = siblings.indexOf(STATE.selectedNode.id);
+            
+            if (idx > 0) {
+                const prev = STATE.nodes.find(n => n.id === siblings[idx - 1]);
+                if (prev) selectSector(prev);
+            }
+        }
+
+        function selectNextSector() {
+            if (!STATE.selectedNode || STATE.path.length <= 1) return;
+            
+            const parent = STATE.path[STATE.path.length - 2];
+            const siblings = parent.children;
+            const idx = siblings.indexOf(STATE.selectedNode.id);
+            
+            if (idx < siblings.length - 1) {
+                const next = STATE.nodes.find(n => n.id === siblings[idx + 1]);
+                if (next) selectSector(next);
+            }
+        }
+
+        function fractureCurrent() {
+            if (STATE.path.length > 1 && STATE.selectedNode) {
+                // Fracture the selected sector
+                fractureNode(STATE.selectedNode);
+            } else {
+                // Fracture current node
+                fractureNode(STATE.currentNode);
+            }
+        }
+
+        // =========================================
+        // UI UPDATES
+        // =========================================
+        function updateUI() {
+            // Breadcrumb
+            const breadcrumb = document.getElementById('breadcrumb');
+            breadcrumb.innerHTML = STATE.path.map((node, i) => `
+                <span class="crumb" onclick="navigateToIndex(${i})">${node.label}</span>
+                ${i < STATE.path.length - 1 ? '<i class="fas fa-chevron-right text-[10px] text-[var(--text-muted)]"></i>' : ''}
+            `).join('');
+            
+            // Depth
+            document.getElementById('depth-indicator').textContent = `Depth: ${STATE.depth}`;
+            
+            // Buttons
+            document.getElementById('btn-up').disabled = STATE.path.length <= 1;
+            document.getElementById('btn-prev').disabled = !STATE.selectedNode || STATE.path.length <= 1;
+            document.getElementById('btn-next').disabled = !STATE.selectedNode || STATE.path.length <= 1;
+            document.getElementById('btn-enter').disabled = !STATE.selectedNode;
+            
+            // Fracture button text
+            const btnFracture = document.getElementById('btn-fracture');
+            if (STATE.selectedNode && STATE.selectedNode.fractured) {
+                btnFracture.innerHTML = '<i class="fas fa-check text-xl"></i><span>DONE</span>';
+                btnFracture.disabled = true;
+            } else {
+                btnFracture.innerHTML = '<i class="fas fa-code-branch text-xl"></i><span>FRACTURE</span>';
+                btnFracture.disabled = false;
+            }
+            
+            // Selection info
+            if (STATE.selectedNode) {
+                document.getElementById('selection-info').innerHTML = `
+                    <span style="color: var(--cyan)">${STATE.selectedNode.label}</span><br>
+                    <span style="font-size: 10px; color: var(--text-muted)">
+                        ${STATE.selectedNode.fractured ? 'Already fractured' : 'Ready to fracture'}
+                    </span>
+                `;
+            }
+        }
+
+        function updateEntityList(node) {
+            const container = document.getElementById('entity-list');
+            if (!node.entities || node.entities.length === 0) {
+                container.innerHTML = '<span class="text-[var(--text-muted)] text-xs">No entities</span>';
+                return;
+            }
+            
+            container.innerHTML = node.entities.map(e => `
+                <div class="entity-tag">
+                    <i class="fas ${getIconClass(e.type)}"></i>
+                    ${e.label}
+                    <i class="fas fa-times" onclick="removeEntity(${node.id}, ${e.id})"></i>
+                </div>
+            `).join('');
+        }
+
+        function getIconClass(type) {
+            const icons = {
+                Entity: 'fa-cube',
+                Core: 'fa-gem',
+                Goal: 'fa-bullseye',
+                Obstacle: 'fa-ban',
+                Scene: 'fa-film'
+            };
+            return icons[type] || 'fa-circle';
+        }
+
+        function updateSectorName(value) {
+            if (STATE.selectedNode) {
+                STATE.selectedNode.label = value;
+                updateUI();
+                render();
+            }
+        }
+
+        function updateSectorType(value) {
+            if (STATE.selectedNode) {
+                STATE.selectedNode.type = value;
+                updateUI();
+                render();
+            }
+        }
+
+        function removeEntity(nodeId, entityId) {
+            const node = STATE.nodes.find(n => n.id === nodeId);
+            if (node && node.entities) {
+                node.entities = node.entities.filter(e => e.id !== entityId);
+                updateEntityList(node);
+                render();
+            }
+        }
+
+        function deleteCurrentSector() {
+            if (!STATE.selectedNode) return;
+            
+            if (!confirm(`Delete "${STATE.selectedNode.label}"?`)) return;
+            
+            // Remove from parent's children
+            const parent = STATE.nodes.find(n => n.id === STATE.selectedNode.parentId);
+            if (parent) {
+                parent.children = parent.children.filter(id => id !== STATE.selectedNode.id);
+            }
+            
+            // Remove node
+            STATE.nodes = STATE.nodes.filter(n => n.id !== STATE.selectedNode.id);
+            STATE.selectedNode = null;
+            
+            document.getElementById('sector-name').value = '';
+            document.getElementById('action-section').style.display = 'none';
+            
+            updateUI();
+            render();
+            showToast('Sector deleted');
+        }
+
+        function navigateToIndex(index) {
+            STATE.path = STATE.path.slice(0, index + 1);
+            STATE.currentNode = STATE.path[STATE.path.length - 1];
+            STATE.depth = index;
+            STATE.selectedNode = null;
+            
+            if (STATE.path.length <= 1) {
+                document.getElementById('grid-overlay').classList.remove('active');
+            } else {
+                document.getElementById('grid-overlay').classList.add('active');
+            }
+            
+            updateUI();
+            render();
+        }
+
+        // =========================================
+        // MOBILE UI
+        // =========================================
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+
+        function toggleInspector() {
+            document.getElementById('inspector').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+
+        function closePanels() {
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('inspector').classList.remove('open');
+            document.getElementById('overlay').classList.remove('active');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        // Start
+        init();
+    </script>
+</body>
+</html>

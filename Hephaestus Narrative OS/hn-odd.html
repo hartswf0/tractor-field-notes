@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ONYX: SHIELD OF ACHILLES</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #080a0c;
+            --panel: #111827;
+            --accent-bronze: #cd7f32;
+            --accent-gold: #ffd700;
+            --accent-blue: #3b82f6;
+            --text-muted: #94a3b8;
+            --text-bright: #f1f5f9;
+        }
+        body {
+            background-color: var(--bg);
+            color: var(--text-bright);
+            font-family: 'JetBrains Mono', monospace;
+            overflow: hidden;
+            touch-action: none;
+            -webkit-font-smoothing: antialiased;
+        }
+        .cinzel { font-family: 'Cinzel', serif; }
+        
+        /* Use Tailwind's arbitrary values for glassmorphism */
+        .glass {
+            @apply bg-slate-900/60 backdrop-blur-md border border-slate-700/50;
+        }
+        .glass-panel {
+            @apply bg-[#111827]/90 backdrop-blur-xl border-t border-slate-700/50 shadow-[0_-10px_40px_-10px_rgba(0,0,0,1)];
+        }
+
+        /* Canvas & Layers */
+        #canvas-layer { position: absolute; inset: 0; z-index: 0; }
+        #grid-layer { position: absolute; inset: 0; z-index: 10; pointer-events: none; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); opacity: 0; transition: opacity 0.3s; }
+        #grid-layer.active { opacity: 1; pointer-events: auto; }
+        #ui-layer { position: absolute; inset: 0; z-index: 20; pointer-events: none; display: flex; flex-direction: column; justify-content: space-between; }
+        .pointer-auto { pointer-events: auto; }
+
+        /* Drawer Animation */
+        .drawer { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); will-change: transform; }
+        .drawer-peek { transform: translateY(calc(100% - 70px)); }
+        .drawer-open { transform: translateY(0); }
+
+        /* Grid Mode Styles */
+        .grid-box {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            padding: 20px;
+            width: 100%; max-width: 500px; aspect-ratio: 1;
+        }
+        .grid-slot {
+            @apply glass rounded-lg flex flex-col items-center justify-center cursor-pointer transition-all hover:bg-slate-800/80 hover:border-slate-500 relative overflow-hidden;
+        }
+        .grid-slot.active { @apply border-amber-500 shadow-[inset_0_0_15px_rgba(251,191,36,0.2)]; }
+        .grid-slot-empty { @apply text-slate-700 text-4xl font-bold; }
+    </style>
+</head>
+<body>
+
+    <canvas id="canvas-layer"></canvas>
+    
+    <div id="grid-layer">
+        <div class="text-center">
+            <h2 id="grid-title" class="text-2xl cinzel text-amber-500 font-bold mb-2">Current Sector</h2>
+            <div class="text-xs text-slate-400 mb-6 tracking-widest">TACTICAL GRID VIEW</div>
+            <div id="grid-container" class="grid-box">
+                </div>
+        </div>
+    </div>
+
+    <div id="ui-layer">
+        <header class="p-4 flex justify-between items-start">
+            <div class="glass rounded-lg px-4 py-2 pointer-auto">
+                <h1 class="text-xs text-amber-500 font-bold tracking-[0.2em] cinzel">ONYX: SHIELD</h1>
+                <div id="breadcrumbs" class="text-[10px] text-slate-400 flex items-center gap-2 mt-1">
+                    <i class="fas fa-circle-notch"></i> <span>ROOT</span>
+                </div>
+            </div>
+            <div class="flex gap-2 pointer-auto">
+                <button onclick="APP.toggleView()" class="w-10 h-10 glass rounded-full text-amber-500 flex items-center justify-center hover:text-amber-400 active:scale-95 transition-all" title="Toggle View">
+                    <i id="view-icon" class="fas fa-th"></i>
+                </button>
+                <button onclick="APP.reset()" class="w-10 h-10 glass rounded-full text-slate-400 flex items-center justify-center hover:text-slate-200 active:scale-95 transition-all" title="Reset">
+                    <i class="fas fa-crosshairs"></i>
+                </button>
+            </div>
+        </header>
+
+        <div class="flex flex-col justify-end">
+            <div class="flex justify-center gap-6 mb-6 pointer-auto relative z-10">
+                <button onclick="APP.navUp()" class="w-12 h-12 glass rounded-full text-slate-300 flex items-center justify-center hover:bg-slate-800 active:scale-95 transition-all">
+                    <i class="fas fa-chevron-up"></i>
+                </button>
+                <button onclick="APP.subdivide()" class="w-16 h-16 bg-amber-600/90 backdrop-blur-md rounded-full text-white flex items-center justify-center shadow-lg shadow-amber-600/30 hover:bg-amber-500 active:scale-95 transition-all -mt-2 relative">
+                    <i class="fas fa-hammer text-2xl"></i>
+                    <div class="absolute -bottom-2 text-[8px] font-bold tracking-widest uppercase">Forge</div>
+                </button>
+                <button onclick="UI.toggleDrawer()" class="w-12 h-12 glass rounded-full text-slate-300 flex items-center justify-center hover:bg-slate-800 active:scale-95 transition-all">
+                    <i class="fas fa-sliders-h"></i>
+                </button>
+            </div>
+
+            <div id="drawer" class="drawer drawer-peek glass-panel rounded-t-3xl pointer-auto relative z-20">
+                <div class="h-[70px] flex items-center justify-between px-6 cursor-pointer border-b border-slate-800/50" onclick="UI.toggleDrawer()">
+                    <div>
+                        <div class="text-[9px] text-amber-600 uppercase tracking-wider font-bold mb-1">SELECTED SECTOR</div>
+                        <div id="insp-label" class="text-lg font-bold cinzel text-slate-100">The Shield</div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-[9px] text-slate-500 uppercase tracking-wider font-bold mb-1">CONTENT</div>
+                        <div id="insp-stats" class="text-xs text-amber-400 font-mono"><i class="fas fa-cubes"></i> 0 Entities</div>
+                    </div>
+                </div>
+
+                <div class="p-6 space-y-6 pb-10">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-[9px] text-slate-500 uppercase font-bold">Designation</label>
+                            <input type="text" id="inp-label" class="w-full bg-slate-950/50 border border-slate-800 rounded px-3 py-2 text-sm font-bold text-slate-200 focus:border-amber-500 outline-none" onchange="APP.updateNode()">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[9px] text-slate-500 uppercase font-bold">Material Type</label>
+                            <select id="inp-type" class="w-full bg-slate-950/50 border border-slate-800 rounded px-3 py-2 text-sm font-bold text-slate-200 focus:border-amber-500 outline-none appearance-none" onchange="APP.updateNode()">
+                                <option value="Gold">Gold (Divine)</option>
+                                <option value="Silver">Silver (Human)</option>
+                                <option value="Bronze">Bronze (Earth)</option>
+                                <option value="Tin">Tin (Structure)</option>
+                                <option value="Kyanos">Kyanos (Ocean)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-2">
+                         <label class="text-[9px] text-slate-500 uppercase font-bold">Ekphrasis Details</label>
+                        <textarea id="inp-desc" class="w-full bg-slate-950/50 border border-slate-800 rounded px-3 py-2 text-sm text-slate-300 focus:border-amber-500 outline-none resize-none h-24 font-serif italic" placeholder="Description of this sector's imagery..."></textarea>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4 pt-2">
+                        <button onclick="APP.drillDown()" class="py-3 rounded-lg bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold uppercase tracking-wider hover:bg-amber-500/20 active:scale-95 transition-all">
+                            Enter Sector
+                        </button>
+                        <button onclick="APP.deleteNode()" class="py-3 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-bold uppercase tracking-wider hover:bg-red-500/20 active:scale-95 transition-all">
+                            Smelt Down
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+// --- CONFIGURATION ---
+const CONFIG = {
+    colors: {
+        Gold: '#ffb700', Silver: '#c0c0c0', Bronze: '#cd7f32', Tin: '#94a3b8', Kyanos: '#006994',
+        Highlight: '#ffffff', GridLine: 'rgba(255, 183, 0, 0.2)', GridDot: 'rgba(255, 255, 255, 0.7)'
+    },
+    icons: {
+        Gold: '☀', Silver: '☾', Bronze: '⬢', Tin: '⚔', Kyanos: '≈'
+    }
+};
+
+// --- STATE MANAGEMENT ---
+const STATE = {
+    nodes: {}, rootId: 'root', currentId: 'root', selectedId: null, history: [],
+    viewMode: 'voronoi', // 'voronoi' or 'grid'
+    canvas: null, ctx: null, width: 0, height: 0, dpr: 1,
+    frame: 0
+};
+
+// --- INITIALIZATION ---
+window.onload = () => {
+    STATE.canvas = document.getElementById('canvas-layer');
+    STATE.ctx = STATE.canvas.getContext('2d');
+    STATE.dpr = window.devicePixelRatio || 1;
+    
+    initShieldData();
+    
+    window.addEventListener('resize', resize);
+    resize();
+    
+    setupInteractions();
+    requestAnimationFrame(animate);
+};
+
+function resize() {
+    STATE.width = window.innerWidth;
+    STATE.height = window.innerHeight;
+    STATE.canvas.width = STATE.width * STATE.dpr;
+    STATE.canvas.height = STATE.height * STATE.dpr;
+    STATE.ctx.scale(STATE.dpr, STATE.dpr);
+    
+    recalculateGeometry(STATE.currentId);
+    if(STATE.viewMode === 'grid') UI.renderGrid();
+}
+
+// --- DATA MODEL ---
+function initShieldData() {
+    const root = createNode('root', null, 'Shield of Achilles', 'Gold');
+    
+    // Create initial concentric layers
+    const layers = [
+        { id: 'l1', name: 'Cosmos Center', type: 'Gold' },
+        { id: 'l2', name: 'Two Cities', type: 'Silver' },
+        { id: 'l3', name: 'Ploughing & Reaping', type: 'Bronze' },
+        { id: 'l4', name: 'Pastoral Scene', type: 'Silver' },
+        { id: 'l5', name: 'The Dance', type: 'Gold' },
+        { id: 'l6', name: 'River Oceanus', type: 'Kyanos' }
+    ];
+    
+    layers.forEach(l => createNode(l.id, root.id, l.name, l.type));
+    
+    // Pre-fracture a layer to show grid items
+    fractureNode('l2'); 
+
+    recalculateGeometry(root.id);
+    UI.updateInspector();
+}
+
+function createNode(id, parentId, label, type) {
+    STATE.nodes[id] = {
+        id, parentId, label, type, description: '',
+        children: [], // IDs of Voronoi children
+        grid: new Array(9).fill(null), // IDs of grid contents (3x3)
+        gridIndex: -1,
+        color: CONFIG.colors[type],
+        seed: { angle: 0, radius: 0 }, // For concentric layout
+        cell: null // Polygon path
+    };
+    if (parentId && STATE.nodes[parentId]) {
+        STATE.nodes[parentId].children.push(id);
+    }
+    return STATE.nodes[id];
+}
+
+// Subdivide a node, populating its internal 3x3 grid
+function fractureNode(nodeId) {
+    const node = STATE.nodes[nodeId];
+    if (!node) return;
+    
+    const subTypes = { Gold: 'Silver', Silver: 'Bronze', Bronze: 'Tin', Tin: 'Kyanos', Kyanos: 'Gold' };
+    const type = subTypes[node.type];
+    const positions = ['NW', 'N', 'NE', 'W', 'CTR', 'E', 'SW', 'S', 'SE'];
+    
+    let fractured = false;
+    for (let i = 0; i < 9; i++) {
+        if (!node.grid[i] && Math.random() > 0.3) { // Randomly fill some slots
+            const childId = `${nodeId}_g${i}_${Date.now()}`;
+            const child = createNode(childId, nodeId, `${node.label} ${positions[i]}`, type);
+            child.gridIndex = i;
+            node.grid[i] = childId;
+            fractured = true;
+        }
+    }
+    return fractured;
+}
+
+// --- GEOMETRY ENGINE (Concentric Voronoi) ---
+function recalculateGeometry(nodeId) {
+    const node = STATE.nodes[nodeId];
+    if (!node || node.children.length === 0) return;
+
+    const center = { x: STATE.width / 2, y: STATE.height / 2 };
+    const maxRadius = Math.min(STATE.width, STATE.height) * 0.45;
+    const children = node.children.map(id => STATE.nodes[id]);
+    
+    // 1. Place Seeds in Concentric Rings using Golden Ratio
+    const phi = (1 + Math.sqrt(5)) / 2;
+    children.forEach((child, i) => {
+        // Distribute along a spiral to create rings
+        const rNorm = Math.sqrt((i + 1) / children.length); 
+        child.seed.radius = rNorm * maxRadius;
+        child.seed.angle = i * 2 * Math.PI * phi; 
+    });
+    
+    // 2. Compute Voronoi Cells based on these seeds
+    children.forEach(child => {
+        child.cell = computeVoronoiCell(child, children, center, maxRadius);
+    });
+}
+
+function computeVoronoiCell(target, allNodes, center, maxR) {
+    const points = [];
+    const steps = 64; // Number of boundary points
+    
+    for (let i = 0; i < steps; i++) {
+        const theta = (i / steps) * Math.PI * 2;
+        let r = maxR; // Start at outer boundary
+        
+        // Raycasting: find closest point on this ray that belongs to another seed
+        for (const other of allNodes) {
+            if (other === target) continue;
+            
+            // Find intersection of ray with perpendicular bisector between target and other
+            // Simplified approach: iterate along ray
+            for (let d = 10; d < maxR; d += 5) {
+                 const px = center.x + Math.cos(theta) * d;
+                 const py = center.y + Math.sin(theta) * d;
+                 
+                 const distToTarget = Math.hypot(px - (center.x + Math.cos(target.seed.angle)*target.seed.radius), py - (center.y + Math.sin(target.seed.angle)*target.seed.radius));
+                 const distToOther = Math.hypot(px - (center.x + Math.cos(other.seed.angle)*other.seed.radius), py - (center.y + Math.sin(other.seed.angle)*other.seed.radius));
+                 
+                 if (distToOther < distToTarget) {
+                     if (d < r) r = d;
+                     break;
+                 }
+            }
+        }
+        points.push({ x: center.x + Math.cos(theta) * r, y: center.y + Math.sin(theta) * r });
+    }
+    return points;
+}
+
+// --- RENDERING ---
+function animate() {
+    STATE.frame++;
+    renderVoronoi();
+    requestAnimationFrame(animate);
+}
+
+function renderVoronoi() {
+    if (STATE.viewMode !== 'voronoi') return;
+    const ctx = STATE.ctx;
+    ctx.clearRect(0, 0, STATE.width, STATE.height);
+    
+    const current = STATE.nodes[STATE.currentId];
+    if (!current) return;
+
+    // Draw background grid structure
+    drawBaseGrid(ctx);
+
+    if (current.children.length === 0) {
+        // Empty State
+        ctx.fillStyle = CONFIG.colors.Bronze; ctx.font = '20px Cinzel'; ctx.textAlign = 'center';
+        ctx.fillText("UNFORGED TERRITORY", STATE.width/2, STATE.height/2);
+        ctx.font = '12px JetBrains Mono'; ctx.fillStyle = CONFIG.colors.Tin;
+        ctx.fillText("Use the Hammer to Forge the Grid", STATE.width/2, STATE.height/2 + 25);
+        return;
+    }
+
+    // Draw Cells
+    current.children.forEach(cid => {
+        const child = STATE.nodes[cid];
+        if (child.cell) drawCell(ctx, child);
+    });
+}
+
+function drawBaseGrid(ctx) {
+    ctx.save();
+    ctx.strokeStyle = CONFIG.colors.GridLine;
+    ctx.lineWidth = 0.5;
+    ctx.beginPath();
+    // Concentric circles
+    const center = { x: STATE.width/2, y: STATE.height/2 };
+    const maxR = Math.min(STATE.width, STATE.height) * 0.45;
+    for(let i=1; i<=5; i++) { ctx.moveTo(center.x + maxR*i/5, center.y); ctx.arc(center.x, center.y, maxR*i/5, 0, Math.PI*2); }
+    // Radial lines
+    for(let i=0; i<12; i++) { const a = i * Math.PI/6; ctx.moveTo(center.x, center.y); ctx.lineTo(center.x + Math.cos(a)*maxR, center.y + Math.sin(a)*maxR); }
+    ctx.stroke();
+    ctx.restore();
+}
+
+function drawCell(ctx, node) {
+    const isSelected = STATE.selectedId === node.id;
+    
+    ctx.save();
+    // 1. Define Path & Clip
+    ctx.beginPath();
+    node.cell.forEach((p, i) => i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y));
+    ctx.closePath();
+    ctx.clip();
+
+    // 2. Draw Internal Grid & Contents
+    const bounds = getBounds(node.cell);
+    drawInternalGrid(ctx, bounds, node);
+
+    // 3. Fill & Stroke
+    ctx.fillStyle = node.color;
+    ctx.globalAlpha = isSelected ? 0.3 : 0.15;
+    ctx.fill();
+    
+    ctx.strokeStyle = isSelected ? CONFIG.colors.Highlight : node.color;
+    ctx.lineWidth = isSelected ? 2 : 1;
+    ctx.globalAlpha = 1;
+    ctx.stroke();
+
+    // 4. Label
+    const center = getCenter(node.cell);
+    ctx.fillStyle = isSelected ? CONFIG.colors.Highlight : node.color;
+    ctx.font = 'bold 10px Cinzel'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(node.label.split(' ').slice(0,2).join(' '), center.x, center.y);
+
+    ctx.restore();
+}
+
+function drawInternalGrid(ctx, bounds, node) {
+    const gw = (bounds.maxX - bounds.minX) / 3;
+    const gh = (bounds.maxY - bounds.minY) / 3;
+    
+    ctx.strokeStyle = CONFIG.colors.GridLine; ctx.lineWidth = 0.5; ctx.beginPath();
+    for(let i=1; i<3; i++) {
+        const x = bounds.minX + gw*i; const y = bounds.minY + gh*i;
+        ctx.moveTo(x, bounds.minY); ctx.lineTo(x, bounds.maxY);
+        ctx.moveTo(bounds.minX, y); ctx.lineTo(bounds.maxX, y);
+    }
+    ctx.stroke();
+
+    // Draw Dots for Grid Contents
+    ctx.fillStyle = CONFIG.colors.GridDot;
+    node.grid.forEach((childId, i) => {
+        if(childId) {
+            const cx = bounds.minX + gw * (i%3 + 0.5);
+            const cy = bounds.minY + gh * (Math.floor(i/3) + 0.5);
+            ctx.beginPath(); ctx.arc(cx, cy, 2.5, 0, Math.PI*2); ctx.fill();
+        }
+    });
+}
+
+// --- GRID VIEW & UI ---
+const UI = {
+    toggleDrawer: () => {
+        const d = document.getElementById('drawer');
+        d.classList.toggle('drawer-peek'); d.classList.toggle('drawer-open');
+    },
+    renderGrid: () => {
+        const node = STATE.nodes[STATE.currentId];
+        document.getElementById('grid-title').innerText = node.label;
+        const container = document.getElementById('grid-container');
+        container.innerHTML = node.grid.map((childId, i) => {
+            if (!childId) return `<div class="grid-slot" onclick="APP.gridClick(${i})"><span class="grid-slot-empty">${i+1}</span></div>`;
+            const child = STATE.nodes[childId];
+            const active = STATE.selectedId === childId ? 'active' : '';
+            return `
+                <div class="grid-slot ${active}" style="color: ${child.color}" onclick="APP.gridClick(${i})">
+                    <div class="text-3xl mb-2">${CONFIG.icons[child.type]}</div>
+                    <div class="text-[10px] font-bold text-center leading-tight px-1">${child.label}</div>
+                    <div class="text-[8px] opacity-60 uppercase mt-1">${child.type}</div>
+                </div>
+            `;
+        }).join('');
+    },
+    updateInspector: () => {
+        const node = STATE.nodes[STATE.selectedId || STATE.currentId];
+        document.getElementById('insp-label').innerText = node.label;
+        document.getElementById('inp-label').value = node.label;
+        document.getElementById('inp-type').value = node.type;
+        document.getElementById('inp-desc').value = node.description;
+        
+        const count = node.grid.filter(x => x).length;
+        document.getElementById('insp-stats').innerHTML = `<i class="fas fa-cubes"></i> ${count} Entities`;
+        
+        const bc = document.getElementById('breadcrumbs');
+        let path = STATE.nodes[STATE.rootId].label;
+        if(STATE.history.length) path += ' / ... / ' + node.label;
+        bc.innerHTML = `<i class="fas fa-circle-notch"></i> <span>${path}</span>`;
+    }
+};
+
+// --- ACTIONS ---
+const APP = {
+    toggleView: () => {
+        STATE.viewMode = STATE.viewMode === 'voronoi' ? 'grid' : 'voronoi';
+        document.getElementById('grid-layer').classList.toggle('active');
+        document.getElementById('view-icon').className = STATE.viewMode === 'grid' ? 'fas fa-globe' : 'fas fa-th';
+        if(STATE.viewMode === 'grid') UI.renderGrid(); else renderVoronoi();
+    },
+    navUp: () => {
+        if(!STATE.history.length) return;
+        STATE.currentId = STATE.history.pop(); STATE.selectedId = null;
+        recalculateGeometry(STATE.currentId); UI.updateInspector();
+        if(STATE.viewMode === 'grid') UI.renderGrid();
+    },
+    drillDown: () => {
+        if(!STATE.selectedId || STATE.selectedId === STATE.currentId) return;
+        STATE.history.push(STATE.currentId); STATE.currentId = STATE.selectedId; STATE.selectedId = null;
+        recalculateGeometry(STATE.currentId); UI.updateInspector();
+        if(STATE.viewMode === 'grid') UI.renderGrid();
+    },
+    subdivide: () => { // Hammer Action
+        const targetId = STATE.selectedId || STATE.currentId;
+        if(fractureNode(targetId)) {
+            UI.updateInspector();
+            if(STATE.viewMode === 'grid') UI.renderGrid(); else renderVoronoi();
+        }
+    },
+    gridClick: (idx) => {
+        const childId = STATE.nodes[STATE.currentId].grid[idx];
+        if(childId) {
+            if(STATE.selectedId === childId) APP.drillDown(); else { STATE.selectedId = childId; UI.updateInspector(); UI.renderGrid(); }
+        } else { STATE.selectedId = null; UI.updateInspector(); UI.renderGrid(); }
+    },
+    updateNode: () => {
+        const n = STATE.nodes[STATE.selectedId || STATE.currentId];
+        n.label = document.getElementById('inp-label').value;
+        n.type = document.getElementById('inp-type').value;
+        n.color = CONFIG.colors[n.type];
+        n.description = document.getElementById('inp-desc').value;
+        if(STATE.viewMode === 'grid') UI.renderGrid(); else renderVoronoi();
+    },
+    deleteNode: () => {
+        if(!STATE.selectedId) return;
+        const n = STATE.nodes[STATE.selectedId]; const p = STATE.nodes[n.parentId];
+        if(p) { p.children = p.children.filter(id=>id!==n.id); if(n.gridIndex!==-1) p.grid[n.gridIndex]=null; recalculateGeometry(p.id); }
+        delete STATE.nodes[n.id]; STATE.selectedId = null; UI.updateInspector();
+        if(STATE.viewMode === 'grid') UI.renderGrid(); else renderVoronoi();
+    },
+    reset: () => {
+        STATE.currentId = STATE.rootId; STATE.history = []; STATE.selectedId = null;
+        recalculateGeometry(STATE.currentId); UI.updateInspector();
+        if(STATE.viewMode === 'grid') UI.renderGrid();
+    }
+};
+
+// --- HELPERS & EVENTS ---
+function getBounds(points) { let minX=Inf, maxX=-Inf, minY=Inf, maxY=-Inf; points.forEach(p=>{minX=Math.min(minX,p.x);maxX=Math.max(maxX,p.x);minY=Math.min(minY,p.y);maxY=Math.max(maxY,p.y)}); return {minX,maxX,minY,maxY}; }
+function getCenter(points) { let x=0,y=0; points.forEach(p=>{x+=p.x;y+=p.y}); return {x:x/points.length,y:y/points.length}; }
+function pointInPoly(p, vs) { let inside=false; for(let i=0,j=vs.length-1;i<vs.length;j=i++){const xi=vs[i].x,yi=vs[i].y,xj=vs[j].x,yj=vs[j].y;if(((yi>p.y)!==(yj>p.y))&&(p.x<(xj-xi)*(p.y-yi)/(yj-yi)+xi))inside=!inside;} return inside; }
+
+function setupInteractions() {
+    STATE.canvas.addEventListener('pointerdown', e => {
+        if(STATE.viewMode!=='voronoi') return;
+        const rect = STATE.canvas.getBoundingClientRect();
+        const p = { x: (e.clientX-rect.left)*STATE.dpr, y: (e.clientY-rect.top)*STATE.dpr };
+        const parent = STATE.nodes[STATE.currentId];
+        const hit = parent.children.find(cid => STATE.nodes[cid].cell && pointInPoly(p, STATE.nodes[cid].cell));
+        if(hit) {
+            if(STATE.selectedId === hit) APP.drillDown(); else { STATE.selectedId = hit; UI.updateInspector(); renderVoronoi(); }
+        } else { STATE.selectedId = null; UI.updateInspector(); renderVoronoi(); }
+    });
+}
+const Inf = Infinity;
+</script>
+</body>
+</html>

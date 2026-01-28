@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PROTOCOL_Ω_BROWN_V48 // EKPHRASTIC_OS</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root { --amber: #fbbf24; --gold: #f59e0b; --cyan: #22d3ee; --crimson: #ef4444; --dim: #020617; }
+        body { margin: 0; background: #000; color: var(--amber); overflow: hidden; font-family: 'JetBrains Mono', monospace; font-size: 10px; display: flex; flex-direction: column; height: 100vh; }
+        
+        /* Interactive Turntable Field */
+        #visual-field { height: 42vh; width: 100%; position: relative; border-bottom: 2px solid rgba(34, 211, 238, 0.4); background: radial-gradient(circle at center, #0a1229 0%, #000 100%); cursor: crosshair; }
+        #terminal-deck { height: 58vh; width: 100%; background: #010208; display: flex; flex-direction: column; position: relative; }
+        
+        /* Unified OS Command Bar */
+        #interface-header { background: #020617; border-bottom: 1px solid rgba(251, 191, 36, 0.2); padding: 10px 15px; display: flex; gap: 8px; align-items: center; z-index: 50; flex-wrap: wrap; }
+        #archive-stream { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column-reverse; gap: 12px; position: relative; }
+        #parameter-footer { background: #020617; border-top: 1px solid rgba(251, 191, 36, 0.2); padding: 10px 15px; display: flex; gap: 24px; align-items: center; z-index: 10; height: 50px; }
+
+        /* OS Manifest Entries */
+        .manifest-entry { border-left: 2px solid var(--amber); background: rgba(255,255,255,0.015); padding: 12px; animation: slideIn 0.1s ease-out; border-radius: 0 4px 4px 0; border-bottom: 1px solid rgba(255,255,255,0.02); max-width: 1100px; }
+        .manifest-entry.audit { border-left-color: var(--cyan); background: rgba(34, 211, 238, 0.05); }
+        .manifest-entry.synthesis { border-left-color: #fff; background: rgba(255, 255, 255, 0.08); box-shadow: inset 0 0 20px rgba(255,255,255,0.05); }
+        .entry-tag { font-size: 6px; font-weight: 900; opacity: 0.4; margin-bottom: 5px; display: block; letter-spacing: 2px; text-transform: uppercase; }
+        
+        /* Strata Inspector UI */
+        .inspector-panel { margin-top: 12px; padding: 10px; background: rgba(0,0,0,0.4); border: 1px solid rgba(34, 211, 238, 0.1); border-radius: 4px; }
+        .nav-row { display: flex; gap: 4px; margin-top: 8px; }
+        .nav-btn { padding: 4px 10px; background: rgba(34, 211, 238, 0.1); border: 1px solid var(--cyan); color: var(--cyan); font-size: 8px; cursor: pointer; border-radius: 2px; text-transform: uppercase; font-weight: bold; }
+        .nav-btn:hover { background: var(--cyan); color: #000; }
+        .nav-btn:disabled { opacity: 0.2; cursor: default; }
+
+        /* Syntax Highlighting */
+        .entry-yaml { font-size: 8.5px; color: var(--cyan); opacity: 0.9; line-height: 1.6; white-space: pre-wrap; }
+        .yaml-k { color: var(--gold); font-weight: bold; }
+        .yaml-v { color: #fff; }
+
+        /* OS Buttons */
+        .btn-inst { 
+            background: #010208; border: 1px solid rgba(251, 191, 36, 0.2); 
+            padding: 6px 14px; border-radius: 2px; cursor: pointer; color: var(--amber);
+            font-size: 9px; font-weight: 900; transition: all 0.2s; text-transform: uppercase;
+        }
+        .btn-inst:hover { border-color: var(--cyan); color: #fff; }
+        .btn-inst.active { background: var(--cyan); color: #000; border-color: #fff; box-shadow: 0 0 15px var(--cyan); }
+        
+        #engage-field { 
+            background: rgba(34, 211, 238, 0.1); border: 2px solid var(--cyan); 
+            color: var(--cyan); padding: 6px 22px; font-size: 10px; font-weight: 900;
+            text-transform: uppercase; letter-spacing: 3px; transition: all 0.3s;
+        }
+        #engage-field.active { background: var(--crimson); border-color: #fff; color: #fff; box-shadow: 0 0 25px var(--crimson); }
+
+        @keyframes slideIn { from { transform: translateX(-10px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        /* UI Radar Overlay */
+        #radar-mask { position: absolute; right: 25px; top: 25px; width: 110px; aspect-ratio: 1; border: 1px solid rgba(34, 211, 238, 0.2); border-radius: 50%; background: rgba(0,0,0,0.8); overflow: hidden; pointer-events: none; z-index: 5; }
+        .custom-scroll::-webkit-scrollbar { width: 4px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 10px; }
+        
+        input[type=range] { -webkit-appearance: none; background: rgba(255,255,255,0.05); height: 2px; flex: 1; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 10px; height: 10px; background: var(--cyan); border-radius: 50%; cursor: pointer; box-shadow: 0 0 10px var(--cyan); }
+    </style>
+</head>
+<body class="select-none">
+
+    <!-- TOP: TURNTABLE VISUAL INTERFACE -->
+    <div id="visual-field">
+        <div id="canvas-container" class="w-full h-full"></div>
+        <div id="radar-mask"><canvas id="radar-canvas" class="w-full h-full opacity-60"></canvas></div>
+        
+        <div class="absolute top-8 left-8 pointer-events-none space-y-1">
+            <h1 class="font-black text-sm tracking-[0.8em] text-white">⌖ Ω_BROWN // V48</h1>
+            <div class="flex gap-4 text-[7px] text-cyan-400 font-mono uppercase tracking-widest">
+                <span id="active-op">Mode: Audit</span>
+                <span id="synapse-count">Lineage: Stable</span>
+            </div>
+        </div>
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 pointer-events-none opacity-20 text-[7px] tracking-[0.4em] font-black uppercase text-center">
+            Spin Horizon // Tilt Vertical // F2: Subdivide
+        </div>
+    </div>
+
+    <!-- BOTTOM: UNIFIED COMMAND & STRATA INSPECTOR -->
+    <div id="terminal-deck">
+        
+        <div id="interface-header">
+            <button id="tool-audit" class="btn-inst active">F1_Audit</button>
+            <button id="tool-cross" class="btn-inst">F2_Crossing</button>
+            <button id="tool-link" class="btn-inst">F3_Synapse</button>
+            <button id="tool-xray" class="btn-inst">F4_Peel</button>
+            <div class="w-px h-4 bg-white/10 mx-2"></div>
+            <button id="engage-field">GENESIS_MODE: STANDBY</button>
+            <div class="flex-1 min-w-[5px]"></div>
+            <button id="reset-btn" class="btn-inst !text-red-500 border-red-500/20">Reforge_Lattice</button>
+        </div>
+
+        <div id="archive-stream" class="custom-scroll">
+            <div class="manifest-entry">
+                <span class="entry-tag">System_Report</span>
+                Ekphrastic OS Kernel initialized. 
+                Achilles' grief detected at disk base.
+                Hephaestus' forging operations standby. 
+                Draw distinctions (F2) to populate spatiotemporal directories.
+            </div>
+        </div>
+
+        <div id="parameter-footer">
+            <div class="flex items-center gap-4 w-52">
+                <span class="text-[7px] font-black opacity-30 uppercase tracking-widest">Peel</span>
+                <input type="range" id="slider-peel" min="0" max="100" value="100">
+                <span id="lbl-peel" class="text-[8px] text-cyan-400 font-bold w-6">100</span>
+            </div>
+            <div class="flex items-center gap-4 w-52">
+                <span class="text-[7px] font-black opacity-30 uppercase tracking-widest">Relief</span>
+                <input type="range" id="slider-relief" min="0" max="300" value="150">
+                <span id="lbl-relief" class="text-[8px] text-cyan-400 font-bold w-12">1.0x</span>
+            </div>
+            <div class="flex items-center gap-4 w-52">
+                <span class="text-[7px] font-black opacity-30 uppercase tracking-widest">Aural</span>
+                <input type="range" id="slider-audio" min="0" max="100" value="30">
+                <span id="lbl-audio" class="text-[8px] text-cyan-400 font-bold w-10">30%</span>
+            </div>
+            <div class="flex-1"></div>
+            <div class="flex gap-8 text-[8px] font-black uppercase opacity-20 tracking-widest">
+                <span>⌬ MARKS: <span id="stat-nodes" class="text-white">0</span></span>
+                <span class="text-cyan-400">⌖ INDEX: <span id="stat-addr">0,0</span></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- OS DATASETS & HOMERIC GENES ---
+        const ONTOLOGY = {
+            CORE: { name: "Celestial_Umbo", color: 0xfbbf24, h: 2.2, assets: ["orion.vox", "sun.tex"] },
+            RIM: { name: "City_Distinction", color: 0x92400e, h: 1.0, assets: ["marriage.wav", "debate.log"] },
+            MARGIN: { name: "Pastoral_Niche", color: 0x64748b, h: 0.5, assets: ["furrow.data", "lyre.vox"] }
+        };
+
+        const PROMPT_GENES = {
+            CORE: ["Stars dight the umbo's central round.", "Tireless sun and the full moon.", "Celestial crown of heavens."],
+            RIM: ["Marriage feast: bridal torches lighting streets.", "Judge's prize for the blood price debate.", "Besieged city: citizens arming for ambush."],
+            MARGIN: ["Field thrice-ploughed: honeyed wine for binders.", "Vineyard clusters: tied to silver poles.", "Boy singing of Linus: sweet treble voice."]
+        };
+
+        // --- NARRATIVE KERNEL ---
+        class NarrativeKernel {
+            constructor(x, y, size, depth, config, parentId, parentRef = null) {
+                this.x = x; this.y = y; this.size = size; this.depth = depth;
+                this.config = config; this.id = parentId;
+                this.parent = parentRef;
+                this.isSplit = false;
+                this.children = [];
+                this.type = config.type;
+                this.weight = (depth === 0 ? 0.05 : ONTOLOGY[config.type].h + (Math.random() * 0.4));
+                this.history = [config.prompt || "Achilles' grief: foundational layer."];
+                this.links = [];
+                this.annotation = "";
+            }
+            subdivide() {
+                if (this.depth >= 5) return false;
+                this.isSplit = true;
+                const s = this.size/2, o = s/2;
+                const coords = [{x:this.x+o,y:this.y+o},{x:this.x-o,y:this.y+o},{x:this.x-o,y:this.y-o},{x:this.x+o,y:this.y-o}];
+                this.children = coords.map((c, i) => {
+                    const nextType = (this.depth === 0) ? (i % 2 === 0 ? "CORE" : "RIM") : this.type;
+                    const pool = PROMPT_GENES[nextType];
+                    const prompt = pool[Math.floor(Math.random() * pool.length)];
+                    const node = new NarrativeKernel(c.x, c.y, s, this.depth + 1, { type: nextType, prompt: prompt }, `${this.id}_${i}`, this);
+                    node.history = [...this.history, prompt];
+                    node.weight = this.weight + (ONTOLOGY[nextType].h * 0.2);
+                    return node;
+                });
+                return true;
+            }
+            getLeaves(res = []) {
+                if (!this.isSplit) res.push(this);
+                else this.children.forEach(c => c.getLeaves(res));
+                return res;
+            }
+        }
+
+        // --- THREE.JS ENGINE ---
+        const visualField = document.getElementById('visual-field');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(40, visualField.clientWidth / visualField.clientHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(visualField.clientWidth, visualField.clientHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        document.getElementById('canvas-container').appendChild(renderer.domElement);
+        
+        camera.position.set(0, -11.5, 10); camera.lookAt(0, 0, 0);
+
+        // Visual Selection Column
+        const colGeo = new THREE.CylinderGeometry(0.08, 0.08, 15, 16);
+        const colMat = new THREE.MeshBasicMaterial({ color: 0x22d3ee, transparent: true, opacity: 0.3 });
+        const selectionColumn = new THREE.Mesh(colGeo, colMat);
+        selectionColumn.rotation.x = Math.PI / 2;
+        selectionColumn.visible = false;
+        scene.add(selectionColumn);
+
+        const material = new THREE.ShaderMaterial({
+            uniforms: {
+                u_seeds: { value: new Float32Array(256 * 3) },
+                u_colors: { value: new Float32Array(256 * 3) },
+                u_weights: { value: new Float32Array(256) },
+                u_seed_count: { value: 0 },
+                u_time: { value: 0 },
+                u_relief: { value: 1.0 },
+                u_peel_h: { value: 1.0 },
+                u_xray: { value: 0.0 },
+                u_bounds_center: { value: new THREE.Vector2(0.5, 0.5) },
+                u_bounds_size: { value: 0.0 }
+            },
+            vertexShader: `
+                uniform vec3 u_seeds[256];
+                uniform float u_weights[256];
+                uniform int u_seed_count;
+                uniform float u_relief;
+                varying vec2 vUv;
+                varying float vHeight;
+
+                void main() {
+                    vUv = uv;
+                    vec3 pos = position;
+                    float totalW = 0.0, combH = 0.0;
+                    for (int i = 0; i < 256; i++) {
+                        if (i >= u_seed_count) break;
+                        float d = distance(uv, u_seeds[i].xy);
+                        float w = 1.0 / pow(max(d, 0.045), 3.0); 
+                        totalW += w; combH += u_weights[i] * w;
+                    }
+                    float baseH = (totalW > 0.0) ? (combH / totalW) : 0.0;
+                    float hill = 1.0 / (1.0 + exp(30.0 * (distance(uv, vec2(0.5)) - 0.35)));
+                    vHeight = baseH * hill;
+                    pos.z += vHeight * u_relief * 1.8;
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+                }
+            `,
+            fragmentShader: `
+                uniform vec3 u_seeds[256];
+                uniform vec3 u_colors[256];
+                uniform int u_seed_count;
+                uniform float u_time;
+                uniform float u_xray;
+                uniform float u_peel_h;
+                uniform vec2 u_bounds_center;
+                uniform float u_bounds_size;
+                varying vec2 vUv;
+                varying float vHeight;
+
+                void main() {
+                    vec2 uv = vUv;
+                    if (distance(uv, vec2(0.5)) > 0.495) discard;
+                    if (u_xray > 0.5 && vHeight > (u_peel_h * 2.8)) discard;
+
+                    float minDist = 10.0; int closestIdx = 0;
+                    for (int i = 0; i < 256; i++) {
+                        if (i >= u_seed_count) break;
+                        float d = distance(uv, u_seeds[i].xy);
+                        if (d < minDist) { minDist = d; closestIdx = i; }
+                    }
+                    
+                    vec3 color = u_colors[closestIdx];
+                    float contour = abs(fract(vHeight * 18.0 + 0.5) - 0.5);
+                    float line = smoothstep(0.12, 0.0, contour);
+                    float edge = 0.0;
+                    for (int i = 0; i < 256; i++) {
+                        if (i >= u_seed_count || i == closestIdx) continue;
+                        float d = distance(uv, u_seeds[i].xy);
+                        edge = max(edge, 1.0 - smoothstep(0.0, 0.003, abs(d - minDist)));
+                    }
+
+                    bool isActiveNode = false;
+                    if (u_bounds_size > 0.0) {
+                        vec2 bDist = abs(uv - u_bounds_center);
+                        if (bDist.x < u_bounds_size/2.0 && bDist.y < u_bounds_size/2.0) isActiveNode = true;
+                    }
+
+                    if (u_bounds_size > 0.0 && !isActiveNode) {
+                        color *= 0.1;
+                        line *= 0.1;
+                        edge *= 0.1;
+                    }
+
+                    color *= (0.6 + vHeight * 0.4); 
+                    color = mix(color, vec3(0.1, 0.9, 1.0), line * 0.35); 
+                    color += edge * 0.4 * vec3(1.0, 1.0, 1.0); 
+
+                    if (isActiveNode) {
+                        color += 0.2;
+                        if (max(abs(uv.x - u_bounds_center.x), abs(uv.y - u_bounds_center.y)) > (u_bounds_size/2.0 - 0.003)) color = vec3(1.0);
+                    }
+
+                    gl_FragColor = vec4(color, 1.0);
+                }
+            `,
+            transparent: true
+        });
+
+        const plane = new THREE.Mesh(new THREE.PlaneGeometry(12, 12, 512, 512), material);
+        scene.add(plane);
+
+        // --- OS STATE ---
+        let rootNode = null;
+        let activeTool = 'audit', isSimEngaged = false, isOrbiting = false;
+        const radarCanvas = document.getElementById('radar-canvas');
+        const radarCtx = radarCanvas.getContext('2d');
+
+        function initOS() {
+            rootNode = new NarrativeKernel(0, 0, 10, 0, { type: "MARGIN", prompt: "Achilles: agonizing over the war." }, "ROOT");
+            updateKernel();
+        }
+
+        function updateKernel() {
+            let leaves = []; rootNode.getLeaves(leaves);
+            leaves = leaves.slice(0, 256);
+            const pos = material.uniforms.u_seeds.value;
+            const col = material.uniforms.u_colors.value;
+            const wgt = material.uniforms.u_weights.value;
+            leaves.forEach((l, i) => {
+                pos[i*3] = (l.x + 6) / 12; pos[i*3+1] = (l.y + 6) / 12;
+                const c = new THREE.Color(ONTOLOGY[l.type]?.color || 0x64748b);
+                col[i*3] = c.r; col[i*3+1] = c.g; col[i*3+2] = c.b;
+                wgt[i] = l.weight;
+            });
+            material.uniforms.u_seed_count.value = leaves.length;
+            document.getElementById('stat-nodes').innerText = leaves.length;
+            drawRadar(leaves);
+        }
+
+        function drawRadar(leaves) {
+            const s = 110; radarCanvas.width = radarCanvas.height = s;
+            radarCtx.clearRect(0, 0, s, s);
+            radarCtx.strokeStyle = 'rgba(34, 211, 238, 0.2)';
+            radarCtx.strokeRect(0, 0, s, s);
+            leaves.forEach(l => {
+                const rx = ((l.x + 6) / 12) * s, ry = ((l.y + 6) / 12) * s;
+                radarCtx.fillStyle = (l.type === "CORE") ? "#fbbf24" : (l.type === "RIM" ? "#92400e" : "#64748b");
+                radarCtx.globalAlpha = 0.6;
+                radarCtx.fillRect(rx - 1, ry - 1, 2, 2);
+            });
+        }
+
+        function pushFeed(msg, tag = 'SYSTEM', isAudit = false) {
+            const buffer = document.getElementById('archive-stream');
+            if (!buffer) return;
+            const entry = document.createElement('div');
+            entry.className = `manifest-entry ${isAudit ? 'audit' : ''}`;
+            entry.innerHTML = `<span class="entry-tag">${tag}</span>${msg}`;
+            buffer.prepend(entry);
+            if (buffer.childNodes.length > 50) buffer.removeChild(buffer.lastChild);
+        }
+
+        // --- INTERACTION ---
+        const mouse = new THREE.Vector2();
+        const raycaster = new THREE.Raycaster();
+        let isDragging = false, lastMouse = { x: 0, y: 0 }, spinVel = { x: 0, y: 0 };
+
+        function onMove(x, y) {
+            const rect = visualField.getBoundingClientRect();
+            mouse.x = ((x - rect.left) / rect.width) * 2 - 1;
+            mouse.y = -((y - rect.top) / rect.height) * 2 + 1;
+            if (isDragging) {
+                spinVel.x = (x - lastMouse.x) * 0.008; 
+                spinVel.y = (y - lastMouse.y) * 0.008;
+                lastMouse = { x, y };
+            }
+            handleHover();
+        }
+
+        visualField.addEventListener('mousedown', (e) => { isDragging = true; lastMouse = { x: e.clientX, y: e.clientY }; });
+        window.addEventListener('mouseup', () => isOrbiting = isDragging = false);
+        window.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY));
+        visualField.addEventListener('touchstart', (e) => { isDragging = true; lastMouse = { x: e.touches[0].clientX, y: e.touches[0].clientY }; e.preventDefault(); }, { passive: false });
+        window.addEventListener('touchend', () => isDragging = false);
+        window.addEventListener('touchmove', (e) => onMove(e.touches[0].clientX, e.touches[0].clientY), { passive: false });
+
+        function handleHover() {
+            raycaster.setFromCamera(mouse, camera);
+            const hits = raycaster.intersectObject(plane);
+            if (hits.length > 0) {
+                let leaves = []; rootNode.getLeaves(leaves);
+                const pt = hits[0].point;
+                let closest = null, dMin = 999;
+                leaves.forEach(l => {
+                    const d = Math.sqrt((l.x-pt.x)**2 + (l.y-pt.y)**2);
+                    if (d < dMin) { dMin = d; closest = l; }
+                });
+                selectionColumn.visible = true;
+                selectionColumn.position.set(pt.x, pt.y, 0);
+                const statAddr = document.getElementById('stat-addr');
+                if (statAddr) statAddr.innerText = `${pt.x.toFixed(1)}, ${pt.y.toFixed(1)}`;
+                if (closest && dMin < 2.0) {
+                    material.uniforms.u_bounds_center.value.set((closest.x + 6) / 12, (closest.y + 6) / 12);
+                    material.uniforms.u_bounds_size.value = closest.size / 12;
+                    if (activeTool === 'audit') auditStrata(closest);
+                }
+            } else {
+                selectionColumn.visible = false;
+                material.uniforms.u_bounds_size.value = 0;
+            }
+        }
+
+        let lastAuditId = null;
+        function auditStrata(node) {
+            if (node.id === lastAuditId) return;
+            lastAuditId = node.id;
+            
+            const lineage = [];
+            let curr = node;
+            while(curr) { lineage.unshift(curr); curr = curr.parent; }
+
+            const lineageHtml = lineage.map((l, i) => `[L${i}: ${l.type}]`).join(' → ');
+
+            const content = `
+                <div class="entry-yaml">
+                    <span class="yaml-k">INDEX:</span> ${node.id}
+                    <span class="yaml-k">STRATA:</span> ${lineageHtml}
+                    <span class="yaml-k">PROMPT:</span> ${node.history[node.history.length-1]}
+                </div>
+                <div class="nav-row">
+                    <button class="nav-btn" ${!node.parent ? 'disabled' : ''} onclick="focusParent('${node.id}')">Peer_Above</button>
+                    <button class="nav-btn" onclick="focusChildren('${node.id}')">Peer_Beneath</button>
+                </div>
+            `;
+            pushFeed(content, 'STRATA_AUDIT', true);
+        }
+
+        window.focusParent = (id) => {
+            pushFeed(`Shifting focus to parent structural layer of ${id}.`, 'NAV');
+        };
+
+        window.focusChildren = (id) => {
+             pushFeed(`Index ${id} is a terminal leaf. Subdivide (F2) to generate children.`, 'NAV');
+        };
+
+        visualField.addEventListener('click', () => {
+            raycaster.setFromCamera(mouse, camera);
+            const hits = raycaster.intersectObject(plane);
+            if (hits.length > 0) {
+                let leaves = []; rootNode.getLeaves(leaves);
+                const pt = hits[0].point;
+                let closest = null, dMin = 999;
+                leaves.forEach(l => {
+                    const d = Math.sqrt((l.x-pt.x)**2 + (l.y-pt.y)**2);
+                    if (d < dMin) { dMin = d; closest = l; }
+                });
+
+                if (closest && activeTool === 'cross') {
+                    if (closest.subdivide()) {
+                        pushFeed(`⊗ STRATA DIVISION: Distinction indexed at ${closest.id}.`, 'OS_EXEC');
+                        updateKernel();
+                    }
+                }
+            }
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            material.uniforms.u_time.value += 0.01;
+            if (!isDragging) {
+                spinVel.x *= 0.97;
+                spinVel.y *= 0.97;
+                plane.rotation.z += 0.0003;
+            }
+            plane.rotation.z += spinVel.x;
+            plane.rotation.x -= spinVel.y;
+            plane.rotation.x = Math.max(-1.1, Math.min(0.2, plane.rotation.x));
+            selectionColumn.rotation.z = -plane.rotation.z;
+
+            if (isSimEngaged && Math.random() > 0.99) {
+                let leaves = []; rootNode.getLeaves(leaves);
+                const t = leaves[Math.floor(Math.random()*leaves.length)];
+                if (t.subdivide()) updateKernel();
+            }
+            renderer.render(scene, camera);
+        }
+
+        // --- BINDINGS ---
+        window.onload = () => {
+            document.getElementById('slider-peel').addEventListener('input', (e) => {
+                material.uniforms.u_peel_h.value = e.target.value / 100;
+                document.getElementById('lbl-peel').innerText = e.target.value;
+            });
+            document.getElementById('slider-relief').addEventListener('input', (e) => {
+                material.uniforms.u_relief.value = e.target.value / 150;
+                document.getElementById('lbl-relief').innerText = (e.target.value / 150).toFixed(1) + 'x';
+            });
+            document.getElementById('slider-audio').addEventListener('input', (e) => {
+                document.getElementById('lbl-audio').innerText = e.target.value + '%';
+            });
+
+            const tools = ['audit', 'cross', 'link', 'xray'];
+            tools.forEach(t => {
+                const btn = document.getElementById(`tool-${t}`);
+                if (btn) {
+                    btn.addEventListener('click', () => {
+                        if (t === 'xray') {
+                            const activeXray = material.uniforms.u_xray.value > 0.5;
+                            material.uniforms.u_xray.value = activeXray ? 0.0 : 1.0;
+                            btn.classList.toggle('active');
+                            return;
+                        }
+                        activeTool = t;
+                        document.querySelectorAll('.btn-inst').forEach(b => { if(b.id.startsWith('tool')) b.classList.remove('active'); });
+                        btn.classList.add('active');
+                        document.getElementById('active-op').innerText = `Mode: ${t.toUpperCase()}`;
+                    });
+                }
+            });
+
+            document.getElementById('engage-field').addEventListener('click', (e) => {
+                isSimEngaged = !isSimEngaged;
+                e.target.classList.toggle('active');
+                e.target.innerText = isSimEngaged ? 'GENESIS_MODE: ACTIVE' : 'GENESIS_MODE: STANDBY';
+                pushFeed(`Genesis state: ${isSimEngaged ? 'Active' : 'Standby'}.`, 'SYSTEM');
+            });
+
+            document.getElementById('reset-btn').addEventListener('click', () => { 
+                initOS(); 
+                pushFeed("Field purge. State re-centered to root grief.", "RESET"); 
+            });
+
+            window.addEventListener('resize', () => {
+                renderer.setSize(visualField.clientWidth, visualField.clientHeight);
+                camera.aspect = visualField.clientWidth / visualField.clientHeight;
+                camera.updateProjectionMatrix();
+            });
+
+            initOS(); 
+            animate();
+        };
+    </script>
+</body>
+</html>

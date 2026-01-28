@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>PROTOCOL_Ω_BROWN_V38</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root { --amber: #fbbf24; --gold: #f59e0b; --cyan: #22d3ee; --crimson: #ef4444; --dim: #020617; }
+        body { margin: 0; background: #000; color: var(--amber); overflow: hidden; font-family: 'JetBrains Mono', monospace; font-size: 10px; display: flex; flex-direction: column; height: 100vh; }
+        
+        /* Layout Segmentation */
+        #visual-field { height: 40vh; width: 100%; position: relative; border-bottom: 2px solid rgba(34, 211, 238, 0.2); background: #000; cursor: grab; }
+        #visual-field:active { cursor: grabbing; }
+        #terminal-deck { height: 60vh; width: 100%; background: #010208; display: flex; flex-direction: column; position: relative; }
+        
+        /* Unified Command Bar */
+        #interface-header { background: #020617; border-bottom: 1px solid rgba(251, 191, 36, 0.1); padding: 8px 12px; display: flex; gap: 4px; align-items: center; z-index: 20; flex-wrap: wrap; }
+        #unified-stream { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column-reverse; gap: 10px; position: relative; }
+        #parameter-footer { background: #020617; border-top: 1px solid rgba(251, 191, 36, 0.1); padding: 8px 12px; display: flex; gap: 15px; align-items: center; z-index: 10; }
+
+        /* Tactical Feed Entries */
+        .entry { border-left: 1px solid var(--amber); background: rgba(255,255,255,0.01); padding: 10px; animation: slideIn 0.1s ease-out; border-radius: 0 4px 4px 0; border-bottom: 1px solid rgba(255,255,255,0.02); }
+        .entry.audit { border-left-color: var(--cyan); background: rgba(34, 211, 238, 0.05); }
+        .entry.cross { border-left-color: var(--crimson); background: rgba(239, 68, 68, 0.05); }
+        .entry-tag { font-size: 6px; font-weight: 900; opacity: 0.3; margin-bottom: 4px; display: block; letter-spacing: 2px; text-transform: uppercase; }
+        .entry-yaml { font-size: 8px; color: var(--cyan); opacity: 0.9; line-height: 1.4; white-space: pre-wrap; }
+
+        /* Controls */
+        .btn-inst { 
+            background: #010208; border: 1px solid rgba(251, 191, 36, 0.2); 
+            padding: 5px 8px; border-radius: 2px; cursor: pointer; color: var(--amber);
+            font-size: 9px; font-weight: 900; transition: all 0.2s; text-transform: uppercase;
+            flex-shrink: 0;
+        }
+        .btn-inst:hover { border-color: var(--cyan); color: #fff; }
+        .btn-inst.active { background: var(--cyan); color: #000; border-color: #fff; box-shadow: 0 0 10px var(--cyan); }
+        
+        #engage-field { 
+            background: rgba(34, 211, 238, 0.1); border: 1px solid var(--cyan); 
+            color: var(--cyan); padding: 5px 12px; font-size: 10px; font-weight: 900;
+            text-transform: uppercase; letter-spacing: 1px; flex-shrink: 0;
+        }
+        #engage-field.active { background: var(--crimson); border-color: #fff; color: #fff; box-shadow: 0 0 15px var(--crimson); }
+
+        @keyframes slideIn { from { transform: translateX(-10px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        /* Sliders */
+        input[type=range] { -webkit-appearance: none; background: rgba(255,255,255,0.05); height: 2px; flex: 1; }
+        input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 10px; height: 10px; background: var(--cyan); border-radius: 50%; cursor: pointer; box-shadow: 0 0 5px var(--cyan); }
+
+        #radar-mask { position: absolute; right: 20px; top: 20px; width: 90px; aspect-ratio: 1; border: 1px solid rgba(251, 191, 36, 0.1); border-radius: 50%; background: rgba(0,0,0,0.7); overflow: hidden; pointer-events: none; z-index: 5; }
+        .custom-scroll::-webkit-scrollbar { width: 3px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 10px; }
+    </style>
+</head>
+<body class="select-none">
+
+    <!-- TOP: TURNTABLE VISUAL -->
+    <div id="visual-field">
+        <div id="canvas-container" class="w-full h-full"></div>
+        <div id="radar-mask"><canvas id="radar-canvas" class="w-full h-full opacity-40"></canvas></div>
+        
+        <div class="absolute top-6 left-6 pointer-events-none space-y-1">
+            <h1 class="font-black text-sm tracking-[0.4em] text-white">⌖ Ω_BROWN</h1>
+            <p class="text-[7px] text-cyan-400 font-mono opacity-60 uppercase">Field_Instrument_V38</p>
+        </div>
+    </div>
+
+    <!-- BOTTOM: TERMINAL DECK -->
+    <div id="terminal-deck">
+        
+        <!-- Persistent Command Bar -->
+        <div id="interface-header">
+            <button id="tool-audit" class="btn-inst active">F1_Audit</button>
+            <button id="tool-cross" class="btn-inst">F2_Cross</button>
+            <button id="tool-audio" class="btn-inst">F3_Sonic</button>
+            <button id="tool-xray" class="btn-inst">F4_Slicer</button>
+            <div class="w-px h-4 bg-white/10 mx-1"></div>
+            <button id="engage-field">ENGAGE_FIELD: OFF</button>
+            <div class="flex-1 min-w-[10px]"></div>
+            <button id="reset-btn" class="btn-inst !text-red-500 border-red-500/20">Reforge</button>
+        </div>
+
+        <!-- Single Unified Stream -->
+        <div id="unified-stream" class="custom-scroll">
+            <div class="entry">
+                <span class="entry-tag">Operational_Start</span>
+                Field initialized. Turntable interaction active: Drag horizontally to spin, vertically to tilt. F1-F4 tools ready. ⊗ Crossings instantiate narrative mass.
+            </div>
+        </div>
+
+        <!-- Parameter Dashboard -->
+        <div id="parameter-footer">
+            <div class="flex items-center gap-3 w-40">
+                <span class="text-[7px] font-black opacity-30 uppercase">Relief</span>
+                <input type="range" id="slider-relief" min="0" max="300" value="150">
+            </div>
+            <div class="flex items-center gap-3 w-40">
+                <span class="text-[7px] font-black opacity-30 uppercase">Sonic</span>
+                <input type="range" id="slider-audio" min="0" max="100" value="25">
+            </div>
+            <div class="flex-1"></div>
+            <div class="flex gap-6 text-[8px] font-black uppercase opacity-20 tracking-widest">
+                <span>◢ LOD: <span id="stat-lod" class="text-white">0</span></span>
+                <span>⌬ MARKS: <span id="stat-nodes" class="text-white">0</span></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- DATA ARCHITECTURE ---
+        const ONTOLOGY = {
+            CORE: { name: "Galactic Core", prompt: "Distinction Drawn: Sovereign Order established.", color: 0xfbbf24, h: 1.8 },
+            RIM: { name: "Outer Rim", prompt: "Void Measured: Outlaw perturbation detected.", color: 0x92400e, h: 0.6 },
+            MARGIN: { name: "Sentient Debris", prompt: "Latent Wave: Marginalized superposition.", color: 0x64748b, h: 0.2 }
+        };
+
+        const LEGOS = [
+            { id: "e_sol", name: "The Clinamen", prompt: "The first crossing: Outlaw swerves into nobility.", type: "RIM" },
+            { id: "e_leia", name: "The Noble", prompt: "The second crossing: Princess becomes Rebel (void).", type: "CORE" },
+            { id: "e_sky", name: "The Spark", prompt: "Wave collapse: measurement of the Force.", type: "MARGIN" },
+            { id: "e_mark", name: "The Mark", prompt: "Crystalline order: bureaucratic severance.", type: "CORE" }
+        ];
+
+        // --- ENGINE CLASSES ---
+        class EventNode {
+            constructor(x, y, size, depth, config, parentId) {
+                this.x = x; this.y = y; this.size = size; this.depth = depth;
+                this.config = config; this.id = parentId;
+                this.isSplit = false; this.children = [];
+                this.weight = ONTOLOGY[config.type].h + (Math.random() * 0.4);
+                this.history = [config.prompt];
+                this.type = config.type;
+            }
+            subdivide() {
+                if (this.depth >= 3) return false;
+                this.isSplit = true;
+                const s = this.size/2, o = s/2;
+                const coords = [{x:this.x+o,y:this.y+o},{x:this.x-o,y:this.y+o},{x:this.x-o,y:this.y-o},{x:this.x+o,y:this.y-o}];
+                this.children = coords.map((c, i) => {
+                    const next = LEGOS[Math.floor(Math.random() * LEGOS.length)];
+                    const node = new EventNode(c.x, c.y, s, this.depth+1, next, `${this.id}_${i}`);
+                    node.history = [...this.history, next.prompt];
+                    node.weight = this.weight + (ONTOLOGY[next.type].h * 0.3);
+                    return node;
+                });
+                return true;
+            }
+            getLeaves(res = []) {
+                if (!this.isSplit) res.push(this);
+                else this.children.forEach(c => c.getLeaves(res));
+                return res;
+            }
+        }
+
+        // --- THREE.JS ---
+        const container = document.getElementById('visual-field');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        document.getElementById('canvas-container').appendChild(renderer.domElement);
+        
+        camera.position.set(0, -11, 10); camera.lookAt(0,0,0);
+
+        const material = new THREE.ShaderMaterial({
+            uniforms: {
+                u_seeds: { value: new Float32Array(128 * 3) },
+                u_colors: { value: new Float32Array(128 * 3) },
+                u_weights: { value: new Float32Array(128) },
+                u_seed_count: { value: 0 },
+                u_time: { value: 0 },
+                u_relief: { value: 1.0 },
+                u_xray: { value: 0.0 },
+                u_slice_x: { value: -10.0 },
+                u_bounds_center: { value: new THREE.Vector2(0.5, 0.5) },
+                u_bounds_size: { value: 0.0 }
+            },
+            vertexShader: `
+                uniform vec3 u_seeds[128];
+                uniform float u_weights[128];
+                uniform int u_seed_count;
+                uniform float u_relief;
+                varying vec2 vUv;
+                varying float vHeight;
+
+                void main() {
+                    vUv = uv;
+                    vec3 pos = position;
+                    float totalW = 0.0, combH = 0.0;
+                    for (int i = 0; i < 128; i++) {
+                        if (i >= u_seed_count) break;
+                        float d = distance(uv, u_seeds[i].xy);
+                        float w = 1.0 / pow(max(d, 0.04), 3.0); 
+                        totalW += w; combH += u_weights[i] * w;
+                    }
+                    float baseH = (totalW > 0.0) ? (combH / totalW) : 0.0;
+                    float hill = 1.0 / (1.0 + exp(30.0 * (distance(uv, vec2(0.5)) - 0.38)));
+                    vHeight = baseH * hill;
+                    pos.z += vHeight * u_relief * 1.5;
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+                }
+            `,
+            fragmentShader: `
+                uniform vec3 u_seeds[128];
+                uniform vec3 u_colors[128];
+                uniform int u_seed_count;
+                uniform float u_time;
+                uniform float u_xray;
+                uniform float u_slice_x;
+                uniform vec2 u_bounds_center;
+                uniform float u_bounds_size;
+                varying vec2 vUv;
+                varying float vHeight;
+
+                void main() {
+                    vec2 uv = vUv;
+                    if (distance(uv, vec2(0.5)) > 0.495) discard;
+                    if (u_xray > 0.5 && uv.x > u_slice_x) discard;
+
+                    float minDist = 10.0; int closestIdx = 0;
+                    for (int i = 0; i < 128; i++) {
+                        if (i >= u_seed_count) break;
+                        float d = distance(uv, u_seeds[i].xy);
+                        if (d < minDist) { minDist = d; closestIdx = i; }
+                    }
+                    
+                    vec3 color = u_colors[closestIdx];
+                    float contour = abs(fract(vHeight * 12.0 + 0.5) - 0.5);
+                    float line = smoothstep(0.12, 0.0, contour);
+                    
+                    // Recursive Subdivisions Visible
+                    float edge = 0.0;
+                    for (int i = 0; i < 128; i++) {
+                        if (i >= u_seed_count || i == closestIdx) continue;
+                        float d = distance(uv, u_seeds[i].xy);
+                        edge = max(edge, 1.0 - smoothstep(0.0, 0.004, abs(d - minDist)));
+                    }
+                    
+                    float sliceLine = smoothstep(0.003, 0.0, abs(uv.x - u_slice_x));
+
+                    if (u_xray > 0.5) {
+                        color = vec3(0.05, 0.05, 0.1);
+                        color += edge * vec3(1.0, 0.1, 0.1);
+                        color += sliceLine * vec3(1.0, 0.0, 0.0) * 2.0;
+                    } else {
+                        color *= (0.6 + vHeight * 0.4); 
+                        color = mix(color, vec3(0.1, 0.9, 1.0), line * 0.3); // Topo lines
+                        color += edge * 0.4 * vec3(1.0, 1.0, 1.0); // Divisions
+                        color += sliceLine * 0.1 * vec3(1.0);
+                    }
+
+                    if (u_bounds_size > 0.0) {
+                        vec2 bDist = abs(uv - u_bounds_center);
+                        if (bDist.x < u_bounds_size/2.0 && bDist.y < u_bounds_size/2.0) {
+                            color += 0.2;
+                            if (max(bDist.x, bDist.y) > (u_bounds_size/2.0 - 0.0025)) color = vec3(1.0);
+                        }
+                    }
+
+                    gl_FragColor = vec4(color, 1.0);
+                }
+            `,
+            transparent: true
+        });
+
+        const plane = new THREE.Mesh(new THREE.PlaneGeometry(12, 12, 400, 400), material);
+        scene.add(plane);
+
+        // --- STATE & RADAR ---
+        const roots = [];
+        let tool = 'audit', isSimEngaged = false, audioCtx, osc, gainNode;
+        const radarCanvas = document.getElementById('radar-canvas');
+        const radarCtx = radarCanvas.getContext('2d');
+
+        function init() {
+            roots.length = 0;
+            for (let i = 0; i < 8; i++) {
+                const angle = (i / 8) * Math.PI * 2, d = 1.35 + (i % 2) * 1.5;
+                const type = d < 2 ? "CORE" : "RIM";
+                roots.push(new EventNode(Math.cos(angle)*d, Math.sin(angle)*d, 4.0, 0, LEGOS[i%4], `${type}_RT`));
+            }
+            updateLattice();
+        }
+
+        function updateLattice() {
+            let leaves = []; roots.forEach(r => r.getLeaves(leaves));
+            leaves = leaves.slice(0, 128);
+            const pos = material.uniforms.u_seeds.value;
+            const col = material.uniforms.u_colors.value;
+            const wgt = material.uniforms.u_weights.value;
+            leaves.forEach((l, i) => {
+                pos[i*3] = (l.x + 6) / 12; pos[i*3+1] = (l.y + 6) / 12;
+                const c = new THREE.Color(ONTOLOGY[l.type].color);
+                col[i*3] = c.r; col[i*3+1] = c.g; col[i*3+2] = c.b;
+                wgt[i] = l.weight;
+            });
+            material.uniforms.u_seed_count.value = leaves.length;
+            document.getElementById('stat-nodes').innerText = leaves.length;
+            document.getElementById('stat-lod').innerText = Math.max(...leaves.map(l => l.depth));
+            drawRadar(leaves);
+        }
+
+        function drawRadar(leaves) {
+            const size = 100; radarCanvas.width = radarCanvas.height = size;
+            radarCtx.clearRect(0, 0, size, size);
+            radarCtx.strokeStyle = 'rgba(34, 211, 238, 0.1)';
+            radarCtx.strokeRect(0, 0, size, size);
+            leaves.forEach(l => {
+                const rx = ((l.x + 6) / 12) * size, ry = ((l.y + 6) / 12) * size;
+                radarCtx.fillStyle = (l.type === "CORE") ? "#fbbf24" : "#92400e";
+                radarCtx.globalAlpha = 0.5;
+                radarCtx.fillRect(rx - 1, ry - 1, 2, 2);
+            });
+        }
+
+        function pushFeed(msg, tag = 'INFO', isYaml = false) {
+            const buffer = document.getElementById('unified-stream');
+            const entry = document.createElement('div');
+            entry.className = `entry ${tag === 'AUDIT' ? 'audit' : ''} ${tag === 'CROSS' ? 'cross' : ''}`;
+            if (isYaml) entry.innerHTML = `<span class="entry-tag">${tag}</span><div class="entry-yaml">${msg}</div>`;
+            else entry.innerHTML = `<span class="entry-tag">${tag}</span>${msg}`;
+            buffer.prepend(entry);
+            if (buffer.childNodes.length > 40) buffer.removeChild(buffer.lastChild);
+        }
+
+        // --- TURNTABLE PHYSICS ---
+        const mouse = new THREE.Vector2();
+        const raycaster = new THREE.Raycaster();
+        let isDragging = false;
+        let lastMousePos = { x: 0, y: 0 };
+        let spinVel = { x: 0, y: 0 };
+
+        function onDown(x, y) { isDragging = true; lastMousePos = { x, y }; }
+        function onUp() { isDragging = false; }
+        function onMove(x, y) {
+            const rect = container.getBoundingClientRect();
+            mouse.x = ((x - rect.left) / rect.width) * 2 - 1;
+            mouse.y = -((y - rect.top) / rect.height) * 2 + 1;
+            
+            if (isDragging) {
+                const dx = x - lastMousePos.x;
+                const dy = y - lastMousePos.y;
+                spinVel.x = dx * 0.005;
+                spinVel.y = dy * 0.005;
+                lastMousePos = { x, y };
+            }
+            handleHover();
+        }
+
+        container.addEventListener('mousedown', (e) => onDown(e.clientX, e.clientY));
+        window.addEventListener('mouseup', onUp);
+        window.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY));
+
+        container.addEventListener('touchstart', (e) => onDown(e.touches[0].clientX, e.touches[0].clientY));
+        window.addEventListener('touchend', onUp);
+        window.addEventListener('touchmove', (e) => onMove(e.touches[0].clientX, e.touches[0].clientY));
+
+        function handleHover() {
+            raycaster.setFromCamera(mouse, camera);
+            const hits = raycaster.intersectObject(plane);
+            if (hits.length > 0) {
+                let leaves = []; roots.forEach(r => r.getLeaves(leaves));
+                const pt = hits[0].point;
+                let closest = null, dMin = 999;
+                leaves.forEach(l => {
+                    const d = Math.sqrt((l.x-pt.x)**2 + (l.y-pt.y)**2);
+                    if (d < dMin) { dMin = d; closest = l; }
+                });
+                material.uniforms.u_slice_x.value = (pt.x + 6) / 12;
+                if (closest && dMin < 1.6) {
+                    material.uniforms.u_bounds_center.value.set((closest.x + 6) / 12, (closest.y + 6) / 12);
+                    material.uniforms.u_bounds_size.value = closest.size / 12;
+                    if (tool === 'audit') auditLocus(closest);
+                    if (tool === 'audio') playSonic(150 + closest.weight * 200);
+                }
+            } else {
+                if (tool === 'audio') stopSonic();
+            }
+        }
+
+        let lastAuditId = null;
+        function auditLocus(node) {
+            if (node.id === lastAuditId) return;
+            lastAuditId = node.id;
+            const yaml = `NAME: ${node.config.name}\nDOMAIN: ${node.type}\nMASS: ${node.weight.toFixed(4)}\nPROMPT: ${node.history[node.history.length-1]}`;
+            pushFeed(yaml, 'AUDIT', true);
+        }
+
+        function playSonic(hz) {
+            if (!audioCtx) return;
+            const vol = document.getElementById('slider-audio').value / 800;
+            osc.frequency.setTargetAtTime(hz, audioCtx.currentTime, 0.1);
+            gainNode.gain.setTargetAtTime(vol, audioCtx.currentTime, 0.1);
+        }
+        function stopSonic() { if (gainNode) gainNode.gain.setTargetAtTime(0, audioCtx.currentTime, 0.2); }
+
+        container.addEventListener('click', () => {
+            if (!audioCtx) {
+                audioCtx = new AudioContext();
+                osc = audioCtx.createOscillator(); gainNode = audioCtx.createGain();
+                osc.connect(gainNode); gainNode.connect(audioCtx.destination);
+                osc.start(); gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+            }
+            if (tool === 'cross') {
+                raycaster.setFromCamera(mouse, camera);
+                const hits = raycaster.intersectObject(plane);
+                if (hits.length > 0) {
+                    let leaves = []; roots.forEach(r => r.getLeaves(leaves));
+                    const pt = hits[0].point;
+                    let closest = null, dMin = 999;
+                    leaves.forEach(l => {
+                        const d = Math.sqrt((l.x-pt.x)**2 + (l.y-pt.y)**2);
+                        if (d < dMin) { dMin = d; closest = l; }
+                    });
+                    if (closest && closest.subdivide()) {
+                        pushFeed(`⊗ CROSSING PERFORMED: ${closest.id}. Distinctions recursive.`, 'CROSS');
+                        updateLattice();
+                    }
+                }
+            }
+        });
+
+        function animate() {
+            requestAnimationFrame(animate);
+            material.uniforms.u_time.value += 0.01;
+            
+            // Turntable Inertia
+            if (!isDragging) {
+                spinVel.x *= 0.96;
+                spinVel.y *= 0.96;
+                plane.rotation.z += 0.0003;
+            }
+            plane.rotation.z += spinVel.x;
+            plane.rotation.x -= spinVel.y;
+            plane.rotation.x = Math.max(-0.9, Math.min(0.2, plane.rotation.x));
+
+            if (isSimEngaged && Math.random() > 0.99) {
+                let leaves = []; roots.forEach(r => r.getLeaves(leaves));
+                const t = leaves[Math.floor(Math.random()*leaves.length)];
+                if (t.subdivide()) updateLattice();
+            }
+            renderer.render(scene, camera);
+        }
+
+        // --- BINDINGS ---
+        document.getElementById('slider-relief').addEventListener('input', (e) => {
+            material.uniforms.u_relief.value = e.target.value / 150;
+        });
+
+        const tools = ['audit', 'cross', 'audio', 'xray'];
+        tools.forEach(t => {
+            document.getElementById(`tool-${t}`).addEventListener('click', () => {
+                if (t === 'xray') {
+                    const active = material.uniforms.u_xray.value > 0.5;
+                    material.uniforms.u_xray.value = active ? 0.0 : 1.0;
+                    document.getElementById('tool-xray').classList.toggle('active');
+                    pushFeed(`Slicer ${active ? 'Disengaged' : 'Engaged'}.`, 'SYSTEM');
+                    return;
+                }
+                tool = t;
+                document.querySelectorAll('.btn-inst').forEach(b => { if(b.id.startsWith('tool')) b.classList.remove('active'); });
+                document.getElementById(`tool-${t}`).classList.add('active');
+                if (t !== 'audio') stopSonic();
+                pushFeed(`Protocol shifted to ${t.toUpperCase()}.`, 'MODE');
+            });
+        });
+
+        document.getElementById('engage-field').addEventListener('click', (e) => {
+            isSimEngaged = !isSimEngaged;
+            e.target.classList.toggle('active');
+            e.target.innerText = isSimEngaged ? 'ENGAGE_FIELD: ON' : 'ENGAGE_FIELD: OFF';
+            pushFeed(`Engagement ${isSimEngaged ? 'Active' : 'Standby'}.`, 'SYSTEM');
+        });
+
+        document.getElementById('reset-btn').addEventListener('click', () => { init(); pushFeed("Field collapsed.", "RESET"); });
+        
+        window.addEventListener('resize', () => {
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+        });
+
+        init(); animate();
+    </script>
+</body>
+</html>

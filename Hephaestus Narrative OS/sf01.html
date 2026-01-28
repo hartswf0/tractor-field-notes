@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Shield of Achilles | Story Fracture</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bronze: #b87333;
+            --gold: #fbbf24;
+            --cyan: #22d3ee;
+            --crimson: #ef4444;
+            --patina: #4a7c59;
+            --shadow: #0a0e17;
+            --parchment: #e8dcc4;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: #000;
+            color: var(--gold);
+            overflow: hidden;
+            height: 100vh;
+            height: 100dvh;
+        }
+
+        /* Layout: Shield as canvas, panels as overlay */
+        .app {
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            height: 100vh;
+            position: relative;
+        }
+
+        @media (min-width: 1024px) {
+            .app { grid-template-columns: 300px 1fr 340px; grid-template-rows: 1fr; }
+        }
+
+        /* The Shield Canvas - Full screen on mobile, centered on desktop */
+        .shield-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #0f172a 0%, #000 100%);
+            overflow: hidden;
+        }
+
+        #shield-canvas {
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+        }
+
+        /* Narrative Overlay on Shield */
+        .narrative-overlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .verse-marker {
+            position: absolute;
+            background: rgba(184, 115, 51, 0.2);
+            border: 1px solid var(--bronze);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: var(--gold);
+            pointer-events: auto;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(4px);
+        }
+
+        .verse-marker:hover, .verse-marker.active {
+            background: rgba(251, 191, 36, 0.4);
+            border-color: var(--gold);
+            box-shadow: 0 0 20px var(--gold);
+            transform: scale(1.2);
+        }
+
+        .verse-marker.fractured {
+            border-style: dashed;
+            background: rgba(34, 211, 238, 0.2);
+            border-color: var(--cyan);
+        }
+
+        /* Side Panels - Mobile: slide over, Desktop: sidebars */
+        .sidebar, .inspector {
+            background: rgba(10, 14, 23, 0.95);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(184, 115, 51, 0.3);
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+        }
+
+        @media (max-width: 1023px) {
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                bottom: 80px;
+                width: 85%;
+                max-width: 320px;
+                transform: translateX(-100%);
+                z-index: 50;
+            }
+            .sidebar.open { transform: translateX(0); }
+            
+            .inspector {
+                position: fixed;
+                right: 0;
+                top: 0;
+                bottom: 80px;
+                width: 85%;
+                max-width: 380px;
+                transform: translateX(100%);
+                z-index: 50;
+                border-right: none;
+                border-left: 1px solid rgba(184, 115, 51, 0.3);
+            }
+            .inspector.open { transform: translateX(0); }
+        }
+
+        @media (min-width: 1024px) {
+            .sidebar { border-right: 1px solid rgba(184, 115, 51, 0.2); }
+            .inspector { border-left: 1px solid rgba(184, 115, 51, 0.2); border-right: none; }
+        }
+
+        /* Header/Breadcrumb */
+        .header-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 12px 16px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+            z-index: 20;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            overflow-x: auto;
+            white-space: nowrap;
+            max-width: 60%;
+            scrollbar-width: none;
+        }
+
+        .breadcrumb::-webkit-scrollbar { display: none; }
+
+        .crumb {
+            color: var(--bronze);
+            cursor: pointer;
+            font-family: 'Cinzel', serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .crumb:hover { color: var(--gold); }
+        .crumb:last-child { color: var(--gold); font-weight: 600; }
+
+        .depth-badge {
+            background: rgba(184, 115, 51, 0.2);
+            border: 1px solid var(--bronze);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 10px;
+            color: var(--gold);
+        }
+
+        /* Bottom Controls - The 4B Interface */
+        .controls-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: rgba(0, 0, 0, 0.9);
+            border-top: 1px solid rgba(184, 115, 51, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            padding: 0 20px;
+            padding-bottom: env(safe-area-inset-bottom);
+            z-index: 40;
+        }
+
+        @media (min-width: 1024px) {
+            .controls-bar {
+                position: absolute;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: auto;
+                height: auto;
+                background: rgba(10, 14, 23, 0.9);
+                border: 1px solid rgba(184, 115, 51, 0.3);
+                border-radius: 16px;
+                padding: 12px 24px;
+            }
+        }
+
+        .control-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            background: rgba(184, 115, 51, 0.1);
+            border: 1px solid rgba(184, 115, 51, 0.4);
+            color: var(--bronze);
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .control-btn:hover, .control-btn.active {
+            background: rgba(251, 191, 36, 0.2);
+            border-color: var(--gold);
+            color: var(--gold);
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.3);
+        }
+
+        .control-btn.primary {
+            background: rgba(34, 211, 238, 0.1);
+            border-color: var(--cyan);
+            color: var(--cyan);
+            padding: 12px 24px;
+            font-size: 10px;
+        }
+
+        .control-btn.primary:hover {
+            box-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
+        }
+
+        .control-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* Content Styling */
+        .panel-section {
+            padding: 20px;
+            border-bottom: 1px solid rgba(184, 115, 51, 0.1);
+        }
+
+        .panel-title {
+            font-family: 'Cinzel', serif;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--bronze);
+            margin-bottom: 16px;
+        }
+
+        .entity-palette {
+            display: grid;
+            gap: 8px;
+        }
+
+        .palette-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(184, 115, 51, 0.2);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .palette-item:hover {
+            border-color: var(--gold);
+            background: rgba(251, 191, 36, 0.05);
+            transform: translateX(4px);
+        }
+
+        .palette-item.selected {
+            border-color: var(--cyan);
+            background: rgba(34, 211, 238, 0.1);
+        }
+
+        /* Text Styling for Epic */
+        .epic-text {
+            font-family: 'Cinzel', serif;
+            font-size: 13px;
+            line-height: 1.8;
+            color: var(--parchment);
+            opacity: 0.9;
+        }
+
+        .epic-ref {
+            font-size: 10px;
+            color: var(--bronze);
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        /* Inspector Content */
+        .inspector-field {
+            margin-bottom: 16px;
+        }
+
+        .inspector-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            color: var(--bronze);
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+        }
+
+        .inspector-input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(184, 115, 51, 0.3);
+            color: var(--gold);
+            padding: 10px;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 12px;
+        }
+
+        .inspector-input:focus {
+            outline: none;
+            border-color: var(--cyan);
+        }
+
+        /* Peel Slider */
+        .peel-control {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            z-index: 20;
+        }
+
+        .peel-slider {
+            writing-mode: bt-lr; /* IE */
+            -webkit-appearance: slider-vertical; /* WebKit */
+            width: 30px;
+            height: 200px;
+            background: rgba(184, 115, 51, 0.2);
+            border-radius: 15px;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(10, 14, 23, 0.95);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 11px;
+            z-index: 100;
+            opacity: 0;
+            transition: all 0.3s;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            position: absolute;
+            top: 12px;
+            z-index: 30;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(184, 115, 51, 0.4);
+            color: var(--gold);
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .menu-toggle.left { left: 12px; }
+        .menu-toggle.right { right: 12px; }
+
+        @media (min-width: 1024px) {
+            .menu-toggle { display: none; }
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 45;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Strata Lines on Shield */
+        .strata-indicator {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            z-index: 15;
+        }
+
+        .strata-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(184, 115, 51, 0.4);
+            border: 1px solid var(--bronze);
+        }
+
+        .strata-dot.active {
+            background: var(--gold);
+            box-shadow: 0 0 8px var(--gold);
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+
+    <div class="app">
+        <!-- Mobile Toggles -->
+        <button class="menu-toggle left" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+        </button>
+        <button class="menu-toggle right" onclick="toggleInspector()">
+            <i class="fas fa-scroll"></i>
+        </button>
+
+        <!-- Sidebar: Entity Palette -->
+        <aside class="sidebar" id="sidebar">
+            <div class="panel-section">
+                <div class="panel-title">The Forge</div>
+                <div class="entity-palette">
+                    <div class="palette-item" onclick="selectEntity('Character')">
+                        <i class="fas fa-user-shield text-amber-500"></i>
+                        <div>
+                            <div class="text-sm font-medium text-amber-200">Hero</div>
+                            <div class="text-[10px] text-amber-600">Achilles, Patroclus</div>
+                        </div>
+                    </div>
+                    <div class="palette-item" onclick="selectEntity('Divine')">
+                        <i class="fas fa-cloud-sun text-cyan-400"></i>
+                        <div>
+                            <div class="text-sm font-medium text-cyan-200">Divine</div>
+                            <div class="text-[10px] text-cyan-600">Thetis, Athena</div>
+                        </div>
+                    </div>
+                    <div class="palette-item" onclick="selectEntity('Artefact')">
+                        <i class="fas fa-shield-alt text-yellow-500"></i>
+                        <div>
+                            <div class="text-sm font-medium text-yellow-200">Artefact</div>
+                            <div class="text-[10px] text-yellow-600">Armour, Shield</div>
+                        </div>
+                    </div>
+                    <div class="palette-item" onclick="selectEntity('Scene')">
+                        <i class="fas fa-theater-masks text-purple-400"></i>
+                        <div>
+                            <div class="text-sm font-medium text-purple-200">Scene</div>
+                            <div class="text-[10px] text-purple-600">Lament, Assembly</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <div class="panel-title">Strata Control</div>
+                <div class="space-y-4">
+                    <div>
+                        <div class="text-[10px] text-amber-600 uppercase mb-2">Narrative Peel</div>
+                        <input type="range" id="peel-slider" min="0" max="100" value="100" 
+                               class="w-full h-2 bg-amber-900/30 rounded-lg appearance-none cursor-pointer"
+                               oninput="updatePeel(this.value)">
+                    </div>
+                    <div>
+                        <div class="text-[10px] text-amber-600 uppercase mb-2">Relief Height</div>
+                        <input type="range" id="relief-slider" min="0" max="200" value="100"
+                               class="w-full h-2 bg-amber-900/30 rounded-lg appearance-none cursor-pointer"
+                               oninput="updateRelief(this.value)">
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Shield Canvas -->
+        <main class="shield-container">
+            <canvas id="shield-canvas"></canvas>
+            
+            <!-- Header -->
+            <div class="header-bar">
+                <div class="breadcrumb" id="breadcrumb">
+                    <span class="crumb" onclick="navigateToRoot()">Iliad</span>
+                    <i class="fas fa-chevron-right text-[10px] text-amber-800"></i>
+                    <span class="crumb" onclick="navigateToRoot()">Book XVIII</span>
+                </div>
+                <div class="depth-badge" id="depth-badge">Depth: 0</div>
+            </div>
+
+            <!-- Strata Depth Indicator -->
+            <div class="strata-indicator" id="strata-indicator">
+                <div class="strata-dot active"></div>
+            </div>
+
+            <!-- Verse markers will be injected here -->
+            <div class="narrative-overlay" id="verse-overlay"></div>
+        </main>
+
+        <!-- Inspector: Epic Text & Node Details -->
+        <aside class="inspector" id="inspector">
+            <div class="panel-section">
+                <div class="panel-title">Scroll Text</div>
+                <div id="inspector-content">
+                    <div class="epic-ref">BkXVIII:1-77</div>
+                    <div class="epic-text">
+                        So the fighting raged, while swift-footed Antilochus brought the news to Achilles. He found him in front of the high-sterned ships, agonising over the war...
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-section" id="node-actions" style="display: none;">
+                <div class="panel-title">Sector Actions</div>
+                <div class="space-y-2">
+                    <button onclick="fractureCurrent()" class="w-full py-3 bg-cyan-900/30 border border-cyan-600 text-cyan-400 rounded hover:bg-cyan-900/50 transition-colors text-sm">
+                        <i class="fas fa-code-branch mr-2"></i>FRACTURE SECTOR
+                    </button>
+                    <button onclick="placeEntityMode()" class="w-full py-3 bg-amber-900/30 border border-amber-600 text-amber-400 rounded hover:bg-amber-900/50 transition-colors text-sm">
+                        <i class="fas fa-plus mr-2"></i>PLACE ENTITY
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Bottom Controls -->
+        <nav class="controls-bar">
+            <button class="control-btn" onclick="navigateUp()" id="btn-up" disabled>
+                <i class="fas fa-arrow-up"></i>
+                <span>Ascend</span>
+            </button>
+            
+            <button class="control-btn" onclick="selectPrev()" id="btn-prev" disabled>
+                <i class="fas fa-arrow-left"></i>
+                <span>Prev</span>
+            </button>
+
+            <button class="control-btn primary" onclick="fractureCurrent()" id="btn-fracture">
+                <i class="fas fa-hammer"></i>
+                <span>FORGE</span>
+            </button>
+
+            <button class="control-btn" onclick="selectNext()" id="btn-next" disabled>
+                <i class="fas fa-arrow-right"></i>
+                <span>Next</span>
+            </button>
+
+            <button class="control-btn" onclick="enterSelected()" id="btn-enter" disabled>
+                <i class="fas fa-sign-in-alt"></i>
+                <span>Enter</span>
+            </button>
+        </nav>
+    </div>
+
+    <div class="overlay" id="overlay" onclick="closePanels()"></div>
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // =========================================
+        // STATE: The Shield as Story Space
+        // =========================================
+        const STATE = {
+            nodes: [],
+            currentNode: null,
+            selectedNode: null,
+            path: [],
+            depth: 0,
+            nextId: 1,
+            camera: { theta: 0, phi: Math.PI / 3, radius: 12 },
+            isDragging: false,
+            lastMouse: { x: 0, y: 0 },
+            peelLevel: 1.0,
+            reliefScale: 1.0
+        };
+
+        // The Homeric Epic Data Structure
+        const EPIC_SEGMENTS = {
+            root: {
+                ref: "BkXVIII",
+                title: "The Shield of Achilles",
+                text: "Thetis responds to Achilles' sorrow...",
+                children: [
+                    { ref: "1-77", title: "Thetis Responds", text: "So the fighting raged, while swift-footed Antilochus brought the news to Achilles..." },
+                    { ref: "78-147", title: "Fresh Armour Promised", text: "Swift-footed Achilles sighed deeply: 'Mother, it is true that Zeus has brought all this about...'" },
+                    { ref: "148-242", title: "Hera's Message", text: "While Thetis journeyed to Olympus, the Greeks, fleeing with shouts of terror..." },
+                    { ref: "243-309", title: "Trojan Assembly", text: "The Trojans, for their part, having withdrawn from battle..." },
+                    { ref: "310-367", title: "Lamentation", text: "The leader in that outpouring of grief was Achilles..." },
+                    { ref: "368-617", title: "The Forge", text: "When the large heavy shield was done, he made a breastplate for Achilles..." }
+                ]
+            }
+        };
+
+        // =========================================
+        // THREE.JS SHIELD SETUP
+        // =========================================
+        const canvas = document.getElementById('shield-canvas');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
+        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+        
+        renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        
+        camera.position.set(0, 0, 15);
+        
+        // Shield Material - Bronze with Voronoi strata
+        const shieldMaterial = new THREE.ShaderMaterial({
+            uniforms: {
+                u_time: { value: 0 },
+                u_resolution: { value: new THREE.Vector2(canvas.width, canvas.height) },
+                u_mouse: { value: new THREE.Vector2(0.5, 0.5) },
+                u_peel: { value: 1.0 },
+                u_relief: { value: 1.0 },
+                u_cells: { value: [] },
+                u_cellCount: { value: 0 }
+            },
+            vertexShader: `
+                varying vec2 vUv;
+                varying vec3 vPos;
+                varying float vElevation;
+                
+                uniform float u_relief;
+                
+                // Simplex noise for bronze texture
+                vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+                vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+                vec3 permute(vec3 x) { return mod289(((x*34.0)+1.0)*x); }
+                
+                float snoise(vec2 v) {
+                    const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
+                    vec2 i  = floor(v + dot(v, C.yy) );
+                    vec2 x0 = v - i + dot(i, C.xx);
+                    vec2 i1;
+                    i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+                    vec4 x12 = x0.xyxy + C.xxzz;
+                    x12.xy -= i1;
+                    i = mod289(i);
+                    vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 )) + i.x + vec3(0.0, i1.x, 1.0 ));
+                    vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
+                    m = m*m ;
+                    m = m*m ;
+                    vec3 x = 2.0 * fract(p * C.www) - 1.0;
+                    vec3 h = abs(x) - 0.5;
+                    vec3 ox = floor(x + 0.5);
+                    vec3 a0 = x - ox;
+                    m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );
+                    vec3 g;
+                    g.x  = a0.x  * x0.x  + h.x  * x0.y;
+                    g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+                    return 130.0 * dot(m, g);
+                }
+                
+                void main() {
+                    vUv = uv;
+                    vec3 pos = position;
+                    
+                    // Create shield curvature
+                    float dist = length(uv - 0.5);
+                    float dome = cos(dist * 3.14159) * 0.5;
+                    
+                    // Bronze hammered texture
+                    float noise = snoise(uv * 8.0) * 0.1 + snoise(uv * 20.0) * 0.05;
+                    
+                    // Strata layers based on v-coordinate (peel effect)
+                    float strata = sin(uv.y * 20.0 + noise * 5.0) * 0.5 + 0.5;
+                    float elevation = dome + noise + strata * 0.3 * u_relief;
+                    
+                    pos.z += elevation;
+                    vElevation = elevation;
+                    vPos = pos;
+                    
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+                }
+            `,
+            fragmentShader: `
+                varying vec2 vUv;
+                varying vec3 vPos;
+                varying float vElevation;
+                
+                uniform float u_time;
+                uniform float u_peel;
+                uniform vec2 u_cells[32];
+                uniform int u_cellCount;
+                
+                // Bronze colors
+                vec3 bronzeDark = vec3(0.42, 0.27, 0.11);
+                vec3 bronzeLight = vec3(0.72, 0.45, 0.20);
+                vec3 gold = vec3(0.98, 0.74, 0.14);
+                vec3 cyan = vec3(0.13, 0.83, 0.93);
+                vec3 shadow = vec3(0.04, 0.05, 0.09);
+                
+                float voronoi(vec2 uv, out vec2 id) {
+                    vec2 grid = floor(uv);
+                    vec2 frac = fract(uv);
+                    float minDist = 1.0;
+                    
+                    for(int y = -1; y <= 1; y++) {
+                        for(int x = -1; x <= 1; x++) {
+                            vec2 neighbor = vec2(float(x), float(y));
+                            vec2 cellPos = neighbor + 0.5 + 0.5 * sin(vec2(
+                                dot(grid + neighbor, vec2(12.9898, 78.233)),
+                                dot(grid + neighbor, vec2(43.123, 91.456))
+                            ));
+                            vec2 diff = neighbor + cellPos - frac;
+                            float dist = length(diff);
+                            if(dist < minDist) {
+                                minDist = dist;
+                                id = grid + neighbor;
+                            }
+                        }
+                    }
+                    return minDist;
+                }
+                
+                void main() {
+                    // Peel effect: discard fragments above peel level
+                    if(vUv.y > u_peel) discard;
+                    
+                    // Voronoi cells for story sectors
+                    vec2 cellId;
+                    float v = voronoi(vUv * 6.0, cellId);
+                    
+                    // Cell boundaries
+                    float edge = smoothstep(0.05, 0.0, abs(v - 0.5));
+                    
+                    // Base bronze
+                    vec3 color = mix(bronzeDark, bronzeLight, vElevation * 2.0);
+                    
+                    // Add gold to edges
+                    color = mix(color, gold, edge * 0.6);
+                    
+                    // Strata lines (horizontal peel layers)
+                    float strataLine = abs(sin(vUv.y * 40.0));
+                    if(strataLine > 0.95) color = mix(color, gold, 0.4);
+                    
+                    // Highlight selected cells
+                    for(int i = 0; i < 32; i++) {
+                        if(i >= u_cellCount) break;
+                        float d = distance(vUv, u_cells[i]);
+                        if(d < 0.15) {
+                            color = mix(color, cyan, 0.3);
+                            if(d > 0.14) color = cyan; // Border
+                        }
+                    }
+                    
+                    // Lighting
+                    vec3 light = normalize(vec3(0.5, 0.5, 1.0));
+                    vec3 normal = normalize(cross(dFdx(vPos), dFdy(vPos)));
+                    float diff = max(dot(normal, light), 0.0);
+                    color *= (0.6 + 0.4 * diff);
+                    
+                    gl_FragColor = vec4(color, 1.0);
+                }
+            `,
+            side: THREE.DoubleSide
+        });
+
+        const shield = new THREE.Mesh(
+            new THREE.SphereGeometry(5, 128, 128, 0, Math.PI * 2, 0, Math.PI * 0.35),
+            shieldMaterial
+        );
+        shield.rotation.x = -Math.PI / 2;
+        scene.add(shield);
+
+        // Selection marker
+        const markerGeo = new THREE.RingGeometry(0.3, 0.35, 32);
+        const markerMat = new THREE.MeshBasicMaterial({ 
+            color: 0x22d3ee, 
+            transparent: true, 
+            opacity: 0.8,
+            side: THREE.DoubleSide
+        });
+        const marker = new THREE.Mesh(markerGeo, markerMat);
+        marker.visible = false;
+        scene.add(marker);
+
+        // =========================================
+        // STORY NODE SYSTEM
+        // =========================================
+        class StoryNode {
+            constructor(ref, title, text, parentId = null) {
+                this.id = STATE.nextId++;
+                this.ref = ref;
+                this.title = title;
+                this.text = text;
+                this.parentId = parentId;
+                this.children = [];
+                this.entities = [];
+                this.fractured = false;
+                this.position = { x: 0, y: 0 }; // UV coordinates on shield
+                this.depth = parentId ? 0 : 0;
+            }
+        }
+
+        function initStory() {
+            // Create root from epic
+            const root = new StoryNode("BkXVIII", "The Shield of Achilles", EPIC_SEGMENTS.root.text);
+            STATE.rootNode = root;
+            STATE.currentNode = root;
+            STATE.path = [root];
+            
+            // Add first level children (the major sections)
+            EPIC_SEGMENTS.root.children.forEach((child, i) => {
+                const angle = (i / 6) * Math.PI * 2;
+                const node = new StoryNode(child.ref, child.title, child.text, root.id);
+                node.position = {
+                    x: 0.5 + Math.cos(angle) * 0.3,
+                    y: 0.5 + Math.sin(angle) * 0.3
+                };
+                root.children.push(node.id);
+                STATE.nodes.push(node);
+            });
+            
+            STATE.nodes.push(root);
+            updateCellUniforms();
+            renderMarkers();
+            updateUI();
+        }
+
+        function updateCellUniforms() {
+            const cells = STATE.currentNode.children
+                .map(id => STATE.nodes.find(n => n.id === id))
+                .filter(Boolean);
+            
+            const arr = new Array(32).fill(new THREE.Vector2(0, 0));
+            cells.forEach((cell, i) => {
+                if (i < 32) arr[i] = new THREE.Vector2(cell.position.x, cell.position.y);
+            });
+            
+            shieldMaterial.uniforms.u_cells.value = arr;
+            shieldMaterial.uniforms.u_cellCount.value = cells.length;
+        }
+
+        function renderMarkers() {
+            const overlay = document.getElementById('verse-overlay');
+            overlay.innerHTML = '';
+            
+            const cells = STATE.currentNode.children
+                .map(id => STATE.nodes.find(n => n.id === id))
+                .filter(Boolean);
+            
+            cells.forEach(cell => {
+                const marker = document.createElement('div');
+                marker.className = `verse-marker ${cell.fractured ? 'fractured' : ''}`;
+                marker.style.left = `${cell.position.x * 100}%`;
+                marker.style.top = `${cell.position.y * 100}%`;
+                marker.innerHTML = `<span>${cell.ref}</span>`;
+                marker.onclick = (e) => {
+                    e.stopPropagation();
+                    selectSector(cell);
+                };
+                marker.ondblclick = (e) => {
+                    e.stopPropagation();
+                    enterSector(cell);
+                };
+                overlay.appendChild(marker);
+            });
+        }
+
+        // =========================================
+        // INTERACTION
+        // =========================================
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+
+        function onPointerMove(e) {
+            const rect = canvas.getBoundingClientRect();
+            const x = ((e.clientX || e.touches?.[0].clientX) - rect.left) / rect.width;
+            const y = ((e.clientY || e.touches?.[0].clientY) - rect.top) / rect.height;
+            
+            mouse.set(x * 2 - 1, -y * 2 + 1);
+            shieldMaterial.uniforms.u_mouse.value.set(x, y);
+            
+            if (STATE.isDragging) {
+                const dx = x - STATE.lastMouse.x;
+                const dy = y - STATE.lastMouse.y;
+                shield.rotation.z -= dx * 2;
+                shield.rotation.x = Math.max(-Math.PI/2, Math.min(0, shield.rotation.x + dy));
+            }
+            
+            STATE.lastMouse = { x, y };
+            
+            // Hover detection
+            raycaster.setFromCamera(mouse, camera);
+            const hits = raycaster.intersectObject(shield);
+            if (hits.length > 0) {
+                const uv = hits[0].uv;
+                document.body.style.cursor = 'crosshair';
+            } else {
+                document.body.style.cursor = 'default';
+            }
+        }
+
+        function onPointerDown(e) {
+            STATE.isDragging = true;
+            const rect = canvas.getBoundingClientRect();
+            STATE.lastMouse = {
+                x: ((e.clientX || e.touches?.[0].clientX) - rect.left) / rect.width,
+                y: ((e.clientY || e.touches?.[0].clientY) - rect.top) / rect.height
+            };
+        }
+
+        function onPointerUp() {
+            STATE.isDragging = false;
+        }
+
+        canvas.addEventListener('mousemove', onPointerMove);
+        canvas.addEventListener('touchmove', onPointerMove, { passive: true });
+        canvas.addEventListener('mousedown', onPointerDown);
+        canvas.addEventListener('touchstart', onPointerDown, { passive: true });
+        window.addEventListener('mouseup', onPointerUp);
+        window.addEventListener('touchend', onPointerUp);
+
+        // Zoom with wheel
+        canvas.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            camera.position.z += e.deltaY * 0.01;
+            camera.position.z = Math.max(8, Math.min(20, camera.position.z));
+        });
+
+        // =========================================
+        // NAVIGATION ACTIONS
+        // =========================================
+        function selectSector(node) {
+            STATE.selectedNode = node;
+            
+            // Update marker position
+            marker.position.set(
+                (node.position.x - 0.5) * 10,
+                (node.position.y - 0.5) * 10,
+                1
+            );
+            marker.visible = true;
+            
+            // Update inspector
+            updateInspector(node);
+            updateUI();
+            
+            showToast(`Selected: ${node.title}`);
+        }
+
+        function enterSector(node) {
+            if (!node) node = STATE.selectedNode;
+            if (!node) return;
+            
+            if (node.children.length === 0 && !node.fractured) {
+                showToast('Sector not yet fractured. Click FORGE.');
+                return;
+            }
+            
+            STATE.path.push(node);
+            STATE.currentNode = node;
+            STATE.depth++;
+            
+            // Transition camera
+            gsapCamera(node.position);
+            
+            updateCellUniforms();
+            renderMarkers();
+            updateUI();
+            updateBreadcrumb();
+            closePanels();
+        }
+
+        function navigateUp() {
+            if (STATE.path.length <= 1) return;
+            STATE.path.pop();
+            STATE.currentNode = STATE.path[STATE.path.length - 1];
+            STATE.depth--;
+            STATE.selectedNode = null;
+            marker.visible = false;
+            
+            updateCellUniforms();
+            renderMarkers();
+            updateUI();
+            updateBreadcrumb();
+        }
+
+        function navigateToRoot() {
+            STATE.path = [STATE.rootNode];
+            STATE.currentNode = STATE.rootNode;
+            STATE.depth = 0;
+            STATE.selectedNode = null;
+            marker.visible = false;
+            
+            updateCellUniforms();
+            renderMarkers();
+            updateUI();
+            updateBreadcrumb();
+        }
+
+        function selectPrev() {
+            if (!STATE.selectedNode) return;
+            const siblings = STATE.currentNode.children;
+            const idx = siblings.indexOf(STATE.selectedNode.id);
+            if (idx > 0) {
+                const prev = STATE.nodes.find(n => n.id === siblings[idx - 1]);
+                if (prev) selectSector(prev);
+            }
+        }
+
+        function selectNext() {
+            if (!STATE.selectedNode) return;
+            const siblings = STATE.currentNode.children;
+            const idx = siblings.indexOf(STATE.selectedNode.id);
+            if (idx < siblings.length - 1) {
+                const next = STATE.nodes.find(n => n.id === siblings[idx + 1]);
+                if (next) selectSector(next);
+            }
+        }
+
+        function fractureCurrent() {
+            const target = STATE.selectedNode || STATE.currentNode;
+            if (!target) return;
+            
+            if (target.fractured) {
+                showToast('Already fractured');
+                return;
+            }
+            
+            // Create sub-sectors (Voronoi subdivision)
+            const count = 4 + Math.floor(Math.random() * 3);
+            for (let i = 0; i < count; i++) {
+                const angle = (i / count) * Math.PI * 2 + Math.random() * 0.5;
+                const dist = 0.15 + Math.random() * 0.1;
+                const child = new StoryNode(
+                    `${target.ref}.${i+1}`,
+                    `Sub-scene ${i+1}`,
+                    "Subdivision of " + target.title,
+                    target.id
+                );
+                child.position = {
+                    x: target.position.x + Math.cos(angle) * dist,
+                    y: target.position.y + Math.sin(angle) * dist
+                };
+                child.depth = target.depth + 1;
+                target.children.push(child.id);
+                STATE.nodes.push(child);
+            }
+            
+            target.fractured = true;
+            showToast(`Fractured into ${count} sectors`);
+            updateCellUniforms();
+            renderMarkers();
+            updateUI();
+        }
+
+        function enterSelected() {
+            enterSector(STATE.selectedNode);
+        }
+
+        // =========================================
+        // UI UPDATES
+        // =========================================
+        function updateUI() {
+            document.getElementById('depth-badge').textContent = `Depth: ${STATE.depth}`;
+            document.getElementById('btn-up').disabled = STATE.path.length <= 1;
+            document.getElementById('btn-enter').disabled = !STATE.selectedNode;
+            document.getElementById('btn-prev').disabled = !STATE.selectedNode;
+            document.getElementById('btn-next').disabled = !STATE.selectedNode;
+            
+            // Update strata indicator
+            const indicator = document.getElementById('strata-indicator');
+            indicator.innerHTML = '';
+            for (let i = 0; i <= STATE.depth; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'strata-dot' + (i === STATE.depth ? ' active' : '');
+                indicator.appendChild(dot);
+            }
+        }
+
+        function updateBreadcrumb() {
+            const crumb = document.getElementById('breadcrumb');
+            crumb.innerHTML = STATE.path.map((node, i) => `
+                <span class="crumb" onclick="navigateToIndex(${i})">${node.ref}</span>
+                ${i < STATE.path.length - 1 ? '<i class="fas fa-chevron-right text-[10px] text-amber-800"></i>' : ''}
+            `).join('');
+        }
+
+        function updateInspector(node) {
+            const content = document.getElementById('inspector-content');
+            const actions = document.getElementById('node-actions');
+            
+            if (!node) {
+                content.innerHTML = `
+                    <div class="epic-ref">Select a sector</div>
+                    <div class="epic-text text-amber-600/60">Click on a verse marker to view details and fracture the narrative.</div>
+                `;
+                actions.style.display = 'none';
+                return;
+            }
+            
+            content.innerHTML = `
+                <div class="epic-ref">${node.ref}</div>
+                <div class="epic-text">${node.text.substring(0, 300)}...</div>
+                ${node.entities.length ? `
+                    <div class="mt-4 pt-4 border-t border-amber-800/30">
+                        <div class="text-[10px] text-amber-600 uppercase mb-2">Entities</div>
+                        <div class="flex flex-wrap gap-2">
+                            ${node.entities.map(e => `
+                                <span class="px-2 py-1 bg-amber-900/30 border border-amber-600/50 rounded text-[10px] text-amber-300">
+                                    <i class="fas fa-user mr-1"></i>${e.name}
+                                </span>
+                            `).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+            `;
+            actions.style.display = 'block';
+        }
+
+        function navigateToIndex(index) {
+            STATE.path = STATE.path.slice(0, index + 1);
+            STATE.currentNode = STATE.path[STATE.path.length - 1];
+            STATE.depth = index;
+            STATE.selectedNode = null;
+            marker.visible = false;
+            updateCellUniforms();
+            renderMarkers();
+            updateUI();
+            updateBreadcrumb();
+        }
+
+        // =========================================
+        // ENTITY PLACEMENT
+        // =========================================
+        let selectedEntityType = null;
+
+        function selectEntity(type) {
+            selectedEntityType = type;
+            document.querySelectorAll('.palette-item').forEach(el => el.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+            showToast(`Selected: ${type}. Click shield to place.`);
+        }
+
+        function placeEntityMode() {
+            if (!STATE.selectedNode) return;
+            showToast('Select entity type from palette, then click shield');
+            toggleSidebar();
+        }
+
+        // Click on shield to place entity
+        canvas.addEventListener('click', (e) => {
+            if (!selectedEntityType || !STATE.selectedNode) return;
+            
+            const rect = canvas.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width;
+            const y = (e.clientY - rect.top) / rect.height;
+            
+            raycaster.setFromCamera(mouse, camera);
+            const hits = raycaster.intersectObject(shield);
+            
+            if (hits.length > 0) {
+                const uv = hits[0].uv;
+                STATE.selectedNode.entities.push({
+                    type: selectedEntityType,
+                    name: `New ${selectedEntityType}`,
+                    x: uv.x,
+                    y: uv.y
+                });
+                updateInspector(STATE.selectedNode);
+                showToast(`Placed ${selectedEntityType}`);
+                selectedEntityType = null;
+                document.querySelectorAll('.palette-item').forEach(el => el.classList.remove('selected'));
+            }
+        });
+
+        // =========================================
+        // SHIELD CONTROLS
+        // =========================================
+        function updatePeel(val) {
+            STATE.peelLevel = val / 100;
+            shieldMaterial.uniforms.u_peel.value = STATE.peelLevel;
+        }
+
+        function updateRelief(val) {
+            STATE.reliefScale = val / 100;
+            shieldMaterial.uniforms.u_relief.value = STATE.reliefScale;
+        }
+
+        // =========================================
+        // MOBILE UI
+        // =========================================
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+
+        function toggleInspector() {
+            document.getElementById('inspector').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+
+        function closePanels() {
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('inspector').classList.remove('open');
+            document.getElementById('overlay').classList.remove('active');
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        // =========================================
+        // ANIMATION LOOP
+        // =========================================
+        function animate() {
+            requestAnimationFrame(animate);
+            shieldMaterial.uniforms.u_time.value += 0.01;
+            
+            // Gentle rotation when idle
+            if (!STATE.isDragging) {
+                shield.rotation.z += 0.001;
+            }
+            
+            renderer.render(scene, camera);
+        }
+
+        // Camera transition (simple lerp)
+        function gsapCamera(targetPos) {
+            // Simplified - just move marker for now
+            marker.position.set(
+                (targetPos.x - 0.5) * 10,
+                (targetPos.y - 0.5) * 10,
+                1
+            );
+        }
+
+        // Handle resize
+        window.addEventListener('resize', () => {
+            camera.aspect = canvas.clientWidth / canvas.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+        });
+
+        // Initialize
+        initStory();
+        animate();
+    </script>
+</body>
+</html>
