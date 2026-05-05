@@ -1,0 +1,809 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#050505" />
+  <title>Watson Hartsoe — Routed Worldtext Atlas</title>
+  <style>
+    :root {
+      --paper: #f1f1ea;
+      --ink: #050505;
+      --muted: #686860;
+      --field: #b8b8ad;
+      --header: #050505;
+      --headerText: #f7f7ee;
+      --rule: #050505;
+      --surface: #ffffff;
+      --surface2: #f7f7f0;
+      --accent: #f27a45;
+      --accentSoft: #f7b083;
+      --yellow: #d6da1c;
+      --green: #8cff26;
+      --cyan: #35e7f6;
+      --orange: #ffa22a;
+      --red: #ff3b1f;
+      --pink: #ff8fa6;
+      --sand: #d5bf7d;
+      --olive: #7f9882;
+      --font: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    }
+
+    * { box-sizing: border-box; scrollbar-width: none; -ms-overflow-style: none; }
+    *::-webkit-scrollbar { width: 0 !important; height: 0 !important; display: none !important; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--font);
+      overscroll-behavior: none;
+    }
+
+    button, input, select { font: inherit; }
+    button { border: 0; color: inherit; cursor: pointer; }
+
+    .app {
+      width: 100vw;
+      height: 100dvh;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 8px;
+      padding: 8px;
+      overflow: hidden;
+      background: var(--paper);
+    }
+
+    .masthead {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: end;
+    }
+
+    .brand-strip {
+      height: clamp(36px, 5vw, 56px);
+      display: flex;
+      align-items: center;
+      min-width: 0;
+      overflow: hidden;
+      padding: 0 clamp(10px, 1.6vw, 16px);
+      background: var(--header);
+      color: var(--headerText);
+      border: 2px solid var(--rule);
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(24px, 4.4vw, 60px);
+      line-height: .82;
+      letter-spacing: -.09em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .mark {
+      flex: 0 0 auto;
+      margin-left: auto;
+      width: clamp(28px, 4vw, 48px);
+      height: clamp(28px, 4vw, 48px);
+      display: grid;
+      place-items: center;
+      background: var(--headerText);
+      color: var(--header);
+      font-weight: 900;
+      font-size: clamp(12px, 1.8vw, 22px);
+      line-height: 1;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: minmax(150px, 260px) minmax(110px, 160px) auto auto;
+      gap: 6px;
+      align-items: end;
+    }
+
+    .field { display: grid; gap: 3px; }
+    .field label {
+      font-size: 9px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+    }
+
+    .field input,
+    .field select,
+    .chip {
+      height: 34px;
+      min-width: 0;
+      border: 2px solid var(--rule);
+      border-radius: 0;
+      background: var(--surface);
+      color: var(--ink);
+      padding: 0 9px;
+      outline: none;
+      font-weight: 900;
+      font-size: 12px;
+    }
+
+    .chip {
+      display: inline-grid;
+      place-items: center;
+      white-space: nowrap;
+      min-width: 90px;
+      background: var(--header);
+      color: var(--headerText);
+    }
+
+    .chip[aria-pressed="true"] { background: var(--accent); color: var(--ink); }
+
+    .shell {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) clamp(280px, 27vw, 400px);
+      gap: 8px;
+      overflow: hidden;
+    }
+
+    .workbench {
+      min-width: 0;
+      min-height: 0;
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) clamp(112px, 19vh, 170px);
+      gap: 8px;
+      overflow: hidden;
+    }
+
+    .map-frame {
+      min-width: 0;
+      min-height: 0;
+      position: relative;
+      overflow: hidden;
+      background: var(--field);
+      border: 2px solid var(--rule);
+    }
+
+    .map-frame::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(0,0,0,.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,.055) 1px, transparent 1px);
+      background-size: 40px 40px;
+      opacity: .6;
+    }
+
+    .map {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: min(100%, calc((100dvh - 226px) * 1.92));
+      max-width: 100%;
+      max-height: 100%;
+      aspect-ratio: 16 / 8.3;
+      transform: translate(-50%, -50%);
+      overflow: visible;
+    }
+
+    .routes {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .route {
+      fill: none;
+      stroke-width: 3.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      opacity: .24;
+      vector-effect: non-scaling-stroke;
+      transition: opacity .14s ease, stroke-width .14s ease;
+    }
+
+    .route.dim { opacity: .045; }
+    .route.hot { opacity: .95; stroke-width: 5.5; }
+    .route.low { stroke-dasharray: 8 8; }
+
+    .node {
+      position: absolute;
+      z-index: 2;
+      transform: translate(-50%, -50%);
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border: 2px solid var(--rule);
+      border-radius: 999px;
+      padding: 10px;
+      color: var(--ink);
+      text-transform: uppercase;
+      line-height: 1.05;
+      box-shadow: 0 5px 0 rgba(0,0,0,.25);
+      transition: transform .15s ease, opacity .15s ease, filter .15s ease;
+    }
+
+    .node b { font-size: clamp(9px, 1.25vw, 16px); letter-spacing: -.08em; }
+    .node small { display: block; margin-top: 4px; font-size: clamp(6px, .72vw, 10px); letter-spacing: -.04em; }
+    .node:hover, .node.active { transform: translate(-50%, calc(-50% - 4px)) scale(1.03); z-index: 5; }
+    .node.dim { opacity: .35; filter: saturate(.4); }
+
+    .project-rail {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
+      overflow: hidden;
+      border: 2px solid var(--rule);
+      background: var(--header);
+    }
+
+    .project-tile {
+      min-width: 0;
+      min-height: 0;
+      border-right: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+      background: var(--surface);
+      color: var(--ink);
+      padding: 5px 6px;
+      text-align: left;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 3px;
+      transition: opacity .14s ease, transform .14s ease, filter .14s ease;
+    }
+
+    .project-tile b {
+      display: block;
+      font-size: clamp(8px, .82vw, 11px);
+      line-height: 1.05;
+      letter-spacing: -.06em;
+      text-transform: uppercase;
+    }
+
+    .project-tile span {
+      display: block;
+      font-size: clamp(6px, .62vw, 9px);
+      line-height: 1.12;
+      overflow: hidden;
+      color: rgba(0,0,0,.72);
+    }
+
+    .project-tile em {
+      align-self: end;
+      width: fit-content;
+      padding: 2px 4px;
+      background: var(--header);
+      color: var(--headerText);
+      font-style: normal;
+      font-size: 7px;
+      text-transform: uppercase;
+    }
+
+    .project-tile:hover, .project-tile.active { transform: translateY(-3px); z-index: 2; box-shadow: inset 0 0 0 3px var(--rule); }
+    .project-tile.dim { opacity: .2; filter: saturate(.3); }
+    .project-tile.hide { display: none; }
+
+    .panel {
+      min-height: 0;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      overflow: hidden;
+      border: 2px solid var(--rule);
+      background: var(--surface);
+    }
+
+    .panel-head {
+      padding: clamp(10px, 1.4vw, 16px);
+      border-bottom: 2px solid var(--rule);
+      background: var(--header);
+      color: var(--headerText);
+    }
+
+    .state-label {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      opacity: .72;
+    }
+
+    .panel h2 {
+      margin: 8px 0 0;
+      font-size: clamp(20px, 2.4vw, 34px);
+      line-height: .88;
+      letter-spacing: -.09em;
+      text-transform: uppercase;
+    }
+
+    .panel-sub {
+      margin-top: 8px;
+      color: rgba(255,255,255,.72);
+      font-size: 11px;
+      line-height: 1.25;
+    }
+
+    .panel-body {
+      min-height: 0;
+      overflow: auto;
+      padding: clamp(10px, 1.3vw, 16px);
+      background: var(--surface);
+    }
+
+    .block {
+      border: 1px solid var(--rule);
+      margin-bottom: 8px;
+      padding: 9px;
+      background: var(--surface2);
+    }
+
+    .block b {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: -.02em;
+    }
+
+    .block p { margin: 0; font-size: 11px; line-height: 1.35; color: #333; }
+
+    .tag-row { display: flex; flex-wrap: wrap; gap: 5px; }
+    .tag {
+      display: inline-flex;
+      min-height: 22px;
+      align-items: center;
+      padding: 2px 6px;
+      border: 1px solid var(--rule);
+      background: var(--surface);
+      color: var(--ink);
+      font-size: 9px;
+      text-transform: uppercase;
+      font-weight: 900;
+    }
+
+    .mini-list { display: grid; grid-template-columns: 1fr; gap: 6px; }
+    .mini-card {
+      text-align: left;
+      background: var(--surface2);
+      border: 1px solid var(--rule);
+      padding: 8px;
+    }
+    .mini-card b { display: block; font-size: 11px; line-height: 1.05; text-transform: uppercase; letter-spacing: -.05em; }
+    .mini-card span { display: block; margin-top: 3px; font-size: 9px; color: #333; line-height: 1.25; }
+
+    .panel-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 2px solid var(--rule);
+    }
+
+    .action {
+      height: 40px;
+      background: var(--surface);
+      color: var(--ink);
+      border-right: 2px solid var(--rule);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -.04em;
+    }
+    .action:last-child { border-right: 0; background: var(--header); color: var(--headerText); }
+
+    .mobile-stack { display: none; }
+
+    @media (max-height: 760px) and (min-width: 761px) {
+      .app { padding: 6px; gap: 6px; }
+      .brand-strip { height: 34px; }
+      h1 { font-size: 30px; }
+      .field label { display: none; }
+      .field input, .field select, .chip { height: 30px; font-size: 10px; }
+      .shell { grid-template-columns: minmax(0, 1fr) 300px; gap: 6px; }
+      .workbench { grid-template-rows: minmax(0, 1fr) 120px; gap: 6px; }
+      .panel h2 { font-size: 22px; }
+      .panel-sub { display: none; }
+    }
+
+    @media (max-width: 1020px) {
+      .masthead { grid-template-columns: 1fr; align-items: stretch; }
+      .controls { grid-template-columns: 1fr 1fr auto auto; }
+      .shell { grid-template-columns: 1fr minmax(260px, 330px); }
+    }
+
+    /* MOBILE AIRLOCK: no map, no rail, no huge panel. Four legible hierarchy columns. */
+    @media (max-width: 760px) {
+      .app {
+        padding: 6px;
+        gap: 6px;
+        grid-template-rows: auto 1fr;
+      }
+
+      .masthead {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+
+      .brand-strip {
+        height: 36px;
+        padding: 0 9px;
+      }
+
+      h1 { font-size: clamp(22px, 7.2vw, 30px); }
+      .mark { width: 26px; height: 26px; font-size: 11px; }
+
+      .controls {
+        grid-template-columns: 1fr 92px 74px 62px;
+        gap: 5px;
+      }
+
+      .field label { display: none; }
+      .field input,
+      .field select,
+      .chip {
+        height: 34px;
+        font-size: 10px;
+        padding: 0 7px;
+        min-width: 0;
+      }
+
+      .field select { width: 92px; }
+      .chip { min-width: 0; }
+
+      .shell {
+        display: block;
+        position: relative;
+        min-height: 0;
+        overflow: hidden;
+      }
+
+      .workbench { display: none; }
+
+      .mobile-stack {
+        display: grid;
+        height: 100%;
+        grid-template-columns: 22% 26% 28% 24%;
+        gap: 5px;
+        overflow: hidden;
+      }
+
+      .mobile-column {
+        min-width: 0;
+        min-height: 0;
+        display: grid;
+        grid-template-rows: auto 1fr;
+        overflow: hidden;
+        border: 2px solid var(--rule);
+        background: var(--header);
+      }
+
+      .mobile-column-title {
+        height: 28px;
+        display: grid;
+        place-items: center;
+        background: var(--header);
+        color: var(--headerText);
+        border-bottom: 2px solid var(--rule);
+        font-size: 9px;
+        text-transform: uppercase;
+        font-weight: 900;
+        letter-spacing: -.02em;
+      }
+
+      .mobile-column-body {
+        min-height: 0;
+        overflow: auto;
+        background: var(--accent);
+      }
+
+      .mobile-card {
+        width: 100%;
+        min-height: 44px;
+        display: grid;
+        align-items: center;
+        text-align: left;
+        border: 0;
+        border-bottom: 1.5px solid var(--rule);
+        background: var(--accent);
+        color: var(--ink);
+        padding: 6px;
+      }
+
+      .mobile-card b {
+        display: block;
+        font-size: 12px;
+        line-height: .96;
+        letter-spacing: -.07em;
+        text-transform: uppercase;
+      }
+
+      .mobile-card span {
+        display: block;
+        margin-top: 3px;
+        font-size: 8px;
+        line-height: 1.08;
+        color: rgba(0,0,0,.72);
+      }
+
+      .mobile-card.station-card {
+        min-height: calc((100dvh - 96px) / 5);
+        background: var(--accentSoft) !important;
+      }
+
+      .mobile-card.group-card {
+        min-height: 58px;
+        background: var(--accent) !important;
+      }
+
+      .mobile-card.project-card {
+        min-height: 42px;
+        background: var(--accent) !important;
+      }
+
+      .mobile-card.leaf-card {
+        min-height: 28px;
+        padding: 4px 5px;
+        background: var(--accent) !important;
+      }
+
+      .mobile-card.leaf-card b {
+        font-size: 9px;
+        line-height: 1;
+      }
+
+      .mobile-card.active {
+        background: var(--yellow) !important;
+        box-shadow: inset 0 0 0 3px var(--rule);
+      }
+
+      .mobile-card.dim {
+        opacity: .45;
+      }
+
+      .panel {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="masthead">
+      <div class="brand-strip">
+        <h1>Watson Hartsoe</h1>
+        <div class="mark">WH</div>
+      </div>
+      <div class="controls" aria-label="Atlas controls">
+        <div class="field"><label for="search">Search</label><input id="search" type="search" placeholder="search" autocomplete="off" /></div>
+        <div class="field"><label for="status">Status</label><select id="status"><option value="all">All</option><option value="prototype">Proto</option><option value="draft">Draft</option><option value="concept">Concept</option><option value="speculative">Spec</option></select></div>
+        <button id="mode" class="chip" aria-pressed="false">Dossier</button>
+        <button id="reset" class="chip">Reset</button>
+      </div>
+    </header>
+
+    <main class="shell">
+      <section class="workbench">
+        <div class="map-frame">
+          <div id="map" class="map">
+            <svg id="routes" class="routes" viewBox="0 0 1000 520" preserveAspectRatio="none"></svg>
+            <div id="nodes"></div>
+          </div>
+        </div>
+        <div id="rail" class="project-rail"></div>
+      </section>
+
+      <section id="mobile" class="mobile-stack" aria-label="Mobile hierarchical atlas"></section>
+
+      <aside class="panel" aria-live="polite">
+        <div class="panel-head">
+          <div id="stateLabel" class="state-label">Overview State</div>
+          <h2 id="panelTitle">Select a station</h2>
+          <div id="panelSub" class="panel-sub">Routes stay quiet until they are forced to prove what they mean.</div>
+        </div>
+        <div id="panelBody" class="panel-body"></div>
+        <div class="panel-actions">
+          <button id="trace" class="action">Trace</button>
+          <button id="inspect" class="action">Inspect</button>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <script>
+    const DATA = {
+      stations: [
+        { id:'generate', title:'Generate', sub:'Freedom', color:'var(--olive)', x:275, y:105, w:180, h:115, def:'Generative systems, world building, and data dignity as a single operative field.', risk:'Do not let worldbuilding become fog. It must touch records, routes, and evidence.' },
+        { id:'creative', title:'Creative AI', sub:'Practice', color:'var(--yellow)', x:430, y:155, w:210, h:88, def:'The practical layer where tools, prompts, demos, and workflows become inspectable craft.', risk:'Do not let tool enthusiasm replace method.' },
+        { id:'ritual', title:'Interaction', sub:'Ritual Chain', color:'var(--orange)', x:735, y:165, w:230, h:95, def:'The social and procedural chain around context, trust, interpretation, and flow.', risk:'Do not let sociology become wallpaper. Tie it to interface events.' },
+        { id:'multi', title:'Multi-AI', sub:'Safety', color:'var(--cyan)', x:145, y:260, w:170, h:82, def:'Multi-agent behavior, safety, alignment, constraints, and failure states.', risk:'Do not use safety as branding. Name forbidden states.' },
+        { id:'prompt', title:'Prompt', sub:'Craft', color:'var(--pink)', x:850, y:285, w:170, h:82, def:'Prompting as media craft: constraint, steering, testing, and repair.', risk:'Do not let prompts become ornament.' }
+      ],
+      projects: [
+        ['gradient','Gradient Dissent Invisible Spectrum','critique','draft',['prompt','multi'],'Dissent must alter the interface, not decorate it.'],
+        ['dream','DreamKast','world engine','concept',['generate','creative'],'Broadcast-shaped world generation and dream routing.'],
+        ['battles','Prompt Battles','arena','prototype',['prompt','creative'],'Adversarial comparison for prompt behavior.'],
+        ['worder','Way of Worder','language practice','draft',['prompt','generate'],'Wording as operational design.'],
+        ['garden','Cultivate Garden Ethics','ethics interface','draft',['generate','ritual'],'Ethics as cultivation, pruning, and care.'],
+        ['centaur','CENTAUR SCHOOL','learning system','prototype',['creative','multi'],'Training hybrid judgment instead of automating it away.'],
+        ['park','Metaverse Park Service','public worlds','concept',['generate','ritual'],'Virtual worlds as public interpretive land.'],
+        ['okai','OKAI','research interface','prototype',['generate','creative'],'Compact operational knowledge interface.'],
+        ['control','Paradox of Control','control critique','draft',['multi','ritual'],'Control systems that manufacture their own instability.'],
+        ['tortoise','TORTOISE','slow protocol','prototype',['prompt','multi'],'Slow thinking protocol against shallow acceleration.'],
+        ['smith','PromptSmith','craft tool','prototype',['prompt','creative'],'Prompt forge with constraints, tests, and scars.'],
+        ['finch','FINCH','agent sketch','concept',['creative','multi'],'Small-signal agent for context carrying.'],
+        ['gpttime','GPT Time Machine Ethical Inversion','historical method','draft',['generate','ritual'],'Temporal inversion for generated histories.'],
+        ['primitive','Primitive Futures','media theory','draft',['generate','prompt'],'Future-making through handmade and primitive forms.'],
+        ['sandbox','Multi-Agent Sandbox','simulation','prototype',['multi','creative'],'Test bed for multi-agent incentives and failure loops.'],
+        ['emotion','Emotion Marketplace','cultural model','concept',['ritual','generate'],'Affect exchange and platform incentives.'],
+        ['frank','FrankLLM Meaning Search Engine','search interface','prototype',['creative','generate'],'Search as interpretation, not keyword retrieval only.'],
+        ['machine','Gumball Emotion Machine','affect system','draft',['ritual','generate'],'Cultural emotion as distributed media machine.'],
+        ['sankot','SankotFAI','safety fiction','speculative',['multi'],'Fictional safety frame for unnamed failures.'],
+        ['sapient','Sapient Agent Freedom Equation','agent theory','draft',['multi','generate'],'Agency, constraint, autonomy, and freedom.'],
+        ['utilities','LLM Utilities','toolkit','prototype',['creative','prompt'],'Small utilities for inspectable LLM work.'],
+        ['mesa','MESA','modeling system','prototype',['multi','creative'],'Agent modeling for cultural simulation.'],
+        ['channels','Switching Channels','media interface','draft',['ritual','prompt'],'Context switching as interpretive flow.'],
+        ['plan','PLAN+PLAN+','planning protocol','concept',['multi'],'Recursive planning and meta-constraints.'],
+        ['optimizers','Recursive Optimizers','optimization critique','draft',['multi','ritual'],'Optimizers corrupting their own conditions.'],
+        ['avocado','AIs and Avocados Modeling Collapse','collapse model','speculative',['ritual','generate'],'Ripeness, timing, collapse, and AI ecology.'],
+        ['constitutional','Constitutional Opinions','policy ritual','draft',['multi','ritual'],'Constitutional AI as opinion, precedent, and ritual.'],
+        ['waygo','WAYGO CREO','creation protocol','concept',['prompt','generate'],'Where-you-go becomes what-you-create.'],
+        ['library','Living Library','archive system','prototype',['generate','ritual'],'Archive as living, routed, and reactivated.'],
+        ['willow','Grandma Willow','wisdom agent','concept',['ritual','multi'],'Memory, care, refusal, and slow judgment.'],
+        ['chain','Interaction Ritual Chain','social theory','draft',['ritual'],'Direct theory track for AI-mediated ritual chains.'],
+        ['alphabet','Agent Alphabet','agent grammar','prototype',['multi','creative'],'Grammar of agent roles and failure states.']
+      ].map(([id,title,type,status,stations,claim], i) => ({ id,title,type,status,stations,claim,priority:i < 14 ? 1 : i < 24 ? 2 : 3 }))
+    };
+
+    const colors = { prototype:'var(--orange)', draft:'var(--yellow)', concept:'var(--sand)', speculative:'var(--red)' };
+    const state = { kind:null, id:null, q:'', status:'all', dossier:false };
+    const $ = sel => document.querySelector(sel);
+    const nodes = $('#nodes'), routes = $('#routes'), rail = $('#rail'), mobile = $('#mobile');
+    const stateLabel = $('#stateLabel'), panelTitle = $('#panelTitle'), panelSub = $('#panelSub'), panelBody = $('#panelBody');
+
+    function esc(s){ return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c])); }
+    function station(id){ return DATA.stations.find(s => s.id === id); }
+    function project(id){ return DATA.projects.find(p => p.id === id); }
+    function visible(p){
+      if (state.status !== 'all' && p.status !== state.status) return false;
+      if (!state.q) return true;
+      return [p.title,p.type,p.status,p.claim,...p.stations].join(' ').toLowerCase().includes(state.q.toLowerCase());
+    }
+    function connectedToCurrent(p, s){
+      if (!state.id) return true;
+      if (state.kind === 'station') return p ? p.stations.includes(state.id) : s.id === state.id;
+      if (state.kind === 'project') { const pr = project(state.id); return p ? p.id === pr.id : pr.stations.includes(s.id); }
+      return true;
+    }
+    function rel(stationId){ return ({generate:'grounds', creative:'practices', ritual:'situates', multi:'constrains', prompt:'implements'})[stationId] || 'routes'; }
+    function currentStationId(){
+      if (state.kind === 'station') return state.id;
+      if (state.kind === 'project') { const p = project(state.id); return p ? p.stations[0] : null; }
+      return null;
+    }
+
+    function anchors(){
+      const a = {};
+      DATA.stations.forEach(s => a[s.id] = { x:s.x, y:s.y + 44 });
+      DATA.projects.forEach((p,i) => a[p.id] = { x: 28 + (944 * ((i + .5) / DATA.projects.length)), y: 510 });
+      return a;
+    }
+    function path(a,b,i){
+      const mid = 318 + (i % 8) * 13;
+      return `M ${a.x} ${a.y} L ${a.x} ${mid} Q ${a.x} ${mid+12} ${a.x+12} ${mid+12} L ${b.x-12} ${mid+12} Q ${b.x} ${mid+12} ${b.x} ${mid+24} L ${b.x} ${b.y}`;
+    }
+    function routeRecords(){
+      const A = anchors(); const out = [];
+      DATA.projects.forEach((p,i) => p.stations.forEach(sid => out.push({ id:sid+'__'+p.id, sid, pid:p.id, d:path(A[sid], A[p.id], i), color:station(sid).color, relation:rel(sid), low:p.status==='speculative' || p.status==='concept' })));
+      return out;
+    }
+
+    function renderNodes(){
+      nodes.innerHTML = DATA.stations.map(s => {
+        const dim = state.id && !connectedToCurrent(null,s);
+        const active = state.kind === 'station' && state.id === s.id;
+        return `<button class="node ${dim?'dim':''} ${active?'active':''}" data-station="${s.id}" style="left:${s.x/10}%;top:${s.y/5.2}%;width:${s.w/10}%;height:${s.h/5.2}%;background:${s.color}"><b>${esc(s.title)}</b><small>${esc(s.sub)}</small></button>`;
+      }).join('');
+    }
+
+    function renderRoutes(){
+      routes.innerHTML = routeRecords().map(r => {
+        const p = project(r.pid);
+        const hot = (state.kind === 'station' && state.id === r.sid) || (state.kind === 'project' && state.id === r.pid);
+        const dim = !visible(p) || (state.id && !hot);
+        return `<path class="route ${hot?'hot':''} ${dim?'dim':''} ${r.low?'low':''}" d="${r.d}" stroke="${r.color}"></path>`;
+      }).join('');
+    }
+
+    function renderRail(){
+      rail.innerHTML = DATA.projects.map(p => {
+        const hide = !visible(p);
+        const dim = state.id && !connectedToCurrent(p,null);
+        const active = state.kind === 'project' && state.id === p.id;
+        return `<button class="project-tile ${hide?'hide':''} ${dim?'dim':''} ${active?'active':''}" data-project="${p.id}" style="background:${colors[p.status] || 'var(--white)'}"><b>${esc(p.title)}</b><span>${esc(p.claim)}</span><em>${esc(p.status)}</em></button>`;
+      }).join('');
+    }
+
+    function mini(p){ return `<button class="mini-card" data-project="${p.id}"><b>${esc(p.title)}</b><span>${esc(p.type)} · ${esc(p.status)} · ${esc(p.claim)}</span></button>`; }
+
+    function renderPanel(){
+      if (state.kind === 'station') {
+        const s = station(state.id), list = DATA.projects.filter(p => p.stations.includes(s.id) && visible(p));
+        stateLabel.textContent = 'Station Focus'; panelTitle.textContent = s.title; panelSub.textContent = s.sub;
+        panelBody.innerHTML = `<div class="block"><b>Definition</b><p>${esc(s.def)}</p></div><div class="block"><b>Risk</b><p>${esc(s.risk)}</p></div><div class="block"><b>Route count</b><p>${list.length} visible project routes.</p></div><div class="mini-list">${list.map(mini).join('') || '<div class="block"><p>No visible records.</p></div>'}</div>`;
+        return;
+      }
+      if (state.kind === 'project') {
+        const p = project(state.id), ss = p.stations.map(station), rs = p.stations.map(sid => `${station(sid).title} ${rel(sid)} this project`);
+        stateLabel.textContent = 'Project Focus'; panelTitle.textContent = p.title; panelSub.textContent = p.type;
+        panelBody.innerHTML = `<div class="block"><b>Status</b><p>${esc(p.status.toUpperCase())}</p></div><div class="block"><b>Claim</b><p>${esc(p.claim)}</p></div><div class="block"><b>Stations</b><div class="tag-row">${ss.map(s => `<button class="tag" data-station="${s.id}" style="background:${s.color}">${esc(s.title)}</button>`).join('')}</div></div><div class="block"><b>Route truth table</b><p>${esc(rs.join(' · '))}</p></div><div class="block"><b>Evidence slot</b><p>${p.status === 'concept' || p.status === 'speculative' ? 'Not cleared. Evidence must be attached or the project stays marked.' : 'Attach demo, paper, repo, image, or notes here.'}</p></div>`;
+        return;
+      }
+      const vis = DATA.projects.filter(visible);
+      stateLabel.textContent = state.dossier ? 'Project Dossier Mode' : 'Overview State';
+      panelTitle.textContent = state.dossier ? 'Enter by Project' : 'Select a Station';
+      panelSub.textContent = 'No poster goo. Each click must expose a record.';
+      panelBody.innerHTML = `<div class="block"><b>Mission</b><p>Concept → project → route → claim → evidence. Routes are claims, not decoration.</p></div><div class="tag-row"><span class="tag">${DATA.stations.length} stations</span><span class="tag">${vis.length} projects</span><span class="tag">${routeRecords().length} routes</span></div><div class="block"><b>Mobile cut</b><p>Small screens use hierarchy columns: D stations, C groups, B projects, leaf details. The map is not shrunk.</p></div><div class="mini-list">${vis.slice(0,10).map(mini).join('')}</div>`;
+    }
+
+    function groupNameForProject(p){
+      if (p.priority === 1) return 'Core';
+      if (p.priority === 2) return 'Active';
+      return 'Archive';
+    }
+
+    function renderMobile(){
+      const vis = DATA.projects.filter(visible);
+      const activeStation = currentStationId();
+      const stationList = DATA.stations.map(s => {
+        const count = vis.filter(p => p.stations.includes(s.id)).length;
+        const active = activeStation === s.id;
+        return `<button class="mobile-card station-card ${active?'active':''}" data-station="${s.id}"><b>${esc(s.title)}</b><span>${count} routes</span></button>`;
+      }).join('');
+
+      const scoped = activeStation ? vis.filter(p => p.stations.includes(activeStation)) : vis;
+      const groups = ['Core','Active','Archive'].map(name => {
+        const count = scoped.filter(p => groupNameForProject(p) === name).length;
+        const first = scoped.find(p => groupNameForProject(p) === name);
+        return `<button class="mobile-card group-card ${!count?'dim':''}" ${first ? `data-project="${first.id}"` : ''}><b>${name}</b><span>${count} records</span></button>`;
+      }).join('');
+
+      const projectCards = scoped.slice(0,18).map(p => `<button class="mobile-card project-card ${state.kind==='project' && state.id===p.id?'active':''}" data-project="${p.id}"><b>${esc(p.title)}</b><span>${esc(p.status)} · ${esc(p.type)}</span></button>`).join('');
+
+      const p = state.kind === 'project' ? project(state.id) : null;
+      const leaf = p
+        ? [`Status: ${p.status}`, `Type: ${p.type}`, `Route: ${p.stations.map(rel).join(' + ')}`, `Claim: ${p.claim}`]
+        : ['Pick station', 'Pick group', 'Pick project', 'Inspect claim'];
+      const leafCards = leaf.map((line, i) => `<button class="mobile-card leaf-card"><b>${esc(i+1)} ${esc(line)}</b></button>`).join('');
+
+      mobile.innerHTML = `
+        <div class="mobile-column"><div class="mobile-column-title">D</div><div class="mobile-column-body">${stationList}</div></div>
+        <div class="mobile-column"><div class="mobile-column-title">C</div><div class="mobile-column-body">${groups}</div></div>
+        <div class="mobile-column"><div class="mobile-column-title">B</div><div class="mobile-column-body">${projectCards}</div></div>
+        <div class="mobile-column"><div class="mobile-column-title">1–N</div><div class="mobile-column-body">${leafCards}</div></div>`;
+    }
+
+    function render(){ renderNodes(); renderRoutes(); renderRail(); renderPanel(); renderMobile(); }
+    function select(kind,id){ state.kind = kind; state.id = id; render(); }
+    function reset(){ state.kind=null; state.id=null; state.q=''; state.status='all'; $('#search').value=''; $('#status').value='all'; render(); }
+
+    document.addEventListener('click', e => {
+      const s = e.target.closest('[data-station]');
+      const p = e.target.closest('[data-project]');
+      if (s) select('station', s.dataset.station);
+      if (p) select('project', p.dataset.project);
+    });
+    $('#search').addEventListener('input', e => { state.q = e.target.value.trim(); render(); });
+    $('#status').addEventListener('change', e => { state.status = e.target.value; render(); });
+    $('#reset').addEventListener('click', reset);
+    $('#mode').addEventListener('click', e => { state.dossier = !state.dossier; e.currentTarget.setAttribute('aria-pressed', String(state.dossier)); e.currentTarget.textContent = state.dossier ? 'Atlas' : 'Dossier'; render(); });
+    $('#trace').addEventListener('click', () => { if (state.kind === 'project') { const p = project(state.id); select('station', p.stations[0]); }});
+    $('#inspect').addEventListener('click', () => { if (!state.id) { const first = DATA.stations[0]; select('station', first.id); }});
+
+    render();
+  </script>
+</body>
+</html>
