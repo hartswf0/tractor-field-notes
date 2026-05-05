@@ -3,13 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>TRACTOR FOLKLOGICUS · INDEX</title>
+
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --ink: #1a1a1a;
+      --paper: #e8e4dc;
+      --card: #f5f3ed;
+      --muted: #666;
+      --white: #ffffff;
+      --rule: 3px solid var(--ink);
+      --thin: 1px dotted var(--ink);
+    }
+
     body {
-      font-family: 'Courier New', monospace;
-      background: #e8e4dc;
-      color: #1a1a1a;
+      font-family: "Courier New", monospace;
+      background: var(--paper);
+      color: var(--ink);
       overflow-x: hidden;
     }
 
@@ -20,12 +37,12 @@
     }
 
     header {
-      background: #1a1a1a;
-      border: 3px solid #1a1a1a;
+      background: var(--ink);
+      border: var(--rule);
       padding: 18px 14px 14px;
       margin-bottom: 20px;
       text-align: center;
-      color: #f5f3ed;
+      color: var(--card);
     }
 
     header h1 {
@@ -33,6 +50,7 @@
       font-weight: 700;
       letter-spacing: 0.35em;
       margin-bottom: 4px;
+      line-height: 1;
     }
 
     header .tagline {
@@ -42,6 +60,21 @@
       color: rgba(245, 243, 237, 0.85);
     }
 
+    .notice {
+      border: var(--rule);
+      background: var(--card);
+      padding: 12px 14px;
+      margin-bottom: 15px;
+      font-size: 11px;
+      line-height: 1.45;
+    }
+
+    .notice strong {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 10px;
+    }
+
     main {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -49,34 +82,9 @@
       font-size: 12px;
     }
 
-    @media (max-width: 900px) {
-      main {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .container {
-        padding: 16px;
-      }
-
-      header {
-        padding: 16px 10px 12px;
-        margin-bottom: 16px;
-      }
-
-      section {
-        padding: 14px;
-      }
-
-      li {
-        align-items: flex-start;
-      }
-    }
-
     section {
-      background: #f5f3ed;
-      border: 3px solid #1a1a1a;
+      background: var(--card);
+      border: var(--rule);
       padding: 16px;
     }
 
@@ -84,7 +92,7 @@
       font-size: 10px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: #666;
+      color: var(--muted);
       margin-bottom: 8px;
     }
 
@@ -104,22 +112,28 @@
     .code-tag {
       font-weight: bold;
       min-width: 42px;
+      flex: 0 0 42px;
     }
 
     a {
       color: inherit;
       text-decoration: none;
-      border-bottom: 1px dotted #1a1a1a;
+      border-bottom: var(--thin);
       padding-bottom: 1px;
+      font-weight: bold;
     }
 
-    a:hover {
-      background: #ffffff;
+    a:hover,
+    a:focus {
+      background: var(--white);
+      outline: 2px solid var(--ink);
+      outline-offset: 2px;
     }
 
     .desc {
       flex: 1;
       line-height: 1.4;
+      min-width: 0;
     }
 
     .hint {
@@ -127,17 +141,58 @@
       font-size: 10px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: #666;
+      color: var(--muted);
       text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 16px;
+      }
+
+      header {
+        padding: 16px 10px 12px;
+        margin-bottom: 16px;
+      }
+
+      header h1 {
+        letter-spacing: 0.16em;
+      }
+
+      section {
+        padding: 14px;
+      }
+
+      li {
+        align-items: flex-start;
+      }
+
+      .code-tag {
+        min-width: 38px;
+        flex-basis: 38px;
+      }
     }
   </style>
 </head>
+
 <body>
   <div class="container">
     <header>
       <h1>TRACTOR FOLKLOGICUS</h1>
       <div class="tagline">Text · Geometry · Flux</div>
     </header>
+
+    <div class="notice">
+      <strong>Route fix:</strong>
+      this root index points into <code>TRACTOR FOLKLOGICUS/</code>, where the actual tract files live.
+    </div>
+
     <main>
       <section>
         <div class="column-title">Interactive Media</div>
@@ -145,89 +200,110 @@
           <li>
             <span class="code-tag">07F</span>
             <div class="desc">
-              <a href="tract-07-flux.html">007 Flux Field</a>
+              <a href="./TRACTOR%20FOLKLOGICUS/tract-07-flux.html">007 Flux Field</a>
               · orange/blue orbs as a global swarm; all shapes act as operators on the field.
             </div>
           </li>
+
           <li>
             <span class="code-tag">09</span>
             <div class="desc">
-              <a href="tract-09.html">Minimal Suite</a>
-              · 7 short module animations (Circle, Trade, Heart, Seed, Choice, Pattern, Zero) – a cinematic trailer.
+              <a href="./TRACTOR%20FOLKLOGICUS/tract-09.html">Minimal Suite</a>
+              · 7 short module animations: Circle, Trade, Heart, Seed, Choice, Pattern, Zero.
             </div>
           </li>
+
           <li>
             <span class="code-tag">07</span>
             <div class="desc">
-              <a href="tract-07.html">Geometric Medium (orig)</a>
+              <a href="./TRACTOR%20FOLKLOGICUS/tract-07.html">Geometric Medium</a>
               · earlier version of the Tractor OS; kept as a historical snapshot.
             </div>
           </li>
+
           <li>
             <span class="code-tag">07B</span>
             <div class="desc">
-              <a href="tract-07b.html">Geometric Sandbox</a>
+              <a href="./TRACTOR%20FOLKLOGICUS/tract-07b.html">Geometric Sandbox</a>
               · simpler 07-series sandbox with basic shapes and trades.
             </div>
           </li>
+
           <li>
             <span class="code-tag">08</span>
             <div class="desc">
-              <a href="tract-08.html">Seven Glyph Canvas</a>
+              <a href="./TRACTOR%20FOLKLOGICUS/tract-08.html">Seven Glyph Canvas</a>
               · early canvas placing the 7 axioms as glyphs in one field.
+            </div>
+          </li>
+
+          <li>
+            <span class="code-tag">IDX</span>
+            <div class="desc">
+              <a href="./TRACTOR%20FOLKLOGICUS/index.html">Original Folder Index</a>
+              · the actual nested index inside the Tractor Folklogicus folder.
             </div>
           </li>
         </ul>
       </section>
+
       <section>
         <div class="column-title">Texts &amp; Planning Sheets</div>
         <ul>
           <li>
             <span class="code-tag">01</span>
             <div class="desc">
-              <a href="tract-01.html">Modular Planning v1</a>
+              <a href="./TRACTOR%20FOLKLOGICUS/tract-01.html">Modular Planning v1</a>
               · first planning grid for the 7 modules.
             </div>
           </li>
+
           <li>
             <span class="code-tag">02</span>
             <div class="desc">
-              <a href="tract-02.html">Modular Planning v2</a>
-              · refinement of v1 with updated wording/layout.
+              <a href="./TRACTOR%20FOLKLOGICUS/tract-02.html">Modular Planning v2</a>
+              · refinement of v1 with updated wording and layout.
             </div>
           </li>
+
           <li>
             <span class="code-tag">03</span>
             <div class="desc">
-              <a href="tract-03.html">Modular Planning v3</a>
+              <a href="./TRACTOR%20FOLKLOGICUS/tract-03.html">Modular Planning v3</a>
               · later iteration in the planning series.
             </div>
           </li>
+
           <li>
             <span class="code-tag">04</span>
             <div class="desc">
-              <a href="tract-04.html">Circle Formalized</a>
-              · focuses on formalizing the Circle module inside the planning grid.
+              <a href="./TRACTOR%20FOLKLOGICUS/tract-04.html">Circle Formalized</a>
+              · formalizes the Circle module inside the planning grid.
             </div>
           </li>
+
           <li>
             <span class="code-tag">05F</span>
             <div class="desc">
-              <a href="tract-05-formalized.html">Formalized Comprehensive</a>
+              <a href="./TRACTOR%20FOLKLOGICUS/tract-05-formalized.html">Formalized Comprehensive</a>
               · canonical axiom lists, formal spec grammar, planning items, and reference.
             </div>
           </li>
+
           <li>
             <span class="code-tag">06</span>
             <div class="desc">
-              <a href="tract-06.html">Folk System Axioms</a>
+              <a href="./TRACTOR%20FOLKLOGICUS/tract-06.html">Folk System Axioms</a>
               · folk-phrased axiom sheet with highlighted vocabulary.
             </div>
           </li>
         </ul>
       </section>
     </main>
-    <div class="hint">Suggested path: 05F or 06 → 09 → 07 → 07F</div>
+
+    <div class="hint">
+      Suggested path: 05F or 06 → 09 → 07 → 07F
+    </div>
   </div>
 </body>
 </html>
