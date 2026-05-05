@@ -1,1 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TRACTOR FOLKLOGICUS · INDEX</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Courier New', monospace;
+      background: #e8e4dc;
+      color: #1a1a1a;
+      overflow-x: hidden;
+    }
 
+    .container {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      background: #1a1a1a;
+      border: 3px solid #1a1a1a;
+      padding: 18px 14px 14px;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #f5f3ed;
+    }
+
+    header h1 {
+      font-size: clamp(26px, 7vw, 40px);
+      font-weight: 700;
+      letter-spacing: 0.35em;
+      margin-bottom: 4px;
+    }
+
+    header .tagline {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(245, 243, 237, 0.85);
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 15px;
+      font-size: 12px;
+    }
+
+    @media (max-width: 900px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 16px;
+      }
+
+      header {
+        padding: 16px 10px 12px;
+        margin-bottom: 16px;
+      }
+
+      section {
+        padding: 14px;
+      }
+
+      li {
+        align-items: flex-start;
+      }
+    }
+
+    section {
+      background: #f5f3ed;
+      border: 3px solid #1a1a1a;
+      padding: 16px;
+    }
+
+    .column-title {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #666;
+      margin-bottom: 8px;
+    }
+
+    ul {
+      list-style: none;
+      display: grid;
+      gap: 6px;
+    }
+
+    li {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-size: 11px;
+    }
+
+    .code-tag {
+      font-weight: bold;
+      min-width: 42px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      border-bottom: 1px dotted #1a1a1a;
+      padding-bottom: 1px;
+    }
+
+    a:hover {
+      background: #ffffff;
+    }
+
+    .desc {
+      flex: 1;
+      line-height: 1.4;
+    }
+
+    .hint {
+      margin-top: 16px;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #666;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>TRACTOR FOLKLOGICUS</h1>
+      <div class="tagline">Text · Geometry · Flux</div>
+    </header>
+    <main>
+      <section>
+        <div class="column-title">Interactive Media</div>
+        <ul>
+          <li>
+            <span class="code-tag">07F</span>
+            <div class="desc">
+              <a href="tract-07-flux.html">007 Flux Field</a>
+              · orange/blue orbs as a global swarm; all shapes act as operators on the field.
+            </div>
+          </li>
+          <li>
+            <span class="code-tag">09</span>
+            <div class="desc">
+              <a href="tract-09.html">Minimal Suite</a>
+              · 7 short module animations (Circle, Trade, Heart, Seed, Choice, Pattern, Zero) – a cinematic trailer.
+            </div>
+          </li>
+          <li>
+            <span class="code-tag">07</span>
+            <div class="desc">
+              <a href="tract-07.html">Geometric Medium (orig)</a>
+              · earlier version of the Tractor OS; kept as a historical snapshot.
+            </div>
+          </li>
+          <li>
+            <span class="code-tag">07B</span>
+            <div class="desc">
+              <a href="tract-07b.html">Geometric Sandbox</a>
+              · simpler 07-series sandbox with basic shapes and trades.
+            </div>
+          </li>
+          <li>
+            <span class="code-tag">08</span>
+            <div class="desc">
+              <a href="tract-08.html">Seven Glyph Canvas</a>
+              · early canvas placing the 7 axioms as glyphs in one field.
+            </div>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <div class="column-title">Texts &amp; Planning Sheets</div>
+        <ul>
+          <li>
+            <span class="code-tag">01</span>
+            <div class="desc">
+              <a href="tract-01.html">Modular Planning v1</a>
+              · first planning grid for the 7 modules.
+            </div>
+          </li>
+          <li>
+            <span class="code-tag">02</span>
+            <div class="desc">
+              <a href="tract-02.html">Modular Planning v2</a>
+              · refinement of v1 with updated wording/layout.
+            </div>
+          </li>
+          <li>
+            <span class="code-tag">03</span>
+            <div class="desc">
+              <a href="tract-03.html">Modular Planning v3</a>
+              · later iteration in the planning series.
+            </div>
+          </li>
+          <li>
+            <span class="code-tag">04</span>
+            <div class="desc">
+              <a href="tract-04.html">Circle Formalized</a>
+              · focuses on formalizing the Circle module inside the planning grid.
+            </div>
+          </li>
+          <li>
+            <span class="code-tag">05F</span>
+            <div class="desc">
+              <a href="tract-05-formalized.html">Formalized Comprehensive</a>
+              · canonical axiom lists, formal spec grammar, planning items, and reference.
+            </div>
+          </li>
+          <li>
+            <span class="code-tag">06</span>
+            <div class="desc">
+              <a href="tract-06.html">Folk System Axioms</a>
+              · folk-phrased axiom sheet with highlighted vocabulary.
+            </div>
+          </li>
+        </ul>
+      </section>
+    </main>
+    <div class="hint">Suggested path: 05F or 06 → 09 → 07 → 07F</div>
+  </div>
+</body>
+</html>
